@@ -1,0 +1,78 @@
+#page_content_form {
+  .submit-button {
+    @extend %button;
+    display: flex;
+  }
+  .page_editing_area {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 2em;
+
+    li.input {
+      margin-bottom: 0 !important;
+      padding: 2em 0;
+      border-bottom: 1px solid $grey_lightest;
+      .edit-wrapper {
+        display: flex;
+        justify-content: flex-start;
+        flex-flow: column;
+        padding: 0 10em;
+      }
+    }
+  }
+  .action_item {
+    @extend %button;
+    display: flex;
+    &.active_item {
+      background: $blue;
+      color: white;
+    }
+    &.active_item svg, &:hover svg{
+      fill: white;
+    }
+  }
+  .publishing-section, .editing-section {
+    .section-controls {
+      display: flex;
+      justify-content: space-between;
+    }
+    .action_item {
+    }
+  }
+  .schedule-calendar {
+    .info-text {
+      margin: 1em 0;
+    }
+    .action_item {
+      margin: 1em 0;
+    }
+    a {color: $blue;}
+    padding: 1em 0;
+  }
+}
+.m-input-moment {
+  .ion-ios-arrow-right {
+    &:before {
+      content: ' ';
+      background-size: cover;
+      background-position-y: 0px;
+      display: block;
+      width: 30px;
+      height: 30px;
+      transform: rotate(-90deg);
+      background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+PHRpdGxlPkFydGJvYXJkIDM8L3RpdGxlPjxwb2x5Z29uIGZpbGw9JyNmZmZmZmYnIHBvaW50cz0iOS45OCAxMy4yNiA0LjkyIDguMiA2LjMzIDYuNzkgOS45OCAxMC40MyAxMy42NiA2Ljc0IDE1LjA4IDguMTYgOS45OCAxMy4yNiIvPjwvc3ZnPg==);
+    }
+  }
+  .ion-ios-arrow-left {
+    &:before {
+      content: ' ';
+      background-size: cover;
+      background-position-y: 3px;
+      display: block;
+      width: 30px;
+      height: 30px;
+      transform: rotate(90deg);
+      background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+PHRpdGxlPkFydGJvYXJkIDM8L3RpdGxlPjxwb2x5Z29uIGZpbGw9JyNmZmZmZmYnIHBvaW50cz0iOS45OCAxMy4yNiA0LjkyIDguMiA2LjMzIDYuNzkgOS45OCAxMC40MyAxMy42NiA2Ljc0IDE1LjA4IDguMTYgOS45OCAxMy4yNiIvPjwvc3ZnPg==);
+    }
+  }
+}

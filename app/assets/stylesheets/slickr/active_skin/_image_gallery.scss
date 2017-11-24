@@ -1,0 +1,144 @@
+.admin_images {
+  #collection_selection {
+    padding: 0;
+  }
+
+  .table_tools, .pagination_information { display: none; }
+
+  #image-gallery-bar {
+    background-color: $blue;
+    height: 0;
+    opacity: 0;
+    transition: .2s;
+
+    &.visible {
+      height: auto;
+      opacity: 1;
+    }
+
+    .image-gallery-actions {
+      display: grid;
+      grid-template-columns: [filters] auto [buttons] 15em;
+      grid-auto-flow: row;
+      padding: 0 2em;
+      background: $blue;
+      .number-selected {
+        grid-column: filters/buttons;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 1.5em 0;
+        &-info {
+          color: white;
+          cursor: pointer;
+          line-height: 1em;
+
+          &:before {
+            padding-right: 0.5em;
+            content: "x"; font-size: 1.5em; color: white;
+          }
+        }
+      }
+      .buttons {
+        grid-column: buttons;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .actions {
+          @extend %general_link;
+          margin: 0 0.5em;
+          color: $white;
+          &:before {
+            background-color: $white;
+          }
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+
+  .dropzone {
+    @extend %large_cta;
+    margin: 1em 0;
+    max-width: 100vw;
+    &.dropzone-active {
+      border-color: $blue;
+      background-color: lighten($blue, 80%);
+    }
+  }
+  #image-gallery {
+    background-color: $white;
+    border-top: 1px solid $grey_lightest;
+    #image_gallery_wrapper {
+      display: block; min-height: 1px; max-width: 100vw; margin: 1em auto 0; padding: 0.5em;
+      overflow: auto;
+      background-color: $grey_lightest;
+      border-top: 1px solid $grey_light;
+
+      .tile {
+        div:nth-child(3) {
+          opacity: 1 !important;
+
+          div div:first-child {
+            opacity: 0;
+            transition: opacity 0.15s ease-in-out;
+          }
+
+          div.progress_uploading .progress_container {
+            opacity: 1 !important;
+            .progress_bar {
+              opacity: 1 !important;
+            }
+          }
+        }
+
+        &:hover {
+          div:nth-child(3) {
+            div div:first-child {
+              opacity: 1;
+            }
+          }
+        }
+
+        .alt_text_missing {
+          &:after {
+            position: absolute; padding: 6px; top: 0; right: 0;
+            content: "\2205"; font-size: 32px; color: red; text-align: right; line-height: 18px;
+            opacity: 0.5;
+          }
+        }
+
+        .progress_uploading {
+          position: absolute; width: 100%; height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          opacity: 0.5;
+
+          .progress_container {
+            position: relative; width: 100%; height: 100%; padding: 16px; box-sizing: border-box;
+            .progress_bar {
+              position: relative; top: 0; left: 0; bottom: 0; height: 10%;
+              background: white;
+              transition: width .5s;
+            }
+          }
+        }
+
+        .progress_error {
+          content: 'Error - Try again';
+          display: block; position: absolute; height: 100%; width: 100%;
+          background-color: rgba(#ea111c, 0.5);
+
+          &:after {
+            position: relative; padding: 6px;
+            content: "Error - Try again";
+            text-transform: capitalize; text-align: center;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

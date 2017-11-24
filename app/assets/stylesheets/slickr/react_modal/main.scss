@@ -1,0 +1,69 @@
+.ReactModalPortal {
+  .ReactModal {
+    &__Overlay {
+      background-color: rgba(0,0,0,0.75) !important;
+      z-index: 10;
+    }
+    &__Content {
+      left: 20% !important;
+      right: 20% !important;
+      padding: 40px !important;
+    }
+    &__close_button {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      top: -15px;
+      right: -15px;
+      overflow: hidden;
+      cursor: pointer;
+      background: $blue;
+      border-radius: 50%;
+      transition: .2s;
+      svg { fill: white; }
+      span {text-indent: -9999px; }
+      &:hover {
+        transform: scale(1.25);
+      }
+    }
+  }
+}
+
+.scheduling-modal {
+  .ReactModal {
+    &__Overlay {
+      background-color: rgba(0,0,0,0.75) !important;
+      z-index: 10;
+    }
+    &__close_button {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      top: -15px;
+      right: -15px;
+      overflow: hidden;
+      cursor: pointer;
+      background: $blue;
+      border-radius: 50%;
+      transition: .2s;
+      svg { fill: white; }
+      span {text-indent: -9999px; }
+      &:hover {
+        transform: scale(1.25);
+      }
+    }
+  }
+  .m-input-moment {
+    display: block;
+    margin-bottom: 1em;
+  }
+  .action_item {
+    @extend %button;
+  }
+}

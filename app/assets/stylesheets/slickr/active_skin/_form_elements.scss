@@ -1,0 +1,80 @@
+.logged_in #wrapper .formtastic {
+  padding: 0;
+
+  fieldset.inputs {
+    margin-top: 2em !important; padding: 2em !important;
+    border-bottom: 1px solid $grey_lightest !important;
+
+    // ol {
+    //   img {
+    //     max-width: 30em;
+    //   }
+    // }
+  }
+
+  fieldset.actions {
+    padding-left: 2em !important;
+  }
+
+  fieldset.form_inputs {
+    ol {
+      li {
+        border-bottom: 1px solid $grey_lightest; border-right: 1px solid $grey_lightest; border-left: 1px solid $grey_lightest;
+        &.input {
+          padding: 2em 0; margin-bottom: 0!important;
+        }
+        input, textarea {
+          width: auto !important;
+          background: none !important;
+          border-bottom: none !important;
+        }
+        &.password, &.email, &.string, &.select, &.text, &.number {
+          .hint-text {
+            @extend .para_small;
+            margin: 0; padding: 0 0.5em;
+            color: $grey;
+          }
+        }
+        .edit-wrapper {
+          input, textarea {
+            background: none !important;
+            border-bottom: none !important;
+          }
+        }
+        .megadraft-editor {
+          padding: .5em;
+        }
+      }
+      li > * {
+        margin: 0 2em !important;
+      }
+    }
+  }
+}
+
+#custom-wrapper {
+  .page_editing_area {
+    fieldset {
+      ol {
+        li {
+          &.password, &.email, &.string, &.select, &.text, &.number {
+            .hint-text {
+              @extend .para_small;
+              margin: 0; padding: 0 0.5em;
+              color: $grey;
+            }
+          }
+          .edit-wrapper {
+            input, textarea {
+              background: none !important;
+              border-bottom: none !important;
+            }
+          }
+          .megadraft-editor {
+            padding: .5em;
+          }
+        }
+      }
+    }
+  }
+}

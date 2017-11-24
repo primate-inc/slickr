@@ -1,0 +1,24 @@
+$blue: #469CFF;
+$blue_dark: #216BBF;
+$white: #fff;
+$grey_lightest: #F2F2F2;
+$grey_lighter: #E6E6E6;
+$grey_light: #CCCCCC;
+$grey: #808080;
+$grey_dark: #4D4D4D;
+$grey_darker: #333333;
+$grey_darkest: #1A1A1A;
+$alert: #DF2935;
+$notice: #32E875;
+$orange: #FFBC46;
+
+$header: #333333;
+$black: #1D1D1D;
+
+@function url-friendly-colour($colour) {
+  @return '%23' + str-slice('#{$colour}', 2, -1)
+}
+
+$medium_break: 768px;
+$large_break: 1200px;
+$very_large_break: 1600px;

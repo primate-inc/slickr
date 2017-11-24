@@ -1,0 +1,58 @@
+#wrapper #active_admin_content #main_content_wrapper #main_content {
+  #split_display_with_image {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    grid-template-areas:
+      "form image-preview"
+      "actions actions";
+    grid-column-gap: 0;
+    margin: 0;
+
+    .image img, .image img {max-width: 100%;}
+    .form_inputs, .attributes_list {
+      grid-area: form;
+      padding-right: 2em;
+    }
+    .actions {
+      grid-area: actions;
+      background-color: $grey_lightest;
+
+      .input_action {
+        margin-bottom: 1em;
+
+        input {
+          color: $white; background-color: $blue;
+
+          &:hover {
+            background-color: $blue_dark;
+            border-color: $blue_dark;
+          }
+        }
+      }
+    }
+  }
+}
+// #split_display_with_image + .comments {
+//   display: grid;
+//   grid-template-columns: 6fr 4fr;
+//   grid-template-rows: [header] auto [input] auto;
+//   grid-template-areas:
+//     "actions actions";
+//   grid-area: actions;
+//
+//   h3 {
+//     grid-row: header;
+//   }
+//
+//   .panel_contents {
+//     grid-row: input;
+//   }
+// }
+
+// .show.logged_in .panel:not(.comments) {
+//   margin: 0;
+//
+//   ol {
+//     padding-right: 2em;
+//   }
+// }

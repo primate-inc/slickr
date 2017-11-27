@@ -7,6 +7,7 @@ require 'aasm'
 require 'draftjs_exporter/entities/link'
 require 'draper'
 require 'paper_trail'
+require 'webpacker'
 
 module Slickr
   class Engine < ::Rails::Engine

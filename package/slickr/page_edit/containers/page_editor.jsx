@@ -1,4 +1,4 @@
-import draftToHtml from 'draftjs-to-html';
+// import draftToHtml from 'draftjs-to-html';
 import {editorStateToJSON} from "megadraft";
 import React from 'react';
 import PropTypes from 'prop-types'

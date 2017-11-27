@@ -16,5 +16,5 @@
 <% else %>
   <div id="page-data" data-page_data="<%= @slickr_page.to_json(methods: [:admin_publish_path, :admin_unpublish_path, :admin_page_path, :admin_image_index_path, :admin_preview_page_path]) %>"></div>
   <div id='page_edit_content' ></div>
-  <%= javascript_pack_tag 'page_edit' %>
+  <%= javascript_pack_tag 'slickr_page_edit' %>
 <% end %>

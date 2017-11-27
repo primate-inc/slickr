@@ -21,6 +21,14 @@ Or install it yourself as:
 $ gem install slickr
 ```
 
+## Migrations
+
+After installing the gem, slimply run:
+
+```bash
+$ rake db:migrate
+```
+
 ## Contributing
 Contribution directions go here.
 

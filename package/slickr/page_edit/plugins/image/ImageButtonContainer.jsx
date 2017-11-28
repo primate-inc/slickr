@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PageActions from '../../actions'
 import cx from 'classnames';
-import store from '../../../packs/page_edit.jsx'
+import store from '../../../packs/slickr_page_edit.jsx'
 import ImageButton from "./ImageButton.jsx";
 
 const ImageButtonContainer = ({store, modalIsOpen, actions, loadedImages, editorState}) => (

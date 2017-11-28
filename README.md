@@ -59,6 +59,11 @@ Finally, to use Webpacker with React:
 bundle exec rails webpacker:install:react
 ```
 
+## Generators
+
+```bash
+rails g slickr:install
+```
 
 ## Contributing
 Contribution directions go here.

@@ -36,7 +36,7 @@ If you don't already have webpacker installed run:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.0.2'
 ```
 
 And then execute:
@@ -64,6 +64,15 @@ bundle exec rails webpacker:install:react
 ```bash
 rails g slickr:install
 ```
+
+then
+
+```bash
+yarn install
+```
+
+For now you also have to open up node_modules folder and find the folders for
+attr-accept and disposables and delete the .babelrc files
 
 ## Contributing
 Contribution directions go here.

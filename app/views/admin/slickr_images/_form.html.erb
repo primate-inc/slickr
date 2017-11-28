@@ -1,0 +1,3 @@
+<div id="image-data" data-image_data="<%= @slickr_image.to_json(methods: [:admin_update_path, :timestamped_image_url]) %>"></div>
+<div id='image-editing-form'></div>
+<%= javascript_pack_tag 'slickr_image_editor' %>

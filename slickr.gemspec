@@ -30,11 +30,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'devise', '~> 4.3.0'
 
   # Other gems
-  s.add_dependency 'acts_as_tree', '~> 2.7.0'
-  s.add_dependency 'acts_as_list', '~> 0.9.7'
-  s.add_dependency 'friendly_id', '~> 5.1.0'
-  s.add_dependency 'aasm', '~> 4.12.2'
-  s.add_dependency 'paper_trail', '~> 7.0.0'
-  s.add_dependency 'draftjs_exporter', '~> 0.0.7'
-  s.add_dependency 'draper', '~> 3.0.0'
+  s.add_dependency "acts_as_tree", "~> 2.7.0"
+  s.add_dependency "acts_as_list", "~> 0.9.7"
+  s.add_dependency "friendly_id", "~> 5.1.0"
+  s.add_dependency "aasm", "~> 4.12.2"
+  s.add_dependency "paper_trail", "~> 7.0.0"
+  s.add_dependency "draftjs_exporter", "~> 0.0.7"
+  s.add_dependency "draper", "~> 3.0.0"
+  s.add_dependency "verbs", "~> 2.1.4"
 end

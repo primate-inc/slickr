@@ -37,6 +37,7 @@ PATH
       friendly_id (~> 5.1.0)
       paper_trail (~> 7.0.0)
       rails (~> 5.1.4)
+      verbs (~> 2.1.4)
       webpacker (~> 3.0)
 
 GEM
@@ -242,6 +243,9 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
+    verbs (2.1.4)
+      activesupport (>= 2.3.4)
+      i18n
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.1)
@@ -268,6 +272,7 @@ DEPENDENCIES
   pry
   slickr!
   web-console (>= 3.3.0)
+  webpacker (~> 3.0.2)
 
 BUNDLED WITH
    1.16.0

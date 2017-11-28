@@ -74,6 +74,23 @@ yarn install
 For now you also have to open up node_modules folder and find the folders for
 attr-accept and disposables and delete the .babelrc files
 
+## Webpack local
+
+When developing the engine with another app it's useful to use a local of of the
+engine in webpack rather than the github master version.
+
+In the main app, package.json file, replace:
+
+```
+"slickr": "git+https://github.com/primate-inc/slickr#master"
+```
+
+with
+
+```
+"slickr": "file:/Users/primate/Documents/Projects/slickr"
+```
+
 ## Contributing
 Contribution directions go here.
 

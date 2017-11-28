@@ -1,0 +1,38 @@
+<div id="dashboard_title_bar">
+  <h2 id="dashboard_title_bar__greeting"><%= t('.greeting', first_name: current_admin_user.first_name) %></h2>
+  <p id="dashboard_title_bar__last-visit">
+    <%= t('.days_since_last_visit', number: current_admin_user.days_since_last_login) %>
+  </p>
+  <div id="dashboard_title_bar__actions">
+
+  </div>
+  <p id="dashboard_title_bar__activity"><%= t('.activity') %></p>
+</div>
+<ul id="dashboard__events_list">
+<% Slickr::EventLog.includes(:eventable, :admin_user).order(created_at: :desc).all.each do |e| %>
+  <li>
+    <div class='dashboard__events_list-item'>
+      <header class='dashboard__events-item__date'>
+        <%= t("date_time_html".to_sym,
+          scope: [:activerecord, :models, :event_log, :eventable, :actions],
+          date: e.created_at.strftime("%d %b %Y"),
+          time: e.created_at.strftime("%H:%M"))
+        %>
+      </header>
+      <section class='dashboard__events-item__content'>
+        <%= image_tag e.admin_user.avatar.thumbnail, class: 'dashboard__events-item__avatar display_avatar' %>
+        <%= t("action_html".to_sym,
+          scope: [:activerecord, :models, :event_log, :eventable, :actions],
+          action: Verbs::Conjugator.conjugate(e.action, :tense => :past, :aspect => :perfective),
+          user: e.admin_user.display_name,
+          class: e.eventable.class.name.downcase,
+          title: e.eventable.display_title)
+        %>
+      </section>
+      <section class='dashboard__events-item__alert'>
+
+      </section>
+    </div>
+  </li>
+<% end %>
+</ul>

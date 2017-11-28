@@ -3,7 +3,7 @@
 // of the page.
 
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import PropTypes from 'prop-types'
 import Tree from '../page_tree/containers/tree_component'
 import { Provider } from 'react-redux'
@@ -21,7 +21,7 @@ const store = createStore(reducers, initialState, applyMiddleware(thunk))
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('index_footer').remove()
-  ReactDOM.render(
+  render(
     <Provider store={store}>
       <Tree />
     </Provider>,

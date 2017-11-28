@@ -19,7 +19,7 @@ module Slickr
         puts "Slickr yml for webpacker"
       end
 
-      def extend_webpacker_environment
+      def extend_webpack_environment
         insert_after_line = "const { environment } = require('@rails/webpacker')"
         dest_file = "config/webpack/environment.js"
         existing_content = File.read(dest_file)
@@ -33,6 +33,47 @@ module Slickr
           puts "Extended webpacker environment to get packs from Slickr engine"
         else
           puts "Webpacker environment already extended"
+        end
+      end
+
+      def alter_other_webpack_files
+        replace_line = "module.exports = environment.toWebpackConfig()"
+        dev_dest_file = "config/webpack/development.js"
+        pro_dest_file = "config/webpack/production.js"
+        test_dest_file = "config/webpack/test.js"
+        dev_existing_content = File.read(dev_dest_file)
+        pro_existing_content = File.read(pro_dest_file)
+        test_existing_content = File.read(test_dest_file)
+        new_content = "module.exports = environment.toWebpackConfigForRailsEngine()"
+
+        unless dev_existing_content.include? new_content
+          gsub_file(dev_dest_file, replace_line) do |match|
+            "#{new_content}"
+          end
+
+          puts "Altered webpack development.js"
+        else
+          puts "development.js already altered"
+        end
+
+        unless pro_existing_content.include? new_content
+          gsub_file(pro_dest_file, replace_line) do |match|
+            "#{new_content}"
+          end
+
+          puts "Altered webpack development.js"
+        else
+          puts "development.js already altered"
+        end
+
+        unless test_existing_content.include? new_content
+          gsub_file(test_dest_file, replace_line) do |match|
+            "#{new_content}"
+          end
+
+          puts "Altered webpack development.js"
+        else
+          puts "development.js already altered"
         end
       end
 

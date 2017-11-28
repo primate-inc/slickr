@@ -48,4 +48,3 @@ const PageForm = ({schedulingActive, active_tab, editorState, page, actions, val
   )
 }
 export default PageForm;
-

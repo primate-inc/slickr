@@ -1,0 +1,15 @@
+default: &default
+  include_webpacks:
+    slickr: package/slickr/packs
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

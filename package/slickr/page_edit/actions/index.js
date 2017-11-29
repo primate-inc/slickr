@@ -6,14 +6,14 @@ let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].con
 
 export const updatePageContent = values => {
   return function(dispatch, getState) {
-    let params = {"page":{}};
+    let params = {"slickr_page":{}};
     params[_csrf_param()] = _csrf_token()
     for (var key in values) {
       if (values.hasOwnProperty(key)) {
-        params["page"][key] = values[key];
+        params["slickr_page"][key] = values[key];
       }
     }
-    params["page"]["content"] = JSON.parse(editorStateToJSON(getState().editorState))
+    params["slickr_page"]["content"] = JSON.parse(editorStateToJSON(getState().editorState))
 
     request.put(getState().pageState.admin_page_path).type('json').accept('json').send(params).end(function(err,resp){
       if(err) {

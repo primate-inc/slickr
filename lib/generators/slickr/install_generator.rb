@@ -119,6 +119,44 @@ module Slickr
           puts "Babel already using stage-1"
         end
       end
+
+      def extend_admin_user_class
+        dest_file = "app/models/admin_user.rb"
+        existing_content = File.read(dest_file)
+        new_content = "  include Slickr::AdminUser\n  ROLES = [:admin, :editor, :author, :contributor]"
+
+        unless existing_content.include? new_content
+          gsub_file(dest_file, "class AdminUser < ApplicationRecord") do |match|
+            "#{match}\n#{new_content}"
+          end
+
+          puts "AdminUser extended by Slickr class and roles added"
+        else
+          puts "AdminUser already extended by Slickr"
+        end
+      end
+
+      def admin_user_ability
+        template "ability.rb", "app/models/ability.rb"
+
+        puts "Slickr yml for webpacker"
+      end
+
+      def extend_active_admin_initializer
+        dest_file = "config/initializers/active_admin.rb"
+        existing_content = File.read(dest_file)
+        new_content = "  config.authorization_adapter = ActiveAdmin::CanCanAdapter"
+
+        unless existing_content.include? new_content
+          gsub_file(dest_file, "# CanCanAdapter or make your own. Please refer to documentation.") do |match|
+            "#{match}\n#{new_content}"
+          end
+
+          puts "AdminUser authorization with CanCan"
+        else
+          puts "AdminUser already authorized with CanCan"
+        end
+      end
     end
   end
 end

@@ -23,7 +23,7 @@ $ gem install slickr
 
 ## Migrations
 
-After installing the gem, slimply run:
+After installing the gem run:
 
 ```bash
 $ rake db:migrate
@@ -73,6 +73,11 @@ yarn install
 
 For now you also have to open up node_modules folder and find the folders for
 attr-accept and disposables and delete the .babelrc files
+
+## Roles
+
+You will have some basic default roles added to your AdminUser model which you
+can easily added to.
 
 ## Developing
 

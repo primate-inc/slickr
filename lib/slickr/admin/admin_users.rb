@@ -4,7 +4,6 @@ ActiveAdmin.register AdminUser, as: "Users" do
   permit_params :email, :password, :password_confirmation, :first_name, :last_name, :role, :avatar
 
   scope :all, default: true
-  scope("Authors") {|scope| scope.where(role: "author")}
 
   config.clear_action_items!
 
@@ -17,7 +16,7 @@ ActiveAdmin.register AdminUser, as: "Users" do
     column :last_name
     column :email
     column "Role" do |user|
-      "#{user.role.capitalize}"
+      "#{user.role.try(:capitalize)}"
     end
     actions
   end

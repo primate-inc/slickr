@@ -11,6 +11,7 @@ require "webpacker"
 require "carrierwave"
 require "rmagick"
 require "cancancan"
+require "verbs"
 
 module Slickr
   class Engine < ::Rails::Engine

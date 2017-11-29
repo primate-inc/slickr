@@ -1,5 +1,5 @@
 module Slickr
-  module AdminUser
+  module SlickrAdminUser
     def self.included(base)
       base.class_eval do
         mount_uploader :avatar, SlickrAvatarUploader

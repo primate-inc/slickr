@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    models:
+      event_log:
+        one: "Log item"
+        other: "Log items"
+        eventable:
+          actions:
+            date_time_html: "%{date} at %{time}"
+            action_html: "%{user} %{action} the following %{class}: <span>%{title}</span>"

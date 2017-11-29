@@ -28,6 +28,9 @@ Gem::Specification.new do |s|
   s.add_dependency "cancancan", "~> 2.0.0"
   # User authentication
   s.add_dependency 'devise', '~> 4.3.0'
+  # Images
+  s.add_dependency 'carrierwave', '~> 1.1.0'
+  s.add_dependency 'rmagick', '~> 2.16.0'
 
   # Other gems
   s.add_dependency "acts_as_tree", "~> 2.7.0"

@@ -18,9 +18,9 @@ export const updateImage = formData => {
   return function(dispatch, getState) {
     let params = {};
     params[_csrf_param()] = _csrf_token()
-    params["image"] = {}
-    params["image"] = formData
-    params["image"]["crop_data"] = getState().imageState.crop_data
+    params["slickr_image"] = {}
+    params["slickr_image"] = formData
+    params["slickr_image"]["crop_data"] = getState().imageState.crop_data
     request.put(getState().imageState.admin_update_path).type('json').accept('json').send(params).end(function(err,resp){
       if(err) {
         console.error(err)

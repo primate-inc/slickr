@@ -26,7 +26,7 @@ if defined?(ActiveAdmin)
       def index
         if params[:type] == 'page_edit'
           index! do |format|
-            format.html { render :json => @images.to_json(
+            format.html { render :json => @slickr_images.to_json(
               methods: [:build_for_gallery]
             )}
           end
@@ -37,20 +37,20 @@ if defined?(ActiveAdmin)
 
       def create
         create! do |format|
-          format.html { redirect_to admin_images_path }
-          format.json { render :json => @image.to_json(
+          format.html { redirect_to admin_slickr_images_path }
+          format.json { render :json => @slickr_image.to_json(
             methods: [:build_for_gallery, :admin_edit_path, :admin_update_path, :admin_batch_delete_path]
           )}
         end
       end
 
       def update
-        @image = Slickr::Image.find(params[:image][:id])
-        @image.crop(params[:image][:crop_data][:x],params[:image][:crop_data][:y],params[:image][:crop_data][:width],params[:image][:crop_data][:height])
+        @slickr_image = Slickr::Image.find(params[:slickr_image][:id])
+        @slickr_image.crop(params[:slickr_image][:crop_data][:x],params[:slickr_image][:crop_data][:y],params[:slickr_image][:crop_data][:width],params[:slickr_image][:crop_data][:height])
 
         update! do |format|
-          format.html { redirect_to edit_admin_image_path(resource) }
-          format.json { render json: @image.to_json(methods: [:admin_update_path, :timestamped_image_url]) }
+          format.html { redirect_to edit_admin_slickr_image_path(resource) }
+          format.json { render json: @slickr_image.to_json(methods: [:admin_update_path, :timestamped_image_url]) }
         end
       end
     end

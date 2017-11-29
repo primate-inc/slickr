@@ -131,6 +131,13 @@ folder and when you run the dev server in the main app with
 
 any changes you make to your engine react code will be live reloaded.
 
+When you're done you can type
+
+```bash
+yarn unlink slickr
+```
+
+from the main app but note that you'll have to ``` yarn install ``` again.
 
 ## Contributing
 Contribution directions go here.

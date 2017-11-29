@@ -74,10 +74,12 @@ yarn install
 For now you also have to open up node_modules folder and find the folders for
 attr-accept and disposables and delete the .babelrc files
 
-## Webpack local
+## Developing
 
-When developing the engine with another app it's useful to use a local of of the
-engine in webpack rather than the github master version.
+During development with a local copy of the engine being used with another app
+there are 2 options:
+
+### Option 1
 
 In the main app, package.json file, replace:
 
@@ -90,6 +92,45 @@ with
 ```
 "slickr": "file:/Users/primate/Documents/Projects/slickr"
 ```
+
+and use the local copy of the engine to load into the main apps node_modules.
+
+### Option 2
+
+To live reload your changes on the local engine rather than loading a compiled
+version into the main app you can run the following from the engine:
+
+```bash
+yarn install
+```
+
+to install any missing packages. Then
+
+```bash
+yarn link
+```
+
+followed by
+
+```bash
+yarn build
+```
+
+Now in your main app type
+
+```bash
+yarn link slickr
+```
+
+The local engine now takes precedence over the version in the main app node_modules
+folder and when you run the dev server in the main app with
+
+```bash
+./bin/webpack-dev-server
+```
+
+any changes you make to your engine react code will be live reloaded.
+
 
 ## Contributing
 Contribution directions go here.

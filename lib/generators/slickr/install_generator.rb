@@ -13,6 +13,12 @@ module Slickr
         puts "No blank slate for Slickr images"
       end
 
+      def scg_map
+        template "active_admin_svg_map.rb", "config/initializers/active_admin_svg_map.rb"
+
+        puts "SVG map added for Slickr"
+      end
+
       def slickr_yml
         template "slickr.yml", "config/slickr.yml"
 
@@ -123,7 +129,7 @@ module Slickr
       def extend_admin_user_class
         dest_file = "app/models/admin_user.rb"
         existing_content = File.read(dest_file)
-        new_content = "  include Slickr::AdminUser\n  ROLES = [:admin, :editor, :author, :contributor]"
+        new_content = "  include Slickr::SlickrAdminUser\n  ROLES = [:admin, :editor, :author, :contributor]"
 
         unless existing_content.include? new_content
           gsub_file(dest_file, "class AdminUser < ApplicationRecord") do |match|

@@ -1,0 +1,7 @@
+en:
+  admin:
+    dashboard:
+      dashboard:
+        greeting: "Good morning, %{first_name}!"
+        days_since_last_visit: "It's been %{number} days since your last login."
+        activity: "Here's what everyone's been up to lately:"

@@ -26,8 +26,6 @@ export default class Cropper extends React.Component {
   }
 
   onCropComplete = (crop, pixelCrop) => {
-    console.log(pixelCrop)
-    console.log(crop)
     this.setState({ crop });
     if((pixelCrop.width === 0) && (pixelCrop.height === 0))
       this.props.actions.updateCropData({x: null, y: null, width: null, height: null})

@@ -13,7 +13,7 @@ export default class Cropper extends React.Component {
     };
   }
 
-  onImageLoaded = (crop) => {
+  onImageLoaded = (image) => {
     this.setState({
       crop: {
         x: 0,
@@ -26,6 +26,8 @@ export default class Cropper extends React.Component {
   }
 
   onCropComplete = (crop, pixelCrop) => {
+    console.log(pixelCrop)
+    console.log(crop)
     this.setState({ crop });
     if((pixelCrop.width === 0) && (pixelCrop.height === 0))
       this.props.actions.updateCropData({x: null, y: null, width: null, height: null})
@@ -39,7 +41,7 @@ export default class Cropper extends React.Component {
         {...this.state}
         src={this.props.image.timestamped_image_url}
         onImageLoaded={this.onImageLoaded}
-        onComplete={this.onCropComplete}
+        onChange={this.onCropComplete}
       />
     )
   }

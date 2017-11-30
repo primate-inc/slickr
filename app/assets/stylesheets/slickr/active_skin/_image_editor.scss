@@ -6,6 +6,7 @@
 
   .ReactCrop {
     width: max-content;
+    height: max-content;
   }
   #image_editor_form {
     @extend %admin_form_basics;

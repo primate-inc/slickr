@@ -189,10 +189,10 @@ or ``` contact.slim ```.
 The instance variable is accessed as ``` slickr_page``` and the megadraft content
 as ``` raw content ```. So as a simple example the page could look as follows:
 
-``` ruby
-h1= slickr_page.title
-h2= slickr_page.page_intro
-= raw content
+``` html
+<h1><%= page["title"] %></h1>
+<p><%= page["page_intro"] %></p>
+<%= raw content %>
 ```
 
 ## Developing

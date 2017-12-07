@@ -229,7 +229,16 @@ module Slickr
         template "javascript_extensions/page_edit/reducers/additional_reducers.js", "app/javascript/slickr_extensions/page_edit/reducers/additional_reducers.js"
         template "javascript_extensions/page_edit/reducers/loaded_admins.js", "app/javascript/slickr_extensions/page_edit/reducers/loaded_admins.js"
 
-        puts "Sample megadraft extension added"
+        puts "Sample megadraft extensions added"
+      end
+
+      def slickr_page_templates
+        template "slickr_page_template.html.erb", "app/views/slickr_page_templates/home.html.erb"
+        template "slickr_page_template.html.erb", "app/views/slickr_page_templates/contact.html.erb"
+        template "slickr_page_template.html.erb", "app/views/slickr_page_templates/landing.html.erb"
+        template "slickr_page_template.html.erb", "app/views/slickr_page_templates/standard.html.erb"
+
+        puts "Sample page templates added"
       end
     end
   end

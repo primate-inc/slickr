@@ -8,13 +8,13 @@
     <%= f.inputs do %>
       <%= f.input :title %>
       <%= f.input :parent_id, collection: options_for_select(tree, params[:parent]), as: :select %>
-      <%= f.input :layout, collection: options_for_select(Slickr::Page::Layouts.map{|l| [l.capitalize, l]}) %>
+      <%= f.input :layout, collection: options_for_select(Slickr::Page::LAYOUTS.map{|l| [l.capitalize, l]}) %>
     <% end %>
     <%= f.actions %>
   <% end %>
 
 <% else %>
-  <div id="page-data" data-page_data="<%= @slickr_page.to_json(methods: [:admin_publish_path, :admin_unpublish_path, :admin_page_path, :admin_image_index_path, :admin_preview_page_path]) %>"></div>
+  <div id="page-data" data-page_data="<%= @slickr_page.to_json(methods: [:admin_publish_path, :admin_unpublish_path, :admin_page_path, :admin_image_index_path, :admin_preview_page_path, @slickr_page.additional_page_edit_paths].flatten) %>"></div>
   <div id='page_edit_content' ></div>
   <%= javascript_pack_tag 'slickr_page_edit' %>
 <% end %>

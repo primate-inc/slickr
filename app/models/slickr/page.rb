@@ -10,38 +10,6 @@ module Slickr
     has_paper_trail only: [:title, :aasm_state, :content, :published_content, :drafts],
                     meta: { content_changed: :content_changed? }
 
-    Layouts = ["standard", "contact", "landing"]
-    DRAFTJS_CONFIG = {
-      entity_decorators: {
-        'LINK' => DraftjsExporter::Entities::Link.new(className: 'link'),
-        'IMAGE' => Slickr::ImageEntity.new,
-        'VIDEO' => Slickr::VideoEntity.new
-      },
-      block_map: {
-        'header-one'          => { element: 'h1' },
-        'header-two'          => { element: "h2" },
-        'header-three'        => { element: "h3" },
-        'header-four'         => { element: "h4" },
-        'unordered-list-item' => {
-          element: 'li',
-          wrapper: ['ul', { className: 'public-DraftStyleDefault-ul' }]
-        },
-        'ordered-list-item'   => {
-          element: 'li',
-          wrapper: ['ol', { className: 'public-DraftStyleDefault-ol' }]
-        },
-        "blockquote"          => { element: "blockquote" },
-        "code-block"          => { element: "pre" },
-        'unstyled'            => { element: 'p' },
-        'atomic'              => { element: 'div' }
-      },
-      style_map: {
-        'UNDERLINE'           => { fontStyle: 'underline' },
-        'ITALIC'              => { fontStyle: 'italic' },
-        'BOLD'                => { fontStyle: 'bold' }
-      }
-    }
-
     friendly_id :title, use: [:slugged, :finders]
     has_many :drafts, foreign_key: "slickr_page_id", class_name: "Draft", dependent: :destroy
     has_one :active_draft, class_name: "Slickr::Page::Draft"

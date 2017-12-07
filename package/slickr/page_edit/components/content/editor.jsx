@@ -11,12 +11,17 @@ import h3 from "../../text_editor_icons/h3.jsx"
 import h4 from "../../text_editor_icons/h4.jsx"
 import FaBook from 'react-icons/lib/fa/book';
 import FaAuthor from 'react-icons/lib/fa/user';
+import mainAppEntityInputs from 'slickr_extensions/page_edit/components/content/additional_entity_inputs.js'
+import mainAppActions from 'slickr_extensions/page_edit/additional_megadraft_actions.js'
+import mainAppEditorStateChange from 'slickr_extensions/page_edit/components/content/editor_state_change.js'
 
-const entityInputs = {
-  LINK: LinkInput,
+const slickrEntityInputs = {
+  LINK: LinkInput
 }
 
-const actions = [
+const mergedEntityInputs = Object.assign(slickrEntityInputs, mainAppEntityInputs);
+
+const slickrActions = [
   {type: "inline", label: "B", style: "BOLD", icon: icons.BoldIcon},
   {type: "inline", label: "I", style: "ITALIC", icon: icons.ItalicIcon},
   // these actions correspond with the entityInputs above
@@ -32,6 +37,8 @@ const actions = [
   {type: "block", label: "QT", style: "blockquote", icon: icons.BlockQuoteIcon}
 ];
 
+const mergedActions = slickrActions.concat(mainAppActions);
+
 export default class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -40,12 +47,7 @@ export default class Editor extends React.Component {
   }
 
   changeEditorState(editorState) {
-    if(editorState === 'load_books')
-      this.props.actions.loadBooks()
-    else if(editorState === 'load_authors')
-      this.props.actions.loadAuthors()
-    else
-      this.props.actions.changeEditorState(editorState)
+    mainAppEditorStateChange(editorState, this.props)
   }
 
   render() {
@@ -65,8 +67,8 @@ export default class Editor extends React.Component {
           editorState={this.props.editorState}
           onChange={this.changeEditorState}
           plugins={plugins}
-          actions={actions}
-          entityInputs={entityInputs}
+          actions={mergedActions}
+          entityInputs={mergedEntityInputs}
         />
       );
     }

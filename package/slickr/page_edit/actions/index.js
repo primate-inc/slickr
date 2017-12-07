@@ -193,39 +193,3 @@ export const changeEditorState = editorState => {
     })
   }
 }
-
-export const loadBooks = () => {
-  return function(dispatch, getState) {
-    let params = {};
-    params[_csrf_param()] = _csrf_token()
-
-    request.get(getState().pageState.admin_book_index_path).set('Accept', 'text/html').query('type=megadraft_books').end(function(err,resp){
-      if(err) {
-        console.error(err)
-      } else {
-        dispatch({
-          type: 'LOAD_BOOKS',
-          payload: resp.body
-        })
-      }
-    })
-  }
-}
-
-export const loadAuthors = () => {
-  return function(dispatch, getState) {
-    let params = {};
-    params[_csrf_param()] = _csrf_token()
-
-    request.get(getState().pageState.admin_author_index_path).set('Accept', 'text/html').query('type=megadraft_authors').end(function(err,resp){
-      if(err) {
-        console.error(err)
-      } else {
-        dispatch({
-          type: 'LOAD_AUTHORS',
-          payload: resp.body
-        })
-      }
-    })
-  }
-}

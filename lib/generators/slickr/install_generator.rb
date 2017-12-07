@@ -42,7 +42,54 @@ module Slickr
         end
       end
 
-      def alter_other_webpack_files
+      def custom_webpack
+        template "custom_webpack.js", "config/webpack/custom_webpack.js"
+
+        puts "Custom webpack js for webpacker"
+      end
+
+      def alter_webpack_requires
+        starting_line = "const environment = require('./environment')"
+        dev_dest_file = "config/webpack/development.js"
+        pro_dest_file = "config/webpack/production.js"
+        test_dest_file = "config/webpack/test.js"
+        dev_existing_content = File.read(dev_dest_file)
+        pro_existing_content = File.read(pro_dest_file)
+        test_existing_content = File.read(test_dest_file)
+        new_content = "const merge = require('webpack-merge')\nconst customConfig = require('./custom_webpack')"
+
+        unless dev_existing_content.include? new_content
+          gsub_file(dev_dest_file, starting_line) do |match|
+            "#{match}\n#{new_content}"
+          end
+
+          puts "Altered webpack development.js"
+        else
+          puts "development.js already altered"
+        end
+
+        unless pro_existing_content.include? new_content
+          gsub_file(pro_dest_file, starting_line) do |match|
+            "#{match}\n#{new_content}"
+          end
+
+          puts "Altered webpack production.js"
+        else
+          puts "production.js already altered"
+        end
+
+        unless test_existing_content.include? new_content
+          gsub_file(test_dest_file, starting_line) do |match|
+            "#{match}\n#{new_content}"
+          end
+
+          puts "Altered webpack test.js"
+        else
+          puts "test.js already altered"
+        end
+      end
+
+      def alter_webpack_module_exports
         replace_line = "module.exports = environment.toWebpackConfig()"
         dev_dest_file = "config/webpack/development.js"
         pro_dest_file = "config/webpack/production.js"
@@ -50,7 +97,7 @@ module Slickr
         dev_existing_content = File.read(dev_dest_file)
         pro_existing_content = File.read(pro_dest_file)
         test_existing_content = File.read(test_dest_file)
-        new_content = "module.exports = environment.toWebpackConfigForRailsEngine()"
+        new_content = "module.exports = merge(environment.toWebpackConfigForRailsEngine(), customConfig)"
 
         unless dev_existing_content.include? new_content
           gsub_file(dev_dest_file, replace_line) do |match|
@@ -148,6 +195,12 @@ module Slickr
         puts "Slickr yml for webpacker"
       end
 
+      def extend_slickr_page
+        template "page.rb", "app/models/slickr/page.rb"
+
+        puts "Slickr Page extended"
+      end
+
       def extend_active_admin_initializer
         dest_file = "config/initializers/active_admin.rb"
         existing_content = File.read(dest_file)
@@ -162,6 +215,21 @@ module Slickr
         else
           puts "AdminUser already authorized with CanCan"
         end
+      end
+
+      def page_edit_megadraft_extensions
+        template "javascript_extensions/page_edit/additional_megadraft_actions.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_actions.js"
+        template "javascript_extensions/page_edit/additional_megadraft_decorators.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_decorators.js"
+        template "javascript_extensions/page_edit/actions/additional_actions.js", "app/javascript/slickr_extensions/page_edit/actions/additional_actions.js"
+        template "javascript_extensions/page_edit/components/content/additional_entity_inputs.js", "app/javascript/slickr_extensions/page_edit/components/content/additional_entity_inputs.js"
+        template "javascript_extensions/page_edit/components/content/editor_state_change.js", "app/javascript/slickr_extensions/page_edit/components/content/editor_state_change.js"
+        template "javascript_extensions/page_edit/containers/additional_prop_types.js", "app/javascript/slickr_extensions/page_edit/containers/additional_prop_types.js"
+        template "javascript_extensions/page_edit/decorators/admin_link_component.jsx", "app/javascript/slickr_extensions/page_edit/decorators/admin_link_component.jsx"
+        template "javascript_extensions/page_edit/entity_inputs/admin_link_input.jsx", "app/javascript/slickr_extensions/page_edit/entity_inputs/admin_link_input.jsx"
+        template "javascript_extensions/page_edit/reducers/additional_reducers.js", "app/javascript/slickr_extensions/page_edit/reducers/additional_reducers.js"
+        template "javascript_extensions/page_edit/reducers/loaded_admins.js", "app/javascript/slickr_extensions/page_edit/reducers/loaded_admins.js"
+
+        puts "Sample megadraft extension added"
       end
     end
   end

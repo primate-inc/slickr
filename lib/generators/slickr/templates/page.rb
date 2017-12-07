@@ -42,6 +42,6 @@ class Slickr::Page
   private
 
   def admin_user_index_path
-    Rails.application.routes.url_helpers.admin_admin_users_path
+    Rails.application.routes.url_helpers.admin_admin_users_path(type: 'megadraft_admins')
   end
 end

@@ -32,7 +32,7 @@ export default class AdminLinkInput extends React.Component {
         { value: `/a-link-${index}`, label: email }
       )
     )
-    var value = this.props.url === null ? "" : this.props.url
+
     return (
       <Select
         name="form-field-name"

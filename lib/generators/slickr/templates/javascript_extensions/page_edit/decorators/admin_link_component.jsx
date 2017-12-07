@@ -5,7 +5,7 @@ export default class AdminLink extends React.Component {
     const contentState = this.props.contentState;
     const {url} = contentState.getEntity(this.props.entityKey).getData();
     return (
-      <a className="admin__link" href={url} title={url}>
+      <a className="custom-megadraft__link admin__link" href={url} title={url}>
         {this.props.children}
       </a>
     );

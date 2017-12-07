@@ -5,6 +5,7 @@ require "acts_as_list"
 require "friendly_id"
 require "aasm"
 require "draftjs_exporter/entities/link"
+require 'draftjs_exporter/html'
 require "draper"
 require "paper_trail"
 require "webpacker"

@@ -18,6 +18,10 @@ module Slickr
       tree_children
     end
 
+    def choose_template
+      layout.empty? ? 'home' : layout
+    end
+
     def subtitle
       "Current layout: #{layout}, #{drafts.count} Drafts"
     end

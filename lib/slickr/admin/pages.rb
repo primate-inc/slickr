@@ -79,11 +79,11 @@ if defined?(ActiveAdmin)
     end
 
     member_action :preview, method: :get do
-      # exporter = DraftjsExporter::HTML.new(Page::DRAFTJS_CONFIG)
+      exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)
       content = resource.restructure_content
 
       html_output = exporter.call(resource.content.deep_symbolize_keys)
-      render layout: false, template: 'layouts/page_layouts/landing', locals: {page: resource, content: html_output}
+      render layout: false, template: "slickr_page_templates/#{resource.choose_template}", locals: {slickr_page: resource, content: html_output}
     end
 
     controller do

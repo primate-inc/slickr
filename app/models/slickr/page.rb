@@ -119,6 +119,10 @@ module Slickr
       drafts.first.activate
     end
 
+    def preview_page
+      Rails.application.routes.url_helpers.preview_admin_slickr_page_path(self.id)
+    end
+
     def add_child_path
       Rails.application.routes.url_helpers.new_admin_slickr_page_path(parent: self.id)
     end

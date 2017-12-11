@@ -1,6 +1,6 @@
 #wrapper #active_admin_content #main_content_wrapper #main_content {
   #split_display_with_image {
-    display: grid;
+    display: -ms-grid; display: grid;
     grid-template-columns: 6fr 4fr;
     grid-template-areas:
       "form image-preview"

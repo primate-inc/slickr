@@ -1,6 +1,6 @@
 #image_editor {
   padding: 2em;
-  display: grid;
+  display: -ms-grid; display: grid;
   grid-template-columns: 6fr 4fr;
   grid-column-gap: 2em;
 

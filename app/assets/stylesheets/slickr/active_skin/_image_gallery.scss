@@ -17,7 +17,7 @@
     }
 
     .image-gallery-actions {
-      display: grid;
+      display: -ms-grid; display: grid;
       grid-template-columns: [filters] auto [buttons] 15em;
       grid-auto-flow: row;
       padding: 0 2em;

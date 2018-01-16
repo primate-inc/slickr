@@ -1,6 +1,8 @@
 .admin_dashboard.logged_in {
   #wrapper {
+    -ms-grid-rows: 0 100fr 50px;
     grid-template-rows: [header] 0 [content] 100fr [footer] 50px;
+
 
     #title_bar {
       display: none;
@@ -10,21 +12,25 @@
       @extend %main_content_container;
 
       #dashboard_title_bar {
-        display: grid;
+        display: -ms-grid; display: grid;
+        -ms-grid-rows: auto auto auto;
         padding: 0 0 0 2em; height: 12em;
         background-color: $blue;
         &__greeting {
           @extend .h2;
+          -ms-grid-row: 1;
           margin-bottom: 0;
           color: $white;
         }
         &__last-visit {
           @extend .para_style;
-          margin-top: -1em; margin-bottom: 0;
-          color: $blue_dark; font-weight: 600;
+          -ms-grid-row: 2;
+          /*margin-top: -1em;*/  margin-bottom: 0;
+          color: $blue_dark; //font-weight: 600;
         }
         &__activity {
           @extend .para_style;
+          -ms-grid-row: 3;
           margin-bottom: 0; height: 0.5em;
           color: $white;
         }

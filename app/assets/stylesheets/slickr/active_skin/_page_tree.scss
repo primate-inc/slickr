@@ -6,7 +6,7 @@
 .rst__lineHalfVerticalTop::after,
 .rst__lineHalfVerticalBottom::after,
 .rst__lineChildren::after {
-  background-color: $grey_lighter;
+  background-color: $grey_light;
 }
 .rst__nodeContent {
 }
@@ -26,9 +26,8 @@
 }
 .rst__moveHandle {
   // background: $grey_lighter url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42"><g stroke="#FFF" stroke-width="2.9"><path d="M14 15.7h14.4"/><path d="M14 21.4h14.4"/><path d="M14 27.1h14.4"/></g></svg>') no-repeat center;
-  background-color: $blue;
   box-shadow: none;
-  border: none;
+  border-color: #E6E6E6;
 }
 
 .rst__rowContents {

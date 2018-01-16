@@ -2,7 +2,7 @@
   #custom-wrapper {
     #title_bar {
       #titlebar_left {
-        @extend %breadcrumbs;
+        @extend %breadcrumbs !optional;
       }
     }
   }

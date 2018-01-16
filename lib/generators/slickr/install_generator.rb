@@ -146,6 +146,22 @@ module Slickr
         end
       end
 
+      def extend_babel_to_ignore_node_modules
+        dest_file = ".babelrc"
+        existing_content = File.read(dest_file)
+        new_content = '"ignore": "node_modules",'
+
+        unless existing_content.include? new_content
+          gsub_file(dest_file, '"presets": [') do |match|
+            "#{new_content}\n  #{match}"
+          end
+
+          puts "Babel extended to ignore node modules"
+        else
+          puts "Babel already ignoring node modules"
+        end
+      end
+
       def extend_package_json
         dest_file = "package.json"
         existing_content = File.read(dest_file)

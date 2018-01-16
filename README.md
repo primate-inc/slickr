@@ -71,9 +71,6 @@ then
 yarn install
 ```
 
-For now you also have to open up node_modules folder and find the folders for
-attr-accept and disposables and delete the .babelrc files
-
 ## Roles
 
 You will have some basic default roles added to your AdminUser model which you
@@ -231,12 +228,6 @@ to install any missing packages. Then
 
 ```bash
 yarn link
-```
-
-followed by
-
-```bash
-yarn build
 ```
 
 Now in your main app type

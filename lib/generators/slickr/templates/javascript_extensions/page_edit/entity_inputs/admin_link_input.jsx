@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import icons from "megadraft/lib/icons";
-import store from 'slickr/package/slickr/packs/slickr_page_edit.jsx'
+// import store from 'slickr/package/slickr/packs/slickr_page_edit.jsx'
 
 export default class AdminLinkInput extends React.Component {
   constructor(props) {
@@ -27,6 +27,17 @@ export default class AdminLinkInput extends React.Component {
   }
 
   render() {
+    if (window.location.pathname.indexOf('/slickr_pages') !== -1) {
+      import('slickr/package/slickr/packs/slickr_page_edit.jsx')
+      .then((store) => {
+         store
+      });
+    } else {
+      import('slickr/package/slickr/packs/slickr_text_area_editor.jsx')
+      .then((store) => {
+         store;
+      });
+    }
     var admins = store.getState().loadedAdmins.map(
       ({email}, index) => (
         { value: `/a-link-${index}`, label: email }

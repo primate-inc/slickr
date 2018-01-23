@@ -12,6 +12,33 @@ import mainAppDecorators from 'slickr_extensions/page_edit/additional_megadraft_
 
 let storeArray = []
 
+let randHex = function(len) {
+  let maxlen = 8,
+      min = Math.pow(16,Math.min(len,maxlen)-1),
+      max = Math.pow(16,Math.min(len,maxlen)) - 1,
+      n   = Math.floor( Math.random() * (max-min+1) ) + min,
+      r   = n.toString(16);
+  while ( r.length < len ) {
+     r = r + randHex( len - maxlen );
+  }
+  return r;
+};
+
+const emptyDraftObject = {
+  "entityMap": {},
+  "blocks": [
+    {
+      "key": randHex(6),
+      "text": "",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    }
+  ]
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if(document.getElementById('slickr_page_json')) {
     const slickrPageJson = document.getElementById('slickr_page_json')
@@ -26,36 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const dataNode = element.childNodes[0]
       let data = JSON.parse(dataNode.getAttribute('data'))
 
-      if (data.input === '') {
-        let randHex = function(len) {
-          let maxlen = 8,
-              min = Math.pow(16,Math.min(len,maxlen)-1),
-              max = Math.pow(16,Math.min(len,maxlen)) - 1,
-              n   = Math.floor( Math.random() * (max-min+1) ) + min,
-              r   = n.toString(16);
-          while ( r.length < len ) {
-             r = r + randHex( len - maxlen );
-          }
-          return r;
-        };
-
-        data.input = {
-          "entityMap": {},
-          "blocks": [
-            {
-              "key": randHex(6),
-              "text": "",
-              "type": "unstyled",
-              "depth": 0,
-              "inlineStyleRanges": [],
-              "entityRanges": [],
-              "data": {}
-            }
-          ]
-        }
-      } else {
-        data.input = JSON.parse(data.input)
-      }
+      data.input = data.input === '' ? emptyDraftObject : JSON.parse(data.input)
 
       const decorators = [
         {

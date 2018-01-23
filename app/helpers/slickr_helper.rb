@@ -1,6 +1,5 @@
 module SlickrHelper
   def draftjs_to_html(instance, field)
-    binding.pry
     exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)
     restructure(instance.send(field))
     exporter.call(instance.send(field).deep_symbolize_keys)

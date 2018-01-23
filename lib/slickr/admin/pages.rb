@@ -80,11 +80,7 @@ if defined?(ActiveAdmin)
     end
 
     member_action :preview, method: :get do
-      # exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)
-      # resource.restructure_content
-      # html_output = exporter.call(resource.content.deep_symbolize_keys)
       html_output = draftjs_to_html(resource, :content)
-      # html_output = restructure_draftjs_content(resource.content)
       render layout: false, template: "slickr_page_templates/#{resource.choose_template}", locals: {slickr_page: resource, content: html_output}
     end
 

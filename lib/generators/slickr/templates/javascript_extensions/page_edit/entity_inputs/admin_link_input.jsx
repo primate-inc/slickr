@@ -9,10 +9,45 @@ export default class AdminLinkInput extends React.Component {
   constructor(props) {
     super(props);
     this.onAdminChange = this.onAdminChange.bind(this);
+    this.loadData = this.loadData.bind(this);
+
+    this.state = {
+      loading: false,
+      admins: []
+    }
+  }
+
+  loadData = (index) => {
+    var promise = new Promise((resolve, reject) => {
+      (function waitForData(){
+        if(text_editor_store[index]) {
+          if (text_editor_store[index].getState().loadedAdmins.length > 0) return resolve();
+          setTimeout(waitForData, 30);
+        } else {
+          if (page_store.getState().loadedAdmins.length > 0) return resolve();
+          setTimeout(waitForData, 30);
+        }
+      })();
+    });
+    return promise;
   }
 
   componentWillMount() {
+    let textAreaStoreIndex = 0
+    let textareaList = document.getElementsByTagName('textarea');
+
+    Array.prototype.forEach.call(textareaList, function(textarea, index) {
+      if (textarea.classList.contains('active_textarea')) textAreaStoreIndex = index
+    })
     this.props.onChange('load_admins')
+
+    this.loadData(textAreaStoreIndex).then(() => {
+      let admins = text_editor_store[textAreaStoreIndex] ? text_editor_store[textAreaStoreIndex].getState().loadedAdmins : page_store.getState().loadedAdmins
+      this.setState({
+        admins: admins,
+        loading: false
+      });
+    });
   }
 
   onAdminChange(selection) {
@@ -28,9 +63,7 @@ export default class AdminLinkInput extends React.Component {
   }
 
   render() {
-    const store = text_editor_store[0] ? text_editor_store[0].getState() : page_store.getState()
-
-    var admins = store.loadedAdmins.map(
+    let admins = this.state.admins.map(
       ({email}, index) => (
         { value: `/a-link-${index}`, label: email }
       )

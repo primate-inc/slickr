@@ -48,6 +48,15 @@ export default class Editor extends React.Component {
   }
 
   changeEditorState(editorState) {
+    let activeIndex = this.props.textAreaIndex
+    let textareaList = document.getElementsByTagName('textarea');
+    Array.prototype.forEach.call(textareaList, function(textarea, index) {
+      if (activeIndex === index) {
+        textarea.classList.add('active_textarea');
+      } else {
+        textarea.classList.remove('active_textarea');
+      }
+    })
     mainAppEditorStateChange(editorState, this.props)
   }
 
@@ -63,11 +72,11 @@ export default class Editor extends React.Component {
       }
     }
     var plugins = [ImagePlugin(megadraftOptions), Video]
-    
+
     return (
       [
         <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.label.innerHTML}</label>,
-        <textarea key={`${this.props.textAreaIndex}-1`} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>,
+        <textarea key={`${this.props.textAreaIndex}-1`} onChange={this.hightlightActive} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>,
         <MegadraftEditor
           key={`${this.props.textAreaIndex}-2`}
           editorState={this.props.editorState}

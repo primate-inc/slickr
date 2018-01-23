@@ -10,9 +10,10 @@ import * as MainAppPageActions from 'slickr_extensions/page_edit/actions/additio
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
 let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
 
-const MyTextAreaEditor = ({store, actions, modalIsOpen, editorState, textAreaIndex, label, textArea}) => {
+const MyTextAreaEditor = ({store, actions, modalIsOpen, page, editorState, pageState, textAreaIndex, label, textArea}) => {
   return(
     <TextArea actions={actions}
+              page={page}
               editorState={editorState}
               modalIsOpen={modalIsOpen}
               textAreaIndex={textAreaIndex}
@@ -23,6 +24,7 @@ const MyTextAreaEditor = ({store, actions, modalIsOpen, editorState, textAreaInd
 }
 
 const slickrPropTypes = {
+  page: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   loadedImages: PropTypes.array.isRequired,
@@ -32,6 +34,7 @@ const slickrPropTypes = {
 MyTextAreaEditor.propTypes = slickrPropTypes
 
 const mapStateToProps = state => ({
+  page: state.pageState,
   modalIsOpen: state.modalIsOpen,
   loadedImages: state.loadedImages,
   loadedBooks: state.loadedBooks,

@@ -63,7 +63,7 @@ export default class Editor extends React.Component {
       }
     }
     var plugins = [ImagePlugin(megadraftOptions), Video]
-    console.log(JSON.parse(editorStateToJSON(this.props.editorState)))
+    
     return (
       [
         <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.label.innerHTML}</label>,

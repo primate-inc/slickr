@@ -11,10 +11,7 @@ import {DraftJS, editorStateFromRaw, createTypeStrategy} from "megadraft";
 import Link from "megadraft/lib/components/Link"
 import mainAppDecorators from 'slickr_extensions/page_edit/additional_megadraft_decorators.js'
 
-let pageData = {}
-if (window.location.pathname.indexOf('/slickr_pages') !== -1) {
-  pageData = document.getElementById("page-data").dataset.page_data
-}
+const pageState = document.getElementById('page-data') ? document.getElementById('page-data').dataset.page_data : '{"":""}'
 
 const decorators = [
   {
@@ -28,11 +25,11 @@ const mergedDecorators = decorators.concat(mainAppDecorators);
 const compositeDecorator = new DraftJS.CompositeDecorator(mergedDecorators)
 
 const initialState = {
-  pageState: JSON.parse(pageData),
+  pageState: JSON.parse(pageState),
   activeTab: 'content',
   modalIsOpen: false,
   loadedImages: [],
-  editorState: editorStateFromRaw(JSON.parse(pageData).content, compositeDecorator)
+  editorState: editorStateFromRaw(JSON.parse(pageState).content, compositeDecorator)
 }
 
 const middlewares = [thunk];
@@ -41,15 +38,20 @@ if (process.env.NODE_ENV === `development`) {
 }
 const store = createStore(reducers, initialState, applyMiddleware(...middlewares))
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('title_bar').remove()
-  document.getElementById('wrapper').id = 'custom-wrapper'
-  render(
-    <Provider store={store}>
-      <PageEditor />
-    </Provider>,
-    document.getElementById("page_edit_content")
-  )
-})
+if (window.location.pathname.indexOf('/slickr_pages') && window.location.pathname.indexOf('/slickr_pages') !== -1) {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('title_bar').remove()
+    if(document.getElementById('wrapper')) {
+      document.getElementById('wrapper').id = 'custom-wrapper'
+    }
+
+    render(
+      <Provider store={store}>
+        <PageEditor />
+      </Provider>,
+      document.getElementById("page_edit_content")
+    )
+  })
+}
 
 export default store

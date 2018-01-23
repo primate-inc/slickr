@@ -103,7 +103,6 @@ export const setPageTitle = text => {
       if(err) {
         console.error(err)
       } else {
-        console.log(resp.body.title)
         dispatch({
           type: 'SET_PAGE_TITLE',
           title: resp.body.title

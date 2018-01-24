@@ -6,15 +6,60 @@ import Grid from './grid.jsx';
 export default class ImagePickerModal extends React.Component {
   constructor(props) {
     super();
-
-    this.closeImagePicker = this.closeImagePicker.bind(this);
   }
 
-  closeImagePicker () {
+  closeImagePicker = (e) => {
     this.props.actions.toggleImagePicker()
   }
 
+  loadNewImages = (page) => (e) => {
+    this.props.actions.loadImages(page);
+  }
+
+  prev = (e) => {
+    const pagination = this.props.loadedImages.pagination_info
+    if(pagination) {
+      if(pagination.current_page !== 1) {
+        return ([
+          <span key='1' className='first'><a href='#' onClick={this.loadNewImages(1)}>« First</a></span>,
+          <span key='2' className='prev'><a rel="prev" href='#' onClick={this.loadNewImages(pagination.current_page - 1)}>‹ Prev</a></span>
+        ])
+      }
+    }
+  }
+
+  next = (e) => {
+    const pagination = this.props.loadedImages.pagination_info
+    if(pagination) {
+      if(pagination.current_page !== pagination.total_pages) {
+        return ([
+          <span key='1' className='next'><a rel='next' href='#' onClick={this.loadNewImages(pagination.current_page + 1)}>Next ›</a></span>,
+          <span key='2' className='last'><a href='#' onClick={this.loadNewImages(pagination.total_pages)}>Last ››</a></span>
+        ])
+      }
+    }
+  }
+
+  pages = (e) => {
+    const pagination = this.props.loadedImages.pagination_info
+    const that = this
+    let pages = []
+    if(pagination) {
+      const pageArray = [...Array(pagination.total_pages).keys()]
+      pageArray.forEach(function(page) {
+        if(page + 1 === pagination.current_page) {
+          pages.push(<span key={page} className='page current'>{page+1}</span>)
+        } else {
+          pages.push(<span key={page} className='page'><a href='#' onClick={that.loadNewImages(page+1)}>{page+1}</a></span>)
+        }
+      });
+    }
+    return pages
+  }
+
   render(){
+    const images = Object.keys(this.props.loadedImages).length === 0 ? [] : this.props.loadedImages.images
+
     return(
       <ReactModal
         isOpen={this.props.modalIsOpen}
@@ -25,11 +70,19 @@ export default class ImagePickerModal extends React.Component {
         <div style={{overflow: "auto", height: "100%"}}>
           <Grid
             actions={this.props.actions}
-            images={this.props.loadedImages}
+            images={images}
             editorState={this.props.editorState}
           />
         </div>
-      <div onClick={this.closeImagePicker} className="ReactModal__close_button"><svg className="svg-icon"><use xmlnsXlink="http://www.w3.org/1999/xlink" xlinkHref="#svg-cross"></use></svg><span>Close</span></div>
+
+        <div id="index_footer">
+          <nav className="pagination">
+            {this.prev()}
+            {this.pages()}
+            {this.next()}
+          </nav>
+        </div>
+        <div onClick={this.closeImagePicker} className="ReactModal__close_button"><svg className="svg-icon"><use xmlnsXlink="http://www.w3.org/1999/xlink" xlinkHref="#svg-cross"></use></svg><span>Close</span></div>
       {/*<p>Modal text!</p>
         <button onClick={this.closeImagePicker}>Close Modal</button> */}
       </ReactModal>

@@ -28,7 +28,7 @@ const initialState = {
   pageState: JSON.parse(pageState),
   activeTab: 'content',
   modalIsOpen: false,
-  loadedImages: [],
+  loadedImages: {},
   editorState: editorStateFromRaw(JSON.parse(pageState).content, compositeDecorator)
 }
 

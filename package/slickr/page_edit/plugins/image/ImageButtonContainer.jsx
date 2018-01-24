@@ -19,7 +19,7 @@ const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState})
 ImageButtonContainer.propTypes = {
   actions: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
-  loadedImages: PropTypes.array.isRequired,
+  loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired
 }
 

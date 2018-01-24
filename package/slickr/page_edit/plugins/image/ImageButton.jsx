@@ -17,8 +17,9 @@ export default class BlockButton extends React.Component {
   }
 
   openImagePicker () {
+    const page = Object.keys(this.props.loadedImages).length === 0 ? 1 : (this.props.loadedImages.pagination_info.current_page + 1)
     this.props.actions.toggleImagePicker();
-    this.props.actions.loadImages();
+    this.props.actions.loadImages(page);
   }
 
   render() {

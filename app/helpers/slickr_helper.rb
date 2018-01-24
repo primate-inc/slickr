@@ -1,3 +1,5 @@
+include ActionView::Helpers::OutputSafetyHelper
+
 module SlickrHelper
   def draftjs_to_html(instance, field)
     exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)

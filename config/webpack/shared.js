@@ -16,8 +16,6 @@ const entryPath = join(settings.source_path, settings.source_entry_path)
 const packPaths = sync(join(entryPath, extensionGlob))
 const isHMR = settings.dev_server && settings.dev_server.hmr
 
-console.log(entryPath)
-
 module.exports = {
   entry: packPaths.reduce(
     (map, entry) => {

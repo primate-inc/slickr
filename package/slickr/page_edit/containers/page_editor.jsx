@@ -50,7 +50,7 @@ const slickrPropTypes = {
   page: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
-  loadedImages: PropTypes.array.isRequired,
+  loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
 }
 

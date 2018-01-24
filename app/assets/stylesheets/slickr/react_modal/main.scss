@@ -7,7 +7,7 @@
     &__Content {
       left: 20% !important;
       right: 20% !important;
-      padding: 40px !important;
+      padding: 40px 40px 80px !important;
     }
     &__close_button {
       position: absolute;
@@ -29,6 +29,9 @@
         transform: scale(1.25);
       }
     }
+  }
+  #index_footer {
+    @extend %pagination !optional;
   }
 }
 

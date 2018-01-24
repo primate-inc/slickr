@@ -1,9 +1,11 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::Image do
+    IMAGES_PER_PAGE = 2
     menu priority: 2, label: 'Images'
 
     actions :all, :except => [:new, :show]
     config.filters = false
+    config.per_page = IMAGES_PER_PAGE
 
     permit_params :attachment, :crop_data, data: {}
 
@@ -25,10 +27,19 @@ if defined?(ActiveAdmin)
     controller do
       def index
         if params[:type] == 'page_edit'
-          index! do |format|
-            format.html { render :json => @slickr_images.to_json(
-              methods: [:build_for_gallery]
-            )}
+          total = Slickr::Image.all.count
+          @slickr_images = Slickr::Image.limit(IMAGES_PER_PAGE)
+                                        .offset((params[:page].to_i - 1)*IMAGES_PER_PAGE)
+
+          respond_to do |format|
+            format.html { render :json => {
+              images: JSON.parse(@slickr_images.to_json(methods: [:build_for_gallery])),
+              pagination_info: {
+                current_page: params[:page].to_i,
+                total_pages: ((total/IMAGES_PER_PAGE).floor + 1),
+                images_per_page: IMAGES_PER_PAGE
+              }
+            }.to_json }
           end
         else
           index!

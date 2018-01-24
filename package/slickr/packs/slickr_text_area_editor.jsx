@@ -40,9 +40,12 @@ const emptyDraftObject = {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if(document.getElementById('slickr_page_json')) {
-    const slickrPageJson = document.getElementById('slickr_page_json')
-    const pageState = JSON.parse(slickrPageJson.firstChild.getAttribute('data')).slickrPageJson
+  if(document.getElementsByClassName('megadraft-text-editor')[0]) {
+    const pageState = JSON.parse(
+      document.getElementsByClassName('megadraft-text-editor')[0]
+      .childNodes[0]
+      .getAttribute('data')
+    ).pageState
 
     let elements = document.getElementsByClassName('megadraft-text-editor')
     Array.prototype.forEach.call(elements, function(element, index) {

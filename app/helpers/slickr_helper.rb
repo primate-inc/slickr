@@ -5,6 +5,11 @@ module SlickrHelper
     exporter.call(instance.send(field).deep_symbolize_keys)
   end
 
+  def slickr_editor_paths
+    page = Slickr::Page.new
+    form_json(page)
+  end
+
   private
 
   def restructure(draftjs_content)
@@ -39,5 +44,13 @@ module SlickrHelper
       draftjs_content["blocks"][atomic_block[:index]] = replacement_block
     end
     atomic_blocks
+  end
+
+  def form_json(inst)
+    inst.to_json(only: [:admin_image_index_path, :additional_page_edit_paths],
+                       methods: [
+                        :admin_image_index_path,
+                        inst.additional_page_edit_paths
+                      ].flatten)
   end
 end

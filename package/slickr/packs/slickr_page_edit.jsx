@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === `development`) {
 }
 const store = createStore(reducers, initialState, applyMiddleware(...middlewares))
 
-if (window.location.pathname.indexOf('/slickr_pages') && window.location.pathname.indexOf('/slickr_pages') !== -1) {
+if (window.location.pathname.indexOf('/slickr_pages/') && window.location.pathname.indexOf('/slickr_pages/') !== -1) {
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('title_bar').remove()
     if(document.getElementById('wrapper')) {

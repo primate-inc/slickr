@@ -1,0 +1,9 @@
+li class: 'megadraft-text-editor' do
+  f.content_tag :div,
+    class: 'megadraft-data',
+    data: {
+      input: "#{f.object.send(field)}",
+      pageState: slickr_editor_paths
+    }.to_json do
+    end
+end

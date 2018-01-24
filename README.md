@@ -192,6 +192,39 @@ as ``` raw content ```. So as a simple example the page could look as follows:
 <%= raw content %>
 ```
 
+## Megadraft Text Area
+
+Slickr enables the Megadraft editor to be used in text area inputs which normal
+Active Admin resources. Below is an example for how to have a mix of normal
+text area fields and megadraft text areas:
+
+```ruby
+form do |f|
+  f.inputs do
+    f.input :title
+    f.input :body_normal,
+            as: :text
+    render 'admin/form/text_area_helper', f: f, field: :body_megadraft
+    f.input :body_megadraft,
+            as: :text
+  end
+  f.actions
+end
+```
+
+### View Helper
+
+In order to use the DraftJS output from Megadraft there is a helper available to
+use in your views:
+
+```html
+<%= draftjs_to_html(@page, :body_megadraft) %>
+```
+
+replacing the instance variable with that generated in your controller and the
+second argument with whatever field has the DraftJS content.
+
+
 ## Developing
 
 During development with a local copy of the engine being used with another app

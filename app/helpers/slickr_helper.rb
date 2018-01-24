@@ -2,7 +2,7 @@ module SlickrHelper
   def draftjs_to_html(instance, field)
     exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)
     restructure(instance.send(field))
-    exporter.call(instance.send(field).deep_symbolize_keys)
+    raw(exporter.call(instance.send(field).deep_symbolize_keys))
   end
 
   def slickr_editor_paths

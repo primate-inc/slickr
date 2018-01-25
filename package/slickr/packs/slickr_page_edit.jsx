@@ -10,6 +10,7 @@ import logger from 'redux-logger';
 import {DraftJS, editorStateFromRaw, createTypeStrategy} from "megadraft";
 import Link from "megadraft/lib/components/Link"
 import mainAppDecorators from 'slickr_extensions/page_edit/additional_megadraft_decorators.js'
+import ReactModal from 'react-modal';
 
 const pageState = document.getElementById('page-data') ? document.getElementById('page-data').dataset.page_data : '{"":""}'
 

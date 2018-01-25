@@ -9,10 +9,12 @@ export default class ImagePickerModal extends React.Component {
   }
 
   closeImagePicker = (e) => {
+    this.props.actions.keepCurrentPage()
     this.props.actions.toggleImagePicker()
   }
 
   loadNewImages = (page) => (e) => {
+    this.props.actions.showLoader();
     this.props.actions.loadImages(page);
   }
 
@@ -57,9 +59,41 @@ export default class ImagePickerModal extends React.Component {
     return pages
   }
 
-  render(){
-    const images = Object.keys(this.props.loadedImages).length === 0 ? [] : this.props.loadedImages.images
+  loading_or_images = (e) => {
+    if(this.props.loadedImages.loading || this.props.loadedImages.loading === undefined) {
+      return (
+        <div className="loader_box">
+          <div className="loader">
+            <svg className="circular" viewBox="25 25 50 50">
+              <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
+            </svg>
+          </div>
+        </div>
+      )
+    } else {
+      const images = Object.keys(this.props.loadedImages).length === 0 ? [] : this.props.loadedImages.images
 
+      return ([
+        <div key='1' style={{overflow: "auto", height: "100%"}}>
+          <Grid
+            actions={this.props.actions}
+            images={images}
+            editorState={this.props.editorState}
+          />
+        </div>,
+        <div key='2' id="index_footer">
+          <nav className="pagination">
+            {this.prev()}
+            {this.pages()}
+            {this.next()}
+          </nav>
+        </div>,
+        <div key='3' onClick={this.closeImagePicker} className="ReactModal__close_button"><svg className="svg-icon"><use xmlnsXlink="http://www.w3.org/1999/xlink" xlinkHref="#svg-cross"></use></svg><span>Close</span></div>
+      ])
+    }
+  }
+
+  render(){
     return(
       <ReactModal
         isOpen={this.props.modalIsOpen}
@@ -67,24 +101,7 @@ export default class ImagePickerModal extends React.Component {
         onRequestClose={this.closeImagePicker}
         style={{content: {overflow: "visible"}}}
       >
-        <div style={{overflow: "auto", height: "100%"}}>
-          <Grid
-            actions={this.props.actions}
-            images={images}
-            editorState={this.props.editorState}
-          />
-        </div>
-
-        <div id="index_footer">
-          <nav className="pagination">
-            {this.prev()}
-            {this.pages()}
-            {this.next()}
-          </nav>
-        </div>
-        <div onClick={this.closeImagePicker} className="ReactModal__close_button"><svg className="svg-icon"><use xmlnsXlink="http://www.w3.org/1999/xlink" xlinkHref="#svg-cross"></use></svg><span>Close</span></div>
-      {/*<p>Modal text!</p>
-        <button onClick={this.closeImagePicker}>Close Modal</button> */}
+        {this.loading_or_images()}
       </ReactModal>
     )
   }

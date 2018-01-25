@@ -1,6 +1,6 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::Image do
-    IMAGES_PER_PAGE = 2
+    IMAGES_PER_PAGE = 10
     menu priority: 2, label: 'Images'
 
     actions :all, :except => [:new, :show]
@@ -28,7 +28,8 @@ if defined?(ActiveAdmin)
       def index
         if params[:type] == 'page_edit'
           total = Slickr::Image.all.count
-          @slickr_images = Slickr::Image.limit(IMAGES_PER_PAGE)
+          @slickr_images = Slickr::Image.order(created_at: :desc)
+                                        .limit(IMAGES_PER_PAGE)
                                         .offset((params[:page].to_i - 1)*IMAGES_PER_PAGE)
 
           respond_to do |format|
@@ -38,7 +39,8 @@ if defined?(ActiveAdmin)
                 current_page: params[:page].to_i,
                 total_pages: ((total/IMAGES_PER_PAGE).floor + 1),
                 images_per_page: IMAGES_PER_PAGE
-              }
+              },
+              loading: true
             }.to_json }
           end
         else

@@ -32,6 +32,7 @@
   }
   #index_footer {
     @extend %pagination !optional;
+    padding-top: 1.5em;
   }
 }
 

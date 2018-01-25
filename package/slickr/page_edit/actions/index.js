@@ -179,7 +179,26 @@ export const loadImages = (page) => {
           type: 'LOAD_IMAGES',
           payload: JSON.parse(resp.text)
         })
+        dispatch({
+          type: 'CANCEL_LOADER'
+        })
       }
+    })
+  }
+}
+
+export const showLoader = () => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: 'SHOW_LOADER'
+    })
+  }
+}
+
+export const keepCurrentPage = () => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: 'KEEP_CURRENT_PAGE'
     })
   }
 }

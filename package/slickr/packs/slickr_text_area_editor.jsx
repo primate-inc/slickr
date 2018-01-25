@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         label: label,
         textArea: textArea,
         modalIsOpen: false,
-        loadedImages: [],
+        loadedImages: {},
         editorState: editorStateFromRaw(data.input, compositeDecorator)
       }
 

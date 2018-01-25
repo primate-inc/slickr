@@ -50,6 +50,24 @@
       }
     }
   }
+  .megadraft-text-editor {
+    display: none !important;
+     & + .text {
+       textarea {
+         display: none !important;
+       }
+       .megadraft {
+         min-height: 5em; margin-bottom: 5em;
+         .megadraft-editor {
+           padding-right: 4em; padding-left: 0.5em;
+         }
+         .sidebar__menu {
+           left: inherit; right: -4em;
+           float: right;
+         }
+       }
+     }
+  }
 }
 
 #custom-wrapper {

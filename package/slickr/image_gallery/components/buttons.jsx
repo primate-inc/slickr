@@ -24,7 +24,7 @@ export default class Buttons extends React.Component {
         <a href={href} className="active actions">Edit</a>
       )
     } else {
-      return <a href="#" className="actions">Edit</a>
+      return <a href="#" className="actions hidden">Edit</a>
     }
   }
 

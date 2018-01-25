@@ -49,12 +49,15 @@
           @extend %general_link;
           margin: 0 0.5em;
           color: $white;
+          transition: opacity .2s;
           &:before {
             background-color: $white;
           }
           &:hover {
             color: $white;
           }
+          &.active { opacity: 1; }
+          &.hidden { opacity: 0; }
         }
       }
     }

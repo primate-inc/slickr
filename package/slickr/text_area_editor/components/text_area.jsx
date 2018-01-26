@@ -12,15 +12,16 @@ import h3 from "../../page_edit/text_editor_icons/h3.jsx"
 import h4 from "../../page_edit/text_editor_icons/h4.jsx"
 import FaBook from 'react-icons/lib/fa/book';
 import FaAuthor from 'react-icons/lib/fa/user';
-import mainAppEntityInputs from 'slickr_extensions/page_edit/components/content/additional_entity_inputs.js'
-import mainAppActions from 'slickr_extensions/page_edit/additional_megadraft_actions.js'
-import mainAppEditorStateChange from 'slickr_extensions/page_edit/components/content/editor_state_change.js'
+// import mainAppEntityInputs from 'slickr_extensions/page_edit/components/content/additional_entity_inputs.js'
+// import mainAppActions from 'slickr_extensions/page_edit/additional_megadraft_actions.js'
+// import mainAppEditorStateChange from 'slickr_extensions/page_edit/components/content/editor_state_change.js'
 
 const slickrEntityInputs = {
   LINK: LinkInput
 }
 
-const mergedEntityInputs = Object.assign(slickrEntityInputs, mainAppEntityInputs);
+// const mergedEntityInputs = Object.assign(slickrEntityInputs, mainAppEntityInputs);
+const mergedEntityInputs = slickrEntityInputs;
 
 const slickrActions = [
   {type: "inline", label: "B", style: "BOLD", icon: icons.BoldIcon},
@@ -38,7 +39,8 @@ const slickrActions = [
   {type: "block", label: "QT", style: "blockquote", icon: icons.BlockQuoteIcon}
 ];
 
-const mergedActions = slickrActions.concat(mainAppActions);
+// const mergedActions = slickrActions.concat(mainAppActions);
+const mergedActions = slickrActions;
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -57,7 +59,17 @@ export default class Editor extends React.Component {
         textarea.classList.remove('active_textarea');
       }
     })
-    mainAppEditorStateChange(editorState, this.props)
+
+    // mainAppEditorStateChange(editorState, this.props)
+    // Changed to make work with build
+    if(editorState === 'load_admins') {
+      props.actions.loadAdmins()
+    } else if(this.props.textArea)  {
+      document.getElementById(this.props.textArea.id).value = editorStateToJSON(editorState)
+      this.props.actions.changeEditorState(editorState)
+    } else  {
+      this.props.actions.changeEditorState(editorState)
+    }
   }
 
   render() {

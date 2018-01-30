@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import TextArea from '../text_area_editor/containers/text_area_edit'
+import TextArea from '../text_area_editor/containers/text_area_edit.jsx'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reducers from '../page_edit/reducers';

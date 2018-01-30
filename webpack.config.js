@@ -1,35 +1,32 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const sharedConfig = require('./config/webpack/shared.js')
-const { settings, output } = require('./config/webpack/configuration.js')
+const glob = require('glob');
+const path = require('path');
 
-module.exports = merge(sharedConfig, {
-  devtool: 'cheap-eval-source-map',
-
+module.exports = {
+  entry: toObject(glob.sync('./package/slickr/packs/**/*.jsx*')),
   output: {
-    pathinfo: true
+    path: path.resolve('dist'),
+    filename: '[name]'
   },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)?(\.erb)?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
+  }
+}
 
-  devServer: {
-    clientLogLevel: 'none',
-    host: settings.dev_server.host,
-    port: settings.dev_server.port,
-    hot: settings.dev_server.hmr,
-    contentBase: output.path,
-    publicPath: output.publicPath,
-    compress: true,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    historyApiFallback: true,
-    watchOptions: {
-      ignored: /node_modules/
-    },
-    stats: {
-      errorDetails: true
-    }
-  },
+function toObject(paths) {
+  var ret = {};
 
-  plugins: settings.dev_server.hmr ? [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
-  ] : []
-})
+  paths.forEach(function(scss_path) {
+    // you can define entry names mapped to [name] here
+    ret[scss_path.split('/').slice(-1)[0]] = scss_path;
+  });
+
+  return ret;
+}

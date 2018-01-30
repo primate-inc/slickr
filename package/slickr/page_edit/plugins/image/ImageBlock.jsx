@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {MegadraftPlugin, MegadraftIcons, DraftJS} from "megadraft";
 const {BlockContent, CommonBlock, BlockData, BlockInput} = MegadraftPlugin;
 import icons from "megadraft/lib/icons";
-import ImageBlockStyle from "./ImageBlockStyle";
+import ImageBlockStyle from "./ImageBlockStyle.jsx";
 
 export default class ImageBlock extends React.Component {
   constructor(props) {

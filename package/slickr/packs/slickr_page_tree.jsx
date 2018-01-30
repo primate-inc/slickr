@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import PropTypes from 'prop-types'
-import Tree from '../page_tree/containers/tree_component'
+import Tree from '../page_tree/containers/tree_component.jsx'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reducers from '../page_tree/reducers';

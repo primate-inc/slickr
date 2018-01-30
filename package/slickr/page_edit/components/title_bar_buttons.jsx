@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PublishSelect from './publish_select';
+import PublishSelect from './publish_select.jsx';
 import cx from 'classnames';
 
 export default class TitleBarButtons extends React.Component {

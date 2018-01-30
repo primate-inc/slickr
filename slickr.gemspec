@@ -20,8 +20,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "pg"
 
-  # Manage javascript modules
-  s.add_dependency "webpacker", "~> 3.0"
   # Framework for admin interface
   s.add_dependency "activeadmin", "2.0.0.alpha"
   # Authorization

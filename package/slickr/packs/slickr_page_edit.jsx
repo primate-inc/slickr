@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import PropTypes from 'prop-types'
-import PageEditor from '../page_edit/containers/page_editor'
+import PageEditor from '../page_edit/containers/page_editor.jsx'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reducers from '../page_edit/reducers';

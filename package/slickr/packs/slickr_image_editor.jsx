@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import PropTypes from 'prop-types'
-import ImageEditor from '../image_editor/containers/image_editor'
+import ImageEditor from '../image_editor/containers/image_editor.jsx'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reducers from '../image_editor/reducers';

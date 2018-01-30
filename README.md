@@ -227,8 +227,19 @@ second argument with whatever field has the DraftJS content.
 
 ## Developing
 
-During development with a local copy of the engine being used with another app
-there are 2 options:
+During development you can use a local copy of the engine in your app and there
+are 2 options for doing this. One thing you'll have to do first is you change the
+slickr.yml file in the config folder. Comment out:
+
+```bash
+slickr: dist
+```
+
+and uncomment
+
+```bash
+slickr: package/slickr/packs
+```
 
 ### Option 1
 
@@ -238,7 +249,7 @@ In the main app, package.json file, replace:
 "slickr": "git+https://github.com/primate-inc/slickr#master"
 ```
 
-with
+with a local copy like
 
 ```
 "slickr": "file:/Users/primate/Documents/Projects/slickr"

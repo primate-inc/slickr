@@ -1,6 +1,6 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::Image do
-    IMAGES_PER_PAGE = 10
+    IMAGES_PER_PAGE ||= 10
     menu priority: 2, label: 'Images'
 
     actions :all, :except => [:new, :show]

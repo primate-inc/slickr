@@ -8,7 +8,7 @@ module ActiveAdmin
         end
 
         def build_svg_map
-          within @body do
+          within body do
             render 'layouts/partials/svg-map'
           end
         end

@@ -1,6 +1,6 @@
 class CreateSlickrImages < ActiveRecord::Migration[5.1]
   def change
-    ActiveRecord::Base.connection.tables.exclude?('slickr_event_logs')
+    if ActiveRecord::Base.connection.tables.exclude?('slickr_event_logs')
       create_table :slickr_images do |t|
         t.string  :attachment
         t.jsonb   :dimensions

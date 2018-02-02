@@ -1,6 +1,6 @@
-if ActiveRecord::Base.connection.tables.exclude?('slickr_pages')
-  class ChangePageTreeStructure < ActiveRecord::Migration[5.1]
-    def change
+class ChangePageTreeStructure < ActiveRecord::Migration[5.1]
+  def change
+    if ActiveRecord::Base.connection.tables.exclude?('slickr_pages')
       remove_column :slickr_pages, :ancestry
       add_column :slickr_pages, :parent_id, :integer
       add_index :slickr_pages, :parent_id

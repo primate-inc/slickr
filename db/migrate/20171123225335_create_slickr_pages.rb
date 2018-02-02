@@ -1,6 +1,6 @@
-if ActiveRecord::Base.connection.tables.exclude?('slickr_pages')
-  class CreateSlickrPages < ActiveRecord::Migration[5.1]
-    def change
+class CreateSlickrPages < ActiveRecord::Migration[5.1]
+  def change
+    if ActiveRecord::Base.connection.tables.exclude?('slickr_pages')
       create_table :slickr_pages do |t|
         t.string    :title
         t.string    :slug

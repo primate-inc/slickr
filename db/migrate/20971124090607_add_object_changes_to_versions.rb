@@ -1,5 +1,5 @@
-if ActiveRecord::Base.connection.tables.exclude?('versions')
-  class AddObjectChangesToVersions < ActiveRecord::Migration[5.1]
+class AddObjectChangesToVersions < ActiveRecord::Migration[5.1]
+  if ActiveRecord::Base.connection.tables.exclude?('versions')
     # The largest text column available in all supported RDBMS.
     # See `create_versions.rb` for details.
     TEXT_BYTES = 1_073_741_823

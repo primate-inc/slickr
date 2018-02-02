@@ -1,5 +1,5 @@
-class AddMetaDataToVersions < ActiveRecord::Migration[5.1]
-  if ActiveRecord::Base.connection.tables.exclude?('versions')
+if ActiveRecord::Base.connection.tables.exclude?('versions')
+  class AddMetaDataToVersions < ActiveRecord::Migration[5.1]
     def change
       add_column :versions, :admin_id, :integer, index: true
       add_column :versions, :content_changed, :boolean

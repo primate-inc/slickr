@@ -1,7 +1,7 @@
 # This migration creates the `versions` table, the only schema PT requires.
 # All other migrations PT provides are optional.
 class CreateVersions < ActiveRecord::Migration[5.1]
-  if ActiveRecord::Base.connection.tables.exclude?('slickr_pages')
+  if ActiveRecord::Base.connection.tables.exclude?('versions')
     # Class names of MySQL adapters.
     # - `MysqlAdapter` - Used by gems: `mysql`, `activerecord-jdbcmysql-adapter`.
     # - `Mysql2Adapter` - Used by `mysql2` gem.

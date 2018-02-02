@@ -3,8 +3,9 @@ include ActionView::Helpers::OutputSafetyHelper
 module SlickrHelper
   def draftjs_to_html(instance, field)
     exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)
-    restructure(instance.send(field))
-    raw(exporter.call(instance.send(field).deep_symbolize_keys))
+    content = instance.send(field).class == String ? JSON.parse(instance.send(field)) : instance.send(field)
+    restructure(content)
+    raw(exporter.call(content.deep_symbolize_keys))
   end
 
   def slickr_editor_paths

@@ -1,4 +1,3 @@
-if ActiveRecord::Base.connection.tables.exclude?('slickr_event_logs')
 class CreateSlickrEventLogs < ActiveRecord::Migration[5.1]
   def change
     if ActiveRecord::Base.connection.tables.exclude?('slickr_event_logs')

@@ -1,5 +1,5 @@
 if defined?(ActiveAdmin)
-  ActiveAdmin.register Slickr::Image do
+  ActiveAdmin.register Slickr::Image, as: 'Image' do
     IMAGES_PER_PAGE ||= 10
     menu priority: 2, label: 'Images'
 

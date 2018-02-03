@@ -1,6 +1,6 @@
 include SlickrHelper
 if defined?(ActiveAdmin)
-  ActiveAdmin.register Slickr::Page do
+  ActiveAdmin.register Slickr::Page, as: 'Page' do
     menu priority: 1, label: 'Pages'
 
     config.filters = false

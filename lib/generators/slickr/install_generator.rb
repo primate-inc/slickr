@@ -19,6 +19,20 @@ module Slickr
         puts "SVG map added for Slickr"
       end
 
+      def db_migrations
+        template "migrations/create_slickr_pages.rb", "db/migrate/20171123225335_create_slickr_pages.rb"
+        template "migrations/change_page_tree_structure.rb", "db/migrate/20171124081428_change_page_tree_structure.rb"
+        template "migrations/create_versions.rb", "db/migrate/20171124083546_create_versions.rb"
+        template "migrations/add_object_changes_to_versions.rb", "db/migrate/20171124090607_add_object_changes_to_versions.rb"
+        template "migrations/change_slickr_pages_page_id_attribute.rb", "db/migrate/20171124103352_change_slickr_pages_page_id_attribute.rb"
+        template "migrations/create_slickr_images.rb", "db/migrate/20171124113241_create_slickr_images.rb"
+        template "migrations/add_meta_data_to_versions.rb", "db/migrate/20971124090700_add_meta_data_to_versions.rb"
+        template "migrations/create_slickr_event_logs.rb", "db/migrate/20971124093204_create_slickr_event_logs.rb"
+        template "migrations/add_roles_names_and_avatars_to_admin_users.rb", "db/migrate/20971129144523_add_roles_names_and_avatars_to_admin_users.rb"
+
+        puts "Database migrations added"
+      end
+
       def slickr_yml
         template "slickr.yml", "config/slickr.yml"
 

@@ -1,7 +1,18 @@
 if defined?(ActiveAdmin)
-  ActiveAdmin.register Slickr::Image, as: 'Image' do
+  ActiveAdmin.register Slickr::Image do
     IMAGES_PER_PAGE ||= 10
     menu priority: 2, label: 'Images'
+
+    breadcrumb do
+      if params[:action] == 'index'
+        [ link_to('Admin', admin_root_path) ]
+      else
+        [
+          link_to('Admin', admin_root_path),
+          link_to('Images', admin_slickr_images_path),
+        ]
+      end
+    end
 
     actions :all, :except => [:new, :show]
     config.filters = false

@@ -1,7 +1,18 @@
 include SlickrHelper
 if defined?(ActiveAdmin)
-  ActiveAdmin.register Slickr::Page, as: 'Page' do
-    menu priority: 1, label: 'Pages'
+  ActiveAdmin.register Slickr::Page do
+    menu priority: 1
+
+    breadcrumb do
+      if params[:action] == 'index'
+        [ link_to('Admin', admin_root_path) ]
+      else
+        [
+          link_to('Admin', admin_root_path),
+          link_to('Pages', admin_slickr_pages_path),
+        ]
+      end
+    end
 
     config.filters = false
     config.batch_actions = false

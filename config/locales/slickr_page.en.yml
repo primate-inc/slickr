@@ -1,0 +1,6 @@
+en:
+  activerecord:
+    models:
+      slickr/page:
+        one: 'Page'
+        other: 'Pages'

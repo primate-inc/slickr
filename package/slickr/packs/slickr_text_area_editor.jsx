@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import {DraftJS, editorStateFromRaw, createTypeStrategy} from "megadraft";
 import Link from "megadraft/lib/components/Link"
-// import mainAppDecorators from 'slickr_extensions/page_edit/additional_megadraft_decorators.js'
+import mainAppDecorators from 'slickr_extensions/page_edit/additional_megadraft_decorators.js'
 
 let storeArray = []
 
@@ -65,10 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       ]
 
-      // const mergedDecorators = decorators.concat(mainAppDecorators);
-      //
-      // const compositeDecorator = new DraftJS.CompositeDecorator(mergedDecorators)
-      const compositeDecorator = new DraftJS.CompositeDecorator(decorators)
+      const mergedDecorators = decorators.concat(mainAppDecorators);
+
+      const compositeDecorator = new DraftJS.CompositeDecorator(mergedDecorators)
 
       const initialState = {
         pageState: JSON.parse(pageState),

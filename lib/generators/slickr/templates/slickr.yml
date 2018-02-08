@@ -1,7 +1,6 @@
 default: &default
   include_webpacks:
-    # slickr: package/slickr/packs
-    slickr: dist
+    slickr: package/slickr/packs
 
 development:
   <<: *default

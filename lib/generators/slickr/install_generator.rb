@@ -181,6 +181,7 @@ module Slickr
         existing_content = File.read(dest_file)
         new_content_1 = '"slickr": "git+https://github.com/primate-inc/slickr#master"'
         new_content_2 = '"babel-preset-stage-1": "^6.24.1"'
+        new_content_3 = '"ignore-loader": "^0.1.2"'
 
         unless existing_content.include? new_content_1
           gsub_file(dest_file, '"dependencies": {') do |match|
@@ -200,6 +201,16 @@ module Slickr
           puts "Babel extended to use stage-1"
         else
           puts "Babel already using stage-1"
+        end
+
+        unless existing_content.include? new_content_3
+          gsub_file(dest_file, '"devDependencies": {') do |match|
+            "#{match}\n    #{new_content_3},"
+          end
+
+          puts "Package.json extended to use ignore-loader"
+        else
+          puts "Package.json already using ignore-loader"
         end
       end
 

@@ -5,7 +5,7 @@ import modalIsOpen from './modal_is_open'
 import loadedImages from './loaded_images'
 import editorState from './editor_state'
 import schedulingActive from './scheduling_active'
-// import mainAppReducers from 'slickr_extensions/page_edit/reducers/additional_reducers.js'
+import mainAppReducers from 'slickr_extensions/page_edit/reducers/additional_reducers.js'
 
 import textAreaIndex from './text_area_index'
 import label from './label'
@@ -23,8 +23,7 @@ const slickrReducers = {
   textArea
 }
 
-// const mergedReducers = Object.assign(slickrReducers, mainAppReducers);
-const mergedReducers = Object.assign(slickrReducers);
+const mergedReducers = Object.assign(slickrReducers, mainAppReducers);
 
 const rootReducer = combineReducers (mergedReducers)
 

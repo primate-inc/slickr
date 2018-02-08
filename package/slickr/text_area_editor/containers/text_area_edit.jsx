@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import TextArea from '../components/text_area.jsx'
 import * as MegadraftActions from '../../page_edit/actions'
-// import * as MainAppPageActions from 'slickr_extensions/page_edit/actions/additional_actions.js'
+import * as MainAppPageActions from 'slickr_extensions/page_edit/actions/additional_actions.js'
 
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
 let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
@@ -45,11 +45,8 @@ const mapStateToProps = state => ({
   textArea: state.textArea
 })
 
-// const mapDispatchToProps = dispatch => ({
-//   actions: bindActionCreators(Object.assign({}, MegadraftActions, MainAppPageActions), dispatch)
-// })
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Object.assign({}, MegadraftActions), dispatch)
+  actions: bindActionCreators(Object.assign({}, MegadraftActions, MainAppPageActions), dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyTextAreaEditor);

@@ -77,6 +77,17 @@ You will have some basic default roles added to your AdminUser model which you
 can easily add to. Roles are managed by CanCanCan and can be altered in the
 Ability model
 
+## Admin User
+
+The AdminUser model is already setup through this gem so you can remove your own
+version. If however you need to extend it you can still create the ```admin_users.rb```
+file within the ```admin``` folder but set it up like so:
+
+```ruby
+ActiveAdmin.register AdminUser, as: "Users" do
+end
+```
+
 ## Extending Megadraft
 
 In text editing mode, Megadraft has a range of options such as bold, italic,

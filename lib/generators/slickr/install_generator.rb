@@ -243,7 +243,7 @@ module Slickr
       end
 
       def extend_draftjs_exporter
-        template "standard_video.rb", "app/draftjs_exporter/entities/standard_video.rb"
+        template "standard_video.rb", "app/modles/draftjs_exporter/entities/standard_video.rb"
 
         puts "Draftjs exporter extended"
       end

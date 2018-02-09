@@ -6,8 +6,8 @@ class Slickr::Page
   DRAFTJS_CONFIG = {
     entity_decorators: {
       'LINK' => DraftjsExporter::Entities::Link.new(className: 'link'),
-      'IMAGE' => Slickr::ImageEntity.new,
-      'VIDEO' => Slickr::VideoEntity.new,
+      'IMAGE' => DraftjsExporter::Entities::StandardImage.new,
+      'VIDEO' => DraftjsExporter::Entities::StandardVideo.new,
       'ADMIN_LINK' => DraftjsExporter::Entities::Link.new(className: 'admin__link'),
     },
     block_map: {

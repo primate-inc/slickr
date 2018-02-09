@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {MegadraftEditor} from "megadraft";
 import {editorStateToJSON, DraftJS} from "megadraft";
-import Video from "megadraft/lib/plugins/video/plugin";
 import LinkInput from 'megadraft/lib/entity_inputs/LinkInput'
 import ImagePlugin from "../../page_edit/plugins/image/plugin.jsx";
 import icons from "megadraft/lib/icons";
@@ -12,6 +11,7 @@ import h3 from "../../page_edit/text_editor_icons/h3.jsx"
 import h4 from "../../page_edit/text_editor_icons/h4.jsx"
 import FaBook from 'react-icons/lib/fa/book';
 import FaAuthor from 'react-icons/lib/fa/user';
+import mainAppPlugins from 'slickr_extensions/page_edit/plugins/plugin_list.js'
 import mainAppEntityInputs from 'slickr_extensions/page_edit/components/content/additional_entity_inputs.js'
 import mainAppActions from 'slickr_extensions/page_edit/additional_megadraft_actions.js'
 import mainAppEditorStateChange from 'slickr_extensions/page_edit/components/content/editor_state_change.js'
@@ -72,7 +72,8 @@ export default class Editor extends React.Component {
         defaultDisplay: null
       }
     }
-    var plugins = [ImagePlugin(megadraftOptions), Video]
+    var plugins = [ImagePlugin(megadraftOptions)]
+    let mergedPlugins = plugins.concat(mainAppPlugins)
 
     return (
       [
@@ -82,7 +83,7 @@ export default class Editor extends React.Component {
           key={`${this.props.textAreaIndex}-2`}
           editorState={this.props.editorState}
           onChange={this.changeEditorState}
-          plugins={plugins}
+          plugins={mergedPlugins}
           actions={mergedActions}
           entityInputs={mergedEntityInputs}
         />

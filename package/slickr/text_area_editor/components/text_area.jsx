@@ -4,6 +4,7 @@ import {MegadraftEditor} from "megadraft";
 import {editorStateToJSON, DraftJS} from "megadraft";
 import LinkInput from 'megadraft/lib/entity_inputs/LinkInput'
 import ImagePlugin from "../../page_edit/plugins/image/plugin.jsx";
+import VimeoPlugin from "../../page_edit/plugins/vimeo/plugin.jsx";
 import icons from "megadraft/lib/icons";
 import h1 from "../../page_edit/text_editor_icons/h1.jsx"
 import h2 from "../../page_edit/text_editor_icons/h2.jsx"
@@ -72,7 +73,7 @@ export default class Editor extends React.Component {
         defaultDisplay: null
       }
     }
-    var plugins = [ImagePlugin(megadraftOptions)]
+    var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin]
     let mergedPlugins = plugins.concat(mainAppPlugins)
 
     return (

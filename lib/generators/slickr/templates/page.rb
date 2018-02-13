@@ -8,6 +8,7 @@ class Slickr::Page
       'LINK' => DraftjsExporter::Entities::Link.new(className: 'link'),
       'IMAGE' => DraftjsExporter::Entities::StandardImage.new,
       'VIDEO' => DraftjsExporter::Entities::StandardVideo.new,
+      'VIMEO' => DraftjsExporter::Entities::Vimeo.new,
       'ADMIN_LINK' => DraftjsExporter::Entities::Link.new(className: 'admin__link'),
     },
     block_map: {

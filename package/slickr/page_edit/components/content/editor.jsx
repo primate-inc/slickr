@@ -62,7 +62,7 @@ export default class Editor extends React.Component {
           {"key": "thumbnail", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
           {"key": "small", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
           {"key": "medium", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-          {"key": "big", "icon": MegadraftIcons.MediaBigIcon, "label": "BIG"}
+          {"key": "large", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"}
         ],
         defaultDisplay: 'medium'
       }

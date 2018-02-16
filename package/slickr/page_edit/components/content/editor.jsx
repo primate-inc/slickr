@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {MegadraftEditor} from "megadraft";
+import {MegadraftEditor, MegadraftIcons} from "megadraft";
 import LinkInput from 'megadraft/lib/entity_inputs/LinkInput'
 import ImagePlugin from "../../plugins/image/plugin.jsx";
 import VimeoPlugin from "../../plugins/vimeo/plugin.jsx";
@@ -58,8 +58,13 @@ export default class Editor extends React.Component {
     var megadraftOptions = {
       customOptions: {},
       standardDisplayOptions: {
-        displayOptions: [],
-        defaultDisplay: null
+        displayOptions: [
+          {"key": "thumbnail", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
+          {"key": "small", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
+          {"key": "medium", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+          {"key": "big", "icon": MegadraftIcons.MediaBigIcon, "label": "BIG"}
+        ],
+        defaultDisplay: 'medium'
       }
     }
     var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin]

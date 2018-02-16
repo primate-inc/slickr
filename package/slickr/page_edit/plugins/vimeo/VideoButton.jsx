@@ -15,9 +15,9 @@ export default class VideoButton extends Component {
   onClick(e) {
     e.preventDefault();
     let that = this
-    
+
     Popup.plugins().prompt('', 'Paste Vimeo iframe', function (value) {
-      const data = {iframe: value, type: "vimeo", display: "small"};
+      const data = {iframe: value, type: "vimeo", display: "medium"};
       that.props.onChange(insertDataBlock(that.props.editorState, data));
     });
   }

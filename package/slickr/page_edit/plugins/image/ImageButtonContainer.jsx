@@ -7,14 +7,14 @@ import cx from 'classnames';
 import ImageButton from "./ImageButton.jsx";
 
 const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState}) => (
-      <div>
-        <ImageButton modalIsOpen={modalIsOpen}
-                     actions={actions}
-                     loadedImages={loadedImages}
-                     editorState={editorState}
-        />
-      </div>
-    )
+  <div>
+    <ImageButton modalIsOpen={modalIsOpen}
+                 actions={actions}
+                 loadedImages={loadedImages}
+                 editorState={editorState}
+    />
+  </div>
+)
 
 ImageButtonContainer.propTypes = {
   actions: PropTypes.object.isRequired,

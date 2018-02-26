@@ -52,6 +52,7 @@ module Slickr
           title: p.title,
           add_child_path: p.add_child_path,
           edit_page_path: p.edit_page_path,
+          admin_delete_page_path: p.admin_delete_page_path,
           change_position_admin_page: p.change_position_admin_page,
           published: p.published?,
           subtitle: p.subtitle,
@@ -100,6 +101,10 @@ module Slickr
 
     def admin_publish_path
       Rails.application.routes.url_helpers.publish_admin_slickr_page_path(self.id)
+    end
+
+    def admin_delete_page_path
+      Rails.application.routes.url_helpers.admin_slickr_page_path(self.id)
     end
 
     def edit_page_path

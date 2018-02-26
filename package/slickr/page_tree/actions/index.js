@@ -25,3 +25,20 @@ export const saveNodePosition = (node, parent_id, previous_id) => {
     })
   }
 }
+
+export const deletePage = (path) => {
+  return function(dispatch, getState) {
+    let params = {};
+    params[_csrf_param()] = _csrf_token()
+    request.delete(path).type('json').accept('json').send(params).end(function(err,resp){
+      if(err) {
+        console.error(err)
+      } else {
+        dispatch({
+          type: 'UPDATE_TREE',
+          payload: resp.body
+        })
+      }
+    })
+  }
+}

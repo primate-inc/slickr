@@ -19,7 +19,7 @@ module Slickr
     initializer 'Slickr', before: :load_config_initializers do
       Rails.application.config.i18n.load_path += Dir["#{config.root}/config/locales/**/*.yml"]
     end
-    
+
     # load the Active Admin engine files into the core application
     initializer :slickr do
       ActiveAdmin.application.load_paths += Dir[File.dirname(__FILE__) + "/admin"]

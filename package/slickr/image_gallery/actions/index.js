@@ -1,4 +1,5 @@
 import request from 'superagent';
+import pdfPlaceholder from './pdf_image.jpg';
 require('es6-promise/auto');
 import browserImageSize from 'browser-image-size'
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
@@ -66,7 +67,8 @@ export const createImage = payload => {
   const random = Math.random().toString(36).substring(7);
   // const size = {width: 270, height: 180}
   return function(dispatch, getState) {
-    browserImageSize(payload.file.preview)
+    const preview = payload.file.type === 'application/pdf' ? pdfPlaceholder : payload.file.preview
+    browserImageSize(preview)
       .then(function (size) {
         return size
       })
@@ -131,10 +133,11 @@ export function uploadArrayObject(payload, random, size) {
 }
 
 export function buildForGallery(payload, size) {
+  const preview = payload.file.type === 'application/pdf' ? pdfPlaceholder : payload.file.preview
   return {
     id: Math.floor(Math.random() * 1000000000),
     src: payload.file.preview,
-    thumbnail: payload.file.preview,
+    thumbnail: preview,
     caption: "",
     thumbnailWidth: size.width,
     thumbnailHeight: size.height,

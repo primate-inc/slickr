@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   # User authentication
   s.add_dependency 'devise', '~> 4.3.0'
   # Images
-  s.add_dependency 'carrierwave', '~> 1.1.0'
+  s.add_dependency 'carrierwave', '~> 1.2.2'
   s.add_dependency 'rmagick', '~> 2.16.0'
 
   # Other gems

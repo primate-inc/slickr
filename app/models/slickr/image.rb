@@ -5,16 +5,8 @@ module Slickr
     mount_uploader :attachment, SlickrImageUploader
 
     def build_for_gallery
-      {
-        id: id,
-        src: attachment.url(:large),
-        thumbnail: attachment.url(:thumbnail),
-        thumbnailWidth: dimensions['thumbnail']['width'],
-        thumbnailHeight: dimensions['thumbnail']['height'],
-        caption: attachment.file.filename,
-        isSelected: false,
-        editPath: admin_edit_path
-      }
+      extension = File.extname(attachment.file.filename)
+      extension == '.pdf' ? build_pdf : build_image
     end
 
     def admin_edit_path
@@ -39,6 +31,34 @@ module Slickr
       cropped_image = image.crop(x, y, w, h)
       cropped_image.write(attachment.current_path)
       attachment.recreate_versions!
+    end
+
+    private
+
+    def build_pdf
+      {
+        id: id,
+        src: attachment.url(:pdf_image_preview),
+        thumbnail: attachment.url(:pdf_image_preview),
+        thumbnailWidth: 127,
+        thumbnailHeight: 180,
+        caption: attachment.file.filename,
+        isSelected: false,
+        editPath: admin_edit_path
+      }
+    end
+
+    def build_image
+      {
+        id: id,
+        src: attachment.url(:large),
+        thumbnail: attachment.url(:thumbnail),
+        thumbnailWidth: dimensions['thumbnail']['width'],
+        thumbnailHeight: dimensions['thumbnail']['height'],
+        caption: attachment.file.filename,
+        isSelected: false,
+        editPath: admin_edit_path
+      }
     end
   end
 end

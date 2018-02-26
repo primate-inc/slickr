@@ -242,12 +242,6 @@ module Slickr
         puts "Slickr Page extended"
       end
 
-      def extend_draftjs_exporter
-        template "standard_video.rb", "app/modles/draftjs_exporter/entities/standard_video.rb"
-
-        puts "Draftjs exporter extended"
-      end
-
       def extend_active_admin_initializer
         dest_file = "config/initializers/active_admin.rb"
         existing_content = File.read(dest_file)

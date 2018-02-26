@@ -4,6 +4,7 @@ import {MegadraftEditor, MegadraftIcons} from "megadraft";
 import LinkInput from 'megadraft/lib/entity_inputs/LinkInput'
 import ImagePlugin from "../../plugins/image/plugin.jsx";
 import VimeoPlugin from "../../plugins/vimeo/plugin.jsx";
+import YouTubePlugin from "../../plugins/you_tube/plugin.jsx";
 import icons from "megadraft/lib/icons";
 import h1 from "../../text_editor_icons/h1.jsx"
 import h2 from "../../text_editor_icons/h2.jsx"
@@ -62,12 +63,13 @@ export default class Editor extends React.Component {
           {"key": "thumbnail", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
           {"key": "small", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
           {"key": "medium", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-          {"key": "large", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"}
+          {"key": "large", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+          {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
         ],
-        defaultDisplay: 'medium'
+        defaultDisplay: 'full'
       }
     }
-    var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin]
+    var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin, YouTubePlugin]
     let mergedPlugins = plugins.concat(mainAppPlugins)
     return (
         <MegadraftEditor

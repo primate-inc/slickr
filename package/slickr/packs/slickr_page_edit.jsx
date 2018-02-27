@@ -13,6 +13,7 @@ import mainAppDecorators from 'slickr_extensions/page_edit/additional_megadraft_
 import ReactModal from 'react-modal';
 
 const pageState = document.getElementById('page-data') ? document.getElementById('page-data').dataset.page_data : '{"":""}'
+const pageLayouts = document.getElementById('page-data') ? document.getElementById('page-data').dataset.page_layouts : '[]'
 
 const decorators = [
   {
@@ -27,6 +28,7 @@ const compositeDecorator = new DraftJS.CompositeDecorator(mergedDecorators)
 
 const initialState = {
   pageState: JSON.parse(pageState),
+  pageLayouts: JSON.parse(pageLayouts),
   activeTab: 'content',
   modalIsOpen: false,
   loadedImages: {},

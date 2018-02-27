@@ -29,7 +29,8 @@ export const updatePageContent = values => {
         }, 1500);
         dispatch({
           type: 'SET_PAGE_TITLE',
-          title: resp.body.title
+          title: resp.body.title,
+          layout: resp.body.layout
         })
       }
     })

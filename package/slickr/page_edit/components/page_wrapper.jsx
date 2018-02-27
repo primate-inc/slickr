@@ -37,7 +37,7 @@ const unschedule = function(actions) {
   actions.unschedule()
 }
 
-const PageWrapper = ({schedulingActive, active_tab, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset}) => {
+const PageWrapper = ({schedulingActive, pageLayouts, active_tab, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset}) => {
   return(
     <div >
       <form onSubmit={handleSubmit} id='page_edit_content_grid'>
@@ -58,7 +58,7 @@ const PageWrapper = ({schedulingActive, active_tab, editorState, page, actions, 
           </div>
           <SchedulingModal actions={actions} modalIsOpen={schedulingActive} />
         </div>
-        <PageForm actions={actions} handleChange={handleChange.bind(this)} active_tab={active_tab} editorState={editorState} page={page} values={values} />
+        <PageForm actions={actions} pageLayouts={pageLayouts} handleChange={handleChange.bind(this)} active_tab={active_tab} editorState={editorState} page={page} values={values} />
       </form>
     </div>
   )
@@ -69,7 +69,8 @@ export default Formik({
     title: props.page.title,
     page_intro: props.page.page_intro,
     meta_title: props.page.meta_title,
-    meta_description: props.page.meta_description
+    meta_description: props.page.meta_description,
+    layout: props.page.layout
   }),
   handleSubmit: (values, { props, setErrors, setSubmitting }) => {
     // do stuff with your payload

@@ -5,7 +5,7 @@ import icons from "megadraft/lib/icons";
 import page_store from 'slickr/package/slickr/packs/slickr_page_edit.jsx'
 import text_editor_store from 'slickr/package/slickr/packs/slickr_text_area_editor.jsx'
 
-export default class AdminLinkInput extends React.Component {
+export default class PdfLinkInput extends React.Component {
   constructor(props) {
     super(props);
     this.onAdminChange = this.onAdminChange.bind(this);
@@ -13,7 +13,7 @@ export default class AdminLinkInput extends React.Component {
 
     this.state = {
       loading: false,
-      admins: []
+      pdfs: []
     }
   }
 
@@ -21,10 +21,10 @@ export default class AdminLinkInput extends React.Component {
     var promise = new Promise((resolve, reject) => {
       (function waitForData(){
         if(text_editor_store[index]) {
-          if (text_editor_store[index].getState().loadedAdmins.length > 0) return resolve();
+          if (text_editor_store[index].getState().loadedPdfs.length > 0) return resolve();
           setTimeout(waitForData, 30);
         } else {
-          if (page_store.getState().loadedAdmins.length > 0) return resolve();
+          if (page_store.getState().loadedPdfs.length > 0) return resolve();
           setTimeout(waitForData, 30);
         }
       })();
@@ -39,12 +39,12 @@ export default class AdminLinkInput extends React.Component {
     Array.prototype.forEach.call(textareaList, function(textarea, index) {
       if (textarea.classList.contains('active_textarea')) textAreaStoreIndex = index
     })
-    this.props.onChange('load_admins')
+    this.props.onChange('load_pdfs')
 
     this.loadData(textAreaStoreIndex).then(() => {
-      let admins = text_editor_store[textAreaStoreIndex] ? text_editor_store[textAreaStoreIndex].getState().loadedAdmins : page_store.getState().loadedAdmins
+      let pdfs = text_editor_store[textAreaStoreIndex] ? text_editor_store[textAreaStoreIndex].getState().loadedPdfs : page_store.getState().loadedPdfs
       this.setState({
-        admins: admins,
+        pdfs: pdfs,
         loading: false
       });
     });
@@ -63,9 +63,9 @@ export default class AdminLinkInput extends React.Component {
   }
 
   render() {
-    let admins = this.state.admins.map(
-      ({email}, index) => (
-        { value: `/a-link-${index}`, label: email }
+    let pdfs = this.state.pdfs.map(
+      ({attachment}, index) => (
+        { value: attachment.url, label: attachment.url.substr(attachment.url.lastIndexOf('/') + 1) }
       )
     )
 
@@ -73,7 +73,7 @@ export default class AdminLinkInput extends React.Component {
       <Select
         name="form-field-name"
         value={this.props.url}
-        options={admins}
+        options={pdfs}
         onChange={this.onAdminChange}
       />
     );

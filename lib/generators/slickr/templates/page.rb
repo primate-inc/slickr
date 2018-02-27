@@ -9,7 +9,7 @@ class Slickr::Page
       'IMAGE' => DraftjsExporter::Entities::StandardImage.new,
       'VIMEO' => DraftjsExporter::Entities::Vimeo.new,
       'YOUTUBE' => DraftjsExporter::Entities::YouTube.new,
-      'ADMIN_LINK' => DraftjsExporter::Entities::Link.new(className: 'admin__link'),
+      'PDF_LINK' => DraftjsExporter::Entities::Link.new(className: 'pdf__link'),
     },
     block_map: {
       'header-one'          => { element: 'h1' },

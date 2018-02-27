@@ -11,8 +11,6 @@ import h1 from "../../page_edit/text_editor_icons/h1.jsx"
 import h2 from "../../page_edit/text_editor_icons/h2.jsx"
 import h3 from "../../page_edit/text_editor_icons/h3.jsx"
 import h4 from "../../page_edit/text_editor_icons/h4.jsx"
-import FaBook from 'react-icons/lib/fa/book';
-import FaAuthor from 'react-icons/lib/fa/user';
 import mainAppPlugins from 'slickr_extensions/page_edit/plugins/plugin_list.js'
 import mainAppEntityInputs from 'slickr_extensions/page_edit/components/content/additional_entity_inputs.js'
 import mainAppActions from 'slickr_extensions/page_edit/additional_megadraft_actions.js'

@@ -54,6 +54,11 @@ if defined?(ActiveAdmin)
               loading: true
             }.to_json }
           end
+        elsif params[:type] == 'megadraft_pdfs'
+          @pdfs = Slickr::Image.where('attachment like ?', '%.pdf%')
+          index! do |format|
+            format.html { render :json => @pdfs.to_json }
+          end
         else
           index!
         end

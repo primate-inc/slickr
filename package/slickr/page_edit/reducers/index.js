@@ -16,6 +16,7 @@ const slickrReducers = {
   activeTab,
   modalIsOpen,
   loadedImages,
+  pageLayouts: (state = {}) => state,
   schedulingActive,
   editorState,
   textAreaIndex,

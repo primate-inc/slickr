@@ -12,9 +12,9 @@ import mainAppPropTypes from 'slickr_extensions/page_edit/containers/additional_
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
 let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
 
-const MyEditor = ({schedulingActive, store, page, active_tab, actions, modalIsOpen, editorState}) => {
+const MyEditor = ({schedulingActive, pageLayouts, store, page, active_tab, actions, modalIsOpen, editorState}) => {
   return(
-    <PageWrapper page={page} actions={actions} schedulingActive={schedulingActive} editorState={editorState} modalIsOpen={modalIsOpen} active_tab={active_tab} />
+    <PageWrapper pageLayouts={pageLayouts} page={page} actions={actions} schedulingActive={schedulingActive} editorState={editorState} modalIsOpen={modalIsOpen} active_tab={active_tab} />
   )
 }
 
@@ -24,6 +24,7 @@ const slickrPropTypes = {
   modalIsOpen: PropTypes.bool.isRequired,
   loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
+  pageLayouts: PropTypes.object.isRequired
 }
 const mergedPropTypes = Object.assign(slickrPropTypes, mainAppPropTypes);
 
@@ -31,6 +32,7 @@ MyEditor.propTypes = mergedPropTypes
 
 const mapStateToProps = state => ({
   page: state.pageState,
+  pageLayouts: state.pageLayouts,
   active_tab: state.activeTab,
   modalIsOpen: state.modalIsOpen,
   loadedImages: state.loadedImages,

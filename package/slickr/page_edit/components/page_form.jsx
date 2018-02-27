@@ -4,6 +4,7 @@ import ContentTab from "./content/content_tab.jsx";
 import MetaTab from "./meta/meta_tab.jsx";
 import SocialTab from "./social/social_tab.jsx";
 import PublishingTab from "./publishing/publishing_tab.jsx";
+import ConfigTab from "./config/config_tab.jsx";
 import {editorStateFromRaw, editorStateToJSON} from "megadraft";
 import { Formik } from 'formik';
 import Yup from 'yup';
@@ -22,13 +23,14 @@ const tabClasses = (tabName, active_tab) => {
 }
 
 
-const PageForm = ({schedulingActive, active_tab, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset}) => {
+const PageForm = ({schedulingActive, active_tab, pageLayouts, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset}) => {
   return(
     <div id='page_content_form' onSubmit={handleSubmit}>
       <div id="resource_tabs">
         <a href='#' onClick={changeTab.bind(this, 'content', actions)} className={tabClasses('content', active_tab)}>Page content</a>
         <a href='#' onClick={changeTab.bind(this, 'meta', actions)} className={tabClasses('meta', active_tab)}>SEO</a>
         <a href='#' onClick={changeTab.bind(this, 'social', actions)} className={tabClasses('social', active_tab)}>Social media</a>
+        <a href='#' onClick={changeTab.bind(this, 'config', actions)} className={tabClasses('config', active_tab)}>Config</a>
       </div>
       <div className='page_editing_area' id='collection_selection'>
         { active_tab == 'content' ?
@@ -42,6 +44,9 @@ const PageForm = ({schedulingActive, active_tab, editorState, page, actions, val
         : null}
         { active_tab == 'publishing' ?
           <PublishingTab page={page} actions={actions} values={values} schedulingActive={schedulingActive} handleChange={handleChange} />
+        : null}
+        { active_tab == 'config' ?
+          <ConfigTab pageLayouts={pageLayouts} page={page} actions={actions} values={values} handleChange={handleChange} />
         : null}
       </div>
     </div>

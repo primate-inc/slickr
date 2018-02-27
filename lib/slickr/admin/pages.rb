@@ -49,6 +49,15 @@ if defined?(ActiveAdmin)
           redirect_to edit_resource_url and return if resource.valid?
         end
       end
+
+      def destroy
+        Slickr::EventLog.create(action: :delete, eventable: resource, admin_user: current_admin_user) if resource.valid?
+        destroy! do |format|
+          format.html { redirect_to edit_resource_url and return if resource.valid? }
+          format.json { render json: Slickr::Page.roots.not_draft.decorate.to_json(only: [:id, :title], methods: [:expanded, :subtitle, :edit_page_path, :add_child_path, :children, :published, :admin_delete_page_path]) }
+          
+        end
+      end
     end
 
     member_action :change_position, method: :put do
@@ -60,7 +69,6 @@ if defined?(ActiveAdmin)
         resource.move_to_top
       end
     end
-
 
     member_action :publish, method: :put do
       resource.publish! and Slickr::EventLog.create(action: :publish, eventable: resource, admin_user: current_admin_user) if resource.valid?

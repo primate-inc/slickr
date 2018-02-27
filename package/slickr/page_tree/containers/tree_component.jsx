@@ -38,6 +38,11 @@ const moveNode = (node, treeData, nextTreeIndex, actions) => {
     actions.saveNodePosition(node, currentNode.parentNode.id, null)
   }
 }
+
+const deletePage = (path, actions) => {
+  actions.deletePage(path)
+}
+
 const Tree = ({store, pages, actions}) => (
   <div style={{height: "100vh"}}>
     <SortableTree
@@ -64,9 +69,8 @@ const Tree = ({store, pages, actions}) => (
             <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-plus"></use></svg>
             Add Child
           </button>,
-          <button onClick={() =>
-            FollowLink(node.edit_page_path)
-          }>
+          <button onClick={ () => {if(confirm('Delete the page?')) { deletePage(node.admin_delete_page_path, actions)};}}
+          >
             <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-delete"></use></svg>
             Remove
           </button>

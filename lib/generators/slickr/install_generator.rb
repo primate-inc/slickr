@@ -265,11 +265,11 @@ module Slickr
         template "javascript_extensions/page_edit/components/content/additional_entity_inputs.js", "app/javascript/slickr_extensions/page_edit/components/content/additional_entity_inputs.js"
         template "javascript_extensions/page_edit/components/content/editor_state_change.js", "app/javascript/slickr_extensions/page_edit/components/content/editor_state_change.js"
         template "javascript_extensions/page_edit/containers/additional_prop_types.js", "app/javascript/slickr_extensions/page_edit/containers/additional_prop_types.js"
-        template "javascript_extensions/page_edit/decorators/admin_link_component.jsx", "app/javascript/slickr_extensions/page_edit/decorators/admin_link_component.jsx"
-        template "javascript_extensions/page_edit/entity_inputs/admin_link_input.jsx", "app/javascript/slickr_extensions/page_edit/entity_inputs/admin_link_input.jsx"
-        template "javascript_extensions/page_edit/plugins/plugin_list.jsx", "app/javascript/slickr_extensions/page_edit/plugins/plugin_list.jsx"
+        template "javascript_extensions/page_edit/decorators/pdf_link_component.jsx", "app/javascript/slickr_extensions/page_edit/decorators/pdf_link_component.jsx"
+        template "javascript_extensions/page_edit/entity_inputs/pdf_link_input.jsx", "app/javascript/slickr_extensions/page_edit/entity_inputs/pdf_link_input.jsx"
+        template "javascript_extensions/page_edit/plugins/plugin_list.js", "app/javascript/slickr_extensions/page_edit/plugins/plugin_list.js"
         template "javascript_extensions/page_edit/reducers/additional_reducers.js", "app/javascript/slickr_extensions/page_edit/reducers/additional_reducers.js"
-        template "javascript_extensions/page_edit/reducers/loaded_admins.js", "app/javascript/slickr_extensions/page_edit/reducers/loaded_admins.js"
+        template "javascript_extensions/page_edit/reducers/loaded_pdfs.js", "app/javascript/slickr_extensions/page_edit/reducers/loaded_pdfs.js"
 
         puts "Sample megadraft extensions added"
       end

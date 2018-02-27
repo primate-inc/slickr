@@ -37,12 +37,12 @@ class Slickr::Page
   }
 
   def additional_page_edit_paths
-    [:admin_user_index_path]
+    [:admin_pdfs_path]
   end
 
   private
 
-  def admin_user_index_path
-    Rails.application.routes.url_helpers.admin_admin_users_path(type: 'megadraft_admins')
+  def admin_pdfs_path
+    Rails.application.routes.url_helpers.admin_slickr_images_path(type: 'megadraft_pdfs')
   end
 end

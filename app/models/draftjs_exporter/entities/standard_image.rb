@@ -6,6 +6,7 @@ class DraftjsExporter::Entities::StandardImage
        size = data[:data][:display].to_sym
        args = { src: data[:data][:image][:attachment][size][:url] }
      end
+     args[:alt] = data[:data][:image][:data][:alt_text]
      element = parent_element.document.create_element('img', args)
      parent_element.replace(element)
      element

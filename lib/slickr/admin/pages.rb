@@ -18,7 +18,7 @@ if defined?(ActiveAdmin)
     config.batch_actions = false
     decorate_with Slickr::PageDecorator
     before_action :set_paper_trail_whodunnit
-    permit_params :meta_title, :meta_description, :title, :page_intro, :layout, :parent_id, content: {}
+    permit_params :meta_title, :meta_description, :title, :page_intro, :page_header, :layout, :parent_id, content: {}
     form :partial => "edit"
     config.clear_action_items!
 
@@ -55,7 +55,7 @@ if defined?(ActiveAdmin)
         destroy! do |format|
           format.html { redirect_to edit_resource_url and return if resource.valid? }
           format.json { render json: Slickr::Page.roots.not_draft.decorate.to_json(only: [:id, :title], methods: [:expanded, :subtitle, :edit_page_path, :add_child_path, :children, :published, :admin_delete_page_path]) }
-          
+
         end
       end
     end

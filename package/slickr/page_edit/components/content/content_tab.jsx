@@ -14,8 +14,15 @@ export default class ContentTab extends React.Component {
         <ol>
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
-              <label htmlFor="title">Page header</label>
+              <label htmlFor="title">Title</label>
               <input type="text" name="title" value={values.title} onChange={handleChange} />
+              <p className='hint-text'>Navigation title</p>
+            </div>
+          </li>
+          <li className="input string admin-big-title">
+            <div className="edit-wrapper">
+              <label htmlFor="page_header">Page header</label>
+              <input type="text" name="page_header" value={values.page_header} onChange={handleChange} />
               <p className='hint-text'>Your main page header</p>
             </div>
           </li>

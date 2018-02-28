@@ -46,7 +46,7 @@ const PageWrapper = ({schedulingActive, pageLayouts, active_tab, editorState, pa
             <span className="breadcrumb">
               <a href="/admin">Admin</a>
               <span className="breadcrumb_sep"> / </span>
-              <a href="/admin/pages">Pages</a>
+              <a href="/admin/slickr_pages">Pages</a>
               <span className="breadcrumb_sep"> / </span>
               <a href={page.admin_page_path}>{page.title}</a>
               <span className="breadcrumb_sep"> / </span>
@@ -67,6 +67,7 @@ const PageWrapper = ({schedulingActive, pageLayouts, active_tab, editorState, pa
 export default Formik({
   mapPropsToValues: (props) => ({
     title: props.page.title,
+    page_header: props.page.page_header,
     page_intro: props.page.page_intro,
     meta_title: props.page.meta_title,
     meta_description: props.page.meta_description,

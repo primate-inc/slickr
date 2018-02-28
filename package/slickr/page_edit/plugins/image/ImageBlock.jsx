@@ -30,12 +30,12 @@ export default class ImageBlock extends React.Component {
                alt={this.props.data.image.data.alt_text}
           />
         </BlockContent>
-        <BlockData>
+        {/*<BlockData>
           <BlockInput
             placeholder="Caption"
             value={this.props.data.caption}
             onChange={this.handleCaptionChange} />
-        </BlockData>
+        </BlockData>*/}
       </CommonBlock>
     );
   }

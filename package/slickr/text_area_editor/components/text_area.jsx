@@ -11,6 +11,8 @@ import h1 from "../../page_edit/text_editor_icons/h1.jsx"
 import h2 from "../../page_edit/text_editor_icons/h2.jsx"
 import h3 from "../../page_edit/text_editor_icons/h3.jsx"
 import h4 from "../../page_edit/text_editor_icons/h4.jsx"
+import h5 from "../../page_edit/text_editor_icons/h5.jsx"
+import h6 from "../../page_edit/text_editor_icons/h6.jsx"
 import mainAppPlugins from 'slickr_extensions/page_edit/plugins/plugin_list.js'
 import mainAppEntityInputs from 'slickr_extensions/page_edit/components/content/additional_entity_inputs.js'
 import mainAppActions from 'slickr_extensions/page_edit/additional_megadraft_actions.js'
@@ -35,6 +37,8 @@ const slickrActions = [
   {type: "block", label: "H2", style: "header-two", icon: h2},
   {type: "block", label: "H3", style: "header-three", icon: h3},
   {type: "block", label: "H4", style: "header-four", icon: h4},
+  {type: "block", label: "H5", style: "header-five", icon: h5},
+  {type: "block", label: "H6", style: "header-six", icon: h6},
   {type: "block", label: "QT", style: "blockquote", icon: icons.BlockQuoteIcon}
 ];
 

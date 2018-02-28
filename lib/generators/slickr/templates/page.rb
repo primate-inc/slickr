@@ -16,6 +16,8 @@ class Slickr::Page
       'header-two'          => { element: "h2" },
       'header-three'        => { element: "h3" },
       'header-four'         => { element: "h4" },
+      'header-five'         => { element: "h5" },
+      'header-six'         => { element: "h6" },
       'unordered-list-item' => {
         element: 'li',
         wrapper: ['ul', { className: 'public-DraftStyleDefault-ul' }]

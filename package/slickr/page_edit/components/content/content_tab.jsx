@@ -71,7 +71,7 @@ export default class ContentTab extends React.Component {
                 <li className="input string admin-subtitle">
                   <div className="edit-wrapper">
                     <label htmlFor="page_intro">Page introduction</label>
-                    <input type="text" name="page_intro" value={values.page_intro} onChange={handleChange} />
+                    <textarea type="textarea" name="page_intro" value={values.page_intro} onChange={handleChange} />
                     <p className='hint-text'>Short summary of page content</p>
                   </div>
                 </li>

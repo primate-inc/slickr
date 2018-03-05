@@ -8,7 +8,7 @@
     <%= f.inputs do %>
       <%= f.input :title %>
       <%= f.input :parent_id, collection: options_for_select(tree, params[:parent]), as: :select %>
-      <%= f.input :layout, collection: options_for_select(Slickr::Page::LAYOUTS.map{|l| [l.capitalize, l]}) %>
+      <%= f.input :layout, collection: options_for_select(Slickr::Page::LAYOUTS.map{|l| [l[:template].capitalize, l[:template]]}) %>
     <% end %>
     <%= f.actions %>
   <% end %>

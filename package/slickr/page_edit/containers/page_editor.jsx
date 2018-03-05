@@ -24,7 +24,7 @@ const slickrPropTypes = {
   modalIsOpen: PropTypes.bool.isRequired,
   loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
-  pageLayouts: PropTypes.object.isRequired
+  pageLayouts: PropTypes.array.isRequired
 }
 const mergedPropTypes = Object.assign(slickrPropTypes, mainAppPropTypes);
 

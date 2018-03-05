@@ -34,7 +34,7 @@ const PageForm = ({schedulingActive, active_tab, pageLayouts, editorState, page,
       </div>
       <div className='page_editing_area' id='collection_selection'>
         { active_tab == 'content' ?
-          <ContentTab page={page} actions={actions} values={values} handleChange={handleChange} editorState={editorState} />
+          <ContentTab page={page} pageLayouts={pageLayouts} actions={actions} values={values} handleChange={handleChange} editorState={editorState} />
         : null }
         { active_tab == 'meta' ?
           <MetaTab values={values} handleChange={handleChange} />

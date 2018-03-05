@@ -8,7 +8,6 @@ require "draftjs_exporter/entities/link"
 require 'draftjs_exporter/html'
 require "draper"
 require "paper_trail"
-require "webpacker"
 require "carrierwave"
 require "rmagick"
 require "cancancan"

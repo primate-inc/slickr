@@ -18,7 +18,6 @@ group :development, :test do
   gem 'pry'
   gem 'active_admin_slickr', :git => 'https://github.com/primate-inc/active_admin_slickr.git', :branch => 'master'
   # gem 'active_admin_slickr', :path => '/Users/primate/Documents/gems/active_admin_slickr'
-  gem 'webpacker', '~> 3.0.2'
 end
 
 group :development do

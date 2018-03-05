@@ -1,7 +1,11 @@
 require_dependency Slickr::Engine.config.root.join('app', 'models', 'slickr', 'page.rb').to_s
 
 class Slickr::Page
-  LAYOUTS = ["standard", "contact", "landing"]
+  LAYOUTS = [
+    { template: "standard", exclude: [:page_header, :page_subheader, :page_intro] },
+    { template: "contact", exclude: [] },
+    { template: "landing", exclude: [] }
+  ]
 
   DRAFTJS_CONFIG = {
     entity_decorators: {

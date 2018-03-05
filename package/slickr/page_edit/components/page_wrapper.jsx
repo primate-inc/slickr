@@ -68,6 +68,7 @@ export default Formik({
   mapPropsToValues: (props) => ({
     title: props.page.title,
     page_header: props.page.page_header,
+    page_subheader: props.page.page_subheader,
     page_intro: props.page.page_intro,
     meta_title: props.page.meta_title,
     meta_description: props.page.meta_description,

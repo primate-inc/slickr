@@ -72,7 +72,8 @@ export default Formik({
     page_intro: props.page.page_intro,
     meta_title: props.page.meta_title,
     meta_description: props.page.meta_description,
-    layout: props.page.layout
+    layout: props.page.layout,
+    slug: props.page.slug
   }),
   handleSubmit: (values, { props, setErrors, setSubmitting }) => {
     // do stuff with your payload

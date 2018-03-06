@@ -20,9 +20,14 @@ export default class ConfigTab extends React.Component {
               <p className='hint_text'></p>
             </div>
           </li>
+          <li className="input string admin-subtitle">
+            <div className="edit-wrapper">
+              <label htmlFor="slug">Slug</label>
+              <input type="text" name="slug" value={values.slug} onChange={handleChange} />
+            </div>
+          </li>
         </ol>
       </fieldset>
     );
   }
 }
-

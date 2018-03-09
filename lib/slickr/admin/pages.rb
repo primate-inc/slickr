@@ -20,7 +20,7 @@ if defined?(ActiveAdmin)
     before_action :set_paper_trail_whodunnit
     permit_params :meta_title, :meta_description, :title, :page_intro,
                   :page_header, :page_subheader, :layout, :parent_id,
-                  :slug, content: {}
+                  :slug, :page_header_image, content: {}
     form :partial => "edit"
     config.clear_action_items!
 

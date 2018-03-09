@@ -33,6 +33,7 @@ export default class BlockButton extends React.Component {
           actions={this.props.actions}
           loadedImages={this.props.loadedImages}
           editorState={this.props.editorState}
+          choosingPageHeaderImage={this.props.choosingPageHeaderImage}
         />
       </div>
     );

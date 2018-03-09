@@ -75,11 +75,27 @@
     fieldset {
       ol {
         li {
-          &.password, &.email, &.string, &.select, &.text, &.number {
+          &.password, &.email, &.string, &.select, &.text, &.number, &.file  {
             .hint-text {
               @extend .para_small;
               margin: 0; padding: 0 0.5em;
               color: $grey;
+            }
+            textarea {
+              resize: none;
+            }
+
+            .inline-hints img {
+              margin-left: 0 !important;
+            }
+          }
+          &.file {
+            input[type='file'] {
+              padding: 8px 8px 8px .5em !important; height: 60px !important;
+
+              &:before {
+                content: 'Select' !important;
+              }
             }
           }
           .edit-wrapper {

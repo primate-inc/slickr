@@ -79,6 +79,8 @@ export default class ImagePickerModal extends React.Component {
             actions={this.props.actions}
             images={images}
             editorState={this.props.editorState}
+            pageHeaderImage={this.props.pageHeaderImage}
+            choosingPageHeaderImage={this.props.choosingPageHeaderImage}
           />
         </div>,
         <div key='2' id="index_footer">

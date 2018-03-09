@@ -167,6 +167,14 @@ export const toggleImagePicker = () => {
   }
 }
 
+export const toggleChoosingPageHeaderImage = () => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: "TOGGLE_CHOOSING_PAGE_HEADER_IMAGE"
+    })
+  }
+}
+
 export const loadImages = (page) => {
   return function(dispatch, getState) {
     let params = {};
@@ -209,6 +217,15 @@ export const changeEditorState = editorState => {
     dispatch({
       type: "CHANGE_EDITOR_STATE",
       payload: editorState
+    })
+  }
+}
+
+export const updatePageHeaderImage = imageData => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: "CHOOSE_PAGE_HEADER_IMAGE",
+      payload: imageData
     })
   }
 }

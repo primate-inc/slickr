@@ -8,7 +8,8 @@ export default class ContentTab extends React.Component {
 
     this.state = {
       excludeList: [],
-      setExcludeList: false
+      setExcludeList: false,
+      headerImagePath: this.props.page.page_header_image
     }
   }
 
@@ -16,11 +17,20 @@ export default class ContentTab extends React.Component {
     this.setState({ setExcludeList: false })
   }
 
+  openImagePicker = () => (e) => {
+    e.preventDefault();
+    const page = Object.keys(this.props.loadedImages).length === 0 ? 1 : (this.props.loadedImages.pagination_info.current_page + 1)
+    this.props.actions.toggleChoosingPageHeaderImage();
+    this.props.actions.toggleImagePicker();
+    if(Object.keys(this.props.loadedImages).length === 0) { this.props.actions.loadImages(page); }
+  }
+
   render() {
     const page = this.props.page
     const actions = this.props.actions
     const editorState = this.props.editorState
     const handleChange = this.props.handleChange
+    const setFieldValue = this.props.setFieldValue
     const values = this.props.values
     if(this.props.pageLayouts.length !== 0 && !this.state.setExcludeList) {
       this.setState({
@@ -47,6 +57,33 @@ export default class ContentTab extends React.Component {
                     <label htmlFor="page_header">Page header</label>
                     <input type="text" name="page_header" value={values.page_header} onChange={handleChange} />
                     <p className='hint-text'>Your main page header</p>
+                  </div>
+                </li>
+              )
+            }
+          })()}
+          {(() => {
+            if(!this.state.excludeList.includes("page_header_image")) {
+              let image = this.props.page.page_header_image
+              return (
+                <li className="file input admin-big-title">
+                  <div className="edit-wrapper">
+                    <label htmlFor="page_header_image">Page header image</label>
+                    <input type="file" onClick={this.openImagePicker()} />
+                    {(() => {
+                      if(this.props.page.page_header_image !== null) {
+                        if(this.state.headerImagePath !== this.props.page.page_header_image) {
+                          setFieldValue('page_header_image', image)
+                          this.setState({headerImagePath: this.props.page.page_header_image})
+                        }
+                        return (
+                          <p className="inline-hints">
+                            <img src={this.props.page.page_header_image} />
+                          </p>
+                        )
+                      }
+                    })()}
+                    <p className='hint-text'>Your main page header image</p>
                   </div>
                 </li>
               )

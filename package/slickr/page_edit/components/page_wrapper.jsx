@@ -37,7 +37,7 @@ const unschedule = function(actions) {
   actions.unschedule()
 }
 
-const PageWrapper = ({schedulingActive, pageLayouts, active_tab, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset}) => {
+const PageWrapper = ({schedulingActive, pageLayouts, active_tab, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, setFieldValue, handleBlur, handleSubmit, handleReset, loadedImages}) => {
   return(
     <div >
       <form onSubmit={handleSubmit} id='page_edit_content_grid'>
@@ -58,7 +58,7 @@ const PageWrapper = ({schedulingActive, pageLayouts, active_tab, editorState, pa
           </div>
           <SchedulingModal actions={actions} modalIsOpen={schedulingActive} />
         </div>
-        <PageForm actions={actions} pageLayouts={pageLayouts} handleChange={handleChange.bind(this)} active_tab={active_tab} editorState={editorState} page={page} values={values} />
+        <PageForm actions={actions} pageLayouts={pageLayouts} setFieldValue={setFieldValue.bind(this)} handleChange={handleChange.bind(this)} active_tab={active_tab} editorState={editorState} page={page} values={values} loadedImages={loadedImages} />
       </form>
     </div>
   )
@@ -68,6 +68,7 @@ export default Formik({
   mapPropsToValues: (props) => ({
     title: props.page.title,
     page_header: props.page.page_header,
+    page_header_image: props.page.page_header_image,
     page_subheader: props.page.page_subheader,
     page_intro: props.page.page_intro,
     meta_title: props.page.meta_title,

@@ -23,7 +23,7 @@ const tabClasses = (tabName, active_tab) => {
 }
 
 
-const PageForm = ({schedulingActive, active_tab, pageLayouts, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset}) => {
+const PageForm = ({schedulingActive, active_tab, pageLayouts, editorState, page, actions, values, touched, errors, dirty, isSubmitting, handleChange, handleBlur, handleSubmit, handleReset, loadedImages, setFieldValue}) => {
   return(
     <div id='page_content_form' onSubmit={handleSubmit}>
       <div id="resource_tabs">
@@ -34,7 +34,7 @@ const PageForm = ({schedulingActive, active_tab, pageLayouts, editorState, page,
       </div>
       <div className='page_editing_area' id='collection_selection'>
         { active_tab == 'content' ?
-          <ContentTab page={page} pageLayouts={pageLayouts} actions={actions} values={values} handleChange={handleChange} editorState={editorState} />
+          <ContentTab page={page} pageLayouts={pageLayouts} actions={actions} values={values} handleChange={handleChange} setFieldValue={setFieldValue} editorState={editorState} loadedImages={loadedImages} />
         : null }
         { active_tab == 'meta' ?
           <MetaTab values={values} handleChange={handleChange} />

@@ -71,12 +71,13 @@ export default class ContentTab extends React.Component {
                     <label htmlFor="page_header_image">Page header image</label>
                     <input type="file" onClick={this.openImagePicker()} />
                     {(() => {
-                      if(this.props.page.page_header_image !== null) {
+                      let image = this.props.page.page_header_image
+
+                      if(!(image == null)) {
                         if(this.state.headerImagePath !== this.props.page.page_header_image) {
                           setFieldValue('page_header_image', image)
                           this.setState({headerImagePath: this.props.page.page_header_image})
                         }
-                        let image = this.props.page.page_header_image
                         let splitFile = this.props.page.page_header_image.split('/');
                         let fileName = splitFile[splitFile.length - 1];
                         let fileNameWithImageSize = image.replace(fileName, `small_${fileName}`)

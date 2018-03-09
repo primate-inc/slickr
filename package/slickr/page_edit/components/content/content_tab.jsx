@@ -76,9 +76,13 @@ export default class ContentTab extends React.Component {
                           setFieldValue('page_header_image', image)
                           this.setState({headerImagePath: this.props.page.page_header_image})
                         }
+                        let image = this.props.page.page_header_image
+                        let splitFile = this.props.page.page_header_image.split('/');
+                        let fileName = splitFile[splitFile.length - 1];
+                        let fileNameWithImageSize = image.replace(fileName, `small_${fileName}`)
                         return (
                           <p className="inline-hints">
-                            <img src={this.props.page.page_header_image} />
+                            <img src={fileNameWithImageSize} />
                           </p>
                         )
                       }

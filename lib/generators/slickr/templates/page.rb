@@ -36,9 +36,9 @@ class Slickr::Page
       'atomic'              => { element: 'div' }
     },
     style_map: {
-      'UNDERLINE'           => { fontStyle: 'underline' },
+      'UNDERLINE'           => { textDecoration: 'underline' },
       'ITALIC'              => { fontStyle: 'italic' },
-      'BOLD'                => { fontStyle: 'bold' }
+      'BOLD'                => { fontWeight: 'bold' }
     }
   }
 

@@ -31,6 +31,7 @@ module Slickr
         migration_template "migrations/add_roles_names_and_avatars_to_admin_users.rb", "db/migrate/add_roles_names_and_avatars_to_admin_users.rb"
         migration_template "migrations/add_subheader_to_slickr_pages.rb", "db/migrate/add_subheader_to_slickr_pages.rb"
         migration_template "migrations/add_header_image_to_slickr_pages.rb", "db/migrate/add_header_image_to_slickr_pages.rb"
+        migration_template "migrations/rename_slickr_pages_og_title_2_and_og_description_2.rb", "db/migrate/rename_slickr_pages_og_title_2_and_og_description_2.rb"
 
         puts "Database migrations added"
       end

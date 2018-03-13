@@ -5,12 +5,13 @@ export default class MetaTab extends React.Component {
   render() {
     const handleChange = this.props.handleChange
     const values = this.props.values
+    console.log(this.props)
     return (
       <fieldset>
         <ol>
           <li className="input string admin-subtitle">
             <div className="edit-wrapper">
-              <label htmlFor="og_title">Facebook post tile</label>
+              <label htmlFor="og_title">Facebook post title</label>
               <input type="text" name="og_title" value={values.og_title} onChange={handleChange} />
             </div>
           </li>
@@ -23,14 +24,14 @@ export default class MetaTab extends React.Component {
           </li>
           <li className="input string admin-subtitle">
             <div className="edit-wrapper">
-              <label htmlFor="og_title_2">Twitter post tile</label>
-              <input type="text" name="og_title_2" value={values.og_title_2} onChange={handleChange} />
+              <label htmlFor="twitter_title">Twitter post title</label>
+              <input type="text" name="twitter_title" value={values.twitter_title} onChange={handleChange} />
             </div>
           </li>
           <li className="input text">
             <div className="edit-wrapper">
-              <label htmlFor="og_description_2">Twitter post text</label>
-              <textarea name="og_description_2" value={values.og_description_2} onChange={handleChange} />
+              <label htmlFor="twitter_description">Twitter post text</label>
+              <textarea name="twitter_description" value={values.twitter_description} onChange={handleChange} />
               <p className='hint_text'></p>
             </div>
           </li>

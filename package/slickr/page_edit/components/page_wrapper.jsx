@@ -73,6 +73,10 @@ export default Formik({
     page_intro: props.page.page_intro,
     meta_title: props.page.meta_title,
     meta_description: props.page.meta_description,
+    og_title: props.page.og_title,
+    og_description: props.page.og_description,
+    twitter_title: props.page.twitter_title,
+    twitter_description: props.page.twitter_description,
     layout: props.page.layout,
     slug: props.page.slug
   }),

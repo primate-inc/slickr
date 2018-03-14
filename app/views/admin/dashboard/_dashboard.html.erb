@@ -26,7 +26,7 @@
           action: Verbs::Conjugator.conjugate(e.action, :tense => :past, :aspect => :perfective),
           user: e.admin_user.display_name,
           class: e.eventable.class.name.downcase.gsub("slickr::", ""),
-          title: e.eventable.display_title)
+          title: e.eventable.try(:display_title))
         %>
       </section>
       <section class="dashboard__events-item__alert">

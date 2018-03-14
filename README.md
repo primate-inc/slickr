@@ -229,7 +229,7 @@ In order to use the DraftJS output from Megadraft there is a helper available to
 use in your views:
 
 ```html
-<%= draftjs_to_html(@page, :body_megadraft) %>
+<%= draftjs_to_html(@slickr_page, :body_megadraft) %>
 ```
 
 replacing the instance variable with that generated in your controller and the

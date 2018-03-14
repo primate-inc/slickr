@@ -1,0 +1,16 @@
+<meta name="title" content='<%= @slickr_page.meta_title %>'>
+<meta name="description" content='<%= @slickr_page.meta_description %>'>
+
+<!-- Open Graph data for Facebook -->
+<meta content='article' property='og:type'>
+<meta content='<%= @slickr_page.meta_title %>' property='og:site_name'>
+<meta content='<%= @slickr_page.og_title %>' property='og:title'>
+<meta content='<%= @slickr_page.og_description %>' property='og:description'>
+<meta content='<%= og_url %>' property='og:url'>
+<meta content='<%= og_image %>' property='og:image'>
+
+<!-- Twitter Card data -->
+<meta content='summary' name='twitter:card'>
+<meta content='<%= @slickr_page.twitter_title %>' name='twitter:title'>
+<meta content='<%= @slickr_page.twitter_description %>' name='twitter:description'>
+<meta content='<%= twitter_image %>' name='twitter:image'>

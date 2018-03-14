@@ -13,10 +13,14 @@ module SlickrHelper
     form_json(page)
   end
 
-  def time_of_day_greeting(name)
-    time_greeting = greeting_wording
-    ending = name.nil? ? '!' : ", #{name}!"
-    time_greeting + ending
+  def main_navigation_pages
+    home_page = Slickr::Page.find_by_slug('home')
+    home_page.nil? ? [] : home_page.children.where(aasm_state: :published).order(:position)
+  end
+
+  def footer_navigation_pages
+    footer = Slickr::Page.find_by_slug('footer')
+    footer.nil? ? [] : footer.children.where(aasm_state: :published).order(:position)
   end
 
   private
@@ -56,34 +60,10 @@ module SlickrHelper
   end
 
   def form_json(inst)
-    inst.to_json(only: [:admin_image_index_path, :additional_page_edit_paths],
-                       methods: [
-                        :admin_image_index_path,
-                        inst.additional_page_edit_paths
-                      ].flatten)
-  end
-
-  def greeting_wording
-    now = Time.now
-    today = Date.today.to_time
-
-    early_morning = today.beginning_of_day
-    morning = today.beginning_of_day + 7.hours
-    noon = today.noon
-    evening = today.change( hour: 17 )
-    night = today.change( hour: 21 )
-    tomorrow = today.tomorrow
-
-    if (early_morning..morning).cover? now
-      'Early bird gets the worm'
-    elsif (morning..noon).cover? now
-      'Good Morning'
-    elsif (noon..evening).cover? now
-      'Good Afternoon'
-    elsif (evening..night).cover? now
-      'Good Evening'
-    elsif (night..tomorrow).cover? now
-      "Keep burning that midnight oil"
-    end
+    inst.to_json(only:  [:admin_image_index_path, :additional_page_edit_paths],
+                        methods: [
+                          :admin_image_index_path,
+                          inst.additional_page_edit_paths
+                        ].flatten)
   end
 end

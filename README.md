@@ -1,6 +1,8 @@
 # Slickr
 Short description and motivation.
 
+[Sitemap configuration](docs/sitemap.md)
+
 ## Usage
 How to use my plugin.
 

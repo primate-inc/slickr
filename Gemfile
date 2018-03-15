@@ -13,7 +13,6 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 gem 'activeadmin', github: 'activeadmin'
-gem 'sitemap_generator'
 
 group :development, :test do
   gem 'pry'

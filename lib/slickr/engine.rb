@@ -13,6 +13,7 @@ require "rmagick"
 require "cancancan"
 require "verbs"
 require "activeadmin_settings_cached"
+require "sitemap_generator"
 
 module Slickr
   class Engine < ::Rails::Engine

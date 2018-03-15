@@ -1,0 +1,22 @@
+<div>
+  <%= semantic_form_for :settings, method: :post, url: {action: :update}, html: {id: 'slickr_settings'} do |f| %>
+    <fieldset class="inputs">
+      <ol>
+        <% settings_model.settings.each_pair do |name, _| %>
+          <% field_name = settings_model.field_name(name) %>
+          <li class='string input stringish slickr_settings_wrapper'>
+            <%= f.label field_name, t("settings.attributes.#{field_name}", default: field_name.humanize), class: 'label' %>
+            <%= f.input field_name, settings_model.field_options(field_name, name) %>
+          </li>
+        <% end%>
+      </ol>
+    </fieldset>
+    <fieldset class="actions">
+      <ol>
+        <li class="action input_action " id="admin_user_submit_action">
+          <%= f.submit %>
+        </li>
+      </ol>
+    </fieldset>
+  <% end %>
+</div>

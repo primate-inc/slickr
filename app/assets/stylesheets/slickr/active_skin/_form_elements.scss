@@ -5,6 +5,14 @@
     margin-top: 2em !important; padding: 2em !important;
     border-bottom: 1px solid $grey_lightest !important;
 
+    ol {
+      li {
+        &.slickr_settings_wrapper {
+          margin-bottom: .25em !important;
+        }
+      }
+    }
+
     // ol {
     //   img {
     //     max-width: 30em;

@@ -72,4 +72,15 @@
   .display-avatar {
     @extend %display-avatar;
   }
+  &.index.admin_settings {
+    #wrapper #active_admin_content #main_content_wrapper {
+      border-top-width: 0;
+      -ms-grid-row: 1;
+      grid-row: content;
+      background-color: white !important;
+      border-top: $grey_lightest;
+      border-top-width: .1em;
+      border-top-style: solid;
+    }
+  }
 }

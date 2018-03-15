@@ -12,6 +12,7 @@ require "carrierwave"
 require "rmagick"
 require "cancancan"
 require "verbs"
+require "activeadmin_settings_cached"
 
 module Slickr
   class Engine < ::Rails::Engine

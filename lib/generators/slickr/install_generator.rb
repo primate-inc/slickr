@@ -32,6 +32,7 @@ module Slickr
         migration_template "migrations/add_subheader_to_slickr_pages.rb", "db/migrate/add_subheader_to_slickr_pages.rb"
         migration_template "migrations/add_header_image_to_slickr_pages.rb", "db/migrate/add_header_image_to_slickr_pages.rb"
         migration_template "migrations/rename_slickr_pages_og_title_2_and_og_description_2.rb", "db/migrate/rename_slickr_pages_og_title_2_and_og_description_2.rb"
+        migration_template "migrations/create_slickr_settings.rb", "db/migrate/create_slickr_settings.rb"
 
         puts "Database migrations added"
       end
@@ -237,6 +238,12 @@ module Slickr
         template "ability.rb", "app/models/ability.rb"
 
         puts "Slickr yml for webpacker"
+      end
+
+      def slickr_setting_yml
+        template "setting.yml", "config/setting.yml"
+
+        puts "Slickr Setting yml"
       end
 
       def extend_slickr_page

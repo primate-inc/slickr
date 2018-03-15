@@ -39,4 +39,5 @@ Gem::Specification.new do |s|
   s.add_dependency "draftjs_exporter", "~> 0.0.7"
   s.add_dependency "draper", "~> 3.0.0"
   s.add_dependency "verbs", "~> 2.1.4"
+  s.add_dependency "activeadmin_settings_cached", "~> 2.2.0"
 end

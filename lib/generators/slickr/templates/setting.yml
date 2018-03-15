@@ -1,0 +1,21 @@
+# config/setting.yml for rails-settings-cached
+defaults: &defaults
+  site_title: ''
+  domain: ''
+  google_analytics_code: ''
+  facebook_page: ''
+  linkedin_page: ''
+  twitter_page: ''
+  instagram_page: ''
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+production:
+  <<: *defaults

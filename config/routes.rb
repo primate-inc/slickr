@@ -18,7 +18,7 @@ module SlickrPageRouteHelper
     slug_sections = request.split('/').reject(&:empty?)
     matching_page = Slickr::Page.where(aasm_state: :published, slug: slug_sections.last)[0]
     return false if matching_page.nil?
-    tree_sections = matching_page.self_and_ancestors.pluck(:slug).reverse - [matching_page.root.slug]
+    tree_sections = matching_page.root? ? [matching_page.slug] : matching_page.self_and_ancestors.pluck(:slug).reverse - [matching_page.root.slug]
     return slug_sections == tree_sections
   end
 end

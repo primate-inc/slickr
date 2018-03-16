@@ -14,6 +14,7 @@ require "cancancan"
 require "verbs"
 require "activeadmin_settings_cached"
 require "sitemap_generator"
+require "activeadmin_reorderable"
 
 module Slickr
   class Engine < ::Rails::Engine

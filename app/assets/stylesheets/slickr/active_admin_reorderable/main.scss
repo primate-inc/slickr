@@ -1,0 +1,39 @@
+.logged_in {
+  #wrapper {
+    .index_as_reorderable_table {
+      @extend %index_table !optional;
+
+      table { margin-bottom: 1.5em; }
+
+      .aa-reorderable {
+        .reorder-handle {
+          content: '....';
+          width: 10px;
+          height: 25px;
+          display: inline-block;
+          overflow: hidden;
+          line-height: 5px;
+          cursor: move;
+          vertical-align: middle;
+          margin-top: -.3em; margin-right: .3em;
+          font-size: 16px;
+          letter-spacing: 2px;
+          color: $blue;
+
+          &:before {
+            content: '.. .. .. ..';
+            color: $blue;
+          }
+        }
+      }
+    }
+
+    @include respond-to-less-than($large_break) {
+      .index_as_table.index_as_reorderable_table {
+        .index_table {
+          margin-bottom: 1.5em;
+        }
+      }
+    }
+  }
+}

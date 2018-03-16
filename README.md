@@ -7,20 +7,22 @@ Short description and motivation.
 How to use my plugin.
 
 ## Installation
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
 ```ruby
+gem 'active_admin_slickr'
 gem 'slickr'
 ```
 
 And then execute:
 ```bash
-$ bundle
+bundle
 ```
 
-Or install it yourself as:
+Or install them yourself as:
 ```bash
-$ gem install slickr
+gem install active_admin_slickr
+gem install slickr
 ```
 
 ## Migrations
@@ -28,7 +30,7 @@ $ gem install slickr
 After installing the gem run:
 
 ```bash
-$ rake db:migrate
+rake db:migrate
 ```
 
 ## CMS
@@ -71,6 +73,32 @@ then
 
 ```bash
 yarn install
+```
+
+## Stylesheets
+
+Firstly, please comment out the default Active Admin stylesheets.
+
+```css
+// Active Admin's got SASS!
+// @import "active_admin/mixins";
+// @import "active_admin/base";
+```
+
+Then add the following in `active_admin.scss`:
+
+```css
+@import 'active_admin_slickr';
+@import 'slickr/slickr_styles';
+```
+
+## Javascript
+- In the `active_admin.js` file, you require:
+
+```javascript
+//= require active_admin/base
+//= require active_admin_slickr
+//= require slickr/slickr_javascript
 ```
 
 ## Roles

@@ -1473,6 +1473,12 @@ copy-concurrently@^1.0.0:
     rimraf "^2.5.4"
     run-queue "^1.0.0"
 
+copy-dir@0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/copy-dir/-/copy-dir-0.0.8.tgz#3f4fe3a1c27bed420bd30ecdcba3cdc98d6397c4"
+  dependencies:
+    mkdir-p "~0.0.4"
+
 core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
@@ -3068,6 +3074,10 @@ lodash.isequal@^4.4.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
 
+lodash.isfunction@3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.isfunction/-/lodash.isfunction-3.0.8.tgz#4db709fc81bc4a8fd7127a458a5346c5cdce2c6b"
+
 lodash.keys@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
@@ -3299,6 +3309,10 @@ mixin-object@^2.0.1:
   dependencies:
     for-in "^0.1.3"
     is-extendable "^0.1.1"
+
+mkdir-p@~0.0.4:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/mkdir-p/-/mkdir-p-0.0.7.tgz#24c5dbe26da3a99ef158a1eef9a5c2dd9de5683c"
 
 "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.1"
@@ -3557,6 +3571,14 @@ osenv@0, osenv@^0.1.4:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
+
+overwrite@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/overwrite/-/overwrite-1.0.3.tgz#63090b15ed2437474a974f76e380b10ad9ebd4ec"
+  dependencies:
+    copy-dir "0.0.8"
+    lodash.isfunction "3.0.8"
+    rimraf "2.5.2"
 
 p-finally@^1.0.0:
   version "1.0.0"
@@ -4970,6 +4992,12 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6.1:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
     glob "^7.0.5"
+
+rimraf@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.5.2.tgz#62ba947fa4c0b4363839aefecd4f0fbad6059726"
+  dependencies:
+    glob "^7.0.0"
 
 ripemd160@^2.0.0, ripemd160@^2.0.1:
   version "2.0.1"

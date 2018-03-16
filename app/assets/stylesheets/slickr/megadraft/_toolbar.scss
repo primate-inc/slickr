@@ -49,6 +49,16 @@
         left: -50%;
         position: relative;
         transition: background-color 0.2s ease-in-out;
+
+        .link_editor {
+          padding-bottom: 16px;
+          input {
+            color: white !important;
+          }
+          .toolbar__item button {
+            padding-top: 24px;
+          }
+        }
     }
 
     &__list {

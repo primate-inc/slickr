@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {MegadraftEditor, MegadraftIcons} from "megadraft";
 import {editorStateToJSON, DraftJS} from "megadraft";
-import LinkInput from 'megadraft/lib/entity_inputs/LinkInput'
+import LinkInput from '../../page_edit/components/content/megadraft_link_input_override.js'
 import ImagePlugin from "../../page_edit/plugins/image/plugin.jsx";
 import VimeoPlugin from "../../page_edit/plugins/vimeo/plugin.jsx";
 import YouTubePlugin from "../../page_edit/plugins/you_tube/plugin.jsx";

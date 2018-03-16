@@ -90,6 +90,45 @@ ActiveAdmin.register AdminUser, as: "Users" do
 end
 ```
 
+## Model Ordering
+
+Slickr uses acts_as_list for ordering. In order to use it in you app you must first
+add a ```position``` calumn to the require table:
+
+```ruby
+rails g migration AddPositionToAdminUser position:integer
+rake db:migrate
+```
+
+Then add acts_as_list to your model (and also a default scope if you need it):
+
+```ruby
+class AdminUser < ActiveRecord::Base
+  acts_as_list
+  default_scope { order(position: :asc) }
+end
+```
+
+In your Active Admin model you then need to add the following:
+
+```ruby
+ActiveAdmin.register AdminUser do
+  config.sort_order = 'position_asc'
+  config.paginate   = false
+  reorderable
+
+  ...
+
+  index as: :reorderable_table do
+    ...
+  end
+
+  ...
+end
+```
+
+That's it, you now have reorderable tables.
+
 ## Extending Megadraft
 
 In text editing mode, Megadraft has a range of options such as bold, italic,

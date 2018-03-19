@@ -11,26 +11,26 @@ export default class MetaTab extends React.Component {
         <ol>
           <li className="input string admin-subtitle">
             <div className="edit-wrapper">
-              <label htmlFor="og_title">Facebook post title</label>
+              <label htmlFor="og_title">Facebook og title</label>
               <input type="text" name="og_title" value={values.og_title} onChange={handleChange} />
             </div>
           </li>
           <li className="input text">
             <div className="edit-wrapper">
-              <label htmlFor="og_description">Facebook post text</label>
+              <label htmlFor="og_description">Facebook og description</label>
               <textarea name="og_description" value={values.og_description} onChange={handleChange} />
               <p className='hint_text'></p>
             </div>
           </li>
           <li className="input string admin-subtitle">
             <div className="edit-wrapper">
-              <label htmlFor="twitter_title">Twitter post title</label>
+              <label htmlFor="twitter_title">Twitter title</label>
               <input type="text" name="twitter_title" value={values.twitter_title} onChange={handleChange} />
             </div>
           </li>
           <li className="input text">
             <div className="edit-wrapper">
-              <label htmlFor="twitter_description">Twitter post text</label>
+              <label htmlFor="twitter_description">Twitter description</label>
               <textarea name="twitter_description" value={values.twitter_description} onChange={handleChange} />
               <p className='hint_text'></p>
             </div>

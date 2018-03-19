@@ -1,6 +1,6 @@
 # config/setting.yml for rails-settings-cached
 defaults: &defaults
-  ite_title: ''
+  site_title: ''
   domain: ''
   google_analytics_identifier: ''
   meta_description: ''

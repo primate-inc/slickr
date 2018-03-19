@@ -27,6 +27,12 @@ module Slickr
       ActiveAdmin.application.load_paths += Dir[File.dirname(__FILE__) + "/admin"]
     end
 
+    # load the Slickr Settings everytime
+    initializer :extend_application_controller do
+      ActionController::Base.send :include, Slickr::EngineController
+      ActionController::Base.send :before_action, :fetch_slickr_settings
+    end
+
     # append the engine migrations to the migrations in the core application
     # initializer :append_migrations do |app|
     #   unless app.root.to_s.match(root.to_s)

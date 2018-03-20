@@ -71,7 +71,7 @@ export default Formik({
     page_header_image: props.page.page_header_image,
     page_subheader: props.page.page_subheader,
     page_intro: props.page.page_intro,
-    meta_title: props.page.meta_title,
+    page_title: props.page.page_title,
     meta_description: props.page.meta_description,
     og_title: props.page.og_title,
     og_description: props.page.og_description,

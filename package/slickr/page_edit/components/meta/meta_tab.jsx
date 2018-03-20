@@ -10,8 +10,8 @@ export default class MetaTab extends React.Component {
         <ol>
           <li className="input string admin-subtitle">
             <div className="edit-wrapper">
-              <label htmlFor="meta_title">Page title</label>
-              <input type="text" name="meta_title" value={values.meta_title} onChange={handleChange} />
+              <label htmlFor="page_title">Page title</label>
+              <input type="text" name="page_title" value={values.page_title} onChange={handleChange} />
             </div>
           </li>
           <li className="input string">

@@ -1,7 +1,15 @@
 include SlickrHelper
 if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::Page do
+    decorate_with Slickr::PageDecorator
+    before_action :set_paper_trail_whodunnit
+    config.filters = false
+    config.batch_actions = false
     menu priority: 1
+    permit_params :page_title, :meta_description, :title, :page_intro,
+                  :page_header, :page_subheader, :layout, :parent_id,
+                  :slug, :page_header_image, :og_title, :og_description,
+                  :twitter_title, :twitter_description, content: {}
 
     breadcrumb do
       if params[:action] == 'index'
@@ -14,14 +22,6 @@ if defined?(ActiveAdmin)
       end
     end
 
-    config.filters = false
-    config.batch_actions = false
-    decorate_with Slickr::PageDecorator
-    before_action :set_paper_trail_whodunnit
-    permit_params :meta_title, :meta_description, :title, :page_intro,
-                  :page_header, :page_subheader, :layout, :parent_id,
-                  :slug, :page_header_image, :og_title, :og_description,
-                  :twitter_title, :twitter_description, content: {}
     form :partial => "edit"
     config.clear_action_items!
 

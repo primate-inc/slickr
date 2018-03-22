@@ -121,7 +121,7 @@ end
 ## Model Ordering
 
 Slickr uses acts_as_list for ordering. In order to use it in you app you must first
-add a ```position``` calumn to the require table:
+add a ```position``` column to the require table:
 
 ```ruby
 rails g migration AddPositionToAdminUser position:integer

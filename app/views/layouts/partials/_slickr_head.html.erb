@@ -1,5 +1,5 @@
 <% if @slickr_page %>
-  <title><%= slickr_meta_title %></title>
+  <title><%= slickr_page_title %></title>
   <meta name="description" content='<%= @slickr_page.meta_description %>'>
 
   <!-- Open Graph data for Facebook -->
@@ -17,7 +17,7 @@
   <meta content='<%= @slickr_page.twitter_description %>' name='twitter:description'>
   <meta content='' name='twitter:image'>
 <% else %>
-  <title><%= slickr_meta_title %></title>
+  <title><%= slickr_page_title %></title>
   <meta name="description" content='<%= @slickr_settings[:meta_description] %>'>
 
   <!-- Open Graph data for Facebook -->

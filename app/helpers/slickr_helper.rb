@@ -4,9 +4,9 @@
 module SlickrHelper
   include ActionView::Helpers::OutputSafetyHelper
 
-  def slickr_meta_title
+  def slickr_page_title
     [
-      @slickr_meta_additional.try(:[], :meta_title),
+      @slickr_meta_additional.try(:[], :page_title),
       @slickr_settings.try(:[], :site_title)
     ].reject(&:blank?).join(' - ')
   end

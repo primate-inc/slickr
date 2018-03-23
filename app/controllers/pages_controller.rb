@@ -6,6 +6,18 @@ class PagesController < ApplicationController
     slug =  params[:slug].class == Symbol ? params[:slug] : params[:slug].split('/').last
     @slickr_page = Slickr::Page.where(slug: slug, aasm_state: :published).first
     @slickr_page_title = @slickr_page.page_title
+    og_title = @slickr_page.og_title.present? ? @slickr_page.og_title : @slickr_page.page_title
+    og_description = @slickr_page.og_description.present? ? @slickr_page.og_description : @slickr_page.meta_description
+    @slickr_meta_override = {
+                              meta_description: @slickr_page.meta_description,
+                              og_title: og_title,
+                              og_description: og_description,
+                              og_url: request.original_url,
+                              og_image: '',
+                              twitter_title: (@slickr_page.twitter_title.present? ? @slickr_page.twitter_title : og_title),
+                              twitter_description: (@slickr_page.twitter_description.present? ? @slickr_page.twitter_title : og_description),
+                              twitter_image: ''
+                            }
     raise AbstractController::ActionNotFound.new unless @slickr_page
     render layout: false
   end

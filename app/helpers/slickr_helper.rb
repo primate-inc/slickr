@@ -11,6 +11,11 @@ module SlickrHelper
     ].reject(&:blank?).join(' - ')
   end
 
+  def slickr_meta_data(attr)
+    meta = @slickr_settings.symbolize_keys.merge(@slickr_meta_override || {})
+    meta[attr].present? ? meta[attr] : ''
+  end
+
   def draftjs_to_html(instance, field)
     exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)
     content = if instance.send(field).class == String

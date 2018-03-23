@@ -1,39 +1,20 @@
 <title><%= slickr_page_title %></title>
-<% if @slickr_page %>
-  <meta name="description" content='<%= @slickr_page.meta_description %>'>
+<meta name="description" content='<%= slickr_meta_data(:meta_description) %>'>
 
-  <!-- Open Graph data for Facebook -->
-  <meta content='article' property='og:type'>
-  <meta content='<%= @slickr_settings[:site_title] %>' property='og:site_name'>
-  <meta content='<%= @slickr_page.og_title %>' property='og:title'>
-  <meta content='<%= @slickr_page.og_description %>' property='og:description'>
-  <meta content='<%= @slickr_settings[:domain].gsub(/\/+$/, '') %>/<%= params[:slug] %>' property='og:url'>
-  <meta content='' property='og:image'>
-
-
-  <!-- Twitter Card data -->
-  <meta content='summary' name='twitter:card'>
-  <meta content='<%= @slickr_page.twitter_title %>' name='twitter:title'>
-  <meta content='<%= @slickr_page.twitter_description %>' name='twitter:description'>
-  <meta content='' name='twitter:image'>
-<% else %>
-  <meta name="description" content='<%= @slickr_settings[:meta_description] %>'>
-
-  <!-- Open Graph data for Facebook -->
-  <meta content='article' property='og:type'>
-  <meta content='<%= @slickr_settings[:site_title] %>' property='og:site_name'>
-  <meta content='<%= @slickr_settings[:facebook_og_title] %>' property='og:title'>
-  <meta content='<%= @slickr_settings[:facebook_og_description] %>' property='og:description'>
-  <meta content='' property='og:url'>
-  <meta content='' property='og:image'>
+<!-- Open Graph data for Facebook -->
+<meta content='<%= slickr_meta_data(:og_type) %>' property='og:type'>
+<meta content='<%= slickr_meta_data(:site_title) %>' property='og:site_name'>
+<meta content='<%= slickr_meta_data(:og_title) %>' property='og:title'>
+<meta content='<%= slickr_meta_data(:og_description) %>' property='og:description'>
+<meta content='<%= slickr_meta_data(:og_url) %>' property='og:url'>
+<meta content='<%= slickr_meta_data(:og_image) %>' property='og:image'>
 
 
-  <!-- Twitter Card data -->
-  <meta content='summary' name='twitter:card'>
-  <meta content='<%= @slickr_settings[:twitter_title] %>' name='twitter:title'>
-  <meta content='<%= @slickr_settings[:twitter_description] %>' name='twitter:description'>
-  <meta content='' name='twitter:image'>
-<% end %>
+<!-- Twitter Card data -->
+<meta content='summary' name='twitter:card'>
+<meta content='<%= slickr_meta_data(:twitter_title) %>' name='twitter:title'>
+<meta content='<%= slickr_meta_data(:twitter_description) %>' name='twitter:description'>
+<meta content='<%= slickr_meta_data(:twitter_image) %>' name='twitter:image'>
 
 <% if Rails.env == 'production' %>
   <script>

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Slickr::VERSION
   s.authors     = ["Primate"]
   s.email       = ["admin@primate.co.uk"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/primate-inc/slickr"
   s.summary     = "CMS built on top of Active Admin"
   s.description = "CMS built on top of Active Admin."
   s.license     = "MIT"

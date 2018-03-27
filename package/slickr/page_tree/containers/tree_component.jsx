@@ -32,8 +32,9 @@ const moveNode = (node, treeData, nextTreeIndex, actions) => {
   const flatData = getFlatDataFromTree({treeData: treeData, getNodeKey: ({ node }) => node.id })
   const prevNode = flatData[nextTreeIndex - 1]
   const currentNode = flatData[nextTreeIndex]
+
   if(prevNode.parentNode == currentNode.parentNode){
-    actions.saveNodePosition(node, currentNode.parentNode.id, prevNode.id)
+    actions.saveNodePosition(node, currentNode.parentNode.id, prevNode.node.id)
   } else {
     actions.saveNodePosition(node, currentNode.parentNode.id, null)
   }

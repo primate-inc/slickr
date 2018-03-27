@@ -67,7 +67,11 @@ if defined?(ActiveAdmin)
       resource.update_attribute(:parent_id, params[:parent_id])
       if params[:previous_id].present?
         previous = Slickr::Page.find(params[:previous_id])
-        resource.insert_at(previous.position.to_i  + 1)
+        if resource.position < previous.position
+          resource.insert_at(previous.position.to_i)
+        else
+          resource.insert_at(previous.position.to_i  + 1)
+        end
       else
         resource.move_to_top
       end

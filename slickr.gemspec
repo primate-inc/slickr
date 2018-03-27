@@ -5,8 +5,8 @@ require "slickr/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "slickr"
-  # s.name        = "slickr_cms"
+  # s.name        = "slickr"
+  s.name        = "slickr_cms"
   s.version     = Slickr::VERSION
   s.authors     = ["Primate"]
   s.email       = ["admin@primate.co.uk"]

@@ -184,7 +184,7 @@ module Slickr
       def extend_package_json
         dest_file = "package.json"
         existing_content = File.read(dest_file)
-        new_content_1 = '"slickr": "git+https://github.com/primate-inc/slickr#master"'
+        new_content_1 = '"slickr_cms": "git+https://github.com/primate-inc/slickr#master"'
         new_content_2 = '"babel-preset-stage-1": "^6.24.1"'
         new_content_3 = '"ignore-loader": "^0.1.2"'
 

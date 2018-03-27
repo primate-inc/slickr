@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import icons from "megadraft/lib/icons";
-import page_store from 'slickr/package/slickr/packs/slickr_page_edit.jsx'
-import text_editor_store from 'slickr/package/slickr/packs/slickr_text_area_editor.jsx'
+import page_store from 'slickr_cms/package/slickr/packs/slickr_page_edit.jsx'
+import text_editor_store from 'slickr_cms/package/slickr/packs/slickr_text_area_editor.jsx'
 
 export default class PdfLinkInput extends React.Component {
   constructor(props) {

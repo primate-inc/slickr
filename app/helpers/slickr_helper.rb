@@ -7,7 +7,7 @@ module SlickrHelper
   def slickr_page_title
     [
       @slickr_page_title,
-      @slickr_settings.try(:[], :site_title)
+      @slickr_settings.try(:[], 'site_title')
     ].reject(&:blank?).join(' - ')
   end
 

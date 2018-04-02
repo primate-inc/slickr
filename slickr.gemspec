@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "pg"
 
   # Framework for admin interface
-  s.add_dependency "activeadmin", "2.0.0.alpha"
+  s.add_dependency "activeadmin", ">= 1.2.1"
   # Authorization
   s.add_dependency "cancancan", "~> 2.0.0"
   # User authentication

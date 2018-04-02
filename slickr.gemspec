@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   # Authorization
   s.add_dependency "cancancan", "~> 2.0.0"
   # User authentication
-  s.add_dependency 'devise', '~> 4.3.0'
+  s.add_dependency 'devise', '~> 4.3'
   # Images
   s.add_dependency 'carrierwave', '~> 1.2.2'
   s.add_dependency 'rmagick', '~> 2.16.0'

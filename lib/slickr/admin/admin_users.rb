@@ -32,7 +32,7 @@ ActiveAdmin.register AdminUser, as: "Users" do
     f.inputs 'User avatar' do
       if resource.avatar.url.present?
         div class: 'image' do
-          image_tag resource.avatar
+          image_tag resource.avatar.url
         end
       end
       f.input :avatar, as: :file_modified, label: 'Select user avatar'

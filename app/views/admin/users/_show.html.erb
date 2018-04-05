@@ -1,7 +1,7 @@
 <div id='split_display_with_image' class='panel'>
   <div class='image'>
     <p class='attributes_list_attr_name'>User photo</p>
-    <%= image_tag resource.avatar %>
+    <%= image_tag resource.avatar.url if resource.avatar.present? %>
   </div>
   <ol class='attributes_list'>
     <li>

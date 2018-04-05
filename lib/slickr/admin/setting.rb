@@ -1,7 +1,6 @@
 ActiveAdmin.register_page 'Settings' do
-  menu priority: 101
   title = 'Settings'
-  menu label: title
+  menu label: title, priority: 101
 
   active_admin_settings_page(
     title: title,

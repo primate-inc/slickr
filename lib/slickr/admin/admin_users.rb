@@ -1,6 +1,6 @@
 ActiveAdmin.register AdminUser, as: "Users" do
 
-  menu priority: 10
+  menu priority: 100
   permit_params :email, :password, :password_confirmation, :first_name, :last_name, :role, :avatar
 
   scope :all, default: true

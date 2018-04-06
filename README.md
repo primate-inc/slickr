@@ -90,6 +90,10 @@ ActiveAdmin.register AdminUser, as: "Users" do
 end
 ```
 
+## Error pages
+
+[Error page configuration](docs/errors.md)
+
 ## Model Ordering
 
 [Model ordering setup](docs/ordering.md)

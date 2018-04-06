@@ -24,6 +24,9 @@ module SlickrPageRouteHelper
 end
 
 Rails.application.routes.draw do
+  %w( 404 500 ).each do |code|
+    get code, to: 'errors#show', code: code
+  end
   constraints(MultiContraint.new([SlickrPageRouteHelper])) do
     get '*slug' => "pages#show", as: "show_page"
   end

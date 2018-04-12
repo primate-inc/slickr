@@ -90,6 +90,10 @@ ActiveAdmin.register AdminUser, as: "Users" do
 end
 ```
 
+## Helpers
+
+[Heleprs](docs/helpers.md)
+
 ## Error pages
 
 [Error page configuration](docs/errors.md)

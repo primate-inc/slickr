@@ -1,8 +1,23 @@
 # frozen_string_literal: true
 
 # View helpers from Slickr
+
+require 'redcarpet'
+
 module SlickrHelper
+  class CustomRender < Redcarpet::Render::HTML
+    def paragraph(text)
+      text
+    end
+  end
+
   include ActionView::Helpers::OutputSafetyHelper
+
+  def format_with_markdown(content)
+    renderer = SlickrHelper::CustomRender.new(filter_html: true)
+    markdown = Redcarpet::Markdown.new(renderer, {})
+    markdown.render(content)
+  end
 
   def slickr_page_title
     [

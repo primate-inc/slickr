@@ -55,7 +55,7 @@ export default class ContentTab extends React.Component {
                 <li className="input string admin-big-title">
                   <div className="edit-wrapper">
                     <label htmlFor="page_header">Page header</label>
-                    <input type="text" name="page_header" value={values.page_header} onChange={handleChange} />
+                    <textarea type="textarea" name="page_header" value={values.page_header} onChange={handleChange} />
                     <p className='hint-text'>Your main page header</p>
                   </div>
                 </li>
@@ -100,7 +100,7 @@ export default class ContentTab extends React.Component {
                 <li className="input string admin-big-title">
                   <div className="edit-wrapper">
                     <label htmlFor="page_subheader">Page subheader</label>
-                    <input type="text" name="page_subheader" value={values.page_subheader} onChange={handleChange} />
+                    <textarea type="textarea" name="page_subheader" value={values.page_subheader} onChange={handleChange} />
                     <p className='hint-text'>Your main page subheader</p>
                   </div>
                 </li>

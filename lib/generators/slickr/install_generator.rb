@@ -34,6 +34,7 @@ module Slickr
         migration_template "migrations/rename_slickr_pages_og_title_2_and_og_description_2.rb", "db/migrate/rename_slickr_pages_og_title_2_and_og_description_2.rb"
         migration_template "migrations/create_slickr_settings.rb", "db/migrate/create_slickr_settings.rb"
         migration_template "migrations/rename_slickr_pages_meta_title.rb", "db/migrate/rename_slickr_pages_meta_title.rb"
+        migration_template "migrations/create_slickr_navigations.rb", "db/migrate/create_slickr_navigations.rb"
 
         puts "Database migrations added"
       end

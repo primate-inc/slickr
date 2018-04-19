@@ -1,0 +1,3 @@
+<div data-pages="<%= Slickr::Navigation.roots.decorate.to_json(only: [:id, :title], methods: [:expanded, :edit_page_path, :add_child_path, :children, :admin_delete_navigation_path]) %>" id='navigation_tree_content'></div>
+<div id='dashboard_content'></div>
+<%= javascript_pack_tag 'slickr_navigation_tree' %>

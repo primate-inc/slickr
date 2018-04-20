@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reducers from '../page_tree/reducers';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 const treeData = document.getElementById("navigation_tree_content").dataset.pages
 
@@ -13,10 +14,13 @@ const initialState = {
   treeState: JSON.parse(treeData)
 }
 
-const store = createStore(reducers, initialState, applyMiddleware(thunk))
+const middlewares = [thunk];
+if (process.env.NODE_ENV === `development`) {
+  middlewares.push(logger);
+}
+const store = createStore(reducers, initialState, applyMiddleware(...middlewares))
 
 document.addEventListener('DOMContentLoaded', () => {
-  // document.getElementById('index_footer').remove()
   render(
     <Provider store={store}>
       <Tree />

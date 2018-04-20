@@ -11,6 +11,10 @@ module Slickr
       Slickr::Navigation::PARENT_TYPES
     end
 
+    def child_type_options
+      Slickr::Navigation::CHILD_TYPES
+    end
+
     def children
       tree_children
     end

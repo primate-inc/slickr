@@ -24,7 +24,8 @@ if defined?(ActiveAdmin)
            as: :select,
            collection: lambda {
              Hash[Slickr::Navigation.all.map { |nav| [nav.title, nav.title] }]
-           }
+           },
+           label: 'Navigation'
 
     form partial: 'new'
     config.clear_action_items!

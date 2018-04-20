@@ -1,16 +1,26 @@
-
-
-<%= semantic_form_for [:admin, @slickr_navigation],
-                      builder: ActiveAdmin::FormBuilder do |f| %>
-  <%= f.inputs do %>
-    <%= f.input :title %>
-    <%= f.input :parent_type,
-                collection: options_for_select(
-                  @slickr_navigation.decorate.parent_type_options
-                ) %>
-    <%= f.input :slickr_page_id, as: :select,
-                collection: Slickr::Page.select(:id, :title)
-                                        .map{|p| [p.title,p.id]} %>
+<% if params[:parent].present? %>
+  <div id="navigation-data"
+       data-navigation_data="<%= @slickr_navigation.to_json(
+         methods: [:admin_navigation_path, :admin_image_index_path]
+       ) %>"
+       data-child_types="<%= @slickr_navigation.decorate.child_type_options
+                                               .to_json %>">
+  </div>
+  <div id='navigation_child_content' ></div>
+  <%= javascript_pack_tag 'slickr_navigation_child' %>
+<% else %>
+  <%= semantic_form_for [:admin, @slickr_navigation],
+                        builder: ActiveAdmin::FormBuilder do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :title %>
+      <%= f.input :parent_type,
+                  collection: options_for_select(
+                    @slickr_navigation.decorate.parent_type_options
+                  ) %>
+      <%= f.input :slickr_page_id, as: :select,
+                  collection: Slickr::Page.select(:id, :title)
+                                          .map{|p| [p.title,p.id]} %>
+    <% end %>
+    <%= f.actions %>
   <% end %>
-  <%= f.actions %>
 <% end %>

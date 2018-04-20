@@ -1,6 +1,7 @@
 import request from 'superagent';
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
 let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
+
 export const updateTree = tree => {
   return function(dispatch, getState) {
     dispatch({type:"UPDATE_TREE", payload:tree})

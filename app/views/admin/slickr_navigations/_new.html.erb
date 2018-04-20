@@ -1,9 +1,4 @@
-<% tree = [] %>
-<% Slickr::Navigation.walk_tree do |navigation, level| %>
-  <% tree << Array(
-      {"#{Array.new(level, '-').join('')}#{navigation.title}".to_sym => page.id}
-    ).flatten if page.type == nil %>
-<% end %>
+
 
 <%= semantic_form_for [:admin, @slickr_navigation],
                       builder: ActiveAdmin::FormBuilder do |f| %>
@@ -14,8 +9,8 @@
                   @slickr_navigation.decorate.parent_type_options
                 ) %>
     <%= f.input :slickr_page_id, as: :select,
-                collection: Hash[Slickr::Page.select(:id, :title)
-                                             .map{|p| [p.title,p.id]}] %>
+                collection: Slickr::Page.select(:id, :title)
+                                        .map{|p| [p.title,p.id]} %>
   <% end %>
   <%= f.actions %>
 <% end %>

@@ -14,6 +14,7 @@ module Slickr
     CHILD_TYPES = ['Page', 'Custom Link', 'Anchor', 'Header'].freeze
 
     validates :title, presence: true
+    validate :uniqueness_of_root_title
     validate :parent_type_or_child_type
 
     def self.root_subtree_for_views; end
@@ -59,8 +60,14 @@ module Slickr
 
     private
 
+    def uniqueness_of_root_title
+      return unless root?
+      titles = Slickr::Navigation.roots.pluck(:title)
+      errors.add(:title, 'already exists') if title.in? titles
+    end
+
     def parent_type_or_child_type
-      return unless parent_type.nil? && child_type.nil?
+      return unless parent_type.blank? && child_type.blank?
       errors.add(:parent_type, 'specify a type')
       errors.add(:child_type, 'specify a type')
     end

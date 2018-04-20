@@ -16,7 +16,7 @@ const initialState = {
 const store = createStore(reducers, initialState, applyMiddleware(thunk))
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('index_footer').remove()
+  // document.getElementById('index_footer').remove()
   render(
     <Provider store={store}>
       <Tree />

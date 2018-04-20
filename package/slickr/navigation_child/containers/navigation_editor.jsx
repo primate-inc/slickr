@@ -6,19 +6,13 @@ import { connect } from 'react-redux'
 import NavigationWrapper from '../components/navigation_wrapper.jsx'
 import * as NavigationActions from '../actions'
 
-let _csrf_param = () => {
-  return document.getElementsByName("csrf-param")[0].content
-}
-let _csrf_token = () => {
-  return document.getElementsByName("csrf-token")[0].content
-}
-
 const NavigationEditor = ({
-    navigation, childTypes, modalIsOpen, loadedImages, choosingImage, actions,
-    store
+    navigation, childParent, childTypes, modalIsOpen, loadedImages,
+    choosingImage, actions, store
 }) => {
   return(
     <NavigationWrapper  navigation={navigation}
+                        childParent={childParent}
                         childTypes={childTypes}
                         modalIsOpen={modalIsOpen}
                         loadedImages={loadedImages}
@@ -29,6 +23,7 @@ const NavigationEditor = ({
 
 NavigationEditor.propTypes = {
   navigation:     PropTypes.object.isRequired,
+  childParent:    PropTypes.object.isRequired,
   childTypes:     PropTypes.array.isRequired,
   modalIsOpen:    PropTypes.bool.isRequired,
   loadedImages:   PropTypes.object.isRequired,
@@ -38,6 +33,7 @@ NavigationEditor.propTypes = {
 
 const mapStateToProps = state => ({
   navigation:     state.navigationState,
+  childParent:    state.childParent,
   childTypes:     state.childTypes,
   modalIsOpen:    state.modalIsOpen,
   loadedImages:   state.loadedImages,

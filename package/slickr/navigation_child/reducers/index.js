@@ -9,6 +9,7 @@ const rootReducer = combineReducers ({
   modalIsOpen,
   loadedImages,
   choosingImage,
+  childParent: (state = {}) => state,
   childTypes: (state = []) => state
 })
 

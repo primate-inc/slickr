@@ -10,7 +10,7 @@ const changeTab = function(tab, actions) {
   actions.changeTab(tab)
 }
 
-const NavigationWrapper = ({childTypes, navigation, actions, values, touched, errors, dirty, isSubmitting, handleChange, setFieldValue, handleBlur, handleSubmit, handleReset, loadedImages}) => {
+const NavigationWrapper = ({childTypes, childParent, navigation, actions, values, touched, errors, dirty, isSubmitting, handleChange, setFieldValue, handleBlur, handleSubmit, handleReset, loadedImages}) => {
   return(
     <div >
       <form onSubmit={handleSubmit} id='page_edit_content_grid'>
@@ -19,12 +19,10 @@ const NavigationWrapper = ({childTypes, navigation, actions, values, touched, er
             <span className="breadcrumb">
               <a href="/admin">Admin</a>
               <span className="breadcrumb_sep"> / </span>
-              <a href="/admin/slickr_pages">Navigation Tree</a>
-              <span className="breadcrumb_sep"> / </span>
-              <a href={navigation.admin_navigation_path}>{navigation.title}</a>
+              <a href={`${navigation.admin_navigation_path}?q%5Btitle_eq%5D=${childParent.title}`}>{`${childParent.title} Navigation`}</a>
               <span className="breadcrumb_sep"> / </span>
             </span>
-            <h2 id="page_title">Edit Child</h2>
+            <h2 id="page_title">{navigation.title ? 'Edit Child' : 'New Child'}</h2>
           </div>
           <div id="titlebar_right">
           <TitleBarButtons saveNavigation={handleSubmit.bind(this)} navigation={navigation} actions={actions} />
@@ -32,7 +30,7 @@ const NavigationWrapper = ({childTypes, navigation, actions, values, touched, er
         </div>
         <div id='page_content_form' onSubmit={handleSubmit}>
           <div className='page_editing_area' id='collection_selection'>
-            <Content navigation={navigation} childTypes={childTypes} actions={actions} values={values} handleChange={handleChange.bind(this)} setFieldValue={setFieldValue.bind(this)} loadedImages={loadedImages} />
+            <Content navigation={navigation} childTypes={childTypes} childParent={childParent} actions={actions} values={values} handleChange={handleChange.bind(this)} setFieldValue={setFieldValue.bind(this)} loadedImages={loadedImages} />
           </div>
         </div>
       </form>

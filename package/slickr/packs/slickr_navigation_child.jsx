@@ -10,10 +10,13 @@ import logger from 'redux-logger';
 import ReactModal from 'react-modal';
 
 const navigationState = document.getElementById('navigation-data').dataset.navigation_data
-const navigationLayouts = document.getElementById('navigation-data').dataset.child_types
+const childParent = document.getElementById('navigation-data').dataset.child_parent
+const childTypes = document.getElementById('navigation-data').dataset.child_types
 
 const initialState = {
   navigationState: JSON.parse(navigationState),
+  childParent: JSON.parse(childParent),
+  childTypes: JSON.parse(childTypes),
   modalIsOpen: false,
   loadedImages: {}
 }

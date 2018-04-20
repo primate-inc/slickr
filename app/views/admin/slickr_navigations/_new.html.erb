@@ -3,6 +3,9 @@
        data-navigation_data="<%= @slickr_navigation.to_json(
          methods: [:admin_navigation_path, :admin_image_index_path]
        ) %>"
+       data-child_parent="<%= Slickr::Navigation.select(:id, :title, :parent_type)
+                                                .find(params[:parent])
+                                                .to_json %>"
        data-child_types="<%= @slickr_navigation.decorate.child_type_options
                                                .to_json %>">
   </div>

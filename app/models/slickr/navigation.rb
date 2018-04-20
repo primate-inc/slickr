@@ -53,11 +53,7 @@ module Slickr
     end
 
     def admin_navigation_path
-      if id.nil?
-        Rails.application.routes.url_helpers.admin_slickr_navigations_path
-      else
-        Rails.application.routes.url_helpers.admin_slickr_navigation_path(id)
-      end
+      Rails.application.routes.url_helpers.admin_slickr_navigations_path
     end
 
     def admin_image_index_path
@@ -67,7 +63,7 @@ module Slickr
     def change_position_admin_navigation
       Rails.application
            .routes.url_helpers
-           .change_position_admin_slickr_page_path(id)
+           .change_position_admin_slickr_navigation_path(id)
     end
 
     private

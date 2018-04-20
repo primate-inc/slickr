@@ -30,7 +30,7 @@ export default class Content extends React.Component {
     const handleChange = this.props.handleChange
     const setFieldValue = this.props.setFieldValue
     const values = this.props.values
-    if(this.props.childTypes.length !== 0 && !this.state.setExcludeList) {
+    if(this.props.childTypes.length !== 0 && !this.state.setExcludeList && navigation.child_type) {
       this.setState({
         excludeList: this.props.childTypes.find(function (obj) { return obj.value === navigation.child_type }).exclude,
         setExcludeList: true

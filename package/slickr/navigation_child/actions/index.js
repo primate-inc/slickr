@@ -2,17 +2,18 @@ import request from 'superagent';
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
 let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
 
-export const updatePageContent = values => {
+export const updateNavigationChildContent = values => {
   return function(dispatch, getState) {
-    let params = {"slickr_page":{}};
+    let params = {"slickr_navigation":{}};
     params[_csrf_param()] = _csrf_token()
     for (var key in values) {
       if (values.hasOwnProperty(key)) {
-        params["slickr_page"][key] = values[key];
+        params["slickr_navigation"][key] = values[key];
       }
     }
+    params["slickr_navigation"]["parent_id"] = getState().childParent.id;
 
-    request.put(getState().pageState.admin_page_path).type('json').accept('json').send(params).end(function(err,resp){
+    request.post(getState().navigationState.admin_navigation_path).type('json').accept('json').send(params).end(function(err,resp){
       if(err) {
         console.error(err)
       } else {
@@ -24,11 +25,11 @@ export const updatePageContent = values => {
         setTimeout(function() {
           document.getElementById('save_message').remove();
         }, 1500);
-        dispatch({
-          type: 'SET_PAGE_TITLE',
-          title: resp.body.title,
-          layout: resp.body.layout
-        })
+        // dispatch({
+        //   type: 'SET_PAGE_TITLE',
+        //   title: resp.body.title,
+        //   layout: resp.body.layout
+        // })
       }
     })
   }

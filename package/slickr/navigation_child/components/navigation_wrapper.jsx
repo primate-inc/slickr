@@ -40,17 +40,18 @@ const NavigationWrapper = ({childTypes, childParent, navigation, actions, values
 
 export default Formik({
   mapPropsToValues: (props) => ({
-    title:      props.navigation.title,
-    image:      props.navigation.image,
-    text:       props.navigation.text,
-    link:       props.navigation.link,
-    link_text:  props.navigation.link_text
+    child_type:   props.navigation.child_type,
+    title:        props.navigation.title,
+    image:        props.navigation.image,
+    text:         props.navigation.text,
+    link:         props.navigation.link,
+    link_text:    props.navigation.link_text
   }),
   handleSubmit: (values, { props, setErrors, setSubmitting }) => {
     // do stuff with your payload
     // e.preventDefault(), setSubmitting, setError(undefined) are
     // called before handleSubmit is. So you don't have to do repeat this.
     // handleSubmit will only be executed if form values pass validation (if you specify it).
-    props.actions.updatePageContent(values)
+    props.actions.updateNavigationChildContent(values)
   }
 })(NavigationWrapper)

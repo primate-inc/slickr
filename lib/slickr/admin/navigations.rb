@@ -7,7 +7,7 @@ if defined?(ActiveAdmin)
     menu priority: 3
 
     permit_params :parent_type, :child_type, :title, :image, :text, :link,
-                  :link_text, :page_id
+                  :link_text, :page_id, :parent_id
 
     breadcrumb do
       if params[:action] == 'index'
@@ -64,6 +64,12 @@ if defined?(ActiveAdmin)
         return super if params[:q].present?
         merge_first_title_query if params[:q].nil?
         super
+      end
+
+      def create
+        create! do |format|
+          format.json { render json: @slickr_navigation.as_json(methods: [:admin_navigation_path]) }
+        end
       end
 
       def show

@@ -6,8 +6,6 @@ export default class Content extends React.Component {
     super(props);
 
     this.state = {
-      excludeList: [],
-      setExcludeList: false,
       imagePath: this.props.navigation.navigation_image
     }
   }
@@ -30,16 +28,22 @@ export default class Content extends React.Component {
     const handleChange = this.props.handleChange
     const setFieldValue = this.props.setFieldValue
     const values = this.props.values
-    if(this.props.childTypes.length !== 0 && !this.state.setExcludeList && navigation.child_type) {
-      this.setState({
-        excludeList: this.props.childTypes.find(function (obj) { return obj.value === navigation.child_type }).exclude,
-        setExcludeList: true
-      })
-    }
+    const childTypeOptions = this.props.childTypes.map(function(type, index){
+      return <option key={index} value={type}>{type}</option>
+    })
 
     return (
       <fieldset>
         <ol>
+          <li className="input string">
+            <div className="edit-wrapper">
+              <label htmlFor="child_type">Type</label>
+              <select value={values.child_type} onChange={handleChange} name="child_type">
+                { childTypeOptions }
+              </select>
+              <p className='hint_text'></p>
+            </div>
+          </li>
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="title">Title</label>

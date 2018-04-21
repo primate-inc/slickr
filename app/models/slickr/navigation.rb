@@ -14,8 +14,12 @@ module Slickr
     CHILD_TYPES = ['Page', 'Custom Link', 'Anchor', 'Header'].freeze
 
     validates :title, presence: true
-    validate :uniqueness_of_root_title
+    validates_uniqueness_of :title, if: proc { |nav| nav.root? }
     validate :parent_type_or_child_type
+
+    scope(:nav_roots, lambda do
+      where.not(parent_type: [nil, ''])
+    end)
 
     def self.root_subtree_for_views; end
 
@@ -31,7 +35,7 @@ module Slickr
           children: p.tree_children,
           position: p.position,
           add_child_path: p.add_child_path,
-          edit_page_path: p.edit_page_path,
+          edit_navigation_path: p.edit_navigation_path,
           admin_delete_navigation_path: p.admin_delete_navigation_path,
           change_position_admin_navigation: p.change_position_admin_navigation
         }
@@ -44,8 +48,8 @@ module Slickr
       )
     end
 
-    def edit_page_path
-      Rails.application.routes.url_helpers.edit_admin_slickr_page_path(id)
+    def edit_navigation_path
+      Rails.application.routes.url_helpers.edit_admin_slickr_navigation_path(id)
     end
 
     def admin_delete_navigation_path
@@ -67,12 +71,6 @@ module Slickr
     end
 
     private
-
-    def uniqueness_of_root_title
-      return unless root?
-      titles = Slickr::Navigation.roots.pluck(:title)
-      errors.add(:title, 'already exists') if title.in? titles
-    end
 
     def parent_type_or_child_type
       return unless parent_type.blank? && child_type.blank?

@@ -17,12 +17,13 @@
     <%= f.inputs do %>
       <%= f.input :title %>
       <%= f.input :parent_type,
-                  collection: options_for_select(
-                    @slickr_navigation.decorate.parent_type_options
-                  ) %>
+                  collection: @slickr_navigation.decorate
+                                                .parent_type_options
+                                                .map{ |op| [op, op] }
+                  %>
       <%= f.input :slickr_page_id, as: :select,
                   collection: Slickr::Page.select(:id, :title)
-                                          .map{|p| [p.title,p.id]} %>
+                                          .map{ |p| [p.title,p.id] } %>
     <% end %>
     <%= f.actions %>
   <% end %>

@@ -12,6 +12,14 @@ if defined?(ActiveAdmin)
     breadcrumb do
       if params[:action] == 'index'
         [link_to('Admin', admin_root_path)]
+      elsif params[:id]
+        [
+          link_to('Admin', admin_root_path),
+          link_to(
+            "#{Slickr::Navigation.find(params[:id]).title} Navigation",
+            admin_slickr_navigation_path(params[:id])
+          )
+        ]
       else
         [
           link_to('Admin', admin_root_path),
@@ -23,11 +31,11 @@ if defined?(ActiveAdmin)
     filter :title,
            as: :select,
            collection: lambda {
-             Hash[Slickr::Navigation.all.map { |nav| [nav.title, nav.title] }]
+             Hash[Slickr::Navigation.nav_roots.map { |nav| [nav.title, nav.title] }]
            },
            label: 'Navigation'
 
-    form partial: 'new'
+    form partial: 'form'
     config.clear_action_items!
 
     action_item :new_page, only: %i[index show] do
@@ -41,7 +49,6 @@ if defined?(ActiveAdmin)
     end
 
     index title: 'Navigation Tree', download_links: false do
-      # binding.pry
       render partial: 'tree'
     end
 
@@ -68,7 +75,11 @@ if defined?(ActiveAdmin)
 
       def create
         create! do |format|
-          format.json { render json: @slickr_navigation.as_json(methods: [:admin_navigation_path]) }
+          format.json do
+            render json: @slickr_navigation.as_json(
+              methods: [:admin_navigation_path]
+            )
+          end
         end
       end
 
@@ -76,6 +87,13 @@ if defined?(ActiveAdmin)
         redirect_to admin_slickr_navigations_path(
           q: { title_eq: Slickr::Navigation.find(params[:id]).title }
         )
+      end
+
+      def edit
+        nav = Slickr::Navigation.find(params[:id])
+        return super if nav.root?
+        params[:parent] = nav.root.id
+        super
       end
 
       def merge_first_title_query

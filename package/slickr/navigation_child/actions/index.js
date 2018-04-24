@@ -11,9 +11,17 @@ export const updateNavigationChildContent = values => {
         params["slickr_navigation"][key] = values[key];
       }
     }
-    params["slickr_navigation"]["parent_id"] = getState().childParent.id;
+    params["slickr_navigation"]["parent_id"] = getState().parent.id;
+    let method, url;
+    if(getState().navigationState.id == null) {
+      method = 'post'
+      url = 'admin_create_navigation_path'
+    } else {
+      method = 'put'
+      url = 'admin_update_navigation_path'
+    }
 
-    request.post(getState().navigationState.admin_navigation_path).type('json').accept('json').send(params).end(function(err,resp){
+    request[method](getState().navigationState[url]).type('json').accept('json').send(params).end(function(err,resp){
       if(err) {
         console.error(err)
       } else {

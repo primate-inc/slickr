@@ -11,9 +11,10 @@ module Slickr
                     meta: { content_changed: :content_changed? }
 
     friendly_id :title, use: [:slugged, :finders]
-    has_many :drafts, foreign_key: "slickr_page_id", class_name: "Draft", dependent: :destroy
-    has_one :active_draft, class_name: "Slickr::Page::Draft"
-    has_one :published_draft, class_name: "Slickr::Page::Draft"
+    has_many :slickr_navigations, foreign_key: 'slickr_page_id', class_name: 'Slickr::Navigation'
+    has_many :drafts, foreign_key: 'slickr_page_id', class_name: 'Draft', dependent: :destroy
+    has_one :active_draft, class_name: 'Slickr::Page::Draft'
+    has_one :published_draft, class_name: 'Slickr::Page::Draft'
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
     scope :not_draft, -> {where(type: nil)}
@@ -30,6 +31,18 @@ module Slickr
         transitions from: :published, to: :draft
       end
     end
+
+    scope(:no_root_or_page_navs, lambda do
+      includes(:slickr_navigations)
+      .where(aasm_state: :published)
+      .where(slickr_navigations: {id: nil})
+    end)
+
+    scope(:has_root_or_page_navs, lambda do
+      includes(:slickr_navigations)
+      .where(aasm_state: :published)
+      .where.not(slickr_navigations: {id: nil})
+    end)
 
     def self.root_subtree_for_views
     end

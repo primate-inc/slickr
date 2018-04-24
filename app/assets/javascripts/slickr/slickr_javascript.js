@@ -20,7 +20,7 @@ $(function () {
   /******************************************************************
   // Only show Page options if Parent type is Page for new Navigation
   /******************************************************************/
-  $('#slickr_navigation_parent_type').on('change', function(){
+  $('#slickr_navigation_root_type').on('change', function(){
     if($(this).val() === 'Page') {
       $('#slickr_navigation_slickr_page_id_input').show();
     } else {
@@ -28,10 +28,10 @@ $(function () {
       $('#slickr_navigation_slickr_page_id').val('');
     }
   });
-  if($('#slickr_navigation_parent_type').length ) {
+  if($('#slickr_navigation_root_type').length ) {
     $('#slickr_navigation_slickr_page_id_input').hide();
   }
-  if($('#slickr_navigation_parent_type').val() === 'true' ) {
+  if($('#slickr_navigation_root_type').val() === 'true' ) {
     $('#slickr_navigation_slickr_page_id_input').show();
   }
 })

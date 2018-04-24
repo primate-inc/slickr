@@ -55,7 +55,7 @@ const Tree = ({store, navigations, actions}) => (
       generateNodeProps={({ node, path }) => ({
         buttons: [
           <button onClick={() =>
-            FollowLink(node.edit_navigation_path)
+            FollowLink(node.admin_edit_navigation_path)
           }>
             <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-edit"></use></svg>
             Edit

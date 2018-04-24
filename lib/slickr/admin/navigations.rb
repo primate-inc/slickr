@@ -6,9 +6,11 @@ if defined?(ActiveAdmin)
     config.batch_actions = false
     menu priority: 3
 
-    permit_params :parent_type, :child_type, :title, :image, :text, :link,
-                  :link_text, :page_id, :parent_id
+    permit_params :root_type, :child_type, :title, :image, :text, :link,
+                  :link_text, :page_id, :parent_id, :slickr_page_id
 
+    # breadcrumbs only used for tree roots. All child breadcrumbs are
+    #  overridden in the React component
     breadcrumb do
       if params[:action] == 'index'
         [link_to('Admin', admin_root_path)]
@@ -16,7 +18,7 @@ if defined?(ActiveAdmin)
         [
           link_to('Admin', admin_root_path),
           link_to(
-            "#{Slickr::Navigation.find(params[:id]).title} Navigation",
+            "#{Slickr::Navigation.find(params[:id]).title}",
             admin_slickr_navigation_path(params[:id])
           )
         ]
@@ -35,9 +37,13 @@ if defined?(ActiveAdmin)
            },
            label: 'Navigation'
 
-    form partial: 'form'
-    config.clear_action_items!
+    index title: 'Navigation Tree', download_links: false do
+      render partial: 'tree'
+    end
 
+    form partial: 'form'
+
+    config.clear_action_items!
     action_item :new_page, only: %i[index show] do
       link_to new_admin_slickr_navigation_path do
         raw(
@@ -46,10 +52,6 @@ if defined?(ActiveAdmin)
           </svg>Add Navigation"
         )
       end
-    end
-
-    index title: 'Navigation Tree', download_links: false do
-      render partial: 'tree'
     end
 
     member_action :change_position, method: :put do
@@ -69,16 +71,20 @@ if defined?(ActiveAdmin)
     controller do
       def index
         return super if params[:q].present?
-        merge_first_title_query if params[:q].nil?
+        return super if Slickr::Navigation.all.count.zero?
+        merge_first_title_query
+        super
+      end
+
+      def new
+        return super unless params[:parent_id]
+        page_selections
         super
       end
 
       def create
         create! do |format|
           format.json do
-            render json: @slickr_navigation.as_json(
-              methods: [:admin_navigation_path]
-            )
           end
         end
       end
@@ -92,8 +98,16 @@ if defined?(ActiveAdmin)
       def edit
         nav = Slickr::Navigation.find(params[:id])
         return super if nav.root?
-        params[:parent] = nav.root.id
+        params[:parent_id] = nav.parent.id
+        page_selections
         super
+      end
+
+      def update
+        update! do |format|
+          format.json do
+          end
+        end
       end
 
       def merge_first_title_query
@@ -103,6 +117,28 @@ if defined?(ActiveAdmin)
               Slickr::Navigation.first.title
             ).title
           }
+      end
+
+      def page_selections
+        return @page_selections = selectable_pages if params[:id].nil?
+        nav = Slickr::Navigation.find(params[:id])
+        return @page_selections = selectable_pages if nav.child_type != 'Page'
+        combine_results = selectable_pages | selected_nav_page(nav)
+        @page_selections = combine_results.sort_by(&:title)
+      end
+
+      def selectable_pages
+        root_type = Slickr::Navigation.find(params[:parent_id]).root.root_type
+        case root_type
+        when 'General'
+          Slickr::Page.has_root_or_page_navs
+        else
+          Slickr::Page.no_root_or_page_navs
+        end
+      end
+
+      def selected_nav_page(nav)
+        Slickr::Page.where(id: nav.slickr_page.id)
       end
     end
   end

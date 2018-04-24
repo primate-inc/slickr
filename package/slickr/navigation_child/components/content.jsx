@@ -6,7 +6,8 @@ export default class Content extends React.Component {
     super(props);
 
     this.state = {
-      imagePath: this.props.navigation.navigation_image
+      imagePath: this.props.navigation.navigation_image,
+      pageSelectVisible: this.props.values.child_type === 'Page' ? true : false
     }
   }
 
@@ -16,10 +17,17 @@ export default class Content extends React.Component {
 
   openImagePicker = () => (e) => {
     e.preventDefault();
-    const page = Object.keys(this.props.loadedImages).length === 0 ? 1 : (this.props.loadedImages.pagination_info.current_page + 1)
+    let page;
+    if(Object.keys(this.props.loadedImages).length === 0) {
+      page = 1
+    } else {
+      page = this.props.loadedImages.pagination_info.current_page + 1
+    }
     this.props.actions.toggleChoosingImage();
     this.props.actions.toggleImagePicker();
-    if(Object.keys(this.props.loadedImages).length === 0) { this.props.actions.loadImages(navigation); }
+    if(Object.keys(this.props.loadedImages).length === 0) {
+      this.props.actions.loadImages(navigation);
+    }
   }
 
   render() {
@@ -29,25 +37,92 @@ export default class Content extends React.Component {
     const setFieldValue = this.props.setFieldValue
     const values = this.props.values
     const childTypeOptions = this.props.childTypes.map(function(type, index){
-      return <option key={index} value={type}>{type}</option>
+      if(index == 0) {
+        return([
+          <option key={index - 1}></option>,
+          <option key={index} value={type}>{type}</option>
+        ])
+      } else {
+        return <option key={index} value={type}>{type}</option>
+      }
     })
-
+    const selectablePageOptions = this.props.selectablePages.map(
+      function(page, index) {
+        if(index == 0) {
+          return([
+            <option key={index - 1}></option>,
+            <option key={index} value={page.id}>{page.title}</option>
+          ])
+        } else {
+          return <option key={index} value={page.id}>{page.title}</option>
+        }
+      }
+    )
     return (
       <fieldset>
         <ol>
           <li className="input string">
             <div className="edit-wrapper">
               <label htmlFor="child_type">Type</label>
-              <select value={values.child_type} onChange={handleChange} name="child_type">
+              <select value={values.child_type}
+                      onChange={e => {
+                        // call the built-in handleChange
+                        handleChange(e)
+                        // and do something about e
+                        if(e.currentTarget.value !== 'Page') {
+                          this.setState({pageSelectVisible: false});
+                          setFieldValue('slickr_page_id', '');
+                        } else {
+                          this.setState({pageSelectVisible: true});
+                        }
+                      }}
+                      name="child_type">
                 { childTypeOptions }
               </select>
+              {this.props.errors.child_type && this.props.touched.child_type &&
+                <p className="inline-errors">
+                  {this.props.errors.child_type}
+                </p>
+              }
+              <p className='hint_text'></p>
+            </div>
+          </li>
+          <li className="input string" style={{display: this.state.pageSelectVisible ? 'block' : 'none'}}>
+            <div className="edit-wrapper">
+              <label htmlFor="slickr_page_id">Page</label>
+              <select value={values.slickr_page_id}
+                      onChange={e => {
+                        // call the built-in handleChange
+                        handleChange(e)
+                        // and do something about e
+                        let title = this.props.selectablePages.find(
+                          function( obj ) {
+                            return obj.id === parseInt(e.currentTarget.value);
+                          }
+                        ).title
+                        setFieldValue('title', title);
+                      }}
+                      name="slickr_page_id">
+                { selectablePageOptions }
+              </select>
+              {this.props.errors.slickr_page_id && this.props.touched.slickr_page_id &&
+                <p className="inline-errors">
+                  {this.props.errors.slickr_page_id}
+                </p>
+              }
               <p className='hint_text'></p>
             </div>
           </li>
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="title">Title</label>
-              <input type="text" name="title" value={values.title} onChange={handleChange} />
+              <input type="text"
+                     name="title"
+                     value={values.title}
+                     onChange={handleChange} />
+              {this.props.errors.title && this.props.touched.title &&
+                <p className="inline-errors">{this.props.errors.title}</p>
+              }
               <p className='hint-text'>Navigation title</p>
             </div>
           </li>
@@ -79,21 +154,30 @@ export default class Content extends React.Component {
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="text">Text</label>
-              <textarea type="textarea" name="text" value={values.text} onChange={handleChange} />
+              <textarea type="textarea"
+                        name="text"
+                        value={values.text}
+                        onChange={handleChange} />
               <p className='hint-text'>Navigation text</p>
             </div>
           </li>
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="link">Link</label>
-              <input type="text" name="link" value={values.link} onChange={handleChange} />
+              <input type="text"
+                     name="link"
+                     value={values.link}
+                     onChange={handleChange} />
               <p className='hint-text'>Navigation link URL</p>
             </div>
           </li>
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="link_text">Link text</label>
-              <input type="text" name="link_text" value={values.link_text} onChange={handleChange} />
+              <input type="text"
+                     name="link_text"
+                     value={values.link_text}
+                     onChange={handleChange} />
               <p className='hint-text'>Navigation link text</p>
             </div>
           </li>

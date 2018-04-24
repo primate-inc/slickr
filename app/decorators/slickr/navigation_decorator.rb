@@ -5,10 +5,10 @@ module Slickr
   class NavigationDecorator < Draper::Decorator
     delegate_all
 
-    def parent_type_options
+    def root_type_options
       count = Slickr::Navigation.all.count
-      return [Slickr::Navigation::PARENT_TYPES[0]] if count.zero?
-      Slickr::Navigation::PARENT_TYPES
+      return [Slickr::Navigation::ROOT_TYPES[0]] if count.zero?
+      Slickr::Navigation::ROOT_TYPES
     end
 
     def child_type_options
@@ -19,12 +19,15 @@ module Slickr
       tree_children
     end
 
-    def parent_type
-      "Parent type: #{parent_type}"
-    end
-
-    def child_type
-      "Child type: #{child_type}"
+    def subtitle
+      if root?
+        "Type: #{root_type}"
+      elsif child_type == 'Page'
+        "Navigation type: #{child_type},
+        Page: #{Slickr::Page.find(slickr_page_id).title}"
+      else
+        "Navigation type: #{child_type}"
+      end
     end
   end
 end

@@ -9,8 +9,9 @@ const rootReducer = combineReducers ({
   modalIsOpen,
   loadedImages,
   choosingImage,
-  childParent: (state = {}) => state,
-  childTypes: (state = []) => state
+  parent: (state = {}) => state,
+  childTypes: (state = []) => state,
+  selectablePages: (state = []) => state
 })
 
 export default rootReducer

@@ -7,13 +7,14 @@ import NavigationWrapper from '../components/navigation_wrapper.jsx'
 import * as NavigationActions from '../actions'
 
 const NavigationEditor = ({
-    navigation, childParent, childTypes, modalIsOpen, loadedImages,
-    choosingImage, actions, store
+    navigation, parent, childTypes, selectablePages, modalIsOpen,
+    loadedImages, choosingImage, actions, store
 }) => {
   return(
     <NavigationWrapper  navigation={navigation}
-                        childParent={childParent}
+                        parent={parent}
                         childTypes={childTypes}
+                        selectablePages={selectablePages}
                         modalIsOpen={modalIsOpen}
                         loadedImages={loadedImages}
                         choosingImage={choosingImage}
@@ -22,22 +23,24 @@ const NavigationEditor = ({
 }
 
 NavigationEditor.propTypes = {
-  navigation:     PropTypes.object.isRequired,
-  childParent:    PropTypes.object.isRequired,
-  childTypes:     PropTypes.array.isRequired,
-  modalIsOpen:    PropTypes.bool.isRequired,
-  loadedImages:   PropTypes.object.isRequired,
-  choosingImage:  PropTypes.bool.isRequired,
-  actions:        PropTypes.object.isRequired
+  navigation:       PropTypes.object.isRequired,
+  parent:           PropTypes.object.isRequired,
+  childTypes:       PropTypes.array.isRequired,
+  selectablePages:  PropTypes.array.isRequired,
+  modalIsOpen:      PropTypes.bool.isRequired,
+  loadedImages:     PropTypes.object.isRequired,
+  choosingImage:    PropTypes.bool.isRequired,
+  actions:          PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  navigation:     state.navigationState,
-  childParent:    state.childParent,
-  childTypes:     state.childTypes,
-  modalIsOpen:    state.modalIsOpen,
-  loadedImages:   state.loadedImages,
-  choosingImage:  state.choosingImage
+  navigation:       state.navigationState,
+  parent:           state.parent,
+  childTypes:       state.childTypes,
+  selectablePages:  state.selectablePages,
+  modalIsOpen:      state.modalIsOpen,
+  loadedImages:     state.loadedImages,
+  choosingImage:    state.choosingImage
 })
 
 const mapDispatchToProps = dispatch => ({

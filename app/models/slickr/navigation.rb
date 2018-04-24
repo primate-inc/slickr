@@ -9,16 +9,18 @@ module Slickr
     acts_as_tree order: 'position'
     acts_as_list scope: :parent_id
 
-    PARENT_TYPES = %w[Root General Page].freeze
+    ROOT_TYPES = %w[Root General Page].freeze
 
     CHILD_TYPES = ['Page', 'Custom Link', 'Anchor', 'Header'].freeze
 
+    belongs_to :slickr_page, foreign_key: 'slickr_page_id', class_name: 'Slickr::Page', optional: true
+
     validates :title, presence: true
     validates_uniqueness_of :title, if: proc { |nav| nav.root? }
-    validate :parent_type_or_child_type
+    validate :root_type_or_child_type
 
     scope(:nav_roots, lambda do
-      where.not(parent_type: [nil, ''])
+      where.not(root_type: [nil, ''])
     end)
 
     def self.root_subtree_for_views; end
@@ -34,8 +36,9 @@ module Slickr
           title: p.title,
           children: p.tree_children,
           position: p.position,
+          subtitle: p.subtitle,
           add_child_path: p.add_child_path,
-          edit_navigation_path: p.edit_navigation_path,
+          admin_edit_navigation_path: p.admin_edit_navigation_path,
           admin_delete_navigation_path: p.admin_delete_navigation_path,
           change_position_admin_navigation: p.change_position_admin_navigation
         }
@@ -44,21 +47,39 @@ module Slickr
 
     def add_child_path
       Rails.application.routes.url_helpers.new_admin_slickr_navigation_path(
-        parent: id
+        parent_id: id
       )
     end
 
-    def edit_navigation_path
-      Rails.application.routes.url_helpers.edit_admin_slickr_navigation_path(id)
+    def admin_navigation_path
+      Rails.application.routes.url_helpers.admin_slickr_navigations_path(
+        q: { 'title_eq' => Slickr::Navigation.find_by_title(root.title).title }
+      )
+    end
+
+    def admin_create_navigation_path
+      Rails.application.routes.url_helpers.admin_slickr_navigations_path
+    end
+
+    def admin_edit_navigation_path
+      if root?
+        Rails.application.routes.url_helpers
+             .edit_admin_slickr_navigation_path(id)
+      else
+        Rails.application.routes.url_helpers
+             .edit_admin_slickr_navigation_path(id, parent_id: parent.id)
+      end
+    end
+
+    def admin_update_navigation_path
+      return if id.nil?
+      Rails.application.routes.url_helpers.admin_slickr_navigation_path(id)
     end
 
     def admin_delete_navigation_path
       Rails.application.routes.url_helpers.admin_slickr_navigation_path(id)
     end
 
-    def admin_navigation_path
-      Rails.application.routes.url_helpers.admin_slickr_navigations_path
-    end
 
     def admin_image_index_path
       Rails.application.routes.url_helpers.admin_slickr_images_path
@@ -72,9 +93,9 @@ module Slickr
 
     private
 
-    def parent_type_or_child_type
-      return unless parent_type.blank? && child_type.blank?
-      errors.add(:parent_type, 'specify a type')
+    def root_type_or_child_type
+      return unless root_type.blank? && child_type.blank?
+      errors.add(:root_type, 'specify a type')
       errors.add(:child_type, 'specify a type')
     end
   end

@@ -10,13 +10,15 @@ import logger from 'redux-logger';
 import ReactModal from 'react-modal';
 
 const navigationState = document.getElementById('navigation-data').dataset.navigation_data
-const childParent = document.getElementById('navigation-data').dataset.child_parent
+const parent = document.getElementById('navigation-data').dataset.parent
 const childTypes = document.getElementById('navigation-data').dataset.child_types
+const selectablePages = document.getElementById('navigation-data').dataset.selectable_pages
 
 const initialState = {
   navigationState: JSON.parse(navigationState),
-  childParent: JSON.parse(childParent),
+  parent: JSON.parse(parent),
   childTypes: JSON.parse(childTypes),
+  selectablePages: JSON.parse(selectablePages),
   modalIsOpen: false,
   loadedImages: {}
 }

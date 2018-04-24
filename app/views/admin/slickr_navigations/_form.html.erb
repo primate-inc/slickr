@@ -1,28 +1,36 @@
-<% if params[:parent].present? %>
+<% if params[:parent_id].present? %>
   <div id="navigation-data"
        data-navigation_data="<%= @slickr_navigation.to_json(
-         methods: [:admin_navigation_path, :admin_image_index_path]
+         methods: [
+           :admin_navigation_path,
+           :admin_create_navigation_path,
+           :admin_update_navigation_path,
+           :admin_image_index_path,
+           :root
+         ]
        ) %>"
-       data-child_parent="<%= Slickr::Navigation.select(:id, :title, :parent_type)
-                                                .find(params[:parent])
+       data-parent="<%= Slickr::Navigation.select(:id, :title)
+                                                .find(params[:parent_id])
                                                 .to_json %>"
        data-child_types="<%= @slickr_navigation.decorate.child_type_options
-                                               .to_json %>">
+                                               .to_json %>"
+       data-selectable_pages="<%= @page_selections.to_json %>">
+
   </div>
-  <div id='navigation_child_content' ></div>
+  <div id='navigation_child_content'></div>
   <%= javascript_pack_tag 'slickr_navigation_child' %>
 <% else %>
   <%= semantic_form_for [:admin, @slickr_navigation],
                         builder: ActiveAdmin::FormBuilder do |f| %>
     <%= f.inputs do %>
       <%= f.input :title %>
-      <%= f.input :parent_type,
+      <%= f.input :root_type,
                   collection: @slickr_navigation.decorate
-                                                .parent_type_options
+                                                .root_type_options
                                                 .map{ |op| [op, op] }
                   %>
       <%= f.input :slickr_page_id, as: :select,
-                  collection: Slickr::Page.select(:id, :title)
+                  collection: Slickr::Page.has_root_or_page_navs
                                           .map{ |p| [p.title,p.id] } %>
     <% end %>
     <%= f.actions %>

@@ -2,9 +2,9 @@ class CreateSlickrNavigations < ActiveRecord::Migration[5.1]
   def change
     create_table :slickr_navigations do |t|
       t.integer     :parent_id
-      t.references  :slickr_page, index: true
+      t.integer     :slickr_page_id
       t.integer     :position
-      t.string      :parent_type
+      t.string      :root_type
       t.string      :child_type
       t.string      :title
       t.string      :image

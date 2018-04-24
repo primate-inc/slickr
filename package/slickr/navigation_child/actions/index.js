@@ -1,6 +1,10 @@
 import request from 'superagent';
-let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
-let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
+let _csrf_param = () => {
+  return document.getElementsByName("csrf-param")[0].content
+}
+let _csrf_token = () => {
+  return document.getElementsByName("csrf-token")[0].content
+}
 
 export const updateNavigationChildContent = values => {
   return function(dispatch, getState) {
@@ -21,23 +25,24 @@ export const updateNavigationChildContent = values => {
       url = 'admin_update_navigation_path'
     }
 
-    request[method](getState().navigationState[url]).type('json').accept('json').send(params).end(function(err,resp){
+    request[method](getState().navigationState[url])
+           .type('json').accept('json')
+           .send(params)
+           .end(function(err,resp){
       if(err) {
         console.error(err)
       } else {
         let flash = document.getElementsByClassName('flashes')[0]
-        flash.insertAdjacentHTML( 'beforeend', '<div id="save_message" class="flash flash_notice">Saved</div>' );
+        flash.insertAdjacentHTML(
+          'beforeend',
+          '<div id="save_message" class="flash flash_notice">Saved</div>'
+        );
         setTimeout(function() {
           document.getElementById('save_message').className += " hide";
         }, 1000);
         setTimeout(function() {
           document.getElementById('save_message').remove();
         }, 1500);
-        // dispatch({
-        //   type: 'SET_PAGE_TITLE',
-        //   title: resp.body.title,
-        //   layout: resp.body.layout
-        // })
       }
     })
   }
@@ -64,7 +69,10 @@ export const loadImages = (page) => {
     let params = {};
     params[_csrf_param()] = _csrf_token()
 
-    request.get(getState().pageState.admin_image_index_path).set('Accept', 'text/html').query(`type=page_edit&page=${page}`).end(function(err,resp){
+    request.get(getState().navigationState.admin_image_index_path)
+           .set('Accept', 'text/html')
+           .query(`type=page_edit&page=${page}`)
+           .end(function(err,resp){
       if(err) {
         console.error(err)
       } else {
@@ -92,6 +100,15 @@ export const keepCurrentPage = () => {
   return function(dispatch, getState) {
     dispatch({
       type: 'KEEP_CURRENT_PAGE'
+    })
+  }
+}
+
+export const updateNavImage = imageData => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: "CHOOSE_NAV_IMAGE",
+      payload: imageData
     })
   }
 }

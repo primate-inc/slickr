@@ -7,17 +7,18 @@ import NavigationWrapper from '../components/navigation_wrapper.jsx'
 import * as NavigationActions from '../actions'
 
 const NavigationEditor = ({
-    navigation, parent, childTypes, selectablePages, modalIsOpen,
-    loadedImages, choosingImage, actions, store
+    navigation, parent, rootNav, childTypes, selectablePages, modalIsOpen,
+    loadedImages, choosingNavImage, actions, store
 }) => {
   return(
     <NavigationWrapper  navigation={navigation}
                         parent={parent}
+                        rootNav={rootNav}
                         childTypes={childTypes}
                         selectablePages={selectablePages}
                         modalIsOpen={modalIsOpen}
                         loadedImages={loadedImages}
-                        choosingImage={choosingImage}
+                        choosingNavImage={choosingNavImage}
                         actions={actions} />
   )
 }
@@ -25,22 +26,24 @@ const NavigationEditor = ({
 NavigationEditor.propTypes = {
   navigation:       PropTypes.object.isRequired,
   parent:           PropTypes.object.isRequired,
+  rootNav:          PropTypes.object.isRequired,
   childTypes:       PropTypes.array.isRequired,
   selectablePages:  PropTypes.array.isRequired,
   modalIsOpen:      PropTypes.bool.isRequired,
   loadedImages:     PropTypes.object.isRequired,
-  choosingImage:    PropTypes.bool.isRequired,
+  choosingNavImage: PropTypes.bool.isRequired,
   actions:          PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   navigation:       state.navigationState,
   parent:           state.parent,
+  rootNav:          state.rootNav,
   childTypes:       state.childTypes,
   selectablePages:  state.selectablePages,
   modalIsOpen:      state.modalIsOpen,
   loadedImages:     state.loadedImages,
-  choosingImage:    state.choosingImage
+  choosingNavImage: state.choosingNavImage
 })
 
 const mapDispatchToProps = dispatch => ({

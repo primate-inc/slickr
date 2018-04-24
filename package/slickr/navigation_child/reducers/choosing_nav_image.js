@@ -1,4 +1,4 @@
-const choosingImage = (state = false, action) => {
+const choosingNavImage = (state = false, action) => {
   switch(action.type) {
     case 'TOGGLE_CHOOSING_IMAGE':
       return  state === true ? false : true
@@ -7,4 +7,4 @@ const choosingImage = (state = false, action) => {
   }
 }
 
-export default choosingImage
+export default choosingNavImage

@@ -6,7 +6,7 @@ export default class TitleBarButtons extends React.Component {
     return(
         <div className="action_items">
           <span className="action_item">
-            <a onClick={this.props.saveNavigation} href='#'>Save</a>
+            <a onClick={this.props.saveNavigation} href='#'>Save navigation</a>
           </span>
         </div>
     )

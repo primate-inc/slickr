@@ -6,13 +6,14 @@ import * as PageActions from '../../actions'
 import cx from 'classnames';
 import ImageButton from "./ImageButton.jsx";
 
-const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState, choosingPageHeaderImage}) => (
+const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState, choosingPageHeaderImage, choosingNavImage}) => (
   <div>
     <ImageButton modalIsOpen={modalIsOpen}
                  actions={actions}
                  loadedImages={loadedImages}
                  editorState={editorState}
                  choosingPageHeaderImage={choosingPageHeaderImage}
+                 choosingNavImage={choosingNavImage}
     />
   </div>
 )
@@ -22,7 +23,8 @@ ImageButtonContainer.propTypes = {
   modalIsOpen: PropTypes.bool.isRequired,
   loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
-  choosingPageHeaderImage: PropTypes.bool.isRequired
+  choosingPageHeaderImage: PropTypes.bool.isRequired,
+  choosingNavImage: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -30,7 +32,8 @@ const mapStateToProps = state => ({
   modalIsOpen: state.modalIsOpen,
   loadedImages: state.loadedImages,
   editorState: state.editorState,
-  choosingPageHeaderImage: state.choosingPageHeaderImage
+  choosingPageHeaderImage: state.choosingPageHeaderImage,
+  choosingNavImage: state.choosingNavImage
 })
 
 const mapDispatchToProps = dispatch => ({

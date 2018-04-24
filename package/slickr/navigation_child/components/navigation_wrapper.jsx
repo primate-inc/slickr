@@ -1,8 +1,8 @@
 import React from 'react';
-import PageForm from './page_form.jsx'
 import TitleBarButtons from './title_bar_buttons.jsx'
 import PropTypes from 'prop-types'
 import Content from "./content.jsx";
+import ImagePickerModal from '../../page_edit/components/content/image_picker_modal.jsx';
 import { Formik } from 'formik';
 import Yup from 'yup';
 
@@ -11,9 +11,10 @@ const changeTab = function(tab, actions) {
 }
 
 const NavigationWrapper = (
-  {childTypes, parent, selectablePages, navigation, actions, values, touched,
-   errors, dirty, isSubmitting, handleChange, setFieldValue, handleBlur,
-   handleSubmit, handleReset, loadedImages
+  {childTypes, parent, rootNav, selectablePages, navigation, actions, values,
+   touched, errors, dirty, isSubmitting, handleChange, setFieldValue,
+   handleBlur, handleSubmit, handleReset, loadedImages, modalIsOpen,
+   choosingNavImage
   }) => {
     return(
       <div >
@@ -23,9 +24,7 @@ const NavigationWrapper = (
               <span className="breadcrumb">
                 <a href="/admin">Admin</a>
                 <span className="breadcrumb_sep"> / </span>
-                <a href={navigation.admin_navigation_path}>
-                  {navigation.root.title}
-                </a>
+                <a href={rootNav.url}>{`${rootNav.title}`}</a>
                 <span className="breadcrumb_sep"> / </span>
               </span>
               <h2 id="page_title">
@@ -53,6 +52,12 @@ const NavigationWrapper = (
                        loadedImages={loadedImages} />
             </div>
           </div>
+          <ImagePickerModal
+            modalIsOpen={modalIsOpen}
+            actions={actions}
+            loadedImages={loadedImages}
+            choosingNavImage={choosingNavImage}
+          />
         </form>
       </div>
     )
@@ -70,7 +75,9 @@ export default Formik({
   }),
   validationSchema: Yup.object().shape({
     child_type: Yup.string().required('select a type').nullable(),
-    slickr_page_id: Yup.string().nullable().when('child_type', (child_type, schema) => {
+    slickr_page_id: Yup.string()
+                       .nullable()
+                       .when('child_type', (child_type, schema) => {
       if(child_type === 'Page') {
         return schema.required('select a page');
       }
@@ -81,7 +88,8 @@ export default Formik({
     // do stuff with your payload
     // e.preventDefault(), setSubmitting, setError(undefined) are
     // called before handleSubmit is. So you don't have to do repeat this.
-    // handleSubmit will only be executed if form values pass validation (if you specify it).
+    // handleSubmit will only be executed if form values pass validation (if
+    // you specify it).
     props.actions.updateNavigationChildContent(values)
   }
 })(NavigationWrapper)

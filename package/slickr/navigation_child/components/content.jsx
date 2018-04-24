@@ -26,7 +26,7 @@ export default class Content extends React.Component {
     this.props.actions.toggleChoosingImage();
     this.props.actions.toggleImagePicker();
     if(Object.keys(this.props.loadedImages).length === 0) {
-      this.props.actions.loadImages(navigation);
+      this.props.actions.loadImages(page);
     }
   }
 
@@ -87,7 +87,9 @@ export default class Content extends React.Component {
               <p className='hint_text'></p>
             </div>
           </li>
-          <li className="input string" style={{display: this.state.pageSelectVisible ? 'block' : 'none'}}>
+          <li className="input string" style={{
+            display: this.state.pageSelectVisible ? 'block' : 'none'
+          }}>
             <div className="edit-wrapper">
               <label htmlFor="slickr_page_id">Page</label>
               <select value={values.slickr_page_id}
@@ -140,7 +142,9 @@ export default class Content extends React.Component {
                   }
                   let splitFile = this.props.navigation.image.split('/');
                   let fileName = splitFile[splitFile.length - 1];
-                  let fileNameWithImageSize = image.replace(fileName, `small_${fileName}`)
+                  let fileNameWithImageSize = image.replace(
+                    fileName, `small_${fileName}`
+                  )
                   return (
                     <p className="inline-hints">
                       <img src={fileNameWithImageSize} />

@@ -30,17 +30,17 @@ module Slickr
     end
 
     def tree_children
-      children.decorate.map do |p|
+      children.decorate.map do |n|
         {
-          id: p.id,
-          title: p.title,
-          children: p.tree_children,
-          position: p.position,
-          subtitle: p.subtitle,
-          add_child_path: p.add_child_path,
-          admin_edit_navigation_path: p.admin_edit_navigation_path,
-          admin_delete_navigation_path: p.admin_delete_navigation_path,
-          change_position_admin_navigation: p.change_position_admin_navigation
+          id: n.id,
+          title: n.title,
+          children: n.tree_children,
+          position: n.position,
+          subtitle: n.subtitle,
+          add_child_path: n.add_child_path,
+          admin_edit_navigation_path: n.admin_edit_navigation_path,
+          admin_delete_navigation_path: n.admin_delete_navigation_path,
+          change_position_admin_navigation: n.change_position_admin_navigation
         }
       end
     end
@@ -48,12 +48,6 @@ module Slickr
     def add_child_path
       Rails.application.routes.url_helpers.new_admin_slickr_navigation_path(
         parent_id: id
-      )
-    end
-
-    def admin_navigation_path
-      Rails.application.routes.url_helpers.admin_slickr_navigations_path(
-        q: { 'title_eq' => Slickr::Navigation.find_by_title(root.title).title }
       )
     end
 

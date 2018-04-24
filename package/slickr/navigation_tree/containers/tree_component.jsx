@@ -66,7 +66,7 @@ const Tree = ({store, navigations, actions}) => (
             <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-plus"></use></svg>
             Add Child
           </button>,
-          <button onClick={ () => {if(confirm('Delete the navigation?')) { deletePage(node.admin_delete_navigation_path, actions)};}}
+          <button onClick={ () => {if(confirm('Delete the navigation?')) { deleteNavigation(node.admin_delete_navigation_path, actions)};}}
           >
             <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-delete"></use></svg>
             Remove

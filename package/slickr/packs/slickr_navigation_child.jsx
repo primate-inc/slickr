@@ -11,12 +11,14 @@ import ReactModal from 'react-modal';
 
 const navigationState = document.getElementById('navigation-data').dataset.navigation_data
 const parent = document.getElementById('navigation-data').dataset.parent
+const rootNav = document.getElementById('navigation-data').dataset.root_nav
 const childTypes = document.getElementById('navigation-data').dataset.child_types
 const selectablePages = document.getElementById('navigation-data').dataset.selectable_pages
 
 const initialState = {
   navigationState: JSON.parse(navigationState),
   parent: JSON.parse(parent),
+  rootNav: JSON.parse(rootNav),
   childTypes: JSON.parse(childTypes),
   selectablePages: JSON.parse(selectablePages),
   modalIsOpen: false,

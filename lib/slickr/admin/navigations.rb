@@ -10,7 +10,7 @@ if defined?(ActiveAdmin)
                   :link_text, :page_id, :parent_id, :slickr_page_id
 
     # breadcrumbs only used for tree roots. All child breadcrumbs are
-    #  overridden in the React component
+    # overridden in the React component
     breadcrumb do
       if params[:action] == 'index'
         [link_to('Admin', admin_root_path)]
@@ -18,7 +18,7 @@ if defined?(ActiveAdmin)
         [
           link_to('Admin', admin_root_path),
           link_to(
-            "#{Slickr::Navigation.find(params[:id]).title}",
+            Slickr::Navigation.find(params[:id]).title,
             admin_slickr_navigation_path(params[:id])
           )
         ]
@@ -79,6 +79,7 @@ if defined?(ActiveAdmin)
       def new
         return super unless params[:parent_id]
         page_selections
+        root_nav
         super
       end
 
@@ -100,12 +101,26 @@ if defined?(ActiveAdmin)
         return super if nav.root?
         params[:parent_id] = nav.parent.id
         page_selections
+        root_nav
         super
       end
 
       def update
         update! do |format|
           format.json do
+          end
+        end
+      end
+
+      def destroy
+        destroy! do |format|
+          format.json do
+            render json: Slickr::Navigation.roots.decorate.to_json(
+              only: %i[id title], methods: %i[
+                expanded subtitle admin_edit_navigation_path
+                add_child_path children admin_delete_navigation_path
+              ]
+            )
           end
         end
       end
@@ -139,6 +154,15 @@ if defined?(ActiveAdmin)
 
       def selected_nav_page(nav)
         Slickr::Page.where(id: nav.slickr_page.id)
+      end
+
+      def root_nav
+        nav = Slickr::Navigation.find(params[:parent_id])
+                                .root
+        @root_nav = {
+          title:  nav.title,
+          url:    admin_slickr_navigations_path(q: { 'title_eq' => nav.title })
+        }
       end
     end
   end

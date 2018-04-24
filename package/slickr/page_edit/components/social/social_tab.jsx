@@ -5,7 +5,6 @@ export default class MetaTab extends React.Component {
   render() {
     const handleChange = this.props.handleChange
     const values = this.props.values
-    console.log(this.props)
     return (
       <fieldset>
         <ol>

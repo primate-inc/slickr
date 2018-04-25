@@ -13,11 +13,15 @@ module Slickr
 
     CHILD_TYPES = ['Page', 'Custom Link', 'Anchor', 'Header'].freeze
 
-    belongs_to :slickr_page, foreign_key: 'slickr_page_id', class_name: 'Slickr::Page', optional: true
+    belongs_to :slickr_page,
+               foreign_key: 'slickr_page_id',
+               class_name: 'Slickr::Page',
+               optional: true
 
     validates :title, presence: true
     validates_uniqueness_of :title, if: proc { |nav| nav.root? }
     validate :root_type_or_child_type
+    validate :page_id_if_root_is_page
 
     scope(:nav_roots, lambda do
       where.not(root_type: [nil, ''])
@@ -40,7 +44,8 @@ module Slickr
           add_child_path: n.add_child_path,
           admin_edit_navigation_path: n.admin_edit_navigation_path,
           admin_delete_navigation_path: n.admin_delete_navigation_path,
-          change_position_admin_navigation: n.change_position_admin_navigation
+          change_position_admin_navigation: n.change_position_admin_navigation,
+          admin_edit_page_path: n.admin_edit_page_path
         }
       end
     end
@@ -74,6 +79,11 @@ module Slickr
       Rails.application.routes.url_helpers.admin_slickr_navigation_path(id)
     end
 
+    def admin_edit_page_path
+      return nil if slickr_page_id.nil?
+      Rails.application.routes.url_helpers
+           .edit_admin_slickr_page_path(slickr_page_id)
+    end
 
     def admin_image_index_path
       Rails.application.routes.url_helpers.admin_slickr_images_path
@@ -91,6 +101,11 @@ module Slickr
       return unless root_type.blank? && child_type.blank?
       errors.add(:root_type, 'specify a type')
       errors.add(:child_type, 'specify a type')
+    end
+
+    def page_id_if_root_is_page
+      return unless root_type == 'Page' && slickr_page_id.blank?
+      errors.add(:slickr_page_id, 'select a page')
     end
   end
 end

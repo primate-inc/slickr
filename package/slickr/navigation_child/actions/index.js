@@ -1,7 +1,4 @@
 import request from 'superagent';
-import createHistory from 'history/createHashHistory'
-
-const history = createHistory()
 
 let _csrf_param = () => {
   return document.getElementsByName("csrf-param")[0].content
@@ -56,8 +53,9 @@ export const updateNavigationChildContent = values => {
         }, 1000);
         setTimeout(function() {
           document.getElementById('save_message').remove();
-          history.goBack()
+          window.location.href = getState().rootNav.url;
         }, 1500);
+
       }
     })
   }

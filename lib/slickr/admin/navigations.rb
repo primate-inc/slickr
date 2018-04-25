@@ -95,6 +95,7 @@ if defined?(ActiveAdmin)
 
       def show
         redirect_to admin_slickr_navigations_path(
+          utf8: '✓',
           q: { title_eq: Slickr::Navigation.find(params[:id]).title }
         )
       end
@@ -117,14 +118,21 @@ if defined?(ActiveAdmin)
       end
 
       def destroy
+        general_child_nav_ids = general_child_navs_to_delete
+        page_root_nav_ids = page_root_navs_to_delete
         destroy! do |format|
           format.json do
-            render json: Slickr::Navigation.roots.decorate.to_json(
-              only: %i[id title], methods: %i[
-                expanded subtitle admin_edit_navigation_path
-                add_child_path children admin_delete_navigation_path
-              ]
-            )
+            Slickr::Navigation.where(id: general_child_nav_ids)
+                              .destroy_all unless general_child_nav_ids.nil?
+            Slickr::Navigation.where(id: page_root_nav_ids)
+                              .destroy_all unless page_root_nav_ids.nil?
+            render json: Slickr::Navigation.where(title: params[:root_title])
+              .decorate.to_json(
+                only: %i[id title], methods: %i[
+                  expanded subtitle admin_edit_navigation_path
+                  add_child_path children admin_delete_navigation_path
+                ]
+              )
           end
         end
       end
@@ -136,6 +144,7 @@ if defined?(ActiveAdmin)
               Slickr::Navigation.first.title
             ).title
           }
+        params['utf8'] = '✓'
       end
 
       def page_selections
@@ -164,8 +173,38 @@ if defined?(ActiveAdmin)
         nav = Slickr::Navigation.find(params[:parent_id]).root
         @root_nav = {
           title:  nav.title,
-          url:    admin_slickr_navigations_path(q: { 'title_eq' => nav.title })
+          url:    admin_slickr_navigations_path(
+            utf8: '✓',
+            q: { 'title_eq' => nav.title }
+          )
         }
+      end
+
+      # if the deleted navigation child is a Page and its root is not 'General'
+      # then delete the descendants of all roots of type 'General' that have
+      # the same slickr_page_id as the deleted navigation child
+      def general_child_navs_to_delete
+        nav = Slickr::Navigation.find(params[:id])
+        general_page_navs_to_delete = []
+        return unless nav.child_type == 'Page'
+        return if nav.root.root_type == 'General'
+
+        general_roots = Slickr::Navigation.where(root_type: 'General')
+        general_roots.each do |gr|
+          ids_to_delete = gr.descendants.map do |d|
+            d.id if d.slickr_page_id == nav.slickr_page_id
+          end.compact
+          general_page_navs_to_delete += ids_to_delete
+        end
+        general_page_navs_to_delete
+      end
+
+      def page_root_navs_to_delete
+        nav = Slickr::Navigation.find(params[:id])
+        return unless nav.child_type == 'Page'
+        Slickr::Navigation.select(:id).where(
+          root_type: 'Page', slickr_page_id: nav.slickr_page_id
+        ).pluck(:id)
       end
     end
   end

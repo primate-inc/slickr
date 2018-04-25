@@ -31,7 +31,7 @@ $(function () {
   if($('#slickr_navigation_root_type').length ) {
     $('#slickr_navigation_slickr_page_id_input').hide();
   }
-  if($('#slickr_navigation_root_type').val() === 'true' ) {
+  if($('#slickr_navigation_root_type').val() === 'Page' ) {
     $('#slickr_navigation_slickr_page_id_input').show();
   }
 })

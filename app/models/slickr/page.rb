@@ -11,7 +11,10 @@ module Slickr
                     meta: { content_changed: :content_changed? }
 
     friendly_id :title, use: [:slugged, :finders]
-    has_many :slickr_navigations, foreign_key: 'slickr_page_id', class_name: 'Slickr::Navigation'
+    has_many :slickr_navigations,
+             foreign_key: 'slickr_page_id',
+             class_name: 'Slickr::Navigation',
+             dependent: :destroy
     has_many :drafts, foreign_key: 'slickr_page_id', class_name: 'Draft', dependent: :destroy
     has_one :active_draft, class_name: 'Slickr::Page::Draft'
     has_one :published_draft, class_name: 'Slickr::Page::Draft'

@@ -23,14 +23,16 @@
                         builder: ActiveAdmin::FormBuilder do |f| %>
     <%= f.inputs do %>
       <%= f.input :title %>
-      <%= f.input :root_type,
-                  collection: @slickr_navigation.decorate
-                                                .root_type_options
-                                                .map{ |op| [op, op] }
-                  %>
-      <%= f.input :slickr_page_id, as: :select,
-                  collection: Slickr::Page.has_root_or_page_navs
-                                          .map{ |p| [p.title,p.id] } %>
+      <% if f.object.new_record? %>
+        <%= f.input :root_type,
+                    collection: @slickr_navigation.decorate
+                                                  .root_type_options
+                                                  .map{ |op| [op, op] }
+                    %>
+        <%= f.input :slickr_page_id, as: :select,
+                    collection: Slickr::Page.has_root_or_page_navs
+                                            .map{ |p| [p.title,p.id] } %>
+      <% end %>
     <% end %>
     <%= f.actions %>
   <% end %>

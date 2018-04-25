@@ -39,6 +39,7 @@ export const deleteNavigation = (path) => {
   return function(dispatch, getState) {
     let params = {};
     params[_csrf_param()] = _csrf_token()
+    params['root_title'] = getState().treeState[0].title;
     request.delete(path)
            .type('json')
            .accept('json')
@@ -51,6 +52,9 @@ export const deleteNavigation = (path) => {
           type: 'UPDATE_TREE',
           payload: resp.body
         })
+        if(resp.body.length == 0) {
+          window.location.href = window.location.pathname
+        }
       }
     })
   }

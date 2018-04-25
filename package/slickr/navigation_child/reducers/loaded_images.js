@@ -8,7 +8,9 @@ const loadedImages = (state = [], action) => {
       return Object.assign({}, state, { loading: true })
     case 'KEEP_CURRENT_PAGE':
       let page = state.pagination_info.current_page - 1
-      let paginactionInfo = Object.assign({}, state.pagination_info, { current_page: page })
+      let paginactionInfo = Object.assign(
+        {}, state.pagination_info, { current_page: page }
+      )
       return Object.assign({}, state, { pagination_info: paginactionInfo })
 
     default:

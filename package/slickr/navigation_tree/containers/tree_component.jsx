@@ -26,7 +26,9 @@ const updateState = (treeData, actions) => {
   actions.updateTree(treeData)
 }
 const moveNode = (node, treeData, nextTreeIndex, actions) => {
-  const flatData = getFlatDataFromTree({treeData: treeData, getNodeKey: ({ node }) => node.id })
+  const flatData = getFlatDataFromTree({
+    treeData: treeData, getNodeKey: ({ node }) => node.id
+  })
   const prevNode = flatData[nextTreeIndex - 1]
   const currentNode = flatData[nextTreeIndex]
 
@@ -57,18 +59,25 @@ const Tree = ({store, navigations, actions}) => (
           <button onClick={() =>
             FollowLink(node.admin_edit_navigation_path)
           }>
-            <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-edit"></use></svg>
+            <svg className="svg-icon" viewBox="0 0 20 20">
+              <use xlinkHref="#svg-edit"></use>
+            </svg>
             Edit
           </button>,
           <button onClick={() =>
             FollowLink(node.add_child_path)
           }>
-            <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-plus"></use></svg>
+            <svg className="svg-icon" viewBox="0 0 20 20">
+              <use xlinkHref="#svg-plus"></use>
+            </svg>
             Add Child
           </button>,
-          <button onClick={ () => {if(confirm('Delete the navigation?')) { deleteNavigation(node.admin_delete_navigation_path, actions)};}}
-          >
-            <svg className="svg-icon" viewBox="0 0 20 20"><use xlinkHref="#svg-delete"></use></svg>
+          <button onClick={ () => {if(confirm('Delete the navigation?')) {
+            deleteNavigation(node.admin_delete_navigation_path, actions)
+          };}}>
+            <svg className="svg-icon" viewBox="0 0 20 20">
+              <use xlinkHref="#svg-delete"></use>
+            </svg>
             Remove
           </button>
         ]

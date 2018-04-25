@@ -33,7 +33,9 @@ if defined?(ActiveAdmin)
     filter :title,
            as: :select,
            collection: lambda {
-             Hash[Slickr::Navigation.nav_roots.map { |nav| [nav.title, nav.title] }]
+             Hash[
+               Slickr::Navigation.nav_roots.map { |nav| [nav.title, nav.title] }
+             ]
            },
            label: 'Navigation'
 

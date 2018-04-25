@@ -1,4 +1,8 @@
 import request from 'superagent';
+import createHistory from 'history/createHashHistory'
+
+const history = createHistory()
+
 let _csrf_param = () => {
   return document.getElementsByName("csrf-param")[0].content
 }
@@ -30,7 +34,17 @@ export const updateNavigationChildContent = values => {
            .send(params)
            .end(function(err,resp){
       if(err) {
-        console.error(err)
+        let flash = document.getElementsByClassName('flashes')[0]
+        flash.insertAdjacentHTML(
+          'beforeend',
+          '<div id="save_message" class="flash flash_alert">Error</div>'
+        );
+        setTimeout(function() {
+          document.getElementById('save_message').className += " hide";
+        }, 1000);
+        setTimeout(function() {
+          document.getElementById('save_message').remove();
+        }, 1500);
       } else {
         let flash = document.getElementsByClassName('flashes')[0]
         flash.insertAdjacentHTML(
@@ -42,6 +56,7 @@ export const updateNavigationChildContent = values => {
         }, 1000);
         setTimeout(function() {
           document.getElementById('save_message').remove();
+          history.goBack()
         }, 1500);
       }
     })

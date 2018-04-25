@@ -86,6 +86,7 @@ if defined?(ActiveAdmin)
       def create
         create! do |format|
           format.json do
+            render json: {}
           end
         end
       end
@@ -108,6 +109,7 @@ if defined?(ActiveAdmin)
       def update
         update! do |format|
           format.json do
+            render json: {}
           end
         end
       end
@@ -157,8 +159,7 @@ if defined?(ActiveAdmin)
       end
 
       def root_nav
-        nav = Slickr::Navigation.find(params[:parent_id])
-                                .root
+        nav = Slickr::Navigation.find(params[:parent_id]).root
         @root_nav = {
           title:  nav.title,
           url:    admin_slickr_navigations_path(q: { 'title_eq' => nav.title })

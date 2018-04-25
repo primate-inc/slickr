@@ -21,10 +21,7 @@ const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState, 
 ImageButtonContainer.propTypes = {
   actions: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
-  loadedImages: PropTypes.object.isRequired,
-  editorState: PropTypes.object.isRequired,
-  choosingPageHeaderImage: PropTypes.bool.isRequired,
-  choosingNavImage: PropTypes.bool.isRequired
+  loadedImages: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

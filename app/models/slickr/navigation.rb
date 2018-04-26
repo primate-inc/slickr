@@ -5,11 +5,9 @@ module Slickr
   class Navigation < ApplicationRecord
     self.table_name = 'slickr_navigations'
 
-    extend ActsAsTree::TreeWalker
-    acts_as_tree order: 'position'
-    acts_as_list scope: :parent_id
+    has_ancestry
 
-    ROOT_TYPES = %w[Root General Page].freeze
+    ROOT_TYPES = %w[Root Link Page].freeze
 
     CHILD_TYPES = ['Page', 'Custom Link', 'Anchor', 'Header'].freeze
 

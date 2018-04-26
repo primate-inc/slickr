@@ -25,6 +25,7 @@
       <%= f.input :title %>
       <% if f.object.new_record? %>
         <%= f.input :root_type,
+                    label: 'Navigation type',
                     collection: @slickr_navigation.decorate
                                                   .root_type_options
                                                   .map{ |op| [op, op] }

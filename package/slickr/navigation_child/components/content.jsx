@@ -7,7 +7,8 @@ export default class Content extends React.Component {
 
     this.state = {
       imagePath: this.props.navigation.navigation_image,
-      pageSelectVisible: this.props.values.child_type === 'Page' ? true : false
+      pageSelectVisible: this.props.values.child_type === 'Page' ? true : false,
+      linkAndLinkTextVisible: this.props.values.child_type === 'Header' ? false : true
     }
   }
 
@@ -69,11 +70,19 @@ export default class Content extends React.Component {
                         // call the built-in handleChange
                         handleChange(e)
                         // and do something about e
-                        if(e.currentTarget.value !== 'Page') {
-                          this.setState({pageSelectVisible: false});
-                          setFieldValue('slickr_page_id', '');
-                        } else {
+                        if(e.currentTarget.value == 'Page') {
                           this.setState({pageSelectVisible: true});
+                          this.setState({linkAndLinkTextVisible: true});
+                        } else if (e.currentTarget.value == 'Header') {
+                          this.setState({pageSelectVisible: false});
+                          this.setState({linkAndLinkTextVisible: false});
+                          setFieldValue('slickr_page_id', '');
+                          setFieldValue('link', '');
+                          setFieldValue('link_text', '');
+                        } else {
+                          this.setState({pageSelectVisible: false});
+                          this.setState({linkAndLinkTextVisible: true});
+                          setFieldValue('slickr_page_id', '');
                         }
                       }}
                       name="child_type">
@@ -165,17 +174,26 @@ export default class Content extends React.Component {
               <p className='hint-text'>Navigation text</p>
             </div>
           </li>
-          <li className="input string admin-big-title">
+          <li className="input string admin-big-title" style={{
+            display: this.state.linkAndLinkTextVisible ? 'block' : 'none'
+          }}>
             <div className="edit-wrapper">
               <label htmlFor="link">Link</label>
               <input type="text"
                      name="link"
                      value={values.link}
                      onChange={handleChange} />
-              <p className='hint-text'>Navigation link URL</p>
+            {this.props.errors.link && this.props.touched.link &&
+             <p className="inline-errors">
+               {this.props.errors.link}
+             </p>
+            }
+            <p className='hint-text'>Navigation link URL</p>
             </div>
           </li>
-          <li className="input string admin-big-title">
+          <li className="input string admin-big-title" style={{
+            display: this.state.linkAndLinkTextVisible ? 'block' : 'none'
+          }}>
             <div className="edit-wrapper">
               <label htmlFor="link_text">Link text</label>
               <input type="text"

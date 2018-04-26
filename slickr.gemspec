@@ -44,4 +44,5 @@ Gem::Specification.new do |s|
   s.add_dependency "sitemap_generator", "~> 6.0.1"
   s.add_dependency "activeadmin_reorderable", "~> 0.1.2"
   s.add_dependency 'redcarpet', '~> 3.4.0'
+  s.add_dependency "ancestry", "~> 3.0"
 end

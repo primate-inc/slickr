@@ -82,7 +82,14 @@ export default Formik({
         return schema.required('select a page');
       }
     }),
-    title: Yup.string().required('select a title').nullable()
+    title: Yup.string().required('select a title').nullable(),
+    link: Yup.string()
+             .nullable()
+             .when('child_type', (child_type, schema) => {
+      if(child_type === 'Anchor') {
+        return schema.required('enter an anchor link eg. #an-anchor-link');
+      }
+    })
   }),
   handleSubmit: (values, { props, setErrors, setSubmitting }) => {
     // do stuff with your payload

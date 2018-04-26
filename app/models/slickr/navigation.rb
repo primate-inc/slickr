@@ -6,6 +6,7 @@ module Slickr
     self.table_name = 'slickr_navigations'
 
     has_ancestry
+    acts_as_list scope: [:ancestry]
 
     ROOT_TYPES = %w[Root Link Page].freeze
 
@@ -17,22 +18,36 @@ module Slickr
                optional: true
 
     validates :title, presence: true
-    validates_uniqueness_of :title, if: proc { |nav| nav.root? }
+    validates_uniqueness_of :title, if: proc { |nav| nav.sub_root? }
     validate :root_type_or_child_type
     validate :page_id_if_root_is_page
 
     scope(:nav_roots, lambda do
       where.not(root_type: [nil, ''])
+      .where.not(root_type: 'slickr_master')
     end)
 
-    def self.root_subtree_for_views; end
+    def self.all_nav_trees
+      first.build_tree_structure[0]['children']
+    end
 
     def expanded
-      root?
+      sub_root?
+    end
+
+    def sub_root
+      return self if root_type.present?
+      ancestors.where.not(root_type: [nil, ''])
+               .where.not(root_type: 'slickr_master')
+               .first
+    end
+
+    def sub_root?
+      root_type.present?
     end
 
     def tree_children
-      children.decorate.map do |n|
+      children.order(:position).decorate.map do |n|
         {
           id: n.id,
           title: n.title,
@@ -48,6 +63,15 @@ module Slickr
       end
     end
 
+    def build_tree_structure
+      subtree.left_outer_joins(:slickr_page).select(
+        :id, :child_type, :slickr_page_id, :title, :image, :text, :link,
+        :link_text, :ancestry,
+        'slickr_pages.title AS page_title', :page_header, :page_intro,
+        :page_subheader, :page_header_image, :slug
+      ).arrange_serializable(order: :position)
+    end
+
     def add_child_path
       Rails.application.routes.url_helpers.new_admin_slickr_navigation_path(
         parent_id: id
@@ -59,7 +83,7 @@ module Slickr
     end
 
     def admin_edit_navigation_path
-      if root?
+      if sub_root?
         Rails.application.routes.url_helpers
              .edit_admin_slickr_navigation_path(id)
       else

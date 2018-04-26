@@ -6,7 +6,7 @@ module Slickr
     delegate_all
 
     def root_type_options
-      count = Slickr::Navigation.all.count
+      count = Slickr::Navigation.nav_roots.count
       return [Slickr::Navigation::ROOT_TYPES[0]] if count.zero?
       Slickr::Navigation::ROOT_TYPES
     end

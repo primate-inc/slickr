@@ -33,6 +33,9 @@
         <%= f.input :slickr_page_id, as: :select,
                     collection: Slickr::Page.has_root_or_page_navs
                                             .map{ |p| [p.title,p.id] } %>
+        <%= f.input :ancestry,
+                    as: :hidden,
+                    input_html: { value: Slickr::Navigation.first.id } %>
       <% end %>
     <% end %>
     <%= f.actions %>

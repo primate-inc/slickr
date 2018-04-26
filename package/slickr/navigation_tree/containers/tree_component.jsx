@@ -29,14 +29,15 @@ const moveNode = (node, treeData, nextTreeIndex, actions) => {
   const flatData = getFlatDataFromTree({
     treeData: treeData, getNodeKey: ({ node }) => node.id
   })
-  const prevNode = flatData[nextTreeIndex - 1]
   const currentNode = flatData[nextTreeIndex]
 
-  if(prevNode.parentNode == currentNode.parentNode){
-    actions.saveNodePosition(node, currentNode.parentNode.id, prevNode.node.id)
-  } else {
-    actions.saveNodePosition(node, currentNode.parentNode.id, null)
-  }
+  actions.saveNodePosition(
+    node,
+    currentNode.parentNode.id,
+    currentNode.parentNode.children.map(function(x) {
+      return x.id;
+    }).indexOf(currentNode.node.id) + 1
+  )
 }
 
 const deleteNavigation = (path, actions) => {

@@ -7,7 +7,8 @@ if defined?(ActiveAdmin)
     menu priority: 3
 
     permit_params :root_type, :child_type, :title, :image, :text, :link,
-                  :link_text, :page_id, :parent_id, :slickr_page_id
+                  :link_text, :page_id, :parent_id, :slickr_page_id,
+                  :ancestry
 
     # breadcrumbs only used for tree roots. All child breadcrumbs are
     # overridden in the React component
@@ -57,24 +58,26 @@ if defined?(ActiveAdmin)
     end
 
     member_action :change_position, method: :put do
-      resource.update_attribute(:parent_id, params[:parent_id])
-      if params[:previous_id].present?
-        previous = Slickr::Navigation.find(params[:previous_id])
-        if resource.position < previous.position
-          resource.insert_at(previous.position.to_i)
-        else
-          resource.insert_at(previous.position.to_i + 1)
-        end
-      else
-        resource.move_to_top
+      if resource.parent.id != params[:parent_id]
+        resource.parent = Slickr::Navigation.find(params[:parent_id])
+        resource.save
       end
+      resource.update_attribute(:position, params[:new_position])
     end
 
     controller do
       def index
+        count = Slickr::Navigation.all.count
+        if count.zero?
+          Slickr::Navigation.create(
+            root_type: 'slickr_master', title: 'slickr_master'
+          )
+          redirect_to admin_slickr_navigations_path(
+            q: { title_eq: 'slickr_master' }
+          ) and return
+        end
         return super if params[:q].present?
-        return super if Slickr::Navigation.all.count.zero?
-        merge_first_title_query
+        merge_first_title_query(count)
         super
       end
 
@@ -102,7 +105,7 @@ if defined?(ActiveAdmin)
 
       def edit
         nav = Slickr::Navigation.find(params[:id])
-        return super if nav.root?
+        return super if nav.sub_root?
         params[:parent_id] = nav.parent.id
         page_selections
         root_nav
@@ -139,12 +142,15 @@ if defined?(ActiveAdmin)
         end
       end
 
-      # inject params so index only shows the tree of the first root nav
-      def merge_first_title_query
+      # inject params so index only shows the tree of the first sub root nav
+      # if only the 1st record is created then return params early which is
+      # used in the _tree partial to prevent the tree showing
+      def merge_first_title_query(count)
+        return params['q'] = { 'title_eq' => 'slickr_master' } if count == 1
         params['q'] =
           {
             'title_eq' => Slickr::Navigation.find_by_title(
-              Slickr::Navigation.first.title
+              Slickr::Navigation.second.title
             ).title
           }
         params['utf8'] = '✓'
@@ -163,7 +169,8 @@ if defined?(ActiveAdmin)
       # create child pages where the page does not exist in the nav structure
       # of the site
       def selectable_pages
-        root_type = Slickr::Navigation.find(params[:parent_id]).root.root_type
+        root_type = Slickr::Navigation.find(params[:parent_id])
+                                      .sub_root.root_type
         case root_type
         when 'Link'
           Slickr::Page.has_root_or_page_navs
@@ -180,7 +187,7 @@ if defined?(ActiveAdmin)
 
       # extract title and build url for the root nav of any nav
       def root_nav
-        nav = Slickr::Navigation.find(params[:parent_id]).root
+        nav = Slickr::Navigation.find(params[:parent_id]).sub_root
         @root_nav = {
           title:  nav.title,
           url:    admin_slickr_navigations_path(
@@ -198,7 +205,7 @@ if defined?(ActiveAdmin)
       def link_child_navs_to_delete
         nav = Slickr::Navigation.find(params[:id])
         return unless nav.child_type == 'Page'
-        return if nav.root.root_type == 'Link'
+        return if nav.sub_root.root_type == 'Link'
         build_link_child_nav_ids_to_delete(nav)
       end
 

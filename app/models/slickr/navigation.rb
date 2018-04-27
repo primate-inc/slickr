@@ -27,10 +27,18 @@ module Slickr
       .where.not(root_type: 'slickr_master')
     end)
 
+    def self.nav_helper
+      nav_trees = Slickr::Navigation.all_nav_trees
+      pathnames = all_pages_pathnames(nav_trees)
+      {
+        pathnames: pathnames,
+        nav_menus: all_nav_menus(nav_trees, pathnames)
+      }
+    end
+
     # example result
     # [{:page_id=>1, :path=>"/level1"}, {:page_id=>2, :path=>"/level1/level2"}]
-    def self.all_pages_pathnames
-      nav_trees = Slickr::Navigation.all_nav_trees
+    def self.all_pages_pathnames(nav_trees)
       main_page_paths = build_main_page_paths(nav_trees)
       additonal_page_paths = build_additonal_page_paths(
         nav_trees, main_page_paths
@@ -38,19 +46,31 @@ module Slickr
       main_page_paths + additonal_page_paths
     end
 
-    def self.all_nav_menus
-      nav_trees = Slickr::Navigation.all_nav_trees
-      pathnames = Slickr::Navigation.all_pages_pathnames
+    def self.all_nav_menus(nav_trees, pathnames)
       menu_hash = {}
       nav_trees.map do |root|
         menu_hash[root['title']] = root['children'].map do |child_hash|
-          build_nav(child_hash, pathnames, {})
-        end[0]
+          if root['root_type'] == 'Page'
+            parent_link = pathnames.select do |path|
+              path[:page_id] == root['page_id']
+            end[0][:path]
+          else
+            parent_link = '/'
+          end
+          build_nav(child_hash, pathnames, {}, parent_link)
+        end
       end
       menu_hash
     end
 
-    def self.build_nav(child_hash, pathnames, hash)
+    def self.build_nav(child_hash, pathnames, hash, parent_link)
+      if child_hash['child_type'] == 'Page'
+        parent_link = pathnames.select do |path|
+          path[:page_id] == child_hash['page_id']
+        end[0][:path]
+      else
+        parent_link = parent_link
+      end
       menu_hash = case child_hash['child_type']
       when 'Page'
         build_page_nav(child_hash, pathnames)
@@ -59,10 +79,10 @@ module Slickr
       when 'Custom Link'
         build_custom_link_nav(child_hash, pathnames)
       when 'Anchor'
-        build_anchor_link_nav(child_hash, pathnames)
+        build_anchor_link_nav(child_hash, pathnames, parent_link)
       end
       menu_hash['children'] = child_hash['children'].map do |child_hash|
-        build_nav(child_hash, pathnames, menu_hash)
+        build_nav(child_hash, pathnames, menu_hash, parent_link)
       end
       menu_hash
     end
@@ -71,7 +91,10 @@ module Slickr
       {
         title: hash['title'],
         image: hash['image'] ? hash['image'] : hash['page_header_image'],
-        text: {},
+        text: {
+          text: hash['text'], page_header: hash['page_header'],
+          page_into: hash['page_into']
+        },
         link: pathnames.select do |path|
           path[:page_id] == hash['page_id']
         end[0][:path],
@@ -92,17 +115,17 @@ module Slickr
         title: hash['title'],
         image: hash['image'],
         text: hash['text'],
-        link: {},
+        link: hash['link'],
         link_text: hash['link_text']
       }
     end
 
-    def self.build_anchor_link_nav(hash, pathnames)
+    def self.build_anchor_link_nav(hash, pathnames, parent_link)
       {
         title: hash['title'],
         image: hash['image'],
         text: hash['text'],
-        link: hash['link'],
+        link: parent_link + hash['link'],
         link_text: hash['link_text']
       }
     end

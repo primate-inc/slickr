@@ -38,6 +38,75 @@ module Slickr
       main_page_paths + additonal_page_paths
     end
 
+    def self.all_nav_menus
+      nav_trees = Slickr::Navigation.all_nav_trees
+      pathnames = Slickr::Navigation.all_pages_pathnames
+      menu_hash = {}
+      nav_trees.map do |root|
+        menu_hash[root['title']] = root['children'].map do |child_hash|
+          build_nav(child_hash, pathnames, {})
+        end[0]
+      end
+      menu_hash
+    end
+
+    def self.build_nav(child_hash, pathnames, hash)
+      menu_hash = case child_hash['child_type']
+      when 'Page'
+        build_page_nav(child_hash, pathnames)
+      when 'Header'
+        build_header_nav(child_hash, pathnames)
+      when 'Custom Link'
+        build_custom_link_nav(child_hash, pathnames)
+      when 'Anchor'
+        build_anchor_link_nav(child_hash, pathnames)
+      end
+      menu_hash['children'] = child_hash['children'].map do |child_hash|
+        build_nav(child_hash, pathnames, menu_hash)
+      end
+      menu_hash
+    end
+
+    def self.build_page_nav(hash, pathnames)
+      {
+        title: hash['title'],
+        image: hash['image'] ? hash['image'] : hash['page_header_image'],
+        text: {},
+        link: pathnames.select do |path|
+          path[:page_id] == hash['page_id']
+        end[0][:path],
+        link_text: hash['link_text'] ? hash['link_tex'] : hash['title']
+      }
+    end
+
+    def self.build_header_nav(hash, pathnames)
+      {
+        title: hash['title'],
+        image: hash['image'],
+        text: hash['text']
+      }
+    end
+
+    def self.build_custom_link_nav(hash, pathnames)
+      {
+        title: hash['title'],
+        image: hash['image'],
+        text: hash['text'],
+        link: {},
+        link_text: hash['link_text']
+      }
+    end
+
+    def self.build_anchor_link_nav(hash, pathnames)
+      {
+        title: hash['title'],
+        image: hash['image'],
+        text: hash['text'],
+        link: hash['link'],
+        link_text: hash['link_text']
+      }
+    end
+
     def self.all_nav_trees
       first.build_tree_structure[0]['children']
     end
@@ -81,7 +150,8 @@ module Slickr
         :id, :root_type, :child_type, :slickr_page_id, :title, :image, :text,
         :link, :link_text, :ancestry,
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
-        :page_header, :page_intro, :page_subheader, :page_header_image, :slug
+        :page_header, :page_intro, :page_subheader, :page_intro,
+        :page_header_image, :slug
       ).arrange_serializable(order: :position)
     end
 

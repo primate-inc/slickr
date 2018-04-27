@@ -6,7 +6,11 @@ import SortableTree, { getFlatDataFromTree } from 'react-sortable-tree';
 import * as TreeActions from '../actions'
 
 const canDrop = ({ node, nextParent, prevPath, nextPath }) => {
-  if(node.treeIndex == 0 || nextParent == null) {
+  if(node.treeIndex == 0 || nextParent == null ||
+      (nextParent.root_type == null ^ (
+        nextParent.child_type == 'Page' || nextParent.child_type == 'Header'
+      ))
+    ) {
     return false
   } else {
     return true
@@ -52,6 +56,7 @@ const Tree = ({store, navigations, actions}) => (
         ({ node, treeData, nextTreeIndex }) =>
          moveNode(node, treeData, nextTreeIndex, actions)
       }
+      maxDepth={navigations[0].root_type == 'Link' ? 2 : Infinity}
       canDrag={canDrag}
       canDrop={canDrop}
       onChange={ treeData => { updateState(treeData, actions)}}
@@ -81,14 +86,22 @@ const Tree = ({store, navigations, actions}) => (
             </svg>
             Edit
           </button>,
-          <button onClick={() =>
-            FollowLink(node.add_child_path)
-          }>
-            <svg className="svg-icon" viewBox="0 0 20 20">
-              <use xlinkHref="#svg-plus"></use>
-            </svg>
-            Add Child
-          </button>,
+          <div>
+            {(() => {
+              if((node.child_type == 'Page' || node.child_type == 'Header' || node.root_type) && (navigations[0].root_type != 'Link' || node.root_type)) {
+                return (
+                  <button onClick={() =>
+                    FollowLink(node.add_child_path)
+                  }>
+                    <svg className="svg-icon" viewBox="0 0 20 20">
+                      <use xlinkHref="#svg-plus"></use>
+                    </svg>
+                    Add Child
+                  </button>
+                )
+              }
+            })()}
+          </div>,
           <button onClick={ () => {if(confirm('Delete the navigation?')) {
             deleteNavigation(node.admin_delete_navigation_path, actions)
           };}}>

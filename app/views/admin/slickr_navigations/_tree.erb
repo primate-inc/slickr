@@ -1,7 +1,7 @@
 <% if params[:q][:title_eq] == 'slickr_master' %>
   <div data-pages='[]' id='navigation_tree_content'/>
 <% else %>
-  <div data-pages="<%= Slickr::Navigation.where(title: params[:q][:title_eq]).decorate.to_json(only: [:id, :title], methods: [:expanded, :subtitle, :admin_edit_navigation_path, :add_child_path, :children, :admin_delete_navigation_path]) %>" id='navigation_tree_content'></div>
+  <div data-pages="<%= Slickr::Navigation.where(title: params[:q][:title_eq]).decorate.to_json(only: [:id, :title], methods: [:expanded, :subtitle, :admin_edit_navigation_path, :add_child_path, :children, :admin_delete_navigation_path, :root_type]) %>" id='navigation_tree_content'></div>
 <% end %>
 <div id='dashboard_content'></div>
 <%= javascript_pack_tag 'slickr_navigation_tree' %>

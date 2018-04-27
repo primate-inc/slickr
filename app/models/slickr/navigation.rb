@@ -27,6 +27,12 @@ module Slickr
       .where.not(root_type: 'slickr_master')
     end)
 
+    def self.all_pages_pathnames
+      nav_trees = Slickr::Navigation.all_nav_trees
+      root_paths = build_root_paths(nav_trees)
+      binding.pry
+    end
+
     def self.all_nav_trees
       first.build_tree_structure[0]['children']
     end
@@ -51,6 +57,8 @@ module Slickr
         {
           id: n.id,
           title: n.title,
+          root_type: n.root_type,
+          child_type: n.child_type,
           children: n.tree_children,
           position: n.position,
           subtitle: n.subtitle,
@@ -65,8 +73,8 @@ module Slickr
 
     def build_tree_structure
       subtree.left_outer_joins(:slickr_page).select(
-        :id, :child_type, :slickr_page_id, :title, :image, :text, :link,
-        :link_text, :ancestry,
+        :id, :root_type, :child_type, :slickr_page_id, :title, :image, :text,
+        :link, :link_text, :ancestry,
         'slickr_pages.title AS page_title', :page_header, :page_intro,
         :page_subheader, :page_header_image, :slug
       ).arrange_serializable(order: :position)
@@ -128,6 +136,33 @@ module Slickr
     def page_id_if_root_is_page
       return unless root_type == 'Page' && slickr_page_id.blank?
       errors.add(:slickr_page_id, 'select a page')
+    end
+
+    def self.build_root_paths(nav_trees)
+      root_root_types = nav_trees.map do |root|
+        root if root['root_type'] == 'Root'
+      end
+      root_root_types.compact.map do |hash|
+        hash['children'].map do |child_hash|
+          build_page_pathnames(child_hash, '/', [])
+        end
+      end.flatten
+    end
+
+    def self.build_page_pathnames(hash, pathname, array)
+      if hash['child_type'] == 'Page'
+        new_pathname = pathname + hash['slug']
+        array.push(new_pathname)
+        hash['children'].map do |child_hash|
+          build_page_pathnames(child_hash, "#{new_pathname}/", array)
+        end
+      end
+      if hash['child_type'] == 'Header'
+        hash['children'].map do |child_hash|
+          build_page_pathnames(child_hash, pathname, array)
+        end
+      end
+      array
     end
   end
 end

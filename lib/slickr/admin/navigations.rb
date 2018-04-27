@@ -84,7 +84,7 @@ if defined?(ActiveAdmin)
       def new
         return super unless params[:parent_id]
         page_selections
-        root_nav
+        additional_instance_variables
         super
       end
 
@@ -108,7 +108,7 @@ if defined?(ActiveAdmin)
         return super if nav.sub_root?
         params[:parent_id] = nav.parent.id
         page_selections
-        root_nav
+        additional_instance_variables
         super
       end
 
@@ -186,13 +186,15 @@ if defined?(ActiveAdmin)
       end
 
       # extract title and build url for the root nav of any nav
-      def root_nav
-        nav = Slickr::Navigation.find(params[:parent_id]).sub_root
+      def additional_instance_variables
+        parent = Slickr::Navigation.find(params[:parent_id])
+        root = parent.sub_root
+        @parent = parent
         @root_nav = {
-          title:  nav.title,
+          title:  root.title,
           url:    admin_slickr_navigations_path(
             utf8: '✓',
-            q: { 'title_eq' => nav.title }
+            q: { 'title_eq' => root.title }
           )
         }
       end

@@ -7,12 +7,10 @@
            :admin_image_index_path
          ]
        ) %>"
-       data-parent="<%= Slickr::Navigation.select(:id, :title)
-                                                .find(params[:parent_id])
-                                                .to_json %>"
+       data-parent="<%= @parent.to_json %>"
        data-root_nav="<%= @root_nav.to_json %>"
-       data-child_types="<%= @slickr_navigation.decorate.child_type_options
-                                               .to_json %>"
+       data-child_types="<%= @slickr_navigation.decorate
+                                               .child_type_options.to_json %>"
        data-selectable_pages="<%= @page_selections.to_json %>">
 
   </div>

@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 export default class Content extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       imagePath: this.props.navigation.navigation_image,
       pageSelectVisible: this.props.values.child_type === 'Page' ? true : false,
-      linkAndLinkTextVisible: this.props.values.child_type === 'Header' ? false : true
+      linkVisible: ['Page', 'Header'].indexOf(this.props.values.child_type) < 0,
+      linkTextVisible: this.props.values.child_type === 'Header' ? false : true
     }
   }
 
@@ -72,16 +72,20 @@ export default class Content extends React.Component {
                         // and do something about e
                         if(e.currentTarget.value == 'Page') {
                           this.setState({pageSelectVisible: true});
-                          this.setState({linkAndLinkTextVisible: true});
+                          this.setState({linkVisible: false});
+                          this.setState({linkTextVisible: true});
+                          setFieldValue('link', '');
                         } else if (e.currentTarget.value == 'Header') {
                           this.setState({pageSelectVisible: false});
-                          this.setState({linkAndLinkTextVisible: false});
+                          this.setState({linkVisible: false});
+                          this.setState({linkTextVisible: false});
                           setFieldValue('slickr_page_id', '');
                           setFieldValue('link', '');
                           setFieldValue('link_text', '');
                         } else {
                           this.setState({pageSelectVisible: false});
-                          this.setState({linkAndLinkTextVisible: true});
+                          this.setState({linkVisible: true});
+                          this.setState({linkTextVisible: true});
                           setFieldValue('slickr_page_id', '');
                         }
                       }}
@@ -175,7 +179,7 @@ export default class Content extends React.Component {
             </div>
           </li>
           <li className="input string admin-big-title" style={{
-            display: this.state.linkAndLinkTextVisible ? 'block' : 'none'
+            display: this.state.linkVisible ? 'block' : 'none'
           }}>
             <div className="edit-wrapper">
               <label htmlFor="link">Link</label>
@@ -192,7 +196,7 @@ export default class Content extends React.Component {
             </div>
           </li>
           <li className="input string admin-big-title" style={{
-            display: this.state.linkAndLinkTextVisible ? 'block' : 'none'
+            display: this.state.linkTextVisible ? 'block' : 'none'
           }}>
             <div className="edit-wrapper">
               <label htmlFor="link_text">Link text</label>

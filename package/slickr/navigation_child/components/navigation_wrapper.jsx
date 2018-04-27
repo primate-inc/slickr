@@ -88,6 +88,8 @@ export default Formik({
              .when('child_type', (child_type, schema) => {
       if(child_type === 'Anchor') {
         return schema.required('enter an anchor link eg. #an-anchor-link');
+      } else if(child_type === 'Custom Link') {
+        return schema.required('enter a link');
       }
     })
   }),

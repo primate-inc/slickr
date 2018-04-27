@@ -29,8 +29,11 @@ module Slickr
 
     def self.all_pages_pathnames
       nav_trees = Slickr::Navigation.all_nav_trees
-      root_paths = build_root_paths(nav_trees)
-      binding.pry
+      main_page_paths = build_main_page_paths(nav_trees)
+      additonal_page_paths = build_additonal_page_paths(
+        nav_trees, main_page_paths
+      )
+      main_page_paths + additonal_page_paths
     end
 
     def self.all_nav_trees
@@ -75,8 +78,8 @@ module Slickr
       subtree.left_outer_joins(:slickr_page).select(
         :id, :root_type, :child_type, :slickr_page_id, :title, :image, :text,
         :link, :link_text, :ancestry,
-        'slickr_pages.title AS page_title', :page_header, :page_intro,
-        :page_subheader, :page_header_image, :slug
+        'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
+        :page_header, :page_intro, :page_subheader, :page_header_image, :slug
       ).arrange_serializable(order: :position)
     end
 
@@ -127,32 +130,35 @@ module Slickr
 
     private
 
-    def root_type_or_child_type
-      return unless root_type.blank? && child_type.blank?
-      errors.add(:root_type, 'specify a type')
-      errors.add(:child_type, 'specify a type')
-    end
-
-    def page_id_if_root_is_page
-      return unless root_type == 'Page' && slickr_page_id.blank?
-      errors.add(:slickr_page_id, 'select a page')
-    end
-
-    def self.build_root_paths(nav_trees)
-      root_root_types = nav_trees.map do |root|
-        root if root['root_type'] == 'Root'
-      end
-      root_root_types.compact.map do |hash|
-        hash['children'].map do |child_hash|
-          build_page_pathnames(child_hash, '/', [])
-        end
+    private_class_method def self.build_main_page_paths(nav_trees)
+      navs = nav_trees.map { |root| root if root['root_type'] == 'Root' }
+      navs.compact.map do |hash|
+        iterate_children_for_pathnames(hash, '/')
       end.flatten
     end
 
-    def self.build_page_pathnames(hash, pathname, array)
+    private_class_method def self.build_additonal_page_paths(
+      nav_trees, main_page_paths
+    )
+      navs = nav_trees.map { |root| root if root['root_type'] == 'Page' }
+      navs.compact.map do |hash|
+        start_path_name = main_page_paths.select do |path|
+          path[:page_id] == hash['page_id']
+        end
+        iterate_children_for_pathnames(hash, "#{start_path_name[0][:path]}/")
+      end.flatten
+    end
+
+    private_class_method def self.iterate_children_for_pathnames(hash, pathname)
+      hash['children'].map do |child_hash|
+        build_page_pathnames(child_hash, pathname, [])
+      end
+    end
+
+    private_class_method def self.build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
         new_pathname = pathname + hash['slug']
-        array.push(new_pathname)
+        array.push(page_id: hash['page_id'], path: new_pathname)
         hash['children'].map do |child_hash|
           build_page_pathnames(child_hash, "#{new_pathname}/", array)
         end
@@ -163,6 +169,17 @@ module Slickr
         end
       end
       array
+    end
+
+    def root_type_or_child_type
+      return unless root_type.blank? && child_type.blank?
+      errors.add(:root_type, 'specify a type')
+      errors.add(:child_type, 'specify a type')
+    end
+
+    def page_id_if_root_is_page
+      return unless root_type == 'Page' && slickr_page_id.blank?
+      errors.add(:slickr_page_id, 'select a page')
     end
   end
 end

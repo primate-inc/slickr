@@ -27,6 +27,8 @@ module Slickr
       .where.not(root_type: 'slickr_master')
     end)
 
+    # example result
+    # [{:page_id=>1, :path=>"/level1"}, {:page_id=>2, :path=>"/level1/level2"}]
     def self.all_pages_pathnames
       nav_trees = Slickr::Navigation.all_nav_trees
       main_page_paths = build_main_page_paths(nav_trees)
@@ -130,6 +132,9 @@ module Slickr
 
     private
 
+    # build up all of the pathnames nested under a root_type of 'Root'
+    # example result
+    # [{:page_id=>1, :path=>"/level1"}, {:page_id=>2, :path=>"/level1/level2"}]
     private_class_method def self.build_main_page_paths(nav_trees)
       navs = nav_trees.map { |root| root if root['root_type'] == 'Root' }
       navs.compact.map do |hash|
@@ -137,6 +142,11 @@ module Slickr
       end.flatten
     end
 
+    # build up all of the pathnames nested under a root_type of 'Page'
+    # the pathnames and associated page id is also passed in to allow these
+    # pathnames to build upon the main pathnames
+    # example result
+    # [{:page_id=>3, :path=>"/level1/level2/level3"}]
     private_class_method def self.build_additonal_page_paths(
       nav_trees, main_page_paths
     )
@@ -149,12 +159,15 @@ module Slickr
       end.flatten
     end
 
+    # will iterate the children of the hash passed in.
     private_class_method def self.iterate_children_for_pathnames(hash, pathname)
       hash['children'].map do |child_hash|
         build_page_pathnames(child_hash, pathname, [])
       end
     end
 
+    # Keeps iterating through the deeply nested hash in order to generate an
+    # array of hashed with keys of page_id and path
     private_class_method def self.build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
         new_pathname = pathname + hash['slug']

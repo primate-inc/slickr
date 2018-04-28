@@ -254,6 +254,12 @@ module Slickr
         puts "Slickr Page extended"
       end
 
+      def extend_slickr_image_uploader
+        template "slickr_image_uploader.rb", "app/uploaders/slickr_image_uploader.rb"
+
+        puts "Slickr Page extended"
+      end
+
       def extend_active_admin_initializer
         dest_file = "config/initializers/active_admin.rb"
         existing_content = File.read(dest_file)

@@ -23,6 +23,15 @@ module SlickrPageRouteHelper
   end
 end
 
+module SlickrNavRouteHelper
+  def self.matches?(request)
+    request = request.path
+    path_info = Slickr::NavigationBuilder.new.nav_helper[:pathnames]
+    routes = path_info.map { |path| path[:path] }
+    request.in?(routes)
+  end
+end
+
 Rails.application.routes.draw do
   %w( 404 500 ).each do |code|
     get code, to: 'errors#show', code: code

@@ -20,6 +20,7 @@ module Slickr
     has_one :published_draft, class_name: 'Slickr::Page::Draft'
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
+    after_save :delete_nav_if_page_unpublished
     scope :not_draft, -> {where(type: nil)}
 
     aasm(:status, column: :aasm_state) do
@@ -141,6 +142,13 @@ module Slickr
 
     def admin_image_index_path
       Rails.application.routes.url_helpers.admin_slickr_images_path
+    end
+
+    private
+
+    def delete_nav_if_page_unpublished
+      return unless draft?
+      Slickr::Navigation.where(slickr_page_id: id).destroy_all
     end
   end
 end

@@ -20,14 +20,12 @@ module Slickr
     end
 
     def subtitle
-      if root?
-        "Type: #{root_type}"
-      elsif child_type == 'Page'
-        "Navigation type: #{child_type},
-        Page: #{Slickr::Page.find(slickr_page_id).title}"
-      else
-        "Navigation type: #{child_type}"
+      type = "Type: #{sub_root? ? root_type : child_type}"
+      if root_type == 'Page' || child_type == 'Page'
+        page = ", Page: #{slickr_page.title}"
+        return type + page
       end
+      type
     end
   end
 end

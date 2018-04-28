@@ -88,7 +88,11 @@ const Tree = ({store, navigations, actions}) => (
           </button>,
           <div>
             {(() => {
-              if((node.child_type == 'Page' || node.child_type == 'Header' || node.root_type) && (navigations[0].root_type != 'Link' || node.root_type)) {
+              if(
+                  (node.child_type == 'Page' || node.child_type == 'Header' ||
+                  node.root_type) &&
+                  (navigations[0].root_type != 'Link' || node.root_type)
+                ) {
                 return (
                   <button onClick={() =>
                     FollowLink(node.add_child_path)

@@ -87,8 +87,10 @@ module Slickr
           build_page_pathnames(child_hash, "#{new_pathname}/", array)
         end
       elsif hash['child_type'] == 'Header'
+        no_link = hash['link'].blank?
+        new_pathname = no_link ? pathname : "#{pathname}#{hash['link']}/"
         hash['children'].map do |child_hash|
-          build_page_pathnames(child_hash, pathname, array)
+          build_page_pathnames(child_hash, new_pathname, array)
         end
       end
       array
@@ -171,7 +173,7 @@ module Slickr
     def build_header_nav(hash)
       {
         title: hash['title'], image: hash['image'], text: hash['text'],
-        link: nil, link_text: nil
+        link: hash['link'], link_text: hash['link_text']
       }
     end
 

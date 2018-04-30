@@ -19,7 +19,6 @@ export default class Grid extends React.Component {
         "data": this.props.images[index].data
       }
     };
-    console.log(this.props)
     if(this.props.choosingPageHeaderImage) {
       this.props.actions.toggleChoosingPageHeaderImage();
       this.props.actions.updatePageHeaderImage(data.image.attachment.url)

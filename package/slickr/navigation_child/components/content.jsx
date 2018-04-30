@@ -7,8 +7,7 @@ export default class Content extends React.Component {
     this.state = {
       imagePath: this.props.navigation.navigation_image,
       pageSelectVisible: this.props.values.child_type === 'Page' ? true : false,
-      linkVisible: ['Page', 'Header'].indexOf(this.props.values.child_type) < 0,
-      linkTextVisible: this.props.values.child_type === 'Header' ? false : true
+      linkVisible: this.props.values.child_type === 'Page' ? false : true
     }
   }
 
@@ -73,19 +72,10 @@ export default class Content extends React.Component {
                         if(e.currentTarget.value == 'Page') {
                           this.setState({pageSelectVisible: true});
                           this.setState({linkVisible: false});
-                          this.setState({linkTextVisible: true});
                           setFieldValue('link', '');
-                        } else if (e.currentTarget.value == 'Header') {
-                          this.setState({pageSelectVisible: false});
-                          this.setState({linkVisible: false});
-                          this.setState({linkTextVisible: false});
-                          setFieldValue('slickr_page_id', '');
-                          setFieldValue('link', '');
-                          setFieldValue('link_text', '');
                         } else {
                           this.setState({pageSelectVisible: false});
                           this.setState({linkVisible: true});
-                          this.setState({linkTextVisible: true});
                           setFieldValue('slickr_page_id', '');
                         }
                       }}
@@ -195,9 +185,7 @@ export default class Content extends React.Component {
             <p className='hint-text'>Navigation link URL</p>
             </div>
           </li>
-          <li className="input string admin-big-title" style={{
-            display: this.state.linkTextVisible ? 'block' : 'none'
-          }}>
+          <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="link_text">Link text</label>
               <input type="text"

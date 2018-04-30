@@ -133,19 +133,20 @@ export default class Content extends React.Component {
           </li>
           <li className="file input admin-big-title">
             <div className="edit-wrapper">
-              <label htmlFor="image">Image</label>
+              <label htmlFor="slickr_image_id">Image</label>
               <input type="file" onClick={this.openImagePicker()} />
               {(() => {
-                let image = this.props.navigation.image
+                let imageId = this.props.navigation.slickr_image_id
+                let imagePath = this.props.navigation.slickr_image_path
 
-                if(!(image == null)) {
-                  if(this.state.imagePath !== this.props.navigation.image) {
-                    setFieldValue('image', image)
-                    this.setState({imagePath: this.props.navigation.image})
+                if(!(imagePath == null)) {
+                  if(this.state.imagePath !== imagePath) {
+                    setFieldValue('slickr_image_id', imageId)
+                    this.setState({imagePath: imagePath})
                   }
-                  let splitFile = this.props.navigation.image.split('/');
+                  let splitFile = imagePath.split('/');
                   let fileName = splitFile[splitFile.length - 1];
-                  let fileNameWithImageSize = image.replace(
+                  let fileNameWithImageSize = imagePath.replace(
                     fileName, `small_${fileName}`
                   )
                   return (

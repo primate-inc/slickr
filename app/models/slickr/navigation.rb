@@ -16,6 +16,10 @@ module Slickr
                foreign_key: 'slickr_page_id',
                class_name: 'Slickr::Page',
                optional: true
+    belongs_to :slickr_image,
+               foreign_key: 'slickr_image_id',
+               class_name: 'Slickr::Image',
+               optional: true
 
     validates :title, presence: true
     validates_uniqueness_of :title, if: proc { |nav| nav.sub_root? }
@@ -26,6 +30,25 @@ module Slickr
       where.not(root_type: [nil, ''])
       .where.not(root_type: 'slickr_master')
     end)
+
+    def self.all_nav_trees
+      return nil if first.nil?
+      first.build_tree_structure[0]['children']
+    end
+
+    def build_tree_structure
+      subtree.left_outer_joins(:slickr_page, :slickr_image).select(
+        :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
+        :link_text, :ancestry,
+        'slickr_images.id AS image_id',
+        'slickr_images.attachment AS image_name',
+        'slickr_images.dimensions AS image_dimensions',
+        'slickr_images.data AS image_data', 'slickr_pages.id AS page_id',
+        'slickr_pages.title AS page_title',
+        :page_header, :page_intro, :page_subheader, :page_intro,
+        :page_header_image, :slug
+      ).arrange_serializable(order: :position)
+    end
 
     def expanded
       sub_root?
@@ -59,6 +82,11 @@ module Slickr
           admin_edit_page_path: n.admin_edit_page_path
         }
       end
+    end
+
+    def slickr_image_path
+      return if slickr_image.nil?
+      slickr_image.attachment.url
     end
 
     def add_child_path
@@ -104,20 +132,6 @@ module Slickr
       Rails.application
            .routes.url_helpers
            .change_position_admin_slickr_navigation_path(id)
-    end
-
-    def self.all_nav_trees
-      first.build_tree_structure[0]['children']
-    end
-
-    def build_tree_structure
-      subtree.left_outer_joins(:slickr_page).select(
-        :id, :root_type, :child_type, :slickr_page_id, :title, :image, :text,
-        :link, :link_text, :ancestry,
-        'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
-        :page_header, :page_intro, :page_subheader, :page_intro,
-        :page_header_image, :slug
-      ).arrange_serializable(order: :position)
     end
 
     private

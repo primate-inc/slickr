@@ -4,6 +4,11 @@ module Slickr
 
     mount_uploader :attachment, SlickrImageUploader
 
+    has_many :slickr_navigations,
+             foreign_key: 'slickr_image_id',
+             class_name: 'Slickr::Navigation',
+             dependent: :destroy
+
     def build_for_gallery
       extension = File.extname(attachment.file.filename)
       extension == '.pdf' ? build_pdf : build_image

@@ -65,13 +65,13 @@ const NavigationWrapper = (
 
 export default Formik({
   mapPropsToValues: (props) => ({
-    child_type:     props.navigation.child_type,
-    slickr_page_id: props.navigation.slickr_page_id,
-    title:          props.navigation.title,
-    image:          props.navigation.image,
-    text:           props.navigation.text,
-    link:           props.navigation.link,
-    link_text:      props.navigation.link_text
+    child_type:       props.navigation.child_type,
+    slickr_page_id:   props.navigation.slickr_page_id,
+    title:            props.navigation.title,
+    slickr_image_id:  props.navigation.slickr_image_id,
+    text:             props.navigation.text,
+    link:             props.navigation.link,
+    link_text:        props.navigation.link_text
   }),
   validationSchema: Yup.object().shape({
     child_type: Yup.string().required('select a type').nullable(),

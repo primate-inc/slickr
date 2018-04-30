@@ -22,6 +22,7 @@ module Slickr
     # }
     def nav_helper
       nav_trees = Slickr::Navigation.all_nav_trees
+      return if nav_trees.nil?
       pathnames = all_pages_pathnames(nav_trees)
       {
         pathnames: pathnames,
@@ -160,7 +161,9 @@ module Slickr
     def build_page_nav(hash, pathnames)
       {
         title: hash['title'],
-        image: hash['image'] ? hash['image'] : hash['page_header_image'],
+        image: {
+          nav_image: hash['image_id'],
+          page_image: hash['page_header_image'] },
         text: {
           text: hash['text'], page_header: hash['page_header'],
           page_into: hash['page_into']
@@ -172,22 +175,23 @@ module Slickr
 
     def build_header_nav(hash)
       {
-        title: hash['title'], image: hash['image'], text: hash['text'],
-        link: hash['link'], link_text: hash['link_text']
+        title: hash['title'], image: { nav_image: hash['image_id'] },
+        text: hash['text'], link: hash['link'], link_text: hash['link_text']
       }
     end
 
     def build_custom_link_nav(hash)
       {
-        title: hash['title'], image: hash['image'], text: hash['text'],
-        link: hash['link'], link_text: hash['link_text']
+        title: hash['title'], image: { nav_image: hash['image_id'] },
+        text: hash['text'], link: hash['link'], link_text: hash['link_text']
       }
     end
 
     def build_anchor_link_nav(hash, parent_link)
       {
-        title: hash['title'], image: hash['image'], text: hash['text'],
-        link: parent_link + hash['link'], link_text: hash['link_text']
+        title: hash['title'], image: { nav_image: hash['image_id'] },
+        text: hash['text'], link: parent_link + hash['link'],
+        link_text: hash['link_text']
       }
     end
 

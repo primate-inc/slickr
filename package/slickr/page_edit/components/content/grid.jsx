@@ -15,6 +15,7 @@ export default class Grid extends React.Component {
     var data = {
       type: "image",
       image: {
+        'id': this.props.images[index].id,
         "attachment": this.props.images[index].attachment,
         "data": this.props.images[index].data
       }
@@ -24,7 +25,9 @@ export default class Grid extends React.Component {
       this.props.actions.updatePageHeaderImage(data.image.attachment.url)
     } else if(this.props.choosingNavImage) {
       this.props.actions.toggleChoosingImage();
-      this.props.actions.updateNavImage(data.image.attachment.url)
+      this.props.actions.updateNavImage(
+        { id: data.image.id, path: data.image.attachment.url }
+      )
     } else {
       this.props.actions.changeEditorState(insertDataBlock(this.props.editorState, data))
     }

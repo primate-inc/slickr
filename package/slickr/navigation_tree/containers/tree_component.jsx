@@ -56,7 +56,16 @@ const Tree = ({store, navigations, actions}) => (
         ({ node, treeData, nextTreeIndex }) =>
          moveNode(node, treeData, nextTreeIndex, actions)
       }
-      maxDepth={navigations[0].root_type == 'Link' ? 2 : Infinity}
+      maxDepth={(() => {
+        if(navigations.length === 0) {
+          0
+        } else if(navigations[0].root_type == 'Link') {
+          2
+        } else {
+          Infinity
+        }
+        Infinity
+      })()}
       canDrag={canDrag}
       canDrop={canDrop}
       onChange={ treeData => { updateState(treeData, actions)}}

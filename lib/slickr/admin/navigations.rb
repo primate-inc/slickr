@@ -6,9 +6,9 @@ if defined?(ActiveAdmin)
     config.batch_actions = false
     menu priority: 3
 
-    permit_params :root_type, :child_type, :title, :image, :text, :link,
-                  :link_text, :page_id, :parent_id, :slickr_page_id,
-                  :ancestry
+    permit_params :root_type, :child_type, :title, :text, :link, :link_text,
+                  :page_id, :parent_id, :slickr_page_id, :ancestry,
+                  :slickr_image_id
 
     # breadcrumbs only used for tree roots. All child breadcrumbs are
     # overridden in the React component

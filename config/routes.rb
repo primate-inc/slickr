@@ -5,11 +5,18 @@ class MultiContraint
   end
 
   def matches?(request)
-    matches = true
+    # matches = true
+    # @constraints.each do |constraint|
+    #   matches &&= constraint.matches?(request)
+    # end
+    # matches
+
+    # temp until all sites moved onto new nav
+    count = 0
     @constraints.each do |constraint|
-      matches &&= constraint.matches?(request)
+      count += 1 if constraint.matches?(request)
     end
-    matches
+    true if count > 0
   end
 end
 
@@ -40,7 +47,7 @@ Rails.application.routes.draw do
   %w[404 500].each do |code|
     get code, to: 'errors#show', code: code
   end
-  constraints(MultiContraint.new([SlickrPageRouteHelper])) do
+  constraints(MultiContraint.new([SlickrPageRouteHelper, SlickrNavRouteHelper])) do
     get '*slug' => 'pages#show', as: 'show_page'
   end
 

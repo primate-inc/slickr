@@ -32,8 +32,7 @@ module Slickr
     end)
 
     def self.all_nav_trees
-      return nil if first.nil?
-      first.build_tree_structure[0]['children']
+      first.try(:build_tree_structure)
     end
 
     def build_tree_structure
@@ -47,7 +46,7 @@ module Slickr
         'slickr_pages.title AS page_title',
         :page_header, :page_intro, :page_subheader, :page_intro,
         :page_header_image, :slug
-      ).arrange_serializable(order: :position)
+      ).arrange_serializable(order: :position)[0]['children']
     end
 
     def expanded

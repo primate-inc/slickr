@@ -14,7 +14,8 @@ module Slickr
     #     {
     #       "Main navigation"=>
     #         [{
-    #           :title=>"Menu", :image=>nil, :text=> {
+    #           :title=>"Menu", :image=>{ nav_image_id: hash['image_id'] },
+    #           :text=> {
     #             :text=>"some text", :page_header=>nil, :page_into=>nil
     #           }, :link=>"/menu", :link_text=>"Menu", "children"=>[]
     #         }]
@@ -105,9 +106,9 @@ module Slickr
     # {
     #   "Main navigation"=>
     #     [{
-    #       :title=>"Menu", :image=>nil, :text=> {
-    #         :text=>"some text", :page_header=>nil, :page_into=>nil
-    #       }, :link=>"/menu", :link_text=>"Menu", "children"=>[]
+    #       :title=>"Menu", :image=>{ nav_image_id: hash['image_id'] },
+    #       :text=> { :text=>"some text", :page_header=>nil, :page_into=>nil },
+    #       :link=>"/menu", :link_text=>"Menu", "children"=>[]
     #     }],
     #   "Header"=>
     #     [{
@@ -132,9 +133,9 @@ module Slickr
     # Builds the hash for an individual nav menu.
     # example result
     # {
-    #   :title=>"Menu", :image=>nil, :text=> {
-    #     :text=>"some text", :page_header=>nil, :page_into=>nil
-    #   }, :link=>"/menu", :link_text=>"Menu", "children"=>[]
+    #   :title=>"Menu", :image=>{ nav_image_id: hash['image_id'] },
+    #   :text=> { :text=>"some text", :page_header=>nil, :page_into=>nil },
+    #   :link=>"/menu", :link_text=>"Menu", "children"=>[]
     # }
     def build_nav(child_hash, pathnames, parent_link)
       parent_link = if child_hash['child_type'] == 'Page'

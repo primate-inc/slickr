@@ -22,7 +22,9 @@ export default class Grid extends React.Component {
     };
     if(this.props.choosingPageHeaderImage) {
       this.props.actions.toggleChoosingPageHeaderImage();
-      this.props.actions.updatePageHeaderImage(data.image.attachment.url)
+      this.props.actions.updatePageHeaderImage(
+        { id: data.image.id, path: data.image.attachment.url }
+      )
     } else if(this.props.choosingNavImage) {
       this.props.actions.toggleChoosingImage();
       this.props.actions.updateNavImage(

@@ -11,6 +11,10 @@ module Slickr
                     meta: { content_changed: :content_changed? }
 
     friendly_id :title, use: [:slugged, :finders]
+    belongs_to :slickr_image,
+               foreign_key: 'slickr_image_id',
+               class_name: 'Slickr::Image',
+               optional: true
     has_many :slickr_navigations,
              foreign_key: 'slickr_page_id',
              class_name: 'Slickr::Navigation',
@@ -77,6 +81,11 @@ module Slickr
           position: p.position
         }
       end
+    end
+
+    def slickr_image_path
+      return if slickr_image.nil?
+      slickr_image.attachment.url
     end
 
     def create_content_areas

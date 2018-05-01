@@ -8,6 +8,10 @@ module Slickr
              foreign_key: 'slickr_image_id',
              class_name: 'Slickr::Navigation',
              dependent: :destroy
+    has_many :slickr_pages,
+             foreign_key: 'slickr_image_id',
+             class_name: 'Slickr::Navigation',
+             dependent: :destroy
 
     def build_for_gallery
       extension = File.extname(attachment.file.filename)

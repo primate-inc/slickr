@@ -11,7 +11,11 @@ const pageState = (state = {}, action) => {
     case 'UNPUBLISH_PAGE':
       return Object.assign({}, state, {aasm_state: action.aasm_state})
     case 'CHOOSE_PAGE_HEADER_IMAGE':
-      return Object.assign({}, state, {page_header_image: action.payload})
+    return Object.assign(
+      {}, state, {
+        slickr_image_path: action.payload.path,
+        slickr_image_id: action.payload.id
+      })
     default:
       return state
   }

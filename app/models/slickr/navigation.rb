@@ -38,14 +38,10 @@ module Slickr
     def build_tree_structure
       subtree.left_outer_joins(:slickr_page, :slickr_image).select(
         :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
-        :link_text, :ancestry,
-        'slickr_images.id AS image_id',
-        'slickr_images.attachment AS image_name',
-        'slickr_images.dimensions AS image_dimensions',
-        'slickr_images.data AS image_data', 'slickr_pages.id AS page_id',
-        'slickr_pages.title AS page_title',
-        :page_header, :page_intro, :page_subheader, :page_intro,
-        :page_header_image, :slug
+        :link_text, :ancestry, 'slickr_images.id AS image_id',
+        'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
+        :page_header, :page_intro, :page_subheader, :page_intro, :slug,
+        'slickr_pages.slickr_image_id AS page_image_id'
       ).arrange_serializable(order: :position)[0]['children']
     end
 

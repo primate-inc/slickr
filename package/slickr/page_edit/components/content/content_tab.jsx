@@ -68,19 +68,22 @@ export default class ContentTab extends React.Component {
               return (
                 <li className="file input admin-big-title">
                   <div className="edit-wrapper">
-                    <label htmlFor="page_header_image">Page header image</label>
+                    <label htmlFor="slickr_image_id">Page header image</label>
                     <input type="file" onClick={this.openImagePicker()} />
                     {(() => {
-                      let image = this.props.page.page_header_image
+                      let imageId = this.props.page.slickr_image_id
+                      let imagePath = this.props.page.slickr_image_path
 
-                      if(!(image == null)) {
-                        if(this.state.headerImagePath !== this.props.page.page_header_image) {
-                          setFieldValue('page_header_image', image)
-                          this.setState({headerImagePath: this.props.page.page_header_image})
+                      if(!(imagePath == null)) {
+                        if(this.state.imagePath !== imagePath) {
+                          setFieldValue('slickr_image_id', imageId)
+                          this.setState({imagePath: imagePath})
                         }
-                        let splitFile = this.props.page.page_header_image.split('/');
+                        let splitFile = imagePath.split('/');
                         let fileName = splitFile[splitFile.length - 1];
-                        let fileNameWithImageSize = image.replace(fileName, `small_${fileName}`)
+                        let fileNameWithImageSize = imagePath.replace(
+                          fileName, `small_${fileName}`
+                        )
                         return (
                           <p className="inline-hints">
                             <img src={fileNameWithImageSize} />

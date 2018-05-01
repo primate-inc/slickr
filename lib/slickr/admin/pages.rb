@@ -9,7 +9,8 @@ if defined?(ActiveAdmin)
     permit_params :page_title, :meta_description, :title, :page_intro,
                   :page_header, :page_subheader, :layout, :parent_id,
                   :slug, :page_header_image, :og_title, :og_description,
-                  :twitter_title, :twitter_description, content: {}
+                  :twitter_title, :twitter_description, :slickr_image_id,
+                  content: {}
 
     breadcrumb do
       if params[:action] == 'index'

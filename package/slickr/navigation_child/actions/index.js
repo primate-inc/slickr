@@ -81,7 +81,7 @@ export const loadImages = (page) => {
   return function(dispatch, getState) {
     let params = {};
     params[_csrf_param()] = _csrf_token()
-
+    
     request.get(getState().navigationState.admin_image_index_path)
            .set('Accept', 'text/html')
            .query(`type=page_edit&page=${page}`)
@@ -109,13 +109,13 @@ export const showLoader = () => {
   }
 }
 
-export const keepCurrentPage = () => {
-  return function(dispatch, getState) {
-    dispatch({
-      type: 'KEEP_CURRENT_PAGE'
-    })
-  }
-}
+// export const keepCurrentPage = () => {
+//   return function(dispatch, getState) {
+//     dispatch({
+//       type: 'KEEP_CURRENT_PAGE'
+//     })
+//   }
+// }
 
 export const updateNavImage = imageData => {
   return function(dispatch, getState) {

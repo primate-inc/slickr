@@ -9,7 +9,7 @@ export default class ImagePickerModal extends React.Component {
   }
 
   closeImagePicker = (e) => {
-    this.props.actions.keepCurrentPage()
+    // this.props.actions.keepCurrentPage()
     this.props.actions.toggleImagePicker()
   }
 

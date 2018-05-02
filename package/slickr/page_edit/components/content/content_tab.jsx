@@ -19,7 +19,7 @@ export default class ContentTab extends React.Component {
 
   openImagePicker = () => (e) => {
     e.preventDefault();
-    const page = Object.keys(this.props.loadedImages).length === 0 ? 1 : (this.props.loadedImages.pagination_info.current_page + 1)
+    const page = Object.keys(this.props.loadedImages).length === 0 ? 1 : (this.props.loadedImages.pagination_info.current_page)
     this.props.actions.toggleChoosingPageHeaderImage();
     this.props.actions.toggleImagePicker();
     if(Object.keys(this.props.loadedImages).length === 0) { this.props.actions.loadImages(page); }

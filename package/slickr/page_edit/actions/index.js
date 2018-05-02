@@ -179,7 +179,7 @@ export const loadImages = (page) => {
   return function(dispatch, getState) {
     let params = {};
     params[_csrf_param()] = _csrf_token()
-
+    
     request.get(getState().pageState.admin_image_index_path).set('Accept', 'text/html').query(`type=page_edit&page=${page}`).end(function(err,resp){
       if(err) {
         console.error(err)
@@ -204,13 +204,13 @@ export const showLoader = () => {
   }
 }
 
-export const keepCurrentPage = () => {
-  return function(dispatch, getState) {
-    dispatch({
-      type: 'KEEP_CURRENT_PAGE'
-    })
-  }
-}
+// export const keepCurrentPage = () => {
+//   return function(dispatch, getState) {
+//     dispatch({
+//       type: 'KEEP_CURRENT_PAGE'
+//     })
+//   }
+// }
 
 export const changeEditorState = editorState => {
   return function(dispatch, getState) {

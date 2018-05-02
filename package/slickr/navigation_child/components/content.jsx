@@ -21,7 +21,7 @@ export default class Content extends React.Component {
     if(Object.keys(this.props.loadedImages).length === 0) {
       page = 1
     } else {
-      page = this.props.loadedImages.pagination_info.current_page + 1
+      page = this.props.loadedImages.pagination_info.current_page
     }
     this.props.actions.toggleChoosingImage();
     this.props.actions.toggleImagePicker();

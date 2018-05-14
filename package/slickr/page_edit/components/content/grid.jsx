@@ -30,6 +30,12 @@ export default class Grid extends React.Component {
       this.props.actions.updateNavImage(
         { id: data.image.id, path: data.image.attachment.url }
       )
+    } else if(this.props.choosingGalleryImage) {
+      this.props.actions.toggleChoosingGalleryImage();
+      let urlParts = data.image.attachment.url.split('/');
+      this.props.actions.addGalleryImage(
+        `/${urlParts[urlParts.length - 2]}/${urlParts[urlParts.length - 1]}`
+      )
     } else {
       this.props.actions.changeEditorState(insertDataBlock(this.props.editorState, data))
     }

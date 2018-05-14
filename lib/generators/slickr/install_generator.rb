@@ -301,6 +301,12 @@ module Slickr
 
         puts "Sample page templates added"
       end
+
+      def slickr_gallery_template
+        template "slickr_gallery_template.html.erb", "app/views/slickr_gallery_template/gallery.html.erb"
+
+        puts "Sample gallery template added"
+      end
     end
   end
 end

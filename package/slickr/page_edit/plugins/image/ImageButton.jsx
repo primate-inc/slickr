@@ -7,7 +7,7 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import icons from "megadraft/lib/icons";
-import ImagePickerModal from '../../components/content/image_picker_modal.jsx';
+import ModalToOpen from './ModalToOpen.jsx';
 
 export default class BlockButton extends React.Component {
   constructor(props) {
@@ -25,16 +25,17 @@ export default class BlockButton extends React.Component {
   render() {
     return (
       <div>
-        <button className="sidemenu__button" type="button" onClick={this.openImagePicker} title="Image Gallery">
+        <button className="sidemenu__button" type="button" onClick={this.openImagePicker} title="Image">
           <icons.ImageIcon className="sidemenu__button__icon" />
         </button>
-        <ImagePickerModal
+        <ModalToOpen
           modalIsOpen={this.props.modalIsOpen}
           actions={this.props.actions}
           loadedImages={this.props.loadedImages}
           editorState={this.props.editorState}
           choosingPageHeaderImage={this.props.choosingPageHeaderImage}
           choosingNavImage={this.props.choosingNavImage}
+          choosingGalleryImage={this.props.choosingGalleryImage}
         />
       </div>
     );

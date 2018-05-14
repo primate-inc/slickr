@@ -13,6 +13,7 @@ class Slickr::Page
       'IMAGE' => DraftjsExporter::Entities::StandardImage.new,
       'VIMEO' => DraftjsExporter::Entities::Vimeo.new,
       'YOUTUBE' => DraftjsExporter::Entities::YouTube.new,
+      'GALLERY' => DraftjsExporter::Entities::Gallery.new,
       'PDF_LINK' => DraftjsExporter::Entities::TargetBlankLink.new(className: 'pdf__link'),
     },
     block_map: {

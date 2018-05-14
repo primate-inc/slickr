@@ -15,7 +15,7 @@ export default class Date extends Component {
 
   imageContainer() {
     if(this.props.item.image) {
-      return <img src={this.props.item.image} />
+      return <img src={`/${process.env.NODE_ENV}/uploads/slickr/image/attachment/${this.props.item.image}`} />
     }
   }
 

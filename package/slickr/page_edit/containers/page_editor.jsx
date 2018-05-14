@@ -12,7 +12,7 @@ import mainAppPropTypes from 'slickr_extensions/page_edit/containers/additional_
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
 let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
 
-const MyEditor = ({schedulingActive, pageLayouts, store, page, active_tab, actions, modalIsOpen, editorState, loadedImages, choosingPageHeaderImage}) => {
+const MyEditor = ({schedulingActive, pageLayouts, store, page, active_tab, actions, modalIsOpen, editorState, loadedImages, choosingPageHeaderImage, choosingGalleryImage}) => {
   return(
     <PageWrapper pageLayouts={pageLayouts}
                  page={page}
@@ -22,7 +22,8 @@ const MyEditor = ({schedulingActive, pageLayouts, store, page, active_tab, actio
                  modalIsOpen={modalIsOpen}
                  loadedImages={loadedImages}
                  active_tab={active_tab}
-                 choosingPageHeaderImage={choosingPageHeaderImage} />
+                 choosingPageHeaderImage={choosingPageHeaderImage}
+                 choosingGalleryImage={choosingGalleryImage} />
   )
 }
 
@@ -47,7 +48,8 @@ const mapStateToProps = state => ({
   loadedImages: state.loadedImages,
   schedulingActive: state.schedulingActive,
   editorState: state.editorState,
-  choosingPageHeaderImage: state.choosingPageHeaderImage
+  choosingPageHeaderImage: state.choosingPageHeaderImage,
+  choosingGalleryImage: state.choosingGalleryImage
 })
 
 const mapDispatchToProps = dispatch => ({

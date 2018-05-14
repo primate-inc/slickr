@@ -22,6 +22,9 @@ export default class Grid extends React.Component {
     if(this.props.choosingPageHeaderImage) {
       this.props.actions.toggleChoosingPageHeaderImage();
       this.props.actions.updatePageHeaderImage(data.image.attachment.url)
+    } else if(this.props.choosingGalleryImage) {
+      this.props.actions.toggleChoosingGalleryImage();
+      this.props.actions.addGalleryImage(data.image.attachment.url)
     } else {
       this.props.actions.changeEditorState(insertDataBlock(this.props.editorState, data))
     }

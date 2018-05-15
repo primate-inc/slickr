@@ -75,7 +75,6 @@ export default class ImagePickerModal extends React.Component {
       )
     } else {
       const images = Object.keys(this.props.loadedImages).length === 0 ? [] : this.props.loadedImages.images
-
       return ([
         <div key='1' style={{overflow: "auto", height: "100%"}}>
           <Grid

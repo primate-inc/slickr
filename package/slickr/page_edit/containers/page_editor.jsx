@@ -34,7 +34,8 @@ const slickrPropTypes = {
   loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
   pageLayouts: PropTypes.array.isRequired,
-  choosingPageHeaderImage: PropTypes.bool.isRequired
+  choosingPageHeaderImage: PropTypes.bool.isRequired,
+  choosingGalleryImage: PropTypes.bool.isRequired
 }
 const mergedPropTypes = Object.assign(slickrPropTypes, mainAppPropTypes);
 

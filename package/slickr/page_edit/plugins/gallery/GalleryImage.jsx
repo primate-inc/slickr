@@ -17,7 +17,7 @@ export default class Date extends Component {
     if(Object.keys(this.props.item.image).length !== 0) {
       let url;
       const image = this.props.item.image
-      if(Object.keys(image).length === 2) {
+      if(Object.keys(image).length === 3) {
         url = `${image.domain}/${process.env.NODE_ENV}/uploads/${image.path}`
       } else {
         url = `/${process.env.NODE_ENV}/uploads/${image.path}`

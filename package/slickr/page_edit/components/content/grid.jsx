@@ -35,9 +35,9 @@ export default class Grid extends React.Component {
       let urlParts = data.image.attachment.url.split('/uploads/').filter(String);
       if(urlParts.length === 2 && urlParts[0].indexOf('http') >= 0) {
         const domain = urlParts[0].substring(0, urlParts[0].lastIndexOf('/'));
-        urlParts = { domain: domain, path: urlParts[1]  }
+        urlParts = { id: data.image.id, domain: domain, path: urlParts[1]  }
       } else {
-        urlParts = { path: urlParts[1]  }
+        urlParts = { id: data.image.id, path: urlParts[1]  }
       }
       this.props.actions.addGalleryImage(urlParts)
     } else {

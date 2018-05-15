@@ -14,7 +14,11 @@ export default class GalleryBlock extends Component {
     this.removeGallery = this.removeGallery.bind(this);
 
     this.actions = [
-      {"key": "delete", "icon": MegadraftIcons.DeleteIcon, "action": this.props.container.remove}
+      {
+        "key": "delete",
+        "icon": MegadraftIcons.DeleteIcon,
+        "action": this.props.container.remove
+      }
     ];
 
     this.state = {
@@ -38,7 +42,9 @@ export default class GalleryBlock extends Component {
         item[field] = value;
       }
     }
-    this.props.container.updateData({gallery_items: this.props.data.gallery_items});
+    this.props.container.updateData(
+      {gallery_items: this.props.data.gallery_items}
+    );
   }
 
   removeGallery(key) {
@@ -57,11 +63,13 @@ export default class GalleryBlock extends Component {
     const page = Object.keys(this.props.loadedImages).length === 0 ? 1 : (this.props.loadedImages.pagination_info.current_page + 1)
     this.props.actions.toggleChoosingGalleryImage();
     this.props.actions.toggleImagePicker();
-    if(Object.keys(this.props.loadedImages).length === 0) { this.props.actions.loadImages(page); }
+    if(Object.keys(this.props.loadedImages).length === 0) {
+      this.props.actions.loadImages(page);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.state.pickingImage && this.props.galleryImageToAdd.length) {
+    if(this.state.pickingImage && Object.keys(this.props.galleryImageToAdd).length !== 0) {
       this.setState({pickingImage: false})
       this.handleAddImage('image', this.props.galleryImageToAdd)
       this.props.actions.removeGalleryImage()

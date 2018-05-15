@@ -14,8 +14,15 @@ export default class Date extends Component {
   }
 
   imageContainer() {
-    if(this.props.item.image) {
-      return <img src={`/${process.env.NODE_ENV}/uploads/slickr/image/attachment/${this.props.item.image}`} />
+    if(Object.keys(this.props.item.image).length !== 0) {
+      let url;
+      const image = this.props.item.image
+      if(Object.keys(image).length === 2) {
+        url = `${image.domain}/${process.env.NODE_ENV}/uploads/${image.path}`
+      } else {
+        url = `/${process.env.NODE_ENV}/uploads/${image.path}`
+      }
+      return <img src={url} />
     }
   }
 

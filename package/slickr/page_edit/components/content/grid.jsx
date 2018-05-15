@@ -32,10 +32,14 @@ export default class Grid extends React.Component {
       )
     } else if(this.props.choosingGalleryImage) {
       this.props.actions.toggleChoosingGalleryImage();
-      let urlParts = data.image.attachment.url.split('/');
-      this.props.actions.addGalleryImage(
-        `/${urlParts[urlParts.length - 2]}/${urlParts[urlParts.length - 1]}`
-      )
+      let urlParts = data.image.attachment.url.split('/uploads/').filter(String);
+      if(urlParts.length === 2 && urlParts[0].indexOf('http') >= 0) {
+        const domain = urlParts[0].substring(0, urlParts[0].lastIndexOf('/'));
+        urlParts = { domain: domain, path: urlParts[1]  }
+      } else {
+        urlParts = { path: urlParts[1]  }
+      }
+      this.props.actions.addGalleryImage(urlParts)
     } else {
       this.props.actions.changeEditorState(insertDataBlock(this.props.editorState, data))
     }

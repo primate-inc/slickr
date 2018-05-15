@@ -1,10 +1,10 @@
 
-const galleryImageToAdd = (state = '', action) => {
+const galleryImageToAdd = (state = {}, action) => {
   switch(action.type) {
     case 'ADD_GALLERY_IMAGE':
       return action.payload;
     case 'REMOVE_GALLERY_IMAGE':
-      return '';
+      return {};
 
     default:
       return state

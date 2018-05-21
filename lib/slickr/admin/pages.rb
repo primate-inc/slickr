@@ -10,7 +10,7 @@ if defined?(ActiveAdmin)
                   :page_header, :page_subheader, :layout, :parent_id,
                   :slug, :page_header_image, :og_title, :og_description,
                   :twitter_title, :twitter_description, :slickr_image_id,
-                  content: {}
+                  :remove_page_header_image, content: {}
 
     breadcrumb do
       if params[:action] == 'index'

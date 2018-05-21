@@ -81,7 +81,7 @@ export const loadImages = (page) => {
   return function(dispatch, getState) {
     let params = {};
     params[_csrf_param()] = _csrf_token()
-    
+
     request.get(getState().navigationState.admin_image_index_path)
            .set('Accept', 'text/html')
            .query(`type=page_edit&page=${page}`)

@@ -105,6 +105,11 @@
                 content: 'Select' !important;
               }
             }
+            &.has_image {
+              .hint-text {
+                margin-top: 4em;
+              }
+            }
           }
           .edit-wrapper {
             input, textarea {

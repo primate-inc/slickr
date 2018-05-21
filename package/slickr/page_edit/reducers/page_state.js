@@ -6,6 +6,11 @@ const pageState = (state = {}, action) => {
       return Object.assign({}, state, { publishing_scheduled_for: action.payload, aasm_state: 'draft' })
     case 'SET_PAGE_TITLE':
       return Object.assign({},state, { title: action.title, layout: action.layout })
+    case 'SET_PAGE_HEADER_IMAGE':
+      return Object.assign({},state, {
+        slickr_image_id: action.slickr_image_id,
+        slickr_image_path: action.slickr_image_path
+      })
     case 'PUBLISH_PAGE':
       return Object.assign({}, state, {aasm_state: action.aasm_state, publishing_scheduled_for: null})
     case 'UNPUBLISH_PAGE':

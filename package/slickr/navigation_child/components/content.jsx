@@ -7,7 +7,8 @@ export default class Content extends React.Component {
     this.state = {
       imagePath: this.props.navigation.navigation_image,
       pageSelectVisible: this.props.values.child_type === 'Page' ? true : false,
-      linkVisible: this.props.values.child_type === 'Page' ? false : true
+      linkVisible: this.props.values.child_type === 'Page' ? false : true,
+      imagePresentOnLoad: this.props.navigation.slickr_image_path !== null
     }
   }
 
@@ -131,7 +132,7 @@ export default class Content extends React.Component {
               <p className='hint-text'>Navigation title</p>
             </div>
           </li>
-          <li className="file input admin-big-title">
+          <li className={`file input admin-big-title ${this.props.navigation.slickr_image_path == null ? 'no_image' : 'has_image'}`}>
             <div className="edit-wrapper">
               <label htmlFor="slickr_image_id">Image</label>
               <input type="file" onClick={this.openImagePicker()} />
@@ -159,6 +160,25 @@ export default class Content extends React.Component {
               <p className='hint-text'>Navigation image</p>
             </div>
           </li>
+          {(() => {
+            let imagePath = this.props.navigation.slickr_image_path
+            if(!(imagePath == null) && this.state.imagePresentOnLoad) {
+              return (
+                <li className="true_false image boolean input optional">
+                  <div className="edit-wrapper">
+                    <input type="hidden" name="remove_slickr_image" value="0" />
+                    <label htmlFor="remove_slickr_image">
+                      <input type="checkbox"
+                             name="remove_slickr_image"
+                             id="remove_slickr_image"
+                             value="1"
+                             onChange={handleChange} />Remove image
+                    </label>
+                  </div>
+                </li>
+              )
+            }
+          })()}
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="text">Text</label>

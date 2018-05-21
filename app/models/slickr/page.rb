@@ -2,6 +2,8 @@ module Slickr
   class Page < ApplicationRecord
     self.table_name = 'slickr_pages'
 
+    attr_writer :remove_page_header_image
+
     extend ActsAsTree::TreeWalker
     acts_as_tree order: "position"
     acts_as_list scope: :parent_id
@@ -22,6 +24,8 @@ module Slickr
     has_many :drafts, foreign_key: 'slickr_page_id', class_name: 'Draft', dependent: :destroy
     has_one :active_draft, class_name: 'Slickr::Page::Draft'
     has_one :published_draft, class_name: 'Slickr::Page::Draft'
+
+    before_validation :clear_page_header_image
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
     after_save :delete_nav_if_page_unpublished
@@ -151,6 +155,14 @@ module Slickr
 
     def admin_image_index_path
       Rails.application.routes.url_helpers.admin_slickr_images_path
+    end
+
+    def remove_page_header_image
+      @remove_page_header_image || false
+    end
+
+    def clear_page_header_image
+      self.slickr_image_id = nil if remove_page_header_image == true
     end
 
     private

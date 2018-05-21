@@ -5,12 +5,16 @@ module Slickr
   class Navigation < ApplicationRecord
     self.table_name = 'slickr_navigations'
 
+    attr_writer :remove_slickr_image
+
     has_ancestry
     acts_as_list scope: [:ancestry]
 
     ROOT_TYPES = %w[Root Link Page].freeze
 
     CHILD_TYPES = ['Page', 'Custom Link', 'Anchor', 'Header'].freeze
+
+    before_validation :clear_slickr_image
 
     belongs_to :slickr_page,
                foreign_key: 'slickr_page_id',
@@ -127,6 +131,14 @@ module Slickr
       Rails.application
            .routes.url_helpers
            .change_position_admin_slickr_navigation_path(id)
+    end
+
+    def remove_slickr_image
+      @remove_slickr_image || false
+    end
+
+    def clear_slickr_image
+      self.slickr_image_id = nil if remove_slickr_image == true
     end
 
     private

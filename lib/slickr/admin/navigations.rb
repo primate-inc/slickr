@@ -8,7 +8,7 @@ if defined?(ActiveAdmin)
 
     permit_params :root_type, :child_type, :title, :text, :link, :link_text,
                   :page_id, :parent_id, :slickr_page_id, :ancestry,
-                  :slickr_image_id
+                  :slickr_image_id, :remove_slickr_image
 
     # breadcrumbs only used for tree roots. All child breadcrumbs are
     # overridden in the React component

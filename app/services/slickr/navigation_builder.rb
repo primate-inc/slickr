@@ -168,7 +168,7 @@ module Slickr
         },
         text: {
           text: hash['text'], page_header: hash['page_header'],
-          page_into: hash['page_into']
+          page_subheader: hash['page_subheader'], page_intro: hash['page_intro']
         },
         link: path_finder(pathnames, hash)[:path], link_text: hash['link_text']
       }

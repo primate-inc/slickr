@@ -134,7 +134,10 @@ module Slickr
     # example result
     # {
     #   :title=>"Menu", :image=>{ nav_image_id: hash['image_id'] },
-    #   :text=> { :text=>"some text", :page_header=>nil, :page_into=>nil },
+    #   :text=> {
+    #     :text=>"some text", :page_header=>nil, :page_subheader=>nil,
+    #     :page_into=>nil
+    #   },
     #   :link=>"/menu", :link_text=>"Menu", "children"=>[]
     # }
     def build_nav(child_hash, pathnames, parent_link)

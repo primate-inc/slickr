@@ -1,80 +1,90 @@
 include SlickrHelper
 if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::Page do
-    decorate_with Slickr::PageDecorator
-    before_action :set_paper_trail_whodunnit
-    config.filters = false
-    config.batch_actions = false
     menu priority: 1
+    actions :all, except: :show
+    before_action :set_paper_trail_whodunnit
+    decorate_with Slickr::PageDecorator
+
     permit_params :page_title, :meta_description, :title, :page_intro,
-                  :page_header, :page_subheader, :layout, :parent_id,
-                  :slug, :page_header_image, :og_title, :og_description,
-                  :twitter_title, :twitter_description, :slickr_image_id,
-                  :remove_page_header_image, content: {}
+                  :page_header, :page_subheader, :layout, :slug, :og_title,
+                  :og_description, :twitter_title, :twitter_description,
+                  :slickr_image_id, :remove_page_header_image, content: {}
 
-    breadcrumb do
-      if params[:action] == 'index'
-        [ link_to('Admin', admin_root_path) ]
-      else
-        [
-          link_to('Admin', admin_root_path),
-          link_to('Pages', admin_slickr_pages_path),
-        ]
+    filter :title
+    filter :layout
+
+    index title: 'Pages', download_links: false do
+      selectable_column
+      id_column
+      column :title
+      column 'Layout' do |page|
+        page.layout.humanize
       end
-    end
-
-    form :partial => "edit"
-    config.clear_action_items!
-
-    action_item :new_page, only: :index do
-      link_to new_admin_slickr_page_path do
-        raw("<svg class='svg-icon'><use xlink:href='#svg-plus' /></svg>Add page")
+      column 'State' do |page|
+        page.aasm_state.humanize
       end
+      column 'Drafts' do |page|
+        page.drafts.count
+      end
+      actions
     end
 
-    index title: 'Pages', download_links: false do |page|
-      render partial: 'dashboard'
-    end
+    form partial: 'edit'
 
     controller do
-      def find_resource
-        scoped_collection.friendly.find(params[:id])
-      end
       def create
         super do |format|
-          Slickr::EventLog.create(action: :create, eventable: resource, admin_user: current_admin_user) if resource.valid?
-          redirect_to edit_resource_url and return if resource.valid?
+          create_resource_event_log(:create) if resource.valid?
+          format.html do
+            redirect_to edit_resource_url and return if resource.valid?
+            render :new
+          end
         end
       end
 
       def update
-        super do |format|
-          Slickr::EventLog.create(action: :update, eventable: resource, admin_user: current_admin_user) if resource.valid?
-          redirect_to edit_resource_url and return if resource.valid?
+        update! do |format|
+          create_resource_event_log(:update) if resource.valid?
+          format.html { redirect_to edit_admin_slickr_page_path(resource) }
+          format.json do
+            render json: @slickr_page.as_json(methods: [:admin_page_path])
+          end
         end
       end
 
       def destroy
-        Slickr::EventLog.create(action: :delete, eventable: resource, admin_user: current_admin_user) if resource.valid?
+        create_resource_event_log(:delete) if resource.valid?
         destroy! do |format|
-          format.html { redirect_to edit_resource_url and return if resource.valid? }
-          format.json { render json: Slickr::Page.roots.not_draft.decorate.to_json(only: [:id, :title], methods: [:expanded, :subtitle, :edit_page_path, :add_child_path, :children, :published, :admin_delete_page_path]) }
-
+          format.html do
+            redirect_to admin_slickr_pages_path and return if resource.valid?
+          end
+          format.json do
+            render json: Slickr::Page.roots.not_draft.decorate.to_json(
+              only: %i[id title],
+              methods: %i[
+                expanded subtitle edit_page_path published
+                admin_delete_page_path
+              ]
+            )
+          end
         end
       end
-    end
 
-    member_action :change_position, method: :put do
-      resource.update_attribute(:parent_id, params[:parent_id])
-      if params[:previous_id].present?
-        previous = Slickr::Page.find(params[:previous_id])
-        if resource.position < previous.position
-          resource.insert_at(previous.position.to_i)
-        else
-          resource.insert_at(previous.position.to_i  + 1)
-        end
-      else
-        resource.move_to_top
+      def find_resource
+        scoped_collection.friendly.find(params[:id])
+      end
+
+      def scoped_collection
+        Slickr::Page.not_draft
+      end
+
+      def user_for_paper_trail
+        current_admin_user ? current_admin_user.id : 'Public user' # or whatever
+      end
+
+      def info_for_paper_trail
+        { admin_id: current_admin_user.id } if current_admin_user
       end
     end
 
@@ -110,29 +120,14 @@ if defined?(ActiveAdmin)
       html_output = draftjs_to_html(resource, :content)
       render layout: false, template: "slickr_page_templates/#{resource.choose_template}", locals: {slickr_page: resource, content: html_output}
     end
+  end
 
-    controller do
-      def update
-        update! do |format|
-          format.html { redirect_to edit_admin_slickr_page_path(resource) }
-          format.json { render json: @slickr_page.as_json(methods: [:admin_page_path]) }
-        end
-      end
+  private
 
-      def edit
-        super do |format|
-          # resource.build_content_area if resource.content_areas.empty?
-        end
-      end
-
-
-      def user_for_paper_trail
-        current_admin_user ? current_admin_user.id : 'Public user'  # or whatever
-      end
-
-      def info_for_paper_trail
-        { admin_id: current_admin_user.id } if current_admin_user
-      end
-    end
+  def create_resource_event_log(action)
+    Slickr::EventLog.create(
+      action: action, eventable: resource,
+      admin_user: current_admin_user
+    )
   end
 end

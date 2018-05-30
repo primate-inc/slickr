@@ -4,9 +4,6 @@ module Slickr
 
     attr_writer :remove_page_header_image
 
-    extend ActsAsTree::TreeWalker
-    acts_as_tree order: "position"
-    acts_as_list scope: :parent_id
     extend FriendlyId
     include AASM
     has_paper_trail only: [:title, :aasm_state, :content, :published_content, :drafts],
@@ -29,6 +26,9 @@ module Slickr
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
     after_save :delete_nav_if_page_unpublished
+
+    validates_presence_of :title, :layout, unless: :type_draft?
+
     scope :not_draft, -> {where(type: nil)}
 
     aasm(:status, column: :aasm_state) do
@@ -56,35 +56,12 @@ module Slickr
       .where.not(slickr_navigations: {id: nil})
     end)
 
-    def self.root_subtree_for_views
-    end
-
-    def expanded
-      root?
-    end
-
     def display_title
       title
     end
 
     def published
       published?
-    end
-
-    def tree_children
-      children.not_draft.decorate.map do |p|
-        { id: p.id,
-          title: p.title,
-          add_child_path: p.add_child_path,
-          edit_page_path: p.edit_page_path,
-          admin_delete_page_path: p.admin_delete_page_path,
-          change_position_admin_page: p.change_position_admin_page,
-          published: p.published?,
-          subtitle: p.subtitle,
-          children: p.tree_children,
-          position: p.position
-        }
-      end
     end
 
     def slickr_image_path
@@ -119,10 +96,6 @@ module Slickr
 
     def preview_page
       Rails.application.routes.url_helpers.preview_admin_slickr_page_path(self.id)
-    end
-
-    def add_child_path
-      Rails.application.routes.url_helpers.new_admin_slickr_page_path(parent: self.id)
     end
 
     def admin_unpublish_path
@@ -170,6 +143,10 @@ module Slickr
     def delete_nav_if_page_unpublished
       return unless draft?
       Slickr::Navigation.where(slickr_page_id: id).destroy_all
+    end
+
+    def type_draft?
+      type == 'Slickr::Page::Draft'
     end
   end
 end

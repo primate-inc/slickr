@@ -3,7 +3,6 @@ class CreateSlickrPages < ActiveRecord::Migration[5.1]
     create_table :slickr_pages do |t|
       t.string    :title
       t.string    :slug
-      t.string    :ancestry
       t.string    :aasm_state
       t.json      :content, default: "[]"
       t.string    :type

@@ -1,13 +1,7 @@
-<% tree = [] %>
-<% Slickr::Page.walk_tree do |page, level| %>
-  <% tree << Array({"#{Array.new(level, '-').join('')}#{page.title}".to_sym => page.id}).flatten if page.type == nil %>
-<% end %>
-
 <% if @slickr_page.new_record? %>
   <%= semantic_form_for [:admin, @slickr_page], builder: ActiveAdmin::FormBuilder do |f| %>
     <%= f.inputs do %>
       <%= f.input :title %>
-      <%= f.input :parent_id, collection: options_for_select(tree, params[:parent]), as: :select %>
       <%= f.input :layout, collection: options_for_select(Slickr::Page::LAYOUTS.map{|l| [l[:template].capitalize, l[:template]]}) %>
     <% end %>
     <%= f.actions %>

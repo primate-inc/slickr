@@ -48,6 +48,8 @@ const PageWrapper = ({schedulingActive, pageLayouts, active_tab, editorState, pa
               <span className="breadcrumb_sep"> / </span>
               <a href="/admin/slickr_pages">Pages</a>
               <span className="breadcrumb_sep"> / </span>
+              <a href="#">{page.title}</a>
+              <span className="breadcrumb_sep"> / </span>
             </span>
             <h2 id="page_title">Edit Page</h2>
           </div>

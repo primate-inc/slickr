@@ -109,21 +109,23 @@ export default class ContentTab extends React.Component {
             }
           })()}
           {(() => {
-            let imagePath = this.props.page.slickr_image_path
-            if(!(imagePath == null)) {
-              return (
-                <li className="true_false image boolean input optional">
-                  <div className="edit-wrapper">
-                    <label htmlFor="remove_page_header_image">
-                      <input type="checkbox"
-                             name="remove_page_header_image"
-                             id='remove_page_header_image'
-                             onChange={handleChange}
-                             onClick={this.updateTrueFalse()} />Remove image
-                    </label>
-                  </div>
-                </li>
-              )
+            if(!this.state.excludeList.includes("page_header_image")) {
+              let imagePath = this.props.page.slickr_image_path
+              if(!(imagePath == null)) {
+                return (
+                  <li className="true_false image boolean input optional">
+                    <div className="edit-wrapper">
+                      <label htmlFor="remove_page_header_image">
+                        <input type="checkbox"
+                               name="remove_page_header_image"
+                               id='remove_page_header_image'
+                               onChange={handleChange}
+                               onClick={this.updateTrueFalse()} />Remove image
+                      </label>
+                    </div>
+                  </li>
+                )
+              }
             }
           })()}
           {(() => {

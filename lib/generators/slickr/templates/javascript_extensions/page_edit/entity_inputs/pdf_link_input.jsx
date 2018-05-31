@@ -8,7 +8,7 @@ import text_editor_store from 'slickr_cms/package/slickr/packs/slickr_text_area_
 export default class PdfLinkInput extends React.Component {
   constructor(props) {
     super(props);
-    this.onAdminChange = this.onAdminChange.bind(this);
+    this.onPdfChange = this.onPdfChange.bind(this);
     this.loadData = this.loadData.bind(this);
 
     this.state = {
@@ -50,7 +50,7 @@ export default class PdfLinkInput extends React.Component {
     });
   }
 
-  onAdminChange(selection) {
+  onPdfChange(selection) {
     var url = selection === null ? "" : selection.value
     if(selection !== null) {
       this.props.setEntity({url});
@@ -74,7 +74,7 @@ export default class PdfLinkInput extends React.Component {
         name="form-field-name"
         value={this.props.url}
         options={pdfs}
-        onChange={this.onAdminChange}
+        onChange={this.onPdfChange}
       />
     );
   }

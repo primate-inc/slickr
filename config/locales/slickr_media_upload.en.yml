@@ -1,0 +1,6 @@
+en:
+  activerecord:
+    models:
+      slickr/media_upload:
+        one: 'Media'
+        other: 'Media'

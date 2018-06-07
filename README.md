@@ -90,6 +90,10 @@ ActiveAdmin.register AdminUser, as: "Users" do
 end
 ```
 
+## Image Processing
+
+[Image Processing](docs/image_processing.md)
+
 ## Helpers
 
 [Heleprs](docs/helpers.md)

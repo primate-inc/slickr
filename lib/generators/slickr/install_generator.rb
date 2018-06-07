@@ -21,7 +21,6 @@ module Slickr
 
       def db_migrations
         migration_template "migrations/create_slickr_pages.rb", "db/migrate/create_slickr_pages.rb"
-        migration_template "migrations/change_page_tree_structure.rb", "db/migrate/change_page_tree_structure.rb"
         migration_template "migrations/create_versions.rb", "db/migrate/create_versions.rb"
         migration_template "migrations/add_object_changes_to_versions.rb", "db/migrate/add_object_changes_to_versions.rb"
         migration_template "migrations/change_slickr_pages_page_id_attribute.rb", "db/migrate/change_slickr_pages_page_id_attribute.rb"
@@ -36,8 +35,15 @@ module Slickr
         migration_template "migrations/rename_slickr_pages_meta_title.rb", "db/migrate/rename_slickr_pages_meta_title.rb"
         migration_template "migrations/create_slickr_navigations.rb", "db/migrate/create_slickr_navigations.rb"
         migration_template "migrations/add_slickr_image_id_to_slickr_pages.rb", "db/migrate/add_slickr_image_id_to_slickr_pages.rb"
+        migration_template "migrations/create_slickr_media_uploads.rb", "db/migrate/create_slickr_media_uploads.rb"
 
         puts "Database migrations added"
+      end
+
+      def shrine_initializer
+        template "shrine.rb", "config/initializers/shrine.rb"
+
+        puts "Shrine initializer"
       end
 
       def slickr_yml
@@ -259,6 +265,12 @@ module Slickr
         template "slickr_image_uploader.rb", "app/uploaders/slickr_image_uploader.rb"
 
         puts "Slickr Page extended"
+      end
+
+      def slickr_media_image_uploader
+        template "media_image_uploader.rb", "app/uploaders/slickr/media_image_uploader.rb"
+
+        puts "Slickr::MediaImageUploader added"
       end
 
       def extend_active_admin_initializer

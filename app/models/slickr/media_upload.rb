@@ -5,10 +5,10 @@ module Slickr
     self.table_name = 'slickr_media_uploads'
 
     include Slickr::MediaImageUploader[:image]
+    include Slickr::MediaFileUploader[:file]
 
     def build_for_gallery
-      mime_type = image[:original].data['metadata']['mime_type']
-      mime_type == 'application/pdf' ? build_pdf : build_image
+      image.present? ? build_image : build_pdf
     end
 
     def admin_edit_path
@@ -43,16 +43,16 @@ module Slickr
     private
 
     def build_pdf
-      # {
-      #   id: id,
-      #   src: attachment.url(:pdf_image_preview),
-      #   thumbnail: attachment.url(:pdf_image_preview),
-      #   thumbnailWidth: 127,
-      #   thumbnailHeight: 180,
-      #   caption: attachment.file.filename,
-      #   isSelected: false,
-      #   editPath: admin_edit_path
-      # }
+      {
+        id: id,
+        src: file_url(:l_fit),
+        thumbnail: file_url(:thumb_fit),
+        thumbnailWidth: file[:thumb_fit].data['metadata']['width'],
+        thumbnailHeight: file[:thumb_fit].data['metadata']['height'],
+        caption: file[:l_fit].data['metadata']['filename'],
+        isSelected: false,
+        editPath: admin_edit_path
+      }
     end
 
     def build_image

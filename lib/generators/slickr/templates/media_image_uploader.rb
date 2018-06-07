@@ -3,7 +3,7 @@
 require 'image_optim'
 require 'image_processing/vips'
 
-# Slickr::MediaImageUploader
+# MediaImageUploader
 class Slickr::MediaImageUploader < Shrine
   plugin :delete_raw # automatically delete processed files after uploading
   plugin :delete_promoted

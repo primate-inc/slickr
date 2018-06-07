@@ -273,6 +273,12 @@ module Slickr
         puts "Slickr::MediaImageUploader added"
       end
 
+      def slickr_media_file_uploader
+        template "media_file_uploader.rb", "app/uploaders/slickr/media_file_uploader.rb"
+
+        puts "Slickr::MediaFileUploader added"
+      end
+
       def extend_active_admin_initializer
         dest_file = "config/initializers/active_admin.rb"
         existing_content = File.read(dest_file)

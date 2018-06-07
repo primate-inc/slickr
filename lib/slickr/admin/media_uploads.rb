@@ -2,6 +2,12 @@ if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::MediaUpload do
     IMAGES_PER_PAGE ||= 25
     menu priority: 2, label: 'Media'
+    actions :all, :except => [:new, :show]
+
+    config.filters = false
+    config.per_page = IMAGES_PER_PAGE
+
+    permit_params :image, :file, additional_info: {}
 
     breadcrumb do
       if params[:action] == 'index'
@@ -14,26 +20,21 @@ if defined?(ActiveAdmin)
       end
     end
 
-    actions :all, :except => [:new, :show]
-    config.filters = false
-    config.per_page = IMAGES_PER_PAGE
-
-    permit_params :image, additional_info: {}
-
     index title: 'Media', download_links: false do
       render 'gallery'
     end
 
-    form :partial => 'form'
+    form partial: 'form'
 
     batch_action :destroy do |selection|
       Slickr::MediaUpload.find(selection).each(&:destroy)
-      render json: Slickr::MediaUpload.all.map do |file|
+      media = Slickr::MediaUpload.all.map do |media|
         JSON.parse(
-          file.to_json(methods: %i[build_for_gallery admin_edit_path
+          media.to_json(methods: %i[build_for_gallery admin_edit_path
                                    admin_update_path admin_batch_delete_path])
         )
       end
+      render json: media
     end
 
     controller do

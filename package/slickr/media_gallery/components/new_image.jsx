@@ -13,7 +13,11 @@ export default class NewImage extends React.Component {
   onDrop(files) {
     files.forEach((file)=> {
       const formData = new FormData();
-      formData.append('slickr_media_upload[image]', file);
+      if(file.type === 'application/pdf') {
+        formData.append('slickr_media_upload[file]', file);
+      } else {
+        formData.append('slickr_media_upload[image]', file);
+      }
       this.props.actions.createImage({
         formData: formData, file: file, upload: true
       })

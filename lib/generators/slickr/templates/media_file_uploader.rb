@@ -32,13 +32,24 @@ module Slickr
         convert << page_image.path
       end
       page_image.open # refresh updated file
+
       pipeline = ImageProcessing::Vips.source(page_image).convert('png')
       l_fit =     pipeline.resize_to_fit!(762, 1080)
       thumb_fit = pipeline.resize_to_fit!(127, 180)
 
       pdf.close!
 
-      { original: io, l_fit: l_fit, thumb_fit: thumb_fit }
+      { original: io, large: l_fit, thumb: thumb_fit }
+    end
+
+    def generate_location(io, context)
+      path = super[/^(.*[\\\/])/]
+      version = context[:version]
+      is_original = version.nil? || version == :original
+      return path + context[:metadata]['filename'] if is_original
+      orig_filename = context[:record].file_data['metadata']['filename']
+      filename = "#{version}-#{orig_filename.gsub('.pdf', '.png')}"
+      path + filename
     end
   end
 end

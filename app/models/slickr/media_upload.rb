@@ -7,6 +7,12 @@ module Slickr
     include Slickr::MediaImageUploader[:image]
     include Slickr::MediaFileUploader[:file]
 
+    scope(:pdf_files, lambda do
+      where('file_data @> ?', {
+        original: { metadata: { mime_type: 'application/pdf' } }
+      }.to_json)
+    end)
+
     def build_for_gallery
       image.present? ? build_image : build_pdf
     end
@@ -45,11 +51,11 @@ module Slickr
     def build_pdf
       {
         id: id,
-        src: file_url(:l_fit),
-        thumbnail: file_url(:thumb_fit),
-        thumbnailWidth: file[:thumb_fit].data['metadata']['width'],
-        thumbnailHeight: file[:thumb_fit].data['metadata']['height'],
-        caption: file[:l_fit].data['metadata']['filename'],
+        src: file_url(:large),
+        thumbnail: file_url(:thumb),
+        thumbnailWidth: file[:thumb].data['metadata']['width'],
+        thumbnailHeight: file[:thumb].data['metadata']['height'],
+        caption: file[:large].data['metadata']['filename'],
         isSelected: false,
         editPath: admin_edit_path
       }

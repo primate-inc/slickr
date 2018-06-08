@@ -41,7 +41,7 @@ if defined?(ActiveAdmin)
       def index
         if params[:type] == 'page_edit'
           total = Slickr::MediaUpload.all.count
-          @slickr_media_uploads = Slickr::Image
+          @slickr_media_uploads = Slickr::MediaUpload
                                   .order(created_at: :desc)
                                   .limit(IMAGES_PER_PAGE)
                                   .offset(
@@ -63,11 +63,11 @@ if defined?(ActiveAdmin)
               }.to_json
             end
           end
-        # elsif params[:type] == 'megadraft_pdfs'
-        #   @pdfs = Slickr::Image.where('attachment like ?', '%.pdf%')
-        #   index! do |format|
-        #     format.html { render :json => @pdfs.to_json }
-        #   end
+        elsif params[:type] == 'megadraft_pdfs'
+          pdfs = Slickr::MediaUpload.pdf_files
+          index! do |format|
+            format.html { render json: pdfs.to_json }
+          end
         else
           index!
         end

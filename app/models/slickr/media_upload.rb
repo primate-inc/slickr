@@ -55,9 +55,10 @@ module Slickr
         thumbnail: file_url(:thumb),
         thumbnailWidth: file[:thumb].data['metadata']['width'],
         thumbnailHeight: file[:thumb].data['metadata']['height'],
-        caption: file[:large].data['metadata']['filename'],
+        caption: file[:original].data['metadata']['filename'],
         isSelected: false,
-        editPath: admin_edit_path
+        editPath: admin_edit_path,
+        mimeType: file[:original].data['metadata']['mime_type']
       }
     end
 
@@ -70,7 +71,8 @@ module Slickr
         thumbnailHeight: image[:s_limit].data['metadata']['height'],
         caption: image[:original].data['metadata']['filename'],
         isSelected: false,
-        editPath: admin_edit_path
+        editPath: admin_edit_path,
+        mimeType: image[:original].data['metadata']['mime_type']
       }
     end
   end

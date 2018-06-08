@@ -22,11 +22,15 @@ export default class Buttons extends React.Component {
   }
 
   showEditButton() {
-    if (this.props.selectedImages.length === 1) {
-      var href = this.props.selectedImages[0].editPath
-      return (
-        <a href={href} className='active actions'>Edit</a>
-      )
+    if (this.props.selectedImages.length === 1){
+      if(this.props.selectedImages[0].mimeType === 'application/pdf') {
+        return <a href='#' className='actions hidden'>Edit</a>
+      } else {
+        var href = this.props.selectedImages[0].editPath
+        return (
+          <a href={href} className='active actions'>Edit</a>
+        )
+      }
     } else {
       return <a href='#' className='actions hidden'>Edit</a>
     }
@@ -44,7 +48,7 @@ export default class Buttons extends React.Component {
           </div>
           <div className='buttons'>
             {this.showEditButton()}
-            <a href='#' className='active actions' 
+            <a href='#' className='active actions'
                onClick={ this.DeleteSelectedImages }
             >Delete</a>
           </div>

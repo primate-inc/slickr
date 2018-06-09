@@ -28,13 +28,13 @@ if defined?(ActiveAdmin)
 
     batch_action :destroy do |selection|
       Slickr::MediaUpload.find(selection).each(&:destroy)
-      media = Slickr::MediaUpload.all.map do |media|
+      remaining_media = Slickr::MediaUpload.all.map do |media|
         JSON.parse(
           media.to_json(methods: %i[build_for_gallery admin_edit_path
                                    admin_update_path admin_batch_delete_path])
         )
       end
-      render json: media
+      render json: remaining_media
     end
 
     controller do
@@ -64,9 +64,8 @@ if defined?(ActiveAdmin)
             end
           end
         elsif params[:type] == 'megadraft_pdfs'
-          pdfs = Slickr::MediaUpload.pdf_files
           index! do |format|
-            format.html { render json: pdfs.to_json }
+            format.html { render json: Slickr::MediaUpload.pdf_files.to_json }
           end
         else
           index!

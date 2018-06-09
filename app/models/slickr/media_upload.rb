@@ -4,8 +4,10 @@ module Slickr
   class MediaUpload < ApplicationRecord
     self.table_name = 'slickr_media_uploads'
 
-    include Slickr::MediaImageUploader[:image]
-    include Slickr::MediaFileUploader[:file]
+    include Slickr::MediaImageUploader[:image] rescue NameError
+    include Slickr::MediaFileUploader[:file] rescue NameError
+
+    has_many :slickr_uploads, class_name: 'Slickr::Upload'
 
     scope(:pdf_files, lambda do
       where('file_data @> ?', {
@@ -52,6 +54,7 @@ module Slickr
       {
         id: id,
         src: file_url(:large),
+        display_size: file_url(:large),
         thumbnail: file_url(:thumb),
         thumbnailWidth: file[:thumb].data['metadata']['width'],
         thumbnailHeight: file[:thumb].data['metadata']['height'],
@@ -66,6 +69,7 @@ module Slickr
       {
         id: id,
         src: image_url(:xl_limit),
+        display_size: image_url(:m_limit),
         thumbnail: image_url(:s_limit),
         thumbnailWidth: image[:s_limit].data['metadata']['width'],
         thumbnailHeight: image[:s_limit].data['metadata']['height'],

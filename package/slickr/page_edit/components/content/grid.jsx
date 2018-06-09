@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import Gallery from 'react-grid-gallery';
 import {insertDataBlock} from "megadraft";
+import galleryImages from '../../../utils/gallery_images.jsx'
 
 export default class Grid extends React.Component {
   constructor(props){
@@ -16,23 +17,23 @@ export default class Grid extends React.Component {
       type: "image",
       image: {
         'id': this.props.images[index].id,
-        "attachment": this.props.images[index].attachment,
-        "data": this.props.images[index].data
+        'image_data': this.props.images[index].build_for_gallery,
+        'additional_info': this.props.images[index].additional_info
       }
     };
     if(this.props.choosingPageHeaderImage) {
       this.props.actions.toggleChoosingPageHeaderImage();
       this.props.actions.updatePageHeaderImage(
-        { id: data.image.id, path: data.image.attachment.url }
+        { id: data.image.id, path: data.image.image_data.display_size }
       )
     } else if(this.props.choosingNavImage) {
       this.props.actions.toggleChoosingImage();
       this.props.actions.updateNavImage(
-        { id: data.image.id, path: data.image.attachment.url }
+        { id: data.image.id, path: data.image.image_data.url }
       )
     } else if(this.props.choosingGalleryImage) {
       this.props.actions.toggleChoosingGalleryImage();
-      let urlParts = data.image.attachment.url.split('/uploads/').filter(String);
+      let urlParts = data.image.image_data.url.split('/uploads/').filter(String);
       if(urlParts.length === 2 && urlParts[0].indexOf('http') >= 0) {
         const domain = urlParts[0].substring(0, urlParts[0].lastIndexOf('/'));
         urlParts = { id: data.image.id, domain: domain, path: urlParts[1]  }
@@ -47,28 +48,10 @@ export default class Grid extends React.Component {
   }
 
   render () {
-    var images = this.props.images.map((i) => {
-      var altClass = i.data.alt_text == "" ? "alt_text_missing" : ""
-      i.build_for_gallery.customOverlay = (
-        <div>
-          <div style={captionStyle}>
-            <div>{i.build_for_gallery.caption}</div>
-            { i.build_for_gallery.hasOwnProperty('tags') && this.setCustomTags(i.build_for_gallery) }
-          </div>
-          <div className={altClass}></div>
-        </div>
-      );
-      return i;
-    });
+    var images = galleryImages(this.props.images)
 
     return (
-      <div style={{
-        display: "block",
-        minHeight: "1px",
-        maxWidth: "60vw",
-        margin: "0 auto",
-        overflow: "auto"
-      }}>
+      <div>
         <Gallery
           images={images.map(function(a) {return a.build_for_gallery})}
           enableImageSelection={false}
@@ -79,18 +62,6 @@ export default class Grid extends React.Component {
     );
   }
 }
-
-const captionStyle = {
-  backgroundColor: "rgba(0, 0, 0, 0.8)",
-  maxHeight: "240px",
-  overflow: "hidden",
-  position: "absolute",
-  bottom: "0",
-  width: "100%",
-  color: "white",
-  padding: "2px",
-  fontSize: "90%"
-};
 
 const customTagStyle = {
   wordWrap: "break-word",

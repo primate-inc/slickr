@@ -59,5 +59,15 @@ module Slickr
         m_fit: m_fit, s_fit: s_fit, thumb_fit: thumb_fit
       }
     end
+
+    def generate_location(io, context)
+      path = super[/^(.*[\\\/])/]
+      version = context[:version]
+      is_original = version.nil? || version == :original
+      return path + context[:metadata]['filename'] if is_original
+      orig_filename = context[:record].image_data['metadata']['filename']
+      filename = "#{version}-#{orig_filename}"
+      path + filename
+    end
   end
 end

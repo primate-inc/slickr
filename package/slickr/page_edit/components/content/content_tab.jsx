@@ -80,24 +80,20 @@ export default class ContentTab extends React.Component {
                     <label htmlFor="slickr_image_id">Page header image</label>
                     <input type="file" onClick={this.openImagePicker()} />
                     {(() => {
+                      console.log(this.props)
                       let imageId = this.props.page.slickr_image_id
                       let imagePath = this.props.page.slickr_image_path
 
                       if(!(imagePath == null)) {
                         if(this.state.imagePath !== imagePath) {
-                          setFieldValue('slickr_image_id', imageId)
+                          setFieldValue('slickr_media_upload_id', imageId)
                           this.setState({
                             imagePath: imagePath
                           })
                         }
-                        let splitFile = imagePath.split('/');
-                        let fileName = splitFile[splitFile.length - 1];
-                        let fileNameWithImageSize = imagePath.replace(
-                          fileName, `small_${fileName}`
-                        )
                         return (
                           <p className="inline-hints">
-                            <img src={fileNameWithImageSize} />
+                            <img src={imagePath} />
                           </p>
                         )
                       }

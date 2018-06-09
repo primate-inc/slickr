@@ -26,8 +26,8 @@ export default class ImageBlock extends React.Component {
       <CommonBlock {...this.props} actions={this.actions}>
         <BlockContent>
           <img style={ImageBlockStyle.image}
-               src={this.props.data.image.attachment.url}
-               alt={this.props.data.image.data.alt_text}
+               src={this.props.data.image.image_data.display_size}
+               alt={this.props.data.image.additional_info.alt_text}
           />
         </BlockContent>
         {/*<BlockData>

@@ -1,4 +1,5 @@
 module Slickr
+  # class Page
   class Page < ApplicationRecord
     self.table_name = 'slickr_pages'
 
@@ -6,19 +7,41 @@ module Slickr
 
     extend FriendlyId
     include AASM
-    has_paper_trail only: [:title, :aasm_state, :content, :published_content, :drafts],
+    has_paper_trail only: %i[title aasm_state content published_content drafts],
                     meta: { content_changed: :content_changed? }
 
-    friendly_id :title, use: [:slugged, :finders]
+    friendly_id :title, use: %i[slugged finders]
+
     belongs_to :slickr_image,
                foreign_key: 'slickr_image_id',
                class_name: 'Slickr::Image',
                optional: true
+    has_one :slickr_page_header_image,
+            -> { where(uploadable_type: 'SlickrPageHeaderImage') },
+            foreign_key: 'uploadable_id',
+            class_name: 'Slickr::Upload',
+            dependent: :destroy
+    has_one :page_header_image,
+            through: :slickr_page_header_image,
+            source: :slickr_media_upload,
+            class_name: 'Slickr::MediaUpload'
+    has_many :slickr_page_gallery_images,
+             -> { where(uploadable_type: 'SlickrPageGalleryImage') },
+             foreign_key: 'uploadable_id',
+             class_name: 'Slickr::Upload',
+             dependent: :destroy
+    has_many :gallery_images,
+             through: :slickr_page_gallery_images,
+             source: :slickr_media_upload,
+             class_name: 'Slickr::MediaUpload'
     has_many :slickr_navigations,
              foreign_key: 'slickr_page_id',
              class_name: 'Slickr::Navigation',
              dependent: :destroy
-    has_many :drafts, foreign_key: 'slickr_page_id', class_name: 'Draft', dependent: :destroy
+    has_many :drafts,
+             foreign_key: 'slickr_page_id',
+             class_name: 'Draft',
+             dependent: :destroy
     has_one :active_draft, class_name: 'Slickr::Page::Draft'
     has_one :published_draft, class_name: 'Slickr::Page::Draft'
 
@@ -29,7 +52,7 @@ module Slickr
 
     validates_presence_of :title, :layout, unless: :type_draft?
 
-    scope :not_draft, -> {where(type: nil)}
+    scope :not_draft, -> { where(type: nil) }
 
     aasm(:status, column: :aasm_state) do
       state :draft, initial: true
@@ -47,14 +70,19 @@ module Slickr
     scope(:no_root_or_page_navs, lambda do
       includes(:slickr_navigations)
       .where(aasm_state: :published)
-      .where(slickr_navigations: {id: nil})
+      .where(slickr_navigations: { id: nil })
     end)
 
     scope(:has_root_or_page_navs, lambda do
       includes(:slickr_navigations)
       .where(aasm_state: :published)
-      .where.not(slickr_navigations: {id: nil})
+      .where.not(slickr_navigations: { id: nil })
     end)
+
+    # def page_header_image
+    #   return if slickr_page_header_image.nil?
+    #   slickr_page_header_image.slickr_media_upload
+    # end
 
     def display_title
       title
@@ -127,7 +155,7 @@ module Slickr
     end
 
     def admin_image_index_path
-      Rails.application.routes.url_helpers.admin_slickr_images_path
+      Rails.application.routes.url_helpers.admin_slickr_media_uploads_path
     end
 
     def remove_page_header_image

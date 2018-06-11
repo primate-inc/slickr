@@ -6,7 +6,9 @@ module Slickr
     attr_writer :remove_page_header_image
 
     extend FriendlyId
+    extend Slickr::Uploadable
     include AASM
+    
     has_paper_trail only: %i[title aasm_state content published_content drafts],
                     meta: { content_changed: :content_changed? }
 
@@ -16,24 +18,10 @@ module Slickr
                foreign_key: 'slickr_image_id',
                class_name: 'Slickr::Image',
                optional: true
-    has_one :slickr_page_header_image,
-            -> { where(uploadable_type: 'SlickrPageHeaderImage') },
-            foreign_key: 'uploadable_id',
-            class_name: 'Slickr::Upload',
-            dependent: :destroy
-    has_one :page_header_image,
-            through: :slickr_page_header_image,
-            source: :slickr_media_upload,
-            class_name: 'Slickr::MediaUpload'
-    has_many :slickr_page_gallery_images,
-             -> { where(uploadable_type: 'SlickrPageGalleryImage') },
-             foreign_key: 'uploadable_id',
-             class_name: 'Slickr::Upload',
-             dependent: :destroy
-    has_many :gallery_images,
-             through: :slickr_page_gallery_images,
-             source: :slickr_media_upload,
-             class_name: 'Slickr::MediaUpload'
+
+    has_one_slickr_upload(:slickr_page_header_image, :header_image)
+    has_many_slickr_uploads(:slickr_page_gallery_images, :gallery_images)
+
     has_many :slickr_navigations,
              foreign_key: 'slickr_page_id',
              class_name: 'Slickr::Navigation',

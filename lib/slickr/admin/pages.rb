@@ -9,7 +9,8 @@ if defined?(ActiveAdmin)
     permit_params :page_title, :meta_description, :title, :page_intro,
                   :page_header, :page_subheader, :layout, :slug, :og_title,
                   :og_description, :twitter_title, :twitter_description,
-                  :slickr_image_id, :remove_page_header_image, content: {}
+                  slickr_page_header_image_attributes: [:slickr_media_upload_id],
+                  content: {}
 
     filter :title
     filter :layout
@@ -24,9 +25,9 @@ if defined?(ActiveAdmin)
       column 'State' do |page|
         page.aasm_state.humanize
       end
-      column 'Drafts' do |page|
-        page.drafts.count
-      end
+      # column 'Drafts' do |page|
+      #   page.drafts.count
+      # end
       actions
     end
 
@@ -48,7 +49,12 @@ if defined?(ActiveAdmin)
           create_resource_event_log(:update) if resource.valid?
           format.html { redirect_to edit_admin_slickr_page_path(resource) }
           format.json do
-            render json: @slickr_page.as_json(methods: [:admin_page_path])
+            render json: @slickr_page.to_json(methods: [
+              :preview_page, :admin_publish_path, :admin_unpublish_path,
+              :admin_page_path, :admin_image_index_path, :page_header_image,
+              :admin_return_media_path, :admin_preview_page_path,
+              @slickr_page.additional_page_edit_paths
+            ].flatten)
           end
         end
       end

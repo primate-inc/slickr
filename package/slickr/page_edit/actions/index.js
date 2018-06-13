@@ -13,14 +13,6 @@ export const updatePageContent = values => {
         params["slickr_page"][key] = values[key];
       }
     }
-    let removeImage = document.getElementById('remove_page_header_image')
-    if (typeof(removeImage) != 'undefined' && removeImage != null) {
-      if(document.getElementById('remove_page_header_image').checked) {
-        params["slickr_page"]["remove_page_header_image"] = true
-      } else {
-        params["slickr_page"]["remove_page_header_image"] = false
-      }
-    }
     params["slickr_page"]["content"] = JSON.parse(editorStateToJSON(getState().editorState))
 
     request.put(getState().pageState.admin_page_path).type('json').accept('json').send(params).end(function(err,resp){
@@ -35,19 +27,10 @@ export const updatePageContent = values => {
         setTimeout(function() {
           document.getElementById('save_message').remove();
         }, 1500);
-        console.log(resp.body)
         dispatch({
-          type: 'SET_PAGE_TITLE',
-          title: resp.body.title,
-          layout: resp.body.layout
+          type: 'UPDATE_PAGE_STATE',
+          payload: resp.body
         })
-        if(resp.body.slickr_image_id === null) {
-          dispatch({
-            type: 'SET_PAGE_HEADER_IMAGE',
-            slickr_image_id: resp.body.slickr_image_id,
-            slickr_image_path: null
-          })
-        }
       }
     })
   }

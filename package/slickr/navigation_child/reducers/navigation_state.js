@@ -1,11 +1,7 @@
 const navigationState = (state = {}, action) => {
   switch(action.type) {
     case 'CHOOSE_NAV_IMAGE':
-      return Object.assign(
-        {}, state, {
-          slickr_image_path: action.payload.path,
-          slickr_image_id: action.payload.id
-        })
+      return Object.assign({}, state, { navigation_image: action.payload })
     default:
       return state
   }

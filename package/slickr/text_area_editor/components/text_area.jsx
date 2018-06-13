@@ -73,10 +73,11 @@ export default class Editor extends React.Component {
       customOptions: {},
       standardDisplayOptions: {
         displayOptions: [
-          {"key": "thumbnail", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
-          {"key": "small", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
-          {"key": "medium", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-          {"key": "large", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+          {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
+          {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
+          {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+          {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+          {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
           {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
         ],
         defaultDisplay: 'full'

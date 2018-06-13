@@ -2,7 +2,6 @@
   <div data-pages='[]' id='navigation_tree_content'/>
 <% else %>
   <div data-pages="<%= Slickr::Navigation
-    .includes(:slickr_page)
     .where(title: params[:q][:title_eq])
     .decorate.to_json(
       only: [:id, :title],

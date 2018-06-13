@@ -13,24 +13,26 @@ export default class Grid extends React.Component {
   }
 
   onClickThumbnail(index, event) {
-    var data = {
-      type: "image",
+    let megadraftImageData = {
+      type: 'image',
       image: {
         'id': this.props.images[index].id,
-        'image_data': this.props.images[index].build_for_gallery,
-        'additional_info': this.props.images[index].additional_info
+        'slickr_upload_path': this.props.images[index].build_for_gallery.displayPath,
+        'additional_info': this.props.images[index].additional_info,
+        'media_upload_helper_path': '/admin/slickr_media_uploads/return_media_path'
       }
     };
+    let standardImageData = {
+      id: this.props.images[index].id,
+      path: this.props.images[index].build_for_gallery.displayPath
+    }
+
     if(this.props.choosingPageHeaderImage) {
       this.props.actions.toggleChoosingPageHeaderImage();
-      this.props.actions.updatePageHeaderImage(
-        { id: data.image.id, path: data.image.image_data.display_size }
-      )
+      this.props.actions.updatePageHeaderImage(standardImageData)
     } else if(this.props.choosingNavImage) {
       this.props.actions.toggleChoosingImage();
-      this.props.actions.updateNavImage(
-        { id: data.image.id, path: data.image.image_data.url }
-      )
+      this.props.actions.updateNavImage(standardImageData)
     } else if(this.props.choosingGalleryImage) {
       this.props.actions.toggleChoosingGalleryImage();
       let urlParts = data.image.image_data.url.split('/uploads/').filter(String);
@@ -42,7 +44,9 @@ export default class Grid extends React.Component {
       }
       this.props.actions.addGalleryImage(urlParts)
     } else {
-      this.props.actions.changeEditorState(insertDataBlock(this.props.editorState, data))
+      this.props.actions.changeEditorState(
+        insertDataBlock(this.props.editorState, megadraftImageData)
+      )
     }
     this.props.actions.toggleImagePicker()
   }

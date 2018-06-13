@@ -11,9 +11,11 @@ export default class ImageBlock extends React.Component {
 
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
 
-    this.actions = [
-      {"key": "delete", "icon": icons.DeleteIcon, "action": this.props.container.remove}
-    ];
+    this.actions = [{
+      "key": "delete",
+      "icon": icons.DeleteIcon,
+      "action": this.props.container.remove
+    }];
   }
 
   handleCaptionChange(e) {
@@ -26,7 +28,7 @@ export default class ImageBlock extends React.Component {
       <CommonBlock {...this.props} actions={this.actions}>
         <BlockContent>
           <img style={ImageBlockStyle.image}
-               src={this.props.data.image.image_data.display_size}
+               src={`${this.props.data.image.media_upload_helper_path}?id=${this.props.data.image.id}`}
                alt={this.props.data.image.additional_info.alt_text}
           />
         </BlockContent>

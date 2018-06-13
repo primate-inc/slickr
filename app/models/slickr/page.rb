@@ -3,25 +3,17 @@ module Slickr
   class Page < ApplicationRecord
     self.table_name = 'slickr_pages'
 
-    attr_writer :remove_page_header_image
-
     extend FriendlyId
     extend Slickr::Uploadable
     include AASM
-    
+
     has_paper_trail only: %i[title aasm_state content published_content drafts],
                     meta: { content_changed: :content_changed? }
 
     friendly_id :title, use: %i[slugged finders]
 
-    belongs_to :slickr_image,
-               foreign_key: 'slickr_image_id',
-               class_name: 'Slickr::Image',
-               optional: true
-
     has_one_slickr_upload(:slickr_page_header_image, :header_image)
     has_many_slickr_uploads(:slickr_page_gallery_images, :gallery_images)
-
     has_many :slickr_navigations,
              foreign_key: 'slickr_page_id',
              class_name: 'Slickr::Navigation',
@@ -33,7 +25,6 @@ module Slickr
     has_one :active_draft, class_name: 'Slickr::Page::Draft'
     has_one :published_draft, class_name: 'Slickr::Page::Draft'
 
-    before_validation :clear_page_header_image
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
     after_save :delete_nav_if_page_unpublished
@@ -67,11 +58,6 @@ module Slickr
       .where.not(slickr_navigations: { id: nil })
     end)
 
-    # def page_header_image
-    #   return if slickr_page_header_image.nil?
-    #   slickr_page_header_image.slickr_media_upload
-    # end
-
     def display_title
       title
     end
@@ -80,9 +66,9 @@ module Slickr
       published?
     end
 
-    def slickr_image_path
-      return if slickr_image.nil?
-      slickr_image.attachment.url
+    def page_header_image
+      return { id: nil, path: nil } if header_image.nil?
+      { id: header_image.id, path: header_image.image_url(:m_limit) }
     end
 
     def create_content_areas
@@ -146,12 +132,9 @@ module Slickr
       Rails.application.routes.url_helpers.admin_slickr_media_uploads_path
     end
 
-    def remove_page_header_image
-      @remove_page_header_image || false
-    end
-
-    def clear_page_header_image
-      self.slickr_image_id = nil if remove_page_header_image == true
+    def admin_return_media_path
+      Rails.application.routes.url_helpers
+           .return_media_path_admin_slickr_media_uploads_path
     end
 
     private

@@ -3,24 +3,23 @@ const pageState = (state = {}, action) => {
     case "UNSCHEDULE":
       return Object.assign({}, state, { publishing_scheduled_for: null })
     case "SAVE_SCHEDULE":
-      return Object.assign({}, state, { publishing_scheduled_for: action.payload, aasm_state: 'draft' })
+      return Object.assign({}, state, {
+        publishing_scheduled_for: action.payload, aasm_state: 'draft'
+      })
     case 'SET_PAGE_TITLE':
-      return Object.assign({},state, { title: action.title, layout: action.layout })
-    case 'SET_PAGE_HEADER_IMAGE':
       return Object.assign({},state, {
-        slickr_image_id: action.slickr_image_id,
-        slickr_image_path: action.slickr_image_path
+        title: action.title, layout: action.layout
       })
     case 'PUBLISH_PAGE':
-      return Object.assign({}, state, {aasm_state: action.aasm_state, publishing_scheduled_for: null})
-    case 'UNPUBLISH_PAGE':
-      return Object.assign({}, state, {aasm_state: action.aasm_state})
-    case 'CHOOSE_PAGE_HEADER_IMAGE':
-    return Object.assign(
-      {}, state, {
-        slickr_image_path: action.payload.path,
-        slickr_image_id: action.payload.id
+      return Object.assign({}, state, {
+        aasm_state: action.aasm_state, publishing_scheduled_for: null
       })
+    case 'UNPUBLISH_PAGE':
+      return Object.assign({}, state, { aasm_state: action.aasm_state })
+    case 'CHOOSE_PAGE_HEADER_IMAGE':
+      return Object.assign({}, state, { page_header_image: action.payload })
+    case 'UPDATE_PAGE_STATE':
+      return action.payload
     default:
       return state
   }

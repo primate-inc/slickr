@@ -106,10 +106,15 @@ module SlickrHelper
   end
 
   def form_json(inst)
-    inst.to_json(only: %i[admin_image_index_path additional_page_edit_paths],
-                 methods: [
-                   :admin_image_index_path,
-                   inst.additional_page_edit_paths
-                 ].flatten)
+    inst.to_json(
+      only: %i[
+        admin_image_index_path additional_page_edit_paths
+        admin_return_media_path
+      ],
+      methods: [
+        :admin_image_index_path, :admin_return_media_path,
+        inst.additional_page_edit_paths
+      ].flatten
+    )
   end
 end

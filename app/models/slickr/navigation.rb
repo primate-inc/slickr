@@ -5,7 +5,7 @@ module Slickr
   class Navigation < ApplicationRecord
     self.table_name = 'slickr_navigations'
 
-    attr_writer :remove_slickr_image
+    extend Slickr::Uploadable
 
     has_ancestry
     acts_as_list scope: [:ancestry]
@@ -14,8 +14,7 @@ module Slickr
 
     CHILD_TYPES = ['Page', 'Custom Link', 'Anchor', 'Header'].freeze
 
-    before_validation :clear_slickr_image
-
+    has_one_slickr_upload(:slickr_navigation_image, :image)
     belongs_to :slickr_page,
                foreign_key: 'slickr_page_id',
                class_name: 'Slickr::Page',
@@ -24,6 +23,7 @@ module Slickr
                foreign_key: 'slickr_image_id',
                class_name: 'Slickr::Image',
                optional: true
+
 
     validates :title, presence: true
     validates_uniqueness_of :title, if: proc { |nav| nav.sub_root? }
@@ -40,9 +40,9 @@ module Slickr
     end
 
     def build_tree_structure
-      subtree.left_outer_joins(:slickr_page, :slickr_image).select(
+      subtree.left_outer_joins(:slickr_page, :image).select(
         :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
-        :link_text, :ancestry, 'slickr_images.id AS image_id',
+        :link_text, :ancestry, 'slickr_media_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
         :page_header, :page_intro, :page_subheader, :page_intro, :slug,
         'slickr_pages.slickr_image_id AS page_image_id'
@@ -83,9 +83,9 @@ module Slickr
       end
     end
 
-    def slickr_image_path
-      return if slickr_image.nil?
-      slickr_image.attachment.url
+    def navigation_image
+      return { id: nil, path: nil } if image.nil?
+      { id: image.id, path: image.image_url(:m_limit) }
     end
 
     def add_child_path
@@ -124,21 +124,13 @@ module Slickr
     end
 
     def admin_image_index_path
-      Rails.application.routes.url_helpers.admin_slickr_images_path
+      Rails.application.routes.url_helpers.admin_slickr_media_uploads_path
     end
 
     def change_position_admin_navigation
       Rails.application
            .routes.url_helpers
            .change_position_admin_slickr_navigation_path(id)
-    end
-
-    def remove_slickr_image
-      @remove_slickr_image || false
-    end
-
-    def clear_slickr_image
-      self.slickr_image_id = nil if remove_slickr_image == true
     end
 
     private

@@ -5,11 +5,16 @@ export default class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imagePath: this.props.navigation.navigation_image,
+      navigationImagePath: '',
       pageSelectVisible: this.props.values.child_type === 'Page' ? true : false,
-      linkVisible: this.props.values.child_type === 'Page' ? false : true,
-      imagePresentOnLoad: this.props.navigation.slickr_image_path !== null
+      linkVisible: this.props.values.child_type === 'Page' ? false : true
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      navigationImagePath: this.props.navigation.navigation_image.path
+    })
   }
 
   componentWillUnmount() {
@@ -28,6 +33,19 @@ export default class Content extends React.Component {
     this.props.actions.toggleImagePicker();
     if(Object.keys(this.props.loadedImages).length === 0) {
       this.props.actions.loadImages(page);
+    }
+  }
+
+  updateTrueFalse = () => (e) => {
+    let box = e.target.closest('.true_false');
+    if(e.target.checked === true) {
+      box.classList.add('checked');
+      this.props.setFieldValue(
+        'slickr_navigation_image_attributes',
+        { allow_destroy: true }
+      )
+    } else {
+      box.classList.remove('checked');
     }
   }
 
@@ -132,27 +150,27 @@ export default class Content extends React.Component {
               <p className='hint-text'>Navigation title</p>
             </div>
           </li>
-          <li className={`file input admin-big-title ${this.props.navigation.slickr_image_path == null ? 'no_image' : 'has_image'}`}>
+          <li className={`file input admin-big-title ${this.props.navigation.navigation_image.path == null ? 'no_image' : 'has_image'}`}>
             <div className="edit-wrapper">
               <label htmlFor="slickr_image_id">Image</label>
               <input type="file" onClick={this.openImagePicker()} />
               {(() => {
-                let imageId = this.props.navigation.slickr_image_id
-                let imagePath = this.props.navigation.slickr_image_path
+                let mediaUploadId = this.props.navigation.navigation_image.id
+                let imagePath = this.props.navigation.navigation_image.path
 
                 if(!(imagePath == null)) {
                   if(this.state.imagePath !== imagePath) {
-                    setFieldValue('slickr_image_id', imageId)
-                    this.setState({imagePath: imagePath})
+                    setFieldValue(
+                      'slickr_navigation_image_attributes',
+                      { slickr_media_upload_id: mediaUploadId }
+                    )
+                    this.setState({
+                      imagePath: imagePath
+                    })
                   }
-                  let splitFile = imagePath.split('/');
-                  let fileName = splitFile[splitFile.length - 1];
-                  let fileNameWithImageSize = imagePath.replace(
-                    fileName, `small_${fileName}`
-                  )
                   return (
                     <p className="inline-hints">
-                      <img src={fileNameWithImageSize} />
+                      <img src={imagePath} />
                     </p>
                   )
                 }
@@ -161,18 +179,18 @@ export default class Content extends React.Component {
             </div>
           </li>
           {(() => {
-            let imagePath = this.props.navigation.slickr_image_path
-            if(!(imagePath == null) && this.state.imagePresentOnLoad) {
+            let imagePath = this.props.navigation.navigation_image.path
+            if(imagePath != null) {
               return (
                 <li className="true_false image boolean input optional">
                   <div className="edit-wrapper">
-                    <input type="hidden" name="remove_slickr_image" value="0" />
-                    <label htmlFor="remove_slickr_image">
+                    <label htmlFor="remove_navigation_image">
                       <input type="checkbox"
-                             name="remove_slickr_image"
-                             id="remove_slickr_image"
+                             name="remove_navigation_image"
+                             id="remove_navigation_image"
                              value="1"
-                             onChange={handleChange} />Remove image
+                             onChange={handleChange}
+                             onClick={this.updateTrueFalse()} />Remove image
                     </label>
                   </div>
                 </li>

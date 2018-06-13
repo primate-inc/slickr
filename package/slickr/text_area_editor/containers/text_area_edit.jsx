@@ -37,8 +37,6 @@ const mapStateToProps = state => ({
   page: state.pageState,
   modalIsOpen: state.modalIsOpen,
   loadedImages: state.loadedImages,
-  loadedBooks: state.loadedBooks,
-  loadedAuthors: state.loadedAuthors,
   editorState: state.editorState,
   textAreaIndex: state.textAreaIndex,
   label: state.label,

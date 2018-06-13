@@ -54,7 +54,7 @@ module Slickr
       {
         id: id,
         src: file_url(:large),
-        display_size: file_url(:large),
+        displayPath: file_url(:large),
         thumbnail: file_url(:thumb),
         thumbnailWidth: file[:thumb].data['metadata']['width'],
         thumbnailHeight: file[:thumb].data['metadata']['height'],
@@ -69,7 +69,7 @@ module Slickr
       {
         id: id,
         src: image_url(:xl_limit),
-        display_size: image_url(:m_limit),
+        displayPath: image_url(:m_limit),
         thumbnail: image_url(:s_limit),
         thumbnailWidth: image[:s_limit].data['metadata']['width'],
         thumbnailHeight: image[:s_limit].data['metadata']['height'],

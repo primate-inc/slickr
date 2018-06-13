@@ -37,6 +37,16 @@ if defined?(ActiveAdmin)
       render json: remaining_media
     end
 
+    collection_action :return_media_path, method: :get do
+      media = Slickr::MediaUpload.find(params[:id])
+      path = media.image_url(:m_limit)
+      url = path.starts_with?('/') ? "#{request.base_url}#{path}" : path
+      
+      mime_type = media.image_data['original']['metadata']['mime_type']
+      data = open(url)
+      send_file data, type: mime_type, disposition: 'inline'
+    end
+
     controller do
       def index
         if params[:type] == 'page_edit'

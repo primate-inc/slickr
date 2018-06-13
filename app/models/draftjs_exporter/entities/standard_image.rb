@@ -1,12 +1,16 @@
 class DraftjsExporter::Entities::StandardImage
    def call(parent_element, data)
      if data[:data][:display].nil? || data[:data][:display].to_sym == :full
-       args = { src: data[:data][:image][:attachment][:url] }
+       url = Slickr::MediaUpload.find(data[:data][:image][:id])
+                                .image_url(:xl_limit)
+       args = { src: url }
      else
        size = data[:data][:display].to_sym
-       args = { src: data[:data][:image][:attachment][size][:url] }
+       url = Slickr::MediaUpload.find(data[:data][:image][:id])
+                                .image_url(size)
+       args = { src: url }
      end
-     args[:alt] = data[:data][:image][:data][:alt_text]
+     args[:alt] = data[:data][:image][:additional_info][:alt_text]
      element = parent_element.document.create_element('img', args)
      parent_element.replace(element)
      element

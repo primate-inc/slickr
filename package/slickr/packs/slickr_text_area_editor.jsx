@@ -9,32 +9,21 @@ import logger from 'redux-logger';
 import {DraftJS, editorStateFromRaw, createTypeStrategy} from "megadraft";
 import Link from "megadraft/lib/components/Link"
 import mainAppDecorators from 'slickr_extensions/page_edit/additional_megadraft_decorators.js'
+import { genKey } from 'draft-js'
 
 let storeArray = []
 
-let randHex = function(len) {
-  let maxlen = 8,
-      min = Math.pow(16,Math.min(len,maxlen)-1),
-      max = Math.pow(16,Math.min(len,maxlen)) - 1,
-      n   = Math.floor( Math.random() * (max-min+1) ) + min,
-      r   = n.toString(16);
-  while ( r.length < len ) {
-     r = r + randHex( len - maxlen );
-  }
-  return r;
-};
-
 const emptyDraftObject = {
-  "entityMap": {},
-  "blocks": [
+  entityMap: {},
+  blocks: [
     {
-      "key": randHex(6),
-      "text": "",
-      "type": "unstyled",
-      "depth": 0,
-      "inlineStyleRanges": [],
-      "entityRanges": [],
-      "data": {}
+      key: genKey(),
+      text: '',
+      type: 'unstyled',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {}
     }
   ]
 }

@@ -1,4 +1,0 @@
-<%% @contents.each do |image| %>
-  <div style="background-image: url(<%%= Slickr::Image.find(image[:image_id]).try(:attachment).try(:url) %>)"></div>
-  <div><%%= image[:caption] %></div>
-<%% end %>

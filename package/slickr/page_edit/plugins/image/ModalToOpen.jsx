@@ -11,7 +11,6 @@ export default class ModalToOpen extends React.Component {
           loadedImages={this.props.loadedImages}
           editorState={this.props.editorState}
           choosingPageHeaderImage={this.props.choosingPageHeaderImage}
-          choosingGalleryImage={this.props.choosingGalleryImage}
         />
     );
   }

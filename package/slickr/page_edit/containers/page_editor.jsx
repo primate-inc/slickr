@@ -12,7 +12,7 @@ import mainAppPropTypes from 'slickr_extensions/page_edit/containers/additional_
 let _csrf_param = () => { return document.getElementsByName("csrf-param")[0].content }
 let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].content }
 
-const MyEditor = ({schedulingActive, pageLayouts, store, page, active_tab, actions, modalIsOpen, editorState, loadedImages, choosingPageHeaderImage, choosingGalleryImage}) => {
+const MyEditor = ({schedulingActive, pageLayouts, store, page, active_tab, actions, modalIsOpen, editorState, loadedImages, choosingPageHeaderImage}) => {
   return(
     <PageWrapper pageLayouts={pageLayouts}
                  page={page}
@@ -22,8 +22,7 @@ const MyEditor = ({schedulingActive, pageLayouts, store, page, active_tab, actio
                  modalIsOpen={modalIsOpen}
                  loadedImages={loadedImages}
                  active_tab={active_tab}
-                 choosingPageHeaderImage={choosingPageHeaderImage}
-                 choosingGalleryImage={choosingGalleryImage} />
+                 choosingPageHeaderImage={choosingPageHeaderImage} />
   )
 }
 
@@ -34,8 +33,7 @@ const slickrPropTypes = {
   loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
   pageLayouts: PropTypes.array.isRequired,
-  choosingPageHeaderImage: PropTypes.bool.isRequired,
-  choosingGalleryImage: PropTypes.bool.isRequired
+  choosingPageHeaderImage: PropTypes.bool.isRequired
 }
 const mergedPropTypes = Object.assign(slickrPropTypes, mainAppPropTypes);
 
@@ -49,8 +47,7 @@ const mapStateToProps = state => ({
   loadedImages: state.loadedImages,
   schedulingActive: state.schedulingActive,
   editorState: state.editorState,
-  choosingPageHeaderImage: state.choosingPageHeaderImage,
-  choosingGalleryImage: state.choosingGalleryImage
+  choosingPageHeaderImage: state.choosingPageHeaderImage
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -11,9 +11,6 @@ export default class ImagePickerModal extends React.Component {
   closeImagePicker = (e) => {
     // this.props.actions.keepCurrentPage()
     this.props.actions.toggleImagePicker()
-    if(this.props.choosingGalleryImage) {
-      this.props.actions.toggleChoosingGalleryImage();
-    }
   }
 
   loadNewImages = (page) => (e) => {
@@ -83,7 +80,6 @@ export default class ImagePickerModal extends React.Component {
             editorState={this.props.editorState}
             choosingPageHeaderImage={this.props.choosingPageHeaderImage}
             choosingNavImage={this.props.choosingNavImage}
-            choosingGalleryImage={this.props.choosingGalleryImage}
           />
         </div>,
         <div key='2' id="index_footer">

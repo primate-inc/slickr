@@ -7,8 +7,6 @@ import editorState from './editor_state'
 import schedulingActive from './scheduling_active'
 import mainAppReducers from 'slickr_extensions/page_edit/reducers/additional_reducers.js'
 import choosingPageHeaderImage from './choosing_page_header_image'
-import choosingGalleryImage from './choosing_gallery_image'
-import galleryImageToAdd from './gallery_image_to_add'
 
 import textAreaIndex from './text_area_index'
 import label from './label'
@@ -25,9 +23,7 @@ const slickrReducers = {
   textAreaIndex,
   label,
   textArea,
-  choosingPageHeaderImage,
-  choosingGalleryImage,
-  galleryImageToAdd
+  choosingPageHeaderImage
 }
 
 const mergedReducers = Object.assign(slickrReducers, mainAppReducers);

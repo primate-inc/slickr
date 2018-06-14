@@ -33,16 +33,6 @@ export default class Grid extends React.Component {
     } else if(this.props.choosingNavImage) {
       this.props.actions.toggleChoosingImage();
       this.props.actions.updateNavImage(standardImageData)
-    } else if(this.props.choosingGalleryImage) {
-      this.props.actions.toggleChoosingGalleryImage();
-      let urlParts = data.image.image_data.url.split('/uploads/').filter(String);
-      if(urlParts.length === 2 && urlParts[0].indexOf('http') >= 0) {
-        const domain = urlParts[0].substring(0, urlParts[0].lastIndexOf('/'));
-        urlParts = { id: data.image.id, domain: domain, path: urlParts[1]  }
-      } else {
-        urlParts = { id: data.image.id, path: urlParts[1]  }
-      }
-      this.props.actions.addGalleryImage(urlParts)
     } else {
       this.props.actions.changeEditorState(
         insertDataBlock(this.props.editorState, megadraftImageData)

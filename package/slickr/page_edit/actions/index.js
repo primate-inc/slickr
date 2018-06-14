@@ -174,14 +174,6 @@ export const toggleChoosingPageHeaderImage = () => {
   }
 }
 
-export const toggleChoosingGalleryImage = () => {
-  return function(dispatch, getState) {
-    dispatch({
-      type: "TOGGLE_CHOOSING_GALLERY_IMAGE"
-    })
-  }
-}
-
 export const loadImages = (page) => {
   return function(dispatch, getState) {
     let params = {};
@@ -233,23 +225,6 @@ export const updatePageHeaderImage = imageData => {
     dispatch({
       type: "CHOOSE_PAGE_HEADER_IMAGE",
       payload: imageData
-    })
-  }
-}
-
-export const addGalleryImage = imageData => {
-  return function(dispatch, getState) {
-    dispatch({
-      type: "ADD_GALLERY_IMAGE",
-      payload: imageData
-    })
-  }
-}
-
-export const removeGalleryImage = () => {
-  return function(dispatch, getState) {
-    dispatch({
-      type: "REMOVE_GALLERY_IMAGE"
     })
   }
 }

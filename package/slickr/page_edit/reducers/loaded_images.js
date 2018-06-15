@@ -6,11 +6,22 @@ const loadedImages = (state = [], action) => {
       return Object.assign({}, state, { loading: false })
     case 'SHOW_LOADER':
       return Object.assign({}, state, { loading: true })
-    // case 'KEEP_CURRENT_PAGE':
-    //   let page = state.pagination_info.current_page - 1
-    //   let paginactionInfo = Object.assign({}, state.pagination_info, { current_page: page })
-    //   return Object.assign({}, state, { pagination_info: paginactionInfo })
-
+    case 'ADD_UPLOAD':
+      var newArray = state.images.slice();
+      newArray.unshift(action.payload);
+      return Object.assign({}, state, { images: newArray })
+    case 'UPDATE_UPLOAD_PROGRESS':
+      return Object.assign({}, state, { images: action.payload })
+    case 'UPDATE_UPLOAD_STATE':
+      return Object.assign({}, state, { images: action.payload })
+    case 'ADD_TO_LOADED_IMAGES':
+      var img = state.images[state.images.findIndex(
+        x => x.id == action.payload.id
+      )];
+      var newArray = state.images.slice();
+      newArray.splice(newArray.findIndex(x => x.id == action.payload.id), 1);
+      newArray.unshift(action.payload.body);
+      return Object.assign({}, state, { images: newArray })
     default:
       return state
   }

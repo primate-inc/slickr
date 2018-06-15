@@ -51,6 +51,7 @@ module Slickr
     private
 
     def build_pdf
+      return build_empty_image if file.keys.count == 1
       {
         id: id,
         src: file_url(:large),
@@ -66,6 +67,7 @@ module Slickr
     end
 
     def build_image
+      return build_empty_image if image.keys.count == 1
       {
         id: id,
         src: image_url(:xl_limit),
@@ -77,6 +79,16 @@ module Slickr
         isSelected: false,
         editPath: admin_edit_path,
         mimeType: image[:original].data['metadata']['mime_type']
+      }
+    end
+
+    # used when the image processing has failed but still need to return some
+    # some information for rendering in the media gallery
+    def build_empty_image
+      {
+        id: id, src: '', displayPath: '', thumbnail: '',
+        thumbnailWidth: 127, thumbnailHeight: 180,
+        caption: '', isSelected: false, editPath: '', mimeType: ''
       }
     end
   end

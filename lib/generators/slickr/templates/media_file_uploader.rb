@@ -33,13 +33,18 @@ module Slickr
       end
       page_image.open # refresh updated file
 
-      pipeline = ImageProcessing::Vips.source(page_image).convert('png')
-      l_fit =     pipeline.resize_to_fit!(762, 1080)
-      thumb_fit = pipeline.resize_to_fit!(127, 180)
+      begin
+        pipeline = ImageProcessing::Vips.source(page_image).convert('png')
 
-      pdf.close!
+        l_fit =     pipeline.resize_to_fit!(762, 1080)
+        thumb_fit = pipeline.resize_to_fit!(127, 180)
 
-      { original: io, large: l_fit, thumb: thumb_fit }
+        pdf.close!
+
+        { original: io, large: l_fit, thumb: thumb_fit }
+      rescue Vips::Error
+        { original: io }
+      end
     end
 
     def generate_location(io, context)

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
+import NewImage from '../../../media_gallery/components/new_image.jsx';
 import Grid from './grid.jsx';
 
 export default class ImagePickerModal extends React.Component {
@@ -74,13 +75,18 @@ export default class ImagePickerModal extends React.Component {
       const images = Object.keys(this.props.loadedImages).length === 0 ? [] : this.props.loadedImages.images
       return ([
         <div key='1' style={{overflow: "auto", height: "100%"}}>
-          <Grid
-            actions={this.props.actions}
-            images={images}
-            editorState={this.props.editorState}
-            choosingPageHeaderImage={this.props.choosingPageHeaderImage}
-            choosingNavImage={this.props.choosingNavImage}
-          />
+          <div id="media-gallery">
+            <NewImage actions={this.props.actions} />
+            <div id='modal_image_gallery_wrapper'>
+              <Grid
+                actions={this.props.actions}
+                images={images}
+                editorState={this.props.editorState}
+                choosingPageHeaderImage={this.props.choosingPageHeaderImage}
+                choosingNavImage={this.props.choosingNavImage}
+              />
+            </div>
+          </div>
         </div>,
         <div key='2' id="index_footer">
           <nav className="pagination">

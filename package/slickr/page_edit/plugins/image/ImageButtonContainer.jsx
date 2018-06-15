@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as PageActions from '../../actions'
+import * as MediaGalleryActions from '../../../media_gallery/actions';
 import cx from 'classnames';
 import ImageButton from "./ImageButton.jsx";
 
@@ -34,7 +35,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(PageActions, dispatch)
+  actions: bindActionCreators(
+    Object.assign({}, PageActions, MediaGalleryActions), dispatch
+  )
 })
 
 export default connect(

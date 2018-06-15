@@ -41,7 +41,7 @@ if defined?(ActiveAdmin)
       media = Slickr::MediaUpload.find(params[:id])
       path = media.image_url(:m_limit)
       url = path.starts_with?('/') ? "#{request.base_url}#{path}" : path
-      
+
       mime_type = media.image_data['original']['metadata']['mime_type']
       data = open(url)
       send_file data, type: mime_type, disposition: 'inline'
@@ -86,12 +86,28 @@ if defined?(ActiveAdmin)
         create! do |format|
           format.html { redirect_to admin_slickr_images_path }
           format.json do
-            render json: @slickr_media_upload.to_json(
-              methods: %i[
-                build_for_gallery admin_edit_path admin_update_path
-                admin_batch_delete_path
-              ]
-            )
+            if @slickr_media_upload.image.keys.count == 1
+              # when image processing has failed
+              json_return = @slickr_media_upload.to_json(
+                methods: %i[
+                  build_for_gallery admin_edit_path admin_update_path
+                  admin_batch_delete_path
+                ]
+              )
+              # delete the image, return an error and create the response body
+              #  but the build_for_gallery will return and hash with empty
+              #  values
+              @slickr_media_upload.destroy
+              self.status = 400
+              self.response_body = json_return
+            else
+              render json: @slickr_media_upload.to_json(
+                methods: %i[
+                  build_for_gallery admin_edit_path admin_update_path
+                  admin_batch_delete_path
+                ]
+              )
+            end
           end
         end
       end

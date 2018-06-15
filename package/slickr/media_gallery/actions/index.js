@@ -71,7 +71,6 @@ export const deleteSelectedImages = selectedImageIds => {
 export const createImage = payload => {
   const random = Math.random().toString(36).substring(7);
   let preview;
-  // const size = {width: 270, height: 180}
   return function(dispatch, getState) {
     if(payload.file.type === 'application/pdf') {
       preview = pdfPlaceholder
@@ -96,7 +95,7 @@ export const createImage = payload => {
           })
           .end(function(err,resp){
             if(err) {
-              dispatch(updateUploadState({id: random, state: 'error'}))
+              dispatch(updateUploadState({id: random, state: 'error', storeState: getState()}))
             } else {
               dispatch({
                 type: 'ADD_TO_LOADED_IMAGES',
@@ -106,6 +105,52 @@ export const createImage = payload => {
           })
       })
   }
+}
+
+export function uploadProgress(data) {
+  let state, img, newArray;
+  if(data.state.loadedImages) {
+    state = checkIfLoadedImagesArray(data.state.loadedImages, data.id)
+    img = state[state.findIndex(x => x.id == data.id)];
+    newArray = removeImageFromArray(state, data.id)
+
+    if(img !== undefined) {
+      if(data.uploadProgressValue !== undefined) {
+        var newImg = Object.assign(
+          {},img, { uploadProgressValue: data.uploadProgressValue }
+        )
+      } else {
+        var newImg = Object.assign({},img)
+      }
+      newArray.unshift(newImg)
+      return newArray;
+    } else {
+      return state;
+    }
+  } else {
+    state = checkIfLoadedImagesArray(data.storeState.loadedImages)
+    img = state[state.findIndex(x => x.id == data.id)];
+    newArray = removeImageFromArray(state, data.id)
+    var newImg = Object.assign({},img, { state: 'error' })
+    newArray.unshift(newImg)
+    return newArray;
+  }
+}
+
+function checkIfLoadedImagesArray(loadedImages) {
+  if(loadedImages.constructor == Array) {
+    // if uploaded from the MediaGallery
+    return loadedImages
+  } else {
+    // if uploaded through the image_picker_modal component
+    return loadedImages.images
+  }
+}
+
+function removeImageFromArray(state, id) {
+  let newArray = state.slice();
+  newArray.splice(newArray.findIndex(x => x.id == id), 1);
+  return newArray
 }
 
 export function addUpload(upload) {
@@ -123,7 +168,7 @@ export function updateUploadProgress(data) {
   }
 }
 
-export function updateUploadState(upload) {
+export function updateUploadState(data) {
   var payload = uploadProgress(data)
   return {
     type: 'UPDATE_UPLOAD_STATE',
@@ -160,26 +205,5 @@ export function buildForGallery(payload, size) {
     thumbnailHeight: size.height,
     isSelected: false,
     editPath: ''
-  }
-}
-
-export function uploadProgress(data) {
-  var state = data.state.loadedImages
-  var img = state[state.findIndex(x => x.id == data.id)];
-  var newArray = state.slice();
-  newArray.splice(newArray.findIndex(x => x.id == data.id), 1);
-
-  if(img !== undefined) {
-    if(data.uploadProgressValue !== undefined) {
-      var newImg = Object.assign(
-        {},img, { uploadProgressValue: data.uploadProgressValue }
-      )
-    } else {
-      var newImg = Object.assign({},img)
-    }
-    newArray.unshift(newImg)
-    return newArray;
-  } else {
-    return state;
   }
 }

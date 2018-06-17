@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import NavigationWrapper from '../components/navigation_wrapper.jsx'
 import * as NavigationActions from '../actions'
+import * as MediaGalleryActions from '../../media_gallery/actions';
 
 const NavigationEditor = ({
     navigation, parent, rootNav, childTypes, selectablePages, modalIsOpen,
@@ -47,7 +48,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(NavigationActions, dispatch)
+  actions: bindActionCreators(
+    Object.assign({}, NavigationActions, MediaGalleryActions), dispatch
+  )
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationEditor);

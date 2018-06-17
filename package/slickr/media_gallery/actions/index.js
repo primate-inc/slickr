@@ -1,5 +1,5 @@
 import request from 'superagent';
-import pdfPlaceholder from './pdf_image.jpg';
+import pdfPlaceholder from '../files/pdf_image.jpg';
 require('es6-promise/auto');
 import browserImageSize from 'browser-image-size'
 let _csrf_param = () => {

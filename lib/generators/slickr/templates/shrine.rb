@@ -18,6 +18,7 @@ Shrine.plugin :validation_helpers
 Shrine.plugin :add_metadata # Allows extracting additional metadata values
 Shrine.plugin :determine_mime_type # stores the MIME type of the uploaded file
 Shrine.plugin :infer_extension # Deduce appropriate file extension based on the MIME type
+Shrine.plugin :refresh_metadata # Allows re-extracting metadata of an uploaded file
 Shrine.plugin :restore_cached_data # Re-extracts cached file's metadata on model assignment
 
 # Storage

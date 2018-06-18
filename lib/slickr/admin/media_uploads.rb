@@ -1,11 +1,11 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::MediaUpload do
-    IMAGES_PER_PAGE ||= 25
+    MEDIA_PER_PAGE ||= 25
     menu priority: 2, label: 'Media'
     actions :all, :except => [:new, :show]
 
     config.filters = false
-    config.per_page = IMAGES_PER_PAGE
+    config.per_page = MEDIA_PER_PAGE
 
     permit_params :image, :file, additional_info: {}
 
@@ -41,10 +41,10 @@ if defined?(ActiveAdmin)
       media = Slickr::MediaUpload.find(params[:id])
       path = media.image_url(:m_limit)
       url = path.starts_with?('/') ? "#{request.base_url}#{path}" : path
-
       mime_type = media.image_data['original']['metadata']['mime_type']
-      data = open(url)
-      send_file data, type: mime_type, disposition: 'inline'
+
+      data = open(url, 'rb') { |f| f.read }
+      send_data data, type: mime_type, disposition: 'inline'
     end
 
     controller do
@@ -53,9 +53,9 @@ if defined?(ActiveAdmin)
           total = Slickr::MediaUpload.all.count
           @slickr_media_uploads = Slickr::MediaUpload
                                   .order(created_at: :desc)
-                                  .limit(IMAGES_PER_PAGE)
+                                  .limit(MEDIA_PER_PAGE)
                                   .offset(
-                                    (params[:page].to_i - 1) * IMAGES_PER_PAGE
+                                    (params[:page].to_i - 1) * MEDIA_PER_PAGE
                                   )
 
           respond_to do |format|
@@ -66,8 +66,8 @@ if defined?(ActiveAdmin)
                 ),
                 pagination_info: {
                   current_page: params[:page].to_i,
-                  total_pages: ((total / IMAGES_PER_PAGE).floor + 1),
-                  images_per_page: IMAGES_PER_PAGE
+                  total_pages: ((total / MEDIA_PER_PAGE).floor + 1),
+                  images_per_page: MEDIA_PER_PAGE
                 },
                 loading: true
               }.to_json
@@ -86,7 +86,8 @@ if defined?(ActiveAdmin)
         create! do |format|
           format.html { redirect_to admin_slickr_images_path }
           format.json do
-            if @slickr_media_upload.image.keys.count == 1
+            if @slickr_media_upload.image.try(:keys).try(:count) == 1 ||
+               @slickr_media_upload.file.try(:keys).try(:count) == 1
               # when image processing has failed
               json_return = @slickr_media_upload.to_json(
                 methods: %i[

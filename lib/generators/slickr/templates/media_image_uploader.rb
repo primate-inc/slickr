@@ -19,7 +19,7 @@ module Slickr
       ]
     end
 
-    process(:store) do |io, context|
+    process(:store) do |io, _context|
       original = io.download
       image_optim    = ImageOptim.new(pngout: false, svgo: false)
       optimized_path = image_optim.optimize_image(original.path)

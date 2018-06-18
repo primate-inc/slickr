@@ -17,7 +17,7 @@ module Slickr
       validate_mime_type_inclusion ['application/pdf']
     end
 
-    process(:store) do |io, context|
+    process(:store) do |io, _context|
       pdf = io.download
 
       image = MiniMagick::Image.new(pdf.path)

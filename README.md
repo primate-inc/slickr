@@ -90,6 +90,18 @@ ActiveAdmin.register AdminUser, as: "Users" do
 end
 ```
 
+## HTTP Basic Auth
+
+If your site is using HTTP Basic Auth then please add the following to the
+relevant ```config/environments``` file with your own user and password
+details.
+
+```ruby
+config.slickr_http_basic_auth_required = true
+config.slickr_http_basic_auth_user = "Joe"
+config.slickr_http_basic_auth_password = "Bloggs"
+```
+
 ## Image Processing
 
 [Image Processing](docs/image_processing.md)

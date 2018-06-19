@@ -48,6 +48,17 @@ module Slickr
       update(image: self.image[:original]) # reprocess all images
     end
 
+
+    def open_uri_options
+      return {} unless Rails.configuration.slickr_http_basic_auth_required
+      {
+        http_basic_authentication: [
+          Rails.configuration.slickr_http_basic_auth_user,
+          Rails.configuration.slickr_http_basic_auth_password
+        ]
+      }
+    end
+
     private
 
     def build_pdf

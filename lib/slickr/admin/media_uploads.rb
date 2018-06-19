@@ -43,7 +43,7 @@ if defined?(ActiveAdmin)
       url = path.starts_with?('/') ? "#{request.base_url}#{path}" : path
       mime_type = media.image_data['original']['metadata']['mime_type']
 
-      data = open(url, 'rb') { |f| f.read }
+      data = open(url, media.open_uri_options) { |f| f.read }
       send_data data, type: mime_type, disposition: 'inline'
     end
 

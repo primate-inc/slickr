@@ -50,7 +50,7 @@ module Slickr
 
 
     def open_uri_options
-      return {} unless Rails.configuration.slickr_http_basic_auth_required
+      return {} unless Rails.configuration.try(:slickr_http_basic_auth_required)
       {
         http_basic_authentication: [
           Rails.configuration.slickr_http_basic_auth_user,

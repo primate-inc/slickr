@@ -14,7 +14,7 @@ module Slickr
     #     {
     #       "Main navigation"=>
     #         [{
-    #           :title=>"Menu", :image=>{ nav_image_id: hash['image_id'] },
+    #           :title=>"Menu", :image=>{ nav_upload_id: hash['image_id'] },
     #           :text=> {
     #             :text=>"some text", :page_header=>nil, :page_into=>nil
     #           }, :link=>"/menu", :link_text=>"Menu", "children"=>[]
@@ -22,7 +22,7 @@ module Slickr
     #     }
     # }
     def nav_helper
-      nav_trees = Slickr::Navigation.all_nav_trees
+      nav_trees = nav_trees = Slickr::Navigation.all_nav_trees
       return if nav_trees.nil?
       pathnames = all_pages_pathnames(nav_trees)
       {
@@ -106,7 +106,7 @@ module Slickr
     # {
     #   "Main navigation"=>
     #     [{
-    #       :title=>"Menu", :image=>{ nav_image_id: hash['image_id'] },
+    #       :title=>"Menu", :image=>{ nav_upload_id: hash['image_id'] },
     #       :text=> { :text=>"some text", :page_header=>nil, :page_into=>nil },
     #       :link=>"/menu", :link_text=>"Menu", "children"=>[]
     #     }],
@@ -133,7 +133,7 @@ module Slickr
     # Builds the hash for an individual nav menu.
     # example result
     # {
-    #   :title=>"Menu", :image=>{ nav_image_id: hash['image_id'] },
+    #   :title=>"Menu", :image=>{ nav_upload_id: hash['image_id'] },
     #   :text=> {
     #     :text=>"some text", :page_header=>nil, :page_subheader=>nil,
     #     :page_into=>nil
@@ -166,8 +166,8 @@ module Slickr
       {
         title: hash['title'],
         image: {
-          nav_image_id: hash['image_id'],
-          page_image_id: hash['page_image_id']
+          nav_upload_id: hash['image_id'],
+          page_id: hash['page_id']
         },
         text: {
           text: hash['text'], page_header: hash['page_header'],
@@ -179,21 +179,21 @@ module Slickr
 
     def build_header_nav(hash)
       {
-        title: hash['title'], image: { nav_image_id: hash['image_id'] },
+        title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: hash['link'], link_text: hash['link_text']
       }
     end
 
     def build_custom_link_nav(hash)
       {
-        title: hash['title'], image: { nav_image_id: hash['image_id'] },
+        title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: hash['link'], link_text: hash['link_text']
       }
     end
 
     def build_anchor_link_nav(hash, parent_link)
       {
-        title: hash['title'], image: { nav_image_id: hash['image_id'] },
+        title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: parent_link + hash['link'],
         link_text: hash['link_text']
       }

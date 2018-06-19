@@ -19,10 +19,10 @@ module Slickr
                foreign_key: 'slickr_page_id',
                class_name: 'Slickr::Page',
                optional: true
-    belongs_to :slickr_image,
-               foreign_key: 'slickr_image_id',
-               class_name: 'Slickr::Image',
-               optional: true
+    # belongs_to :slickr_image,
+    #            foreign_key: 'slickr_image_id',
+    #            class_name: 'Slickr::Image',
+    #            optional: true
 
 
     validates :title, presence: true
@@ -40,12 +40,11 @@ module Slickr
     end
 
     def build_tree_structure
-      subtree.left_outer_joins(:slickr_page, :image).select(
+      subtree.left_outer_joins(:slickr_navigation_image, :slickr_page).select(
         :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
-        :link_text, :ancestry, 'slickr_media_uploads.id AS image_id',
+        :link_text, :ancestry, 'slickr_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
-        :page_header, :page_intro, :page_subheader, :page_intro, :slug,
-        'slickr_pages.slickr_image_id AS page_image_id'
+        :page_header, :page_intro, :page_subheader, :page_intro, :slug
       ).arrange_serializable(order: :position)[0]['children']
     end
 

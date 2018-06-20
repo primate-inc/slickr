@@ -13,7 +13,7 @@ export default class PdfLinkInput extends React.Component {
 
     this.state = {
       loading: false,
-      pdfs: []
+      pdfs: { pdf_files: [] }
     }
   }
 
@@ -21,10 +21,10 @@ export default class PdfLinkInput extends React.Component {
     var promise = new Promise((resolve, reject) => {
       (function waitForData(){
         if(text_editor_store[index]) {
-          if (text_editor_store[index].getState().loadedPdfs.length > 0) return resolve();
+          if ('pdf_path' in text_editor_store[index].getState().loadedPdfs) return resolve();
           setTimeout(waitForData, 30);
         } else {
-          if (page_store.getState().loadedPdfs.length > 0) return resolve();
+          if ('pdf_path' in page_store.getState().loadedPdfs) return resolve();
           setTimeout(waitForData, 30);
         }
       })();
@@ -51,7 +51,7 @@ export default class PdfLinkInput extends React.Component {
   }
 
   onPdfChange(selection) {
-    var url = selection === null ? "" : selection.value
+    let url = selection === null ? "" : selection.value
     if(selection !== null) {
       this.props.setEntity({url});
       this.props.cancelEntity();
@@ -63,9 +63,12 @@ export default class PdfLinkInput extends React.Component {
   }
 
   render() {
-    let pdfs = this.state.pdfs.map(
-      ({attachment}, index) => (
-        { value: attachment.url, label: attachment.url.substr(attachment.url.lastIndexOf('/') + 1) }
+    let pdfs = this.state.pdfs.pdf_files.map(
+      (file, index) => (
+        {
+          value: `${this.state.pdfs.pdf_path}?id=${file.id}`,
+          label: file.file_data.original.metadata.filename
+        }
       )
     )
 

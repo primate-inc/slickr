@@ -2,9 +2,9 @@ require_dependency Slickr::Engine.config.root.join('app', 'models', 'slickr', 'p
 
 class Slickr::Page
   LAYOUTS = [
-    { template: "standard", exclude: [:page_header, :page_subheader, :page_intro] },
-    { template: "contact", exclude: [] },
-    { template: "landing", exclude: [] }
+    { template: 'standard', exclude: [:page_header, :page_subheader, :page_intro] },
+    { template: 'contact', exclude: [] },
+    { template: 'landing', exclude: [] }
   ]
 
   DRAFTJS_CONFIG = {
@@ -49,6 +49,7 @@ class Slickr::Page
   private
 
   def admin_pdfs_path
-    Rails.application.routes.url_helpers.admin_slickr_images_path(type: 'megadraft_pdfs')
+    Rails.application.routes.url_helpers
+         .all_pdfs_admin_slickr_media_uploads_path
   end
 end

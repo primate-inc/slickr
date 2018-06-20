@@ -73,10 +73,6 @@ if defined?(ActiveAdmin)
               }.to_json
             end
           end
-        elsif params[:type] == 'megadraft_pdfs'
-          index! do |format|
-            format.html { render json: Slickr::MediaUpload.pdf_files.to_json }
-          end
         else
           index!
         end

@@ -53,6 +53,12 @@ module Slickr
         puts "Slickr yml for webpacker"
       end
 
+      def activeadmin_media_uploads
+        template "media_uploads.rb", "app/admin/media_uploads.rb"
+
+        puts "ActiveAdmin MediaUploads"
+      end
+
       def extend_webpack_environment
         insert_after_line = "const { environment } = require('@rails/webpacker')"
         dest_file = "config/webpack/environment.js"

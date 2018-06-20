@@ -11,7 +11,7 @@ module Slickr
     # the class having to exist which will allow multiple associations
     # on the polymorphic model
     belongs_to :uploadable, polymorphic: true, optional: true
-    belongs_to :slickr_media_upload, class_name: 'Slickr::MediaUpload'
+    belongs_to :slickr_media_upload, class_name: 'Slickr::MediaUpload', optional: true
 
     default_scope { order(position: :asc) }
   end

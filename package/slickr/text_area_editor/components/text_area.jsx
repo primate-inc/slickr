@@ -61,8 +61,13 @@ export default class Editor extends React.Component {
         textarea.classList.remove('active_textarea');
       }
     })
-    let rawDraft = editorStateToJSON(editorState)
-    mainAppEditorStateChange(editorState, this.props, rawDraft)
+
+    if(typeof editorState == 'object') {
+      let rawDraft = editorStateToJSON(editorState)
+      mainAppEditorStateChange(editorState, this.props, rawDraft)
+    } else {
+      mainAppEditorStateChange(editorState, this.props)
+    }  
   }
 
   render() {

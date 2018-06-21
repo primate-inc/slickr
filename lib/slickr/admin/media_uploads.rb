@@ -40,11 +40,15 @@ if defined?(ActiveAdmin)
     collection_action :return_media_path, method: :get do
       media = Slickr::MediaUpload.find(params[:id])
       path = media.image_url(:m_limit)
-      url = path.starts_with?('/') ? "#{request.base_url}#{path}" : path
       mime_type = media.image_data['original']['metadata']['mime_type']
 
-      data = open(url, media.open_uri_options) { |f| f.read }
-      send_data data, type: mime_type, disposition: 'inline'
+      if path.starts_with?('/')
+        file = File.join(Rails.root, 'public', path)
+        send_file file, type: mime_type, disposition: 'inline'
+      else
+        data = open(url, media.open_uri_options) { |f| f.read }
+        send_data data, type: mime_type, disposition: 'inline'
+      end
     end
 
     controller do

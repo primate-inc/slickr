@@ -21,9 +21,12 @@ module Slickr
 
     process(:store) do |io, _context|
       original = io.download
-      image_optim    = ImageOptim.new(pngout: false, svgo: false)
-      optimized_path = image_optim.optimize_image(original.path)
-      original.close!
+      image_optim = ImageOptim.new(
+        pngout: false, svgo: false,
+        jpegoptim: { allow_lossy: true, max_quality: 75 }
+      )
+      optimized_path = image_optim.optimize_image(original.path) ||
+                       original.path
 
       optimized = File.open(optimized_path, 'rb')
 
@@ -62,6 +65,8 @@ module Slickr
         }
       rescue Vips::Error
         { original: io }
+      ensure
+        original.close!
       end
     end
 

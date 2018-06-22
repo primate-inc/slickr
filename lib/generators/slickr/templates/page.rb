@@ -1,4 +1,6 @@
-require_dependency Slickr::Engine.config.root.join('app', 'models', 'slickr', 'page.rb').to_s
+require_dependency Slickr::Engine.config.root.join(
+  'app', 'models', 'slickr', 'page.rb'
+).to_s
 
 class Slickr::Page
   LAYOUTS = [
@@ -13,7 +15,9 @@ class Slickr::Page
       'IMAGE' => DraftjsExporter::Entities::StandardImage.new,
       'VIMEO' => DraftjsExporter::Entities::Vimeo.new,
       'YOUTUBE' => DraftjsExporter::Entities::YouTube.new,
-      'PDF_LINK' => DraftjsExporter::Entities::TargetBlankLink.new(className: 'pdf__link'),
+      'PDF_LINK' => DraftjsExporter::Entities::TargetBlankLink.new(
+        className: 'pdf__link'
+      )
     },
     block_map: {
       'header-one'          => { element: 'h1' },

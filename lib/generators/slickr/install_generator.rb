@@ -24,7 +24,6 @@ module Slickr
         migration_template "migrations/create_versions.rb", "db/migrate/create_versions.rb"
         migration_template "migrations/add_object_changes_to_versions.rb", "db/migrate/add_object_changes_to_versions.rb"
         migration_template "migrations/change_slickr_pages_page_id_attribute.rb", "db/migrate/change_slickr_pages_page_id_attribute.rb"
-        migration_template "migrations/create_slickr_images.rb", "db/migrate/create_slickr_images.rb"
         migration_template "migrations/add_meta_data_to_versions.rb", "db/migrate/add_meta_data_to_versions.rb"
         migration_template "migrations/create_slickr_event_logs.rb", "db/migrate/create_slickr_event_logs.rb"
         migration_template "migrations/add_roles_names_and_avatars_to_admin_users.rb", "db/migrate/add_roles_names_and_avatars_to_admin_users.rb"
@@ -34,7 +33,6 @@ module Slickr
         migration_template "migrations/create_slickr_settings.rb", "db/migrate/create_slickr_settings.rb"
         migration_template "migrations/rename_slickr_pages_meta_title.rb", "db/migrate/rename_slickr_pages_meta_title.rb"
         migration_template "migrations/create_slickr_navigations.rb", "db/migrate/create_slickr_navigations.rb"
-        migration_template "migrations/add_slickr_image_id_to_slickr_pages.rb", "db/migrate/add_slickr_image_id_to_slickr_pages.rb"
         migration_template "migrations/create_slickr_media_uploads.rb", "db/migrate/create_slickr_media_uploads.rb"
         migration_template "migrations/create_slickr_uploads.rb", "db/migrate/create_slickr_uploads.rb"
 
@@ -264,12 +262,6 @@ module Slickr
 
       def extend_slickr_page
         template "page.rb", "app/models/slickr/page.rb"
-
-        puts "Slickr Page extended"
-      end
-
-      def extend_slickr_image_uploader
-        template "slickr_image_uploader.rb", "app/uploaders/slickr_image_uploader.rb"
 
         puts "Slickr Page extended"
       end

@@ -4,6 +4,13 @@ require 'shrine/storage/file_system'
 Shrine.storages = {
   cache: Shrine::Storage::FileSystem.new("public", prefix: 'uploads/cache'),
   store: Shrine::Storage::FileSystem.new("public", prefix: 'uploads/store')
+  # backup_store: Shrine::Storage::S3.new(
+  #   prefix: "backup/#{Rails.env}",
+  #   access_key_id: Rails.application.credentials.s3_key,
+  #   secret_access_key: Rails.application.credentials.s3_secret,
+  #   region: Rails.application.credentials.s3_region,
+  #   bucket: Rails.application.credentials.s3_bucket
+  # )
 }
 
 # ORM
@@ -23,6 +30,7 @@ Shrine.plugin :restore_cached_data # Re-extracts cached file's metadata on model
 
 # Storage
 Shrine.plugin :pretty_location # more organized directory structure on the storage
+# Shrine.plugin :backup, storage: :backup_store
 
 # Other
 Shrine.plugin :logging, logger: Rails.logger

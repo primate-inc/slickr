@@ -3,7 +3,6 @@ class CreateSlickrNavigations < ActiveRecord::Migration[5.1]
     create_table :slickr_navigations do |t|
       t.string      :ancestry
       t.references  :slickr_page
-      t.references  :slickr_image
       t.integer     :position
       t.string      :root_type
       t.string      :child_type

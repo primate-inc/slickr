@@ -47,12 +47,18 @@ export const clearAllSelected = selectedImageIds => {
 
 export const deleteSelectedImages = selectedImageIds => {
   return function(dispatch, getState) {
+    let urlParams = new URLSearchParams(window.location.search);
     let params = {};
     params[_csrf_param()] = _csrf_token()
     params['batch_action'] = 'destroy'
     params['batch_action_inputs'] = '{}'
     params['collection_selection_toggle_all'] = 'on'
     params['collection_selection'] = selectedImageIds.map(String)
+    if(urlParams.has('page')) {
+      params['page'] = urlParams.get('page')
+    } else {
+      params['page'] = '1'
+    }
 
     request.post(getState().loadedImages[0].admin_batch_delete_path)
            .type('json').accept('json').send(params).end(function(err,resp) {

@@ -2,7 +2,7 @@ if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::MediaUpload do
     MEDIA_PER_PAGE ||= 25
     menu priority: 2, label: 'Media'
-    actions :all, :except => [:new, :show]
+    actions :all, except: %i[new show]
 
     config.filters = false
     config.per_page = MEDIA_PER_PAGE
@@ -11,7 +11,7 @@ if defined?(ActiveAdmin)
 
     breadcrumb do
       if params[:action] == 'index'
-        [ link_to('Admin', admin_root_path) ]
+        [link_to('Admin', admin_root_path)]
       else
         [
           link_to('Admin', admin_root_path),
@@ -28,10 +28,16 @@ if defined?(ActiveAdmin)
 
     batch_action :destroy do |selection|
       Slickr::MediaUpload.find(selection).each(&:destroy)
-      remaining_media = Slickr::MediaUpload.all.map do |media|
+      media_for_page = Slickr::MediaUpload
+                       .order(created_at: :desc)
+                       .limit(MEDIA_PER_PAGE)
+                       .offset(
+                         (params[:page].to_i - 1) * MEDIA_PER_PAGE
+                       )
+      remaining_media = media_for_page.map do |media|
         JSON.parse(
           media.to_json(methods: %i[build_for_gallery admin_edit_path
-                                   admin_update_path admin_batch_delete_path])
+                                    admin_update_path admin_batch_delete_path])
         )
       end
       render json: remaining_media

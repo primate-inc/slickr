@@ -9,7 +9,6 @@ module ActiveAdmin
 
         def build_collection
           if items_in_collection? ||
-             params[:controller] == 'admin/slickr_images' ||
              params[:controller] == 'admin/slickr_media_uploads'
             render_index
           else

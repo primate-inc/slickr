@@ -1,7 +1,8 @@
 ActiveAdmin.register AdminUser, as: "Users" do
+  includes :admin_user_avatar
 
   menu priority: 100
-  permit_params :email, :password, :password_confirmation, :first_name, :last_name, :role, :avatar
+  permit_params :email, :password, :password_confirmation, :first_name, :last_name, :role
 
   scope :all, default: true
 
@@ -9,8 +10,11 @@ ActiveAdmin.register AdminUser, as: "Users" do
 
   index do |resource|
     selectable_column
-    column "" do |user|
-      image_tag user.avatar.thumbnail.url.to_s, class: 'display-avatar'
+    column '' do |user|
+      if user.admin_user_avatar
+        image_tag user.admin_user_avatar.image_url(:thumb_fill),
+                  class: 'display-avatar'
+      end
     end
     column :first_name
     column :last_name
@@ -23,19 +27,18 @@ ActiveAdmin.register AdminUser, as: "Users" do
 
   show do
     render 'show'
-    active_admin_comments
   end
 
   filter :email
 
   form html: { id: 'split_display_with_image' } do |f|
     f.inputs 'User avatar' do
-      if resource.avatar.url.present?
+      if resource.admin_user_avatar.present?
         div class: 'image' do
-          image_tag resource.avatar.url
+          image_tag resource.admin_user_avatar.image_url(:m_limit)
         end
       end
-      f.input :avatar, as: :file_modified, label: 'Select user avatar'
+      f.input :admin_user_avatar, as: :file, label: 'Select user avatar'
     end
     f.inputs class: 'form_inputs' do
       f.input :email
@@ -63,14 +66,36 @@ ActiveAdmin.register AdminUser, as: "Users" do
   end
 
   controller do
+    def create
+      create! do |format|
+        create_media_upload_and_polymorphic
+
+        format.html { redirect_to admin_user_path(resource), notice: 'User created' }
+      end
+    end
+
     def update
       if params[:admin_user][:password].blank? && params[:admin_user][:password_confirmation].blank?
         params[:admin_user].delete('password')
         params[:admin_user].delete('password_confirmation')
       end
+
       update! do |format|
-        format.html { redirect_to edit_admin_user_path(resource), notice: 'User updated' }
+        create_media_upload_and_polymorphic
+
+        format.html { redirect_to admin_user_path(resource), notice: 'User updated' }
       end
+    end
+
+    def create_media_upload_and_polymorphic
+      return unless params[:admin_user][:admin_user_avatar]
+      avatar = params[:admin_user][:admin_user_avatar].tempfile
+      media = Slickr::MediaUpload.new
+      media.image = avatar
+      media.image_data
+      media.save
+
+      resource.build_slickr_admin_user_avatar(slickr_media_upload_id: media.id).save
     end
   end
 

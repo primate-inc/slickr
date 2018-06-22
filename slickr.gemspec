@@ -28,15 +28,12 @@ Gem::Specification.new do |s|
   # User authentication
   s.add_dependency 'devise', '~> 4.3'
   # Images
-  s.add_dependency 'carrierwave', '~> 1.2.2'
-  s.add_dependency 'rmagick', '~> 2.16.0'
-
   s.add_dependency 'shrine', '~> 2.0'
   s.add_dependency 'fastimage', '~> 2.1'
   s.add_dependency 'image_processing', '>= 1.0'
   s.add_dependency 'image_optim', '~> 0.26'
   s.add_dependency 'image_optim_pack', '~> 0.5'
-  
+
   # Other gems
   s.add_dependency "acts_as_tree", "~> 2.7.0"
   s.add_dependency "acts_as_list", "~> 0.9.7"

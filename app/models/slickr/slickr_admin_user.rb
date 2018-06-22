@@ -1,13 +1,16 @@
 module Slickr
   module SlickrAdminUser
+
     def self.included(base)
       base.class_eval do
-        mount_uploader :avatar, SlickrAvatarUploader
+        extend Slickr::Uploadable
+
         # Include default devise modules. Others available are:
         # :confirmable, :lockable, :timeoutable and :omniauthable
         devise :database_authenticatable,
                :recoverable, :rememberable, :trackable, :validatable
 
+        has_one_slickr_upload(:slickr_admin_user_avatar, :admin_user_avatar)
         has_many :slickr_event_logs
 
         def display_name

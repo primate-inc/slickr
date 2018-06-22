@@ -20,7 +20,9 @@
         %>
       </header>
       <section class="dashboard__events-item__content">
-        <%= image_tag e.admin_user.avatar.url(:thumbnail), class: "dashboard__events-item__avatar display_avatar" if e.admin_user.avatar.present? %>
+        <% if e.admin_user.admin_user_avatar %>
+          <%= image_tag e.admin_user.admin_user_avatar.image_url(:thumb_fill), class: "dashboard__events-item__avatar display_avatar" %>
+        <% end %>
         <%= t("action_html".to_sym,
           scope: [:activerecord, :models, :event_log, :eventable, :actions],
           action: Verbs::Conjugator.conjugate(e.action, :tense => :past, :aspect => :perfective),

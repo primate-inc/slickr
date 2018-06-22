@@ -90,9 +90,12 @@ ActiveAdmin.register AdminUser, as: "Users" do
     def create_media_upload_and_polymorphic
       return unless params[:admin_user][:admin_user_avatar]
       avatar = params[:admin_user][:admin_user_avatar].tempfile
+      filename = params[:admin_user][:admin_user_avatar].original_filename
+
       media = Slickr::MediaUpload.new
       media.image = avatar
       media.image_data
+      media.image_data['metadata']['filename'] = filename
       media.save
 
       resource.build_slickr_admin_user_avatar(slickr_media_upload_id: media.id).save

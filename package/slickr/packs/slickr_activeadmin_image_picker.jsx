@@ -12,7 +12,7 @@ let storeArray = []
 document.addEventListener('DOMContentLoaded', () => {
   if(document.getElementsByClassName('image-picker')[0]) {
     const pageState = JSON.parse(
-      document.getElementsByClassName('megadraft-text-editor')[0]
+      document.getElementsByClassName('image-picker')[0]
       .childNodes[0]
       .getAttribute('data')
     ).pageState

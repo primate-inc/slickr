@@ -1,0 +1,16 @@
+li class: 'image-picker' do
+  f.content_tag :div,
+    class: 'image-data',
+    data: {
+      input: {
+        field: field,
+        id: f.object.send(field).try(:slickr_media_upload).try(:id),
+        path: f.object.send(field).try(:slickr_media_upload).try(:image_url, :m_limit),
+        label: field.to_s.humanize,
+        hint: local_variables.include?(:hint) ? hint : '',
+        errors: f.object.errors.messages[field]
+      },
+      pageState: slickr_editor_paths
+    }.to_json do
+    end
+end

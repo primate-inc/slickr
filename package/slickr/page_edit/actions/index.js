@@ -174,6 +174,14 @@ export const toggleChoosingPageHeaderImage = () => {
   }
 }
 
+export const toggleChoosingActiveAdminImage = () => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: "TOGGLE_CHOOSING_ACTIVEADMIN_IMAGE"
+    })
+  }
+}
+
 export const loadImages = (page) => {
   return function(dispatch, getState) {
     let params = {};
@@ -224,6 +232,15 @@ export const updatePageHeaderImage = imageData => {
   return function(dispatch, getState) {
     dispatch({
       type: "CHOOSE_PAGE_HEADER_IMAGE",
+      payload: imageData
+    })
+  }
+}
+
+export const updateActiveAdminImage = imageData => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: "CHOOSE_ACTIVEADMIN_IMAGE",
       payload: imageData
     })
   }

@@ -26,6 +26,5 @@ class CreateSlickrPages < ActiveRecord::Migration[5.1]
       t.timestamps
     end
     add_index :slickr_pages, :slug, unique: true
-    add_index :slickr_pages, :ancestry
   end
 end

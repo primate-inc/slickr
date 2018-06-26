@@ -53,7 +53,9 @@ export default class Editor extends React.Component {
 
   changeEditorState(editorState) {
     let activeIndex = this.props.textAreaIndex
-    let textareaList = document.getElementsByTagName('textarea');
+    let textareaList = document.querySelectorAll(
+      '.megadraft-text-editor + .text textarea'
+    );
     Array.prototype.forEach.call(textareaList, function(textarea, index) {
       if (activeIndex === index) {
         textarea.classList.add('active_textarea');
@@ -67,7 +69,7 @@ export default class Editor extends React.Component {
       mainAppEditorStateChange(editorState, this.props, rawDraft)
     } else {
       mainAppEditorStateChange(editorState, this.props)
-    }  
+    }
   }
 
   render() {

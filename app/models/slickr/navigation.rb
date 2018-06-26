@@ -5,7 +5,7 @@ module Slickr
   class Navigation < ApplicationRecord
     self.table_name = 'slickr_navigations'
 
-    extend Slickr::Uploadable
+    include Slickr::Uploadable
 
     has_ancestry
     acts_as_list scope: [:ancestry]
@@ -19,11 +19,6 @@ module Slickr
                foreign_key: 'slickr_page_id',
                class_name: 'Slickr::Page',
                optional: true
-    # belongs_to :slickr_image,
-    #            foreign_key: 'slickr_image_id',
-    #            class_name: 'Slickr::Image',
-    #            optional: true
-
 
     validates :title, presence: true
     validates_uniqueness_of :title, if: proc { |nav| nav.sub_root? }

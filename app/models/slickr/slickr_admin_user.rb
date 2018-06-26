@@ -3,7 +3,7 @@ module Slickr
 
     def self.included(base)
       base.class_eval do
-        extend Slickr::Uploadable
+        include Slickr::Uploadable
 
         # Include default devise modules. Others available are:
         # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -18,7 +18,7 @@ module Slickr
         end
 
         def full_name
-          [first_name, last_name].join(" ")
+          [first_name, last_name].join(' ')
         end
 
         def admin?

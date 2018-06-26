@@ -58,6 +58,36 @@
       }
     }
   }
+  .image-picker {
+    display: none !important;
+    & + .text {
+      .hidden {
+        display: none;
+      }
+      .file {
+        label {
+          display: block;
+        }
+        input[type='file'] {
+          padding: 8px 8px 8px .5em !important; height: 60px !important;
+
+          &:before {
+            content: 'Select' !important;
+          }
+        }
+        &.has_image {
+          .hint-text {
+            margin-top: 4em;
+          }
+        }
+        &.has_error {
+          label {
+            color: $alert !important;
+          }
+        }
+      }
+    }
+  }
   .megadraft-text-editor {
     display: none !important;
      & + .text {

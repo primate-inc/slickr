@@ -4,3 +4,16 @@
     border-bottom: none !important;
   }
 }
+
+.image-picker-remove {
+  &.no_image {
+    display: none;
+  }
+  .true_false {
+    width: 64%; margin-top: -.5em; left: 0;
+
+    .edit-wrapper {
+      width: 100%;
+    }
+  }
+}

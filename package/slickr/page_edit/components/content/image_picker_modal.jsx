@@ -84,6 +84,7 @@ export default class ImagePickerModal extends React.Component {
                 editorState={this.props.editorState}
                 choosingPageHeaderImage={this.props.choosingPageHeaderImage}
                 choosingNavImage={this.props.choosingNavImage}
+                choosingActiveAdminImage={this.props.choosingActiveAdminImage}
               />
             </div>
           </div>

@@ -5,30 +5,49 @@ module Slickr
   module Uploadable
     include ActiveSupport::Concern
 
-    def has_one_slickr_upload(method_symbol, delegate_method_symbol)
-      has_one method_symbol,
-              -> { where(uploadable_type: method_symbol.to_s) },
-              foreign_key: 'uploadable_id',
-              class_name: 'Slickr::Upload',
-              dependent: :destroy
-      accepts_nested_attributes_for method_symbol, allow_destroy: true
-      has_one delegate_method_symbol,
-              through: method_symbol,
-              source: :slickr_media_upload,
-              class_name: 'Slickr::MediaUpload'
+    def self.included(klass)
+      klass.extend(ClassMethods)
     end
 
-    def has_many_slickr_uploads(method_symbol, delegate_method_symbol)
-      has_many method_symbol,
-               -> { where(uploadable_type: method_symbol.to_s) },
-               foreign_key: 'uploadable_id',
-               class_name: 'Slickr::Upload',
-               dependent: :destroy
-      accepts_nested_attributes_for method_symbol, allow_destroy: true
-      has_many delegate_method_symbol,
-               through: method_symbol,
-               source: :slickr_media_upload,
-               class_name: 'Slickr::MediaUpload'
+    module ClassMethods
+      def has_one_slickr_upload(method_symbol, delegate_method_symbol, required=false)
+        has_one method_symbol,
+                -> { where(uploadable_type: method_symbol.to_s) },
+                foreign_key: 'uploadable_id',
+                class_name: 'Slickr::Upload',
+                dependent: :destroy
+        accepts_nested_attributes_for method_symbol, allow_destroy: true
+        has_one delegate_method_symbol,
+                through: method_symbol,
+                source: :slickr_media_upload,
+                class_name: 'Slickr::MediaUpload'
+        validate do |object|
+          object.present_if_required(method_symbol) if required == true
+        end
+      end
+
+      def has_many_slickr_uploads(method_symbol, delegate_method_symbol, required=false)
+        has_many method_symbol,
+                 -> { where(uploadable_type: method_symbol.to_s) },
+                 foreign_key: 'uploadable_id',
+                 class_name: 'Slickr::Upload',
+                 dependent: :destroy
+        accepts_nested_attributes_for method_symbol, allow_destroy: true
+        has_many delegate_method_symbol,
+                 through: method_symbol,
+                 source: :slickr_media_upload,
+                 class_name: 'Slickr::MediaUpload'
+        validate do |object|
+          object.present_if_required(method_symbol) if required == true
+        end
+      end
+    end
+
+    def present_if_required(method_symbol)
+      return unless send(method_symbol).slickr_media_upload_id.nil? ||
+                    send(method_symbol).slickr_media_upload_id.zero? ||
+                    send(method_symbol).slickr_media_upload_id.blank?
+      errors.add(method_symbol, "can't be blank")
     end
   end
 end

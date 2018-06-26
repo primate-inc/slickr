@@ -11,6 +11,8 @@ import choosingPageHeaderImage from './choosing_page_header_image'
 import textAreaIndex from './text_area_index'
 import label from './label'
 import textArea from './text_area'
+import imageObject from './image_object'
+import choosingActiveAdminImage from './choosing_active_admin_image'
 
 const slickrReducers = {
   pageState,
@@ -23,6 +25,8 @@ const slickrReducers = {
   textAreaIndex,
   label,
   textArea,
+  imageObject,
+  choosingActiveAdminImage,
   choosingPageHeaderImage
 }
 

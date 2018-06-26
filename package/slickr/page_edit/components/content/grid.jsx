@@ -33,6 +33,9 @@ export default class Grid extends React.Component {
     } else if(this.props.choosingNavImage) {
       this.props.actions.toggleChoosingImage();
       this.props.actions.updateNavImage(standardImageData)
+    } else if(this.props.choosingActiveAdminImage) {
+      this.props.actions.toggleChoosingActiveAdminImage();
+      this.props.actions.updateActiveAdminImage(standardImageData)
     } else {
       this.props.actions.changeEditorState(
         insertDataBlock(this.props.editorState, megadraftImageData)

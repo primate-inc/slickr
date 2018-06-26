@@ -4,7 +4,7 @@ module Slickr
     self.table_name = 'slickr_pages'
 
     extend FriendlyId
-    extend Slickr::Uploadable
+    include Slickr::Uploadable
     include AASM
 
     has_paper_trail only: %i[title aasm_state content published_content drafts],

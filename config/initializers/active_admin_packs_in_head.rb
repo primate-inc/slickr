@@ -7,7 +7,7 @@ module ActiveAdmin
         def build_active_admin_head
           original_build_head
 
-          within @head do
+          within head do
             script src: "#{Webpacker.manifest.lookup('slickr_text_area_editor.js')}"
             script src: "#{Webpacker.manifest.lookup('slickr_activeadmin_image_picker.js')}"
           end

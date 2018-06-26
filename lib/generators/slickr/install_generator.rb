@@ -7,18 +7,6 @@ module Slickr
       desc "Running Slickr generators"
       argument :name, type: :string, default: "application"
 
-      def no_blank_slate
-        template "active_admin_no_blank_slate.rb", "config/initializers/active_admin_no_blank_slate.rb"
-
-        puts "No blank slate for Slickr images"
-      end
-
-      def scg_map
-        template "active_admin_svg_map.rb", "config/initializers/active_admin_svg_map.rb"
-
-        puts "SVG map added for Slickr"
-      end
-
       def db_migrations
         migration_template "migrations/create_slickr_pages.rb", "db/migrate/create_slickr_pages.rb"
         migration_template "migrations/create_versions.rb", "db/migrate/create_versions.rb"

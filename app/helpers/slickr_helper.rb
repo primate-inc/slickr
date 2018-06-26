@@ -47,21 +47,16 @@ module SlickrHelper
     form_json(page)
   end
 
-  def main_navigation_pages
-    home_page = Slickr::Page.find_by_slug('home')
-    if home_page.nil?
-      []
+  # The Navigation image will override the page image if added.
+  def slickr_nav_menu_image_builder(menu, size)
+    nav_upload_id = menu[:image][:nav_upload_id]
+    page_id = menu[:image][:page_id]
+    if nav_upload_id.nil?
+      Slickr::Page.find_by_id(page_id).header_image.image_url(size.to_sym)
     else
-      home_page.children.where(aasm_state: :published).order(:position)
-    end
-  end
-
-  def footer_navigation_pages
-    footer = Slickr::Page.find_by_slug('footer')
-    if footer.nil?
-      []
-    else
-      footer.children.where(aasm_state: :published).order(:position)
+      Slickr::Upload.find_by_id(nav_upload_id)
+                    .slickr_media_upload
+                    .image_url(size.to_sym)
     end
   end
 

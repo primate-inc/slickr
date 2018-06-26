@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ImageArea from "../components/image_area.jsx";
 import * as PageActions from '../../page_edit/actions';
+import * as GalleryActions from '../../media_gallery/actions';
 
 let _csrf_param = () => {
   return document.getElementsByName("csrf-param")[0].content
@@ -53,7 +54,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Object.assign({}, PageActions), dispatch)
+  actions: bindActionCreators(
+    Object.assign({}, PageActions, GalleryActions), dispatch
+  )
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveadminImagePick);

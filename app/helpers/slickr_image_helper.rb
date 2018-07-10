@@ -37,7 +37,7 @@ module SlickrImageHelper
       aspect_ratio = (meta_data['height'].to_f / meta_data['width']).round(2)
       "<source media='(#{info.keys[0]}: #{info.values[0]})'
        srcset='#{image.image_url(info[:size])}'
-       data-aspect_ratio='#{aspect_ratio}' />"
+       data-aspect_ratio='#{aspect_ratio}' 'data-pagespeed-no-transform'/>"
     end
   end
 

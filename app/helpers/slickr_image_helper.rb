@@ -43,7 +43,7 @@ module SlickrImageHelper
 
   def build_image_tag(image, args)
     image_tag_options = args.except(:slickr)
-    image_tag_options['data-pagespeed-no-transform'] = nil
+    image_tag_options['data-pagespeed-no-transform'] = ''
     image_tag_options['data-min_aspect_ratio'] = min_aspect_ratio(image, args)
     image_tag_options[:style] = 'background-color:white;'
     image_tag image.image_url(args[:slickr][0][:size]),

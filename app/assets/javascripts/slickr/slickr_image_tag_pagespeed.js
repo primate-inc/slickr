@@ -3,7 +3,7 @@ $(function () {
     var image = obj.getElementsByTagName('img')[0];
     var sourceTags = obj.getElementsByTagName('source');
 
-    for (let i = 0; i < sourceTags.length; i++) {
+    for (var i = 0; i < sourceTags.length; i++) {
       var srcSet = sourceTags[i].dataset.srcset;
       sourceTags[i].setAttribute('srcset', srcSet);
     }

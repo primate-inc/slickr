@@ -66,3 +66,17 @@ end
 Within your Active Admin forms you now have access to the Media library which
 appears with a modal and allows you to both choose an image and also drag and
 drop images to add new ones.
+
+## Responsive Images
+
+Slickr helper for ```<picture>``` tag to enable responsive images that are
+generated in ```Slickr::MediaUpload```
+
+### Example
+
+```ruby
+= slickr_picture_tag article.image, version: :xl_fill, image: { alt: ''} do
+  = slickr_source_tag srcset: article.image.image_url(:m_fill), media: '(min-width: 200px)', sizes: '100vw'
+  = slickr_source_tag srcset: article.image.image_url(:l_fill), media: '(min-width: 600px)', sizes: '100vw'
+  = slickr_source_tag srcset: article.image.image_url(:s_fill), sizes: '100vw'
+```

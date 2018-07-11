@@ -34,7 +34,7 @@ module SlickrImageHelper
   def build_sources(image, args)
     args[:slickr].map do |info|
       "<source media='(#{info.keys[0]}: #{info.values[0]})'
-       data-srcset='#{image.image_url(info[:size])}' />"
+       srcset='#{image.image_url(info[:size])}' />"
     end
   end
 

@@ -15,33 +15,30 @@ module SlickrImageHelper
     end
   end
 
-  def slickr_image_tag(image, args)
-    return if image.nil? || args[:slickr].nil?
-    build_picture(image, args)
+  def slickr_picture_tag(image, options = {}, &block)
+    return if image.nil?
+    content_tag :picture, picture_options(options) do
+      "<!--[if IE 9]><video style='display: none;'><![endif]-->".html_safe +
+        capture(&block).html_safe +
+        '<!--[if IE 9]></video><![endif]-->'.html_safe +
+        tag('img', image_options(image, options))
+    end
+  end
+
+  def slickr_source_tag(options = {})
+    tag :source, options
   end
 
   private
 
-  def build_picture(image, args)
-    (
-      '<picture class="slickr_image_tag">' +
-      build_sources(image, args) * '' +
-      build_image_tag(image, args) +
-      '</picture>'
-    ).html_safe
+  def picture_options(options)
+    picture_options_to_ignore = %i[image version]
+    options.except(*picture_options_to_ignore)
   end
 
-  def build_sources(image, args)
-    args[:slickr].map do |info|
-      "<source media='(#{info.keys[0]}: #{info.values[0]})'
-       srcset='#{image.image_url(info[:size])}' />"
-    end
+  def image_options(image, options)
+    image_options = options.fetch(:image, {})
+    image_options[:srcset] = image.image_url(options[:version])
+    image_options
   end
-
-  def build_image_tag(image, args)
-    image_tag_options = args.except(:slickr)
-    image_tag image.image_url(args[:slickr][0][:size]),
-              image_tag_options
-  end
-
 end

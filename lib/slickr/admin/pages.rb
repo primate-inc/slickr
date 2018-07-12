@@ -6,11 +6,7 @@ if defined?(ActiveAdmin)
     before_action :set_paper_trail_whodunnit
     decorate_with Slickr::PageDecorator
 
-    permit_params :page_title, :meta_description, :title, :page_intro,
-                  :page_header, :page_subheader, :layout, :slug, :og_title,
-                  :og_description, :twitter_title, :twitter_description,
-                  slickr_page_header_image_attributes: [:slickr_media_upload_id],
-                  content: {}
+
 
     filter :title
     filter :layout
@@ -30,47 +26,6 @@ if defined?(ActiveAdmin)
       # end
       actions
     end
-
-    form do |f|
-      if object.new_record?
-        inputs do
-          input :title
-          input :layout, collection: options_for_select(
-            Slickr::Page::LAYOUTS.map do |l|
-              [l[:template].humanize, l[:template]]
-            end
-          )
-        end
-        actions
-      else
-        tabs do
-          tab 'Content' do
-            inputs do
-              input :title
-              imput :page_header
-            end
-          end
-          tab 'SEO' do
-            inputs do
-
-            end
-          end
-          tab 'Social Media' do
-            inputs do
-
-            end
-          end
-          tab 'Config' do
-            inputs do
-
-            end
-          end
-        end
-        actions
-      end
-    end
-
-    # form partial: 'edit'
 
     controller do
       def create
@@ -134,36 +89,83 @@ if defined?(ActiveAdmin)
     end
 
     member_action :publish, method: :put do
-      resource.publish! and Slickr::EventLog.create(action: :publish, eventable: resource, admin_user: current_admin_user) if resource.valid?
+      if resource.valid?
+        resource.publish! and Slickr::EventLog.create(
+          action: :publish, eventable: resource, admin_user: current_admin_user
+        )
+      end
       respond_to do |format|
-        format.html { redirect_to edit_resource_path, notice: "Published" }
+        format.html { redirect_to edit_resource_path, notice: 'Published' }
         format.json { render json: @slickr_page.as_json }
       end
     end
 
     member_action :unpublish, method: :put do
-      resource.unpublish! and Slickr::EventLog.create(action: :unpublish, eventable: resource, admin_user: current_admin_user) if resource.valid?
+      if resource.valid?
+        resource.unpublish! and Slickr::EventLog.create(
+          action: :unpublish, eventable: resource,
+          admin_user: current_admin_user
+        )
+      end
       respond_to do |format|
-        format.html { redirect_to edit_resource_path, notice: "Unpublished" }
+        format.html { redirect_to edit_resource_path, notice: 'Unpublished' }
         format.json { render json: @slickr_page.as_json }
       end
     end
 
     member_action :create_draft, method: :post do
       draft = resource.create_draft
-      Slickr::EventLog.create(action: :create, eventable: draft, admin_user: current_admin_user) if draft.valid?
+      if draft.valid?
+        Slickr::EventLog.create(
+          action: :create, eventable: draft, admin_user: current_admin_user
+        )
+      end
       redirect_to edit_resource_path
     end
 
     member_action :delete_draft, method: :delete do
       resource.delete_draft(draft_id)
-      Slickr::EventLog.create(action: :delete, eventable: draft, admin_user: current_admin_user) if draft.valid?
+      if draft.valid?
+        Slickr::EventLog.create(
+          action: :delete, eventable: draft, admin_user: current_admin_user
+        )
+      end
       redirect_to edit_resource_path
     end
 
     member_action :preview, method: :get do
       html_output = draftjs_to_html(resource, :content)
-      render layout: false, template: "slickr_page_templates/#{resource.choose_template}", locals: {slickr_page: resource, content: html_output}
+      render layout: false,
+             template: "slickr_page_templates/#{resource.choose_template}",
+             locals: { slickr_page: resource, content: html_output }
+    end
+
+    action_item :preview, only: [:edit] do
+      link_to preview_admin_slickr_page_path(resource, slickr_page: resource),
+              target: '_blank' do
+        '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="#svg-preview"></use></svg>Preview'.html_safe
+      end
+    end
+
+    action_item :publish, only: [:edit] do
+      unless resource.published?
+        link_to publish_admin_slickr_page_path(resource, slickr_page: resource),
+                method: :put do
+          '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="#svg-publish"></use></svg>Publish'.html_safe
+        end
+      end
+    end
+
+    action_item :unpublish, only: [:edit] do
+      if resource.published?
+        link_to unpublish_admin_slickr_page_path(resource, slickr_page: resource),
+                method: :put do
+          '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="#svg-cross"></use></svg>Unpublish'.html_safe
+        end
+      end
     end
   end
 

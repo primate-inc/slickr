@@ -58,6 +58,11 @@ module Slickr
       .where.not(slickr_navigations: { id: nil })
     end)
 
+    def content
+      return self[:content].to_json if self[:content].is_a? Hash
+      self[:content]
+    end
+
     def display_title
       title
     end

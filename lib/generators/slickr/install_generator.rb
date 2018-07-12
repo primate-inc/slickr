@@ -39,6 +39,12 @@ module Slickr
         puts "Slickr yml for webpacker"
       end
 
+      def activeadmin_slickr_pages
+        template "slickr_pages.rb", "app/admin/slickr_pages.rb"
+
+        puts "ActiveAdmin Slickr::Page"
+      end
+
       def activeadmin_media_uploads
         template "media_uploads.rb", "app/admin/media_uploads.rb"
 

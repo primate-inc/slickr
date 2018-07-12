@@ -38,7 +38,7 @@ module SlickrImageHelper
 
   def image_options(image, options)
     image_options = options.fetch(:image, {})
-    image_options[:srcset] = image.image_url(options[:version])
+    image_options[:src] = image.image_url(options[:version])
     image_options
   end
 end

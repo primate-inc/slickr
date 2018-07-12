@@ -2,7 +2,7 @@ ActiveAdmin.register Slickr::Page do
   permit_params :page_title, :meta_description, :title, :page_intro,
                 :page_header, :page_subheader, :layout, :slug, :og_title,
                 :og_description, :twitter_title, :twitter_description,
-                :content, :slug,
+                :content, :slug, :publish_schedule_date, :publish_schedule_time,
                 slickr_page_header_image_attributes: [:slickr_media_upload_id]
 
   form do |f|
@@ -17,7 +17,9 @@ ActiveAdmin.register Slickr::Page do
       end
       actions
     else
-      layout = Slickr::Page::LAYOUTS.find { |layout| layout[:template] == object.layout }
+      layout = Slickr::Page::LAYOUTS.find do |layout|
+        layout[:template] == object.layout
+      end
       exclude_records = layout[:exclude] ? layout[:exclude] : []
       tabs do
         tab 'Content' do
@@ -64,6 +66,26 @@ ActiveAdmin.register Slickr::Page do
                     [l[:template].humanize, l[:template]]
                   end)
             input :slug
+          end
+        end
+        tab 'Schedule' do
+          inputs do
+            input :publish_schedule_date,
+                  as: :datepicker,
+                  label: 'Scheduled date',
+                  datepicker_options: {
+                    dateFormat: 'dd-MM-yy'
+                  },
+                  input_html: { value: f.object.new_record? \
+                    ? Date.today.try(:strftime, '%d-%B-%Y')
+                    : f.object.publish_schedule_date.try(:strftime, '%d-%B-%Y') }
+            input :publish_schedule_time,
+                  as: :time_picker,
+                  label: 'Scheduled time',
+                  wrapper_html: { class: 'clockpicker', 'data-autoclose': 'true' },
+                  input_html: { value: f.object.new_record? \
+                    ? Time.now.try(:strftime, '%H:%M')
+                    : f.object.publish_schedule_time.try(:strftime, '%H:%M') }
           end
         end
       end

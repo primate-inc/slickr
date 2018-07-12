@@ -41,7 +41,13 @@ if defined?(ActiveAdmin)
       def update
         update! do |format|
           create_resource_event_log(:update) if resource.valid?
-          format.html { redirect_to edit_admin_slickr_page_path(resource) }
+          format.html do
+            if resource.valid?
+              redirect_to edit_admin_slickr_page_path(resource)
+            else
+              render :edit
+            end
+          end
           format.json do
             render json: @slickr_page.to_json(methods: [
               :preview_page, :admin_publish_path, :admin_unpublish_path,

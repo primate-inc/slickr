@@ -40,7 +40,7 @@ module Slickr
         :link_text, :ancestry, 'slickr_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
         :page_header, :page_intro, :page_subheader, :page_intro, :slug,
-        :aasm_state, :publishing_scheduled_for
+        :aasm_state, :publish_schedule_time
       ).arrange_serializable(order: :position)[0]['children']
     end
 

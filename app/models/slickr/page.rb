@@ -27,8 +27,11 @@ module Slickr
 
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
+    before_save :set_date_in_publish_schedule_time
 
     validates_presence_of :title, :layout, unless: :type_draft?
+    validates_presence_of :publish_schedule_date, if: :publish_schedule_time?
+    validates_presence_of :publish_schedule_time, if: :publish_schedule_date?
 
     scope :not_draft, -> { where(type: nil) }
 
@@ -144,6 +147,15 @@ module Slickr
 
     def type_draft?
       type == 'Slickr::Page::Draft'
+    end
+
+    def set_date_in_publish_schedule_time
+      return if publish_schedule_date.nil?
+      self.publish_schedule_time = DateTime.new(
+        publish_schedule_date.year, publish_schedule_date.month,
+        publish_schedule_date.day, self.publish_schedule_time.hour,
+        self.publish_schedule_time.min, 0
+      )
     end
   end
 end

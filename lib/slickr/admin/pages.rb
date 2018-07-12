@@ -31,7 +31,46 @@ if defined?(ActiveAdmin)
       actions
     end
 
-    form partial: 'edit'
+    form do |f|
+      if object.new_record?
+        inputs do
+          input :title
+          input :layout, collection: options_for_select(
+            Slickr::Page::LAYOUTS.map do |l|
+              [l[:template].humanize, l[:template]]
+            end
+          )
+        end
+        actions
+      else
+        tabs do
+          tab 'Content' do
+            inputs do
+              input :title
+              imput :page_header
+            end
+          end
+          tab 'SEO' do
+            inputs do
+
+            end
+          end
+          tab 'Social Media' do
+            inputs do
+
+            end
+          end
+          tab 'Config' do
+            inputs do
+
+            end
+          end
+        end
+        actions
+      end
+    end
+
+    # form partial: 'edit'
 
     controller do
       def create

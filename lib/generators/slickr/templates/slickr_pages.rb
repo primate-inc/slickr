@@ -17,17 +17,27 @@ ActiveAdmin.register Slickr::Page do
       end
       actions
     else
+      layout = Slickr::Page::LAYOUTS.find { |layout| layout[:template] == object.layout }
+      exclude_records = layout[:exclude] ? layout[:exclude] : []
       tabs do
         tab 'Content' do
           inputs do
             input :title
-            input :page_header, as: :text
-            render 'admin/form/image_helper',
-                   f: f,
-                   field: :slickr_page_header_image
-            input :slickr_page_header_image, as: :text
-            input :page_subheader, as: :text
-            input :page_intro, as: :text
+            unless :page_header.in? exclude_records
+              input :page_header, as: :text
+            end
+            unless :slickr_page_header_image.in? exclude_records
+              render 'admin/form/image_helper',
+                     f: f,
+                     field: :slickr_page_header_image
+              input :slickr_page_header_image, as: :text
+            end
+            unless :page_subheader.in? exclude_records
+              input :page_subheader, as: :text
+            end
+            unless :page_intro.in? exclude_records
+              input :page_intro, as: :text
+            end
             render 'admin/form/text_area_helper', f: f, field: :content
             input :content, as: :text
           end

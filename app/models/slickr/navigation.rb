@@ -39,7 +39,8 @@ module Slickr
         :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
         :link_text, :ancestry, 'slickr_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
-        :page_header, :page_intro, :page_subheader, :page_intro, :slug
+        :page_header, :page_intro, :page_subheader, :page_intro, :slug,
+        :aasm_state, :publishing_scheduled_for
       ).arrange_serializable(order: :position)[0]['children']
     end
 

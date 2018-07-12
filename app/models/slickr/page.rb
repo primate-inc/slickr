@@ -27,7 +27,6 @@ module Slickr
 
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
-    after_save :delete_nav_if_page_unpublished
 
     validates_presence_of :title, :layout, unless: :type_draft?
 
@@ -48,13 +47,12 @@ module Slickr
 
     scope(:no_root_or_page_navs, lambda do
       includes(:slickr_navigations)
-      .where(aasm_state: :published)
-      .where(slickr_navigations: { id: nil })
+      .where(type: nil, slickr_navigations: { id: nil })
     end)
 
     scope(:has_root_or_page_navs, lambda do
       includes(:slickr_navigations)
-      .where(aasm_state: :published)
+      .where(type: nil)
       .where.not(slickr_navigations: { id: nil })
     end)
 
@@ -143,11 +141,6 @@ module Slickr
     end
 
     private
-
-    def delete_nav_if_page_unpublished
-      return unless draft?
-      Slickr::Navigation.where(slickr_page_id: id).destroy_all
-    end
 
     def type_draft?
       type == 'Slickr::Page::Draft'

@@ -83,7 +83,9 @@ module Slickr
     # array of hashed with keys of page_id and path
     def build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
-        if hash['aasm_state'] == 'published'
+        schedule_passed = false
+        schedule_passed = publish_page(hash) if hash['publish_schedule_time']
+        if hash['aasm_state'] == 'published' || schedule_passed
           new_pathname = pathname + hash['slug']
           array.push(page_id: hash['page_id'], path: new_pathname)
           hash['children'].map do |child_hash|
@@ -98,6 +100,15 @@ module Slickr
         end
       end
       array
+    end
+
+    def publish_page(hash)
+      return false if Time.current < hash['publish_schedule_time']
+      page = Page.find(hash['slickr_page_id'])
+      page.update_attributes(
+        publish_schedule_date: nil, publish_schedule_time: nil
+      )
+      page.publish!
     end
 
     #####################

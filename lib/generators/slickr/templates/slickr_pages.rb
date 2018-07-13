@@ -85,7 +85,7 @@ ActiveAdmin.register Slickr::Page do
                   wrapper_html: { class: 'clockpicker', 'data-autoclose': 'true' },
                   input_html: { value: f.object.new_record? \
                     ? Time.now.try(:strftime, '%H:%M')
-                    : f.object.publish_schedule_time.try(:strftime, '%H:%M') }
+                    : f.object.publish_schedule_time.try(:localtime).try(:strftime, '%H:%M') }
           end
         end
       end

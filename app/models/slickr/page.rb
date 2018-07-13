@@ -151,7 +151,7 @@ module Slickr
 
     def set_date_in_publish_schedule_time
       return if publish_schedule_date.nil?
-      self.publish_schedule_time = DateTime.new(
+      self.publish_schedule_time = Time.new(
         publish_schedule_date.year, publish_schedule_date.month,
         publish_schedule_date.day, self.publish_schedule_time.hour,
         self.publish_schedule_time.min, 0

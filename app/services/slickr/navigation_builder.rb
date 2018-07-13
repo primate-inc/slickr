@@ -62,14 +62,14 @@ module Slickr
     # pathnames to build upon the main pathnames
     # example result
     # [{:page_id=>3, :path=>"/level1/level2/level3"}]
-    def build_additonal_page_paths(
-      nav_trees, main_page_paths
-    )
+    def build_additonal_page_paths(nav_trees, main_page_paths)
       navs = nav_trees.map { |root| root if root['root_type'] == 'Page' }
       navs.compact.map do |hash|
-        start_path = path_finder(main_page_paths, hash)[:path]
-        iterate_children_for_pathnames(hash, "#{start_path}/")
-      end.flatten
+        start_path_info = path_finder(main_page_paths, hash)
+        unless start_path_info.nil?
+          iterate_children_for_pathnames(hash, "#{start_path_info[:path]}/")
+        end
+      end.flatten.compact
     end
 
     # will iterate the children of the hash passed in.
@@ -133,12 +133,13 @@ module Slickr
       nav_trees.map do |root|
         menu_hash[root['title']] = root['children'].map do |child_hash|
           parent_link = if root['root_type'] == 'Page'
-                          path_finder(pathnames, root)[:path]
+                          path_info = path_finder(pathnames, root)
+                          path_info.nil? ? nil : path_info[:path]
                         else
                           '/'
                         end
-          build_nav(child_hash, pathnames, parent_link)
-        end
+          build_nav(child_hash, pathnames, parent_link) unless parent_link.nil?
+        end.compact
       end
       menu_hash
     end
@@ -172,7 +173,7 @@ module Slickr
                   end
       menu_hash['children'] = child_hash['children'].map do |hash|
         build_nav(hash, pathnames, parent_link)
-      end
+      end.compact
       menu_hash
     end
 

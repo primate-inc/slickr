@@ -78,13 +78,13 @@ const Tree = ({store, navigations, actions}) => (
           node => node.published == false ? node.id : null
         ).filter(id => id );
         let publishStatus  = 'published'
-        if(node.ancestor_ids) {
+        if(node.ancestor_ids || node.root_type == 'Page') {
           if(node.published == false ||
              node.ancestor_ids.some(r=> unpublishedNodeIds.indexOf(r) >= 0) ) {
             publishStatus = 'unpublished'
           }
         }
-        
+
         return {
           className: publishStatus,
           buttons: [

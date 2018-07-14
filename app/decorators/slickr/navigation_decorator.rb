@@ -27,5 +27,14 @@ module Slickr
       end
       type
     end
+
+    def published
+      return unless root_type == 'Page'
+      slickr_page.published?
+    end
+
+    def ancestor_ids
+      []
+    end
   end
 end

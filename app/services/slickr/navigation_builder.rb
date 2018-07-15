@@ -155,7 +155,8 @@ module Slickr
     #   :link=>"/menu", :link_text=>"Menu", "children"=>[]
     # }
     def build_nav(child_hash, pathnames, parent_link)
-      return unless child_hash['aasm_state'] == 'published'
+      return unless child_hash['aasm_state'] == 'published' ||
+                    child_hash['aasm_state'].nil?
       parent_link = if child_hash['child_type'] == 'Page'
                       path_finder(pathnames, child_hash)[:path]
                     else

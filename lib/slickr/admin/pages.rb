@@ -6,8 +6,6 @@ if defined?(ActiveAdmin)
     before_action :set_paper_trail_whodunnit
     decorate_with Slickr::PageDecorator
 
-
-
     filter :title
     filter :layout
 
@@ -21,9 +19,6 @@ if defined?(ActiveAdmin)
       column 'State' do |page|
         page.aasm_state.humanize
       end
-      # column 'Drafts' do |page|
-      #   page.drafts.count
-      # end
       actions
     end
 
@@ -48,14 +43,6 @@ if defined?(ActiveAdmin)
               render :edit
             end
           end
-          format.json do
-            render json: @slickr_page.to_json(methods: [
-              :preview_page, :admin_publish_path, :admin_unpublish_path,
-              :admin_page_path, :admin_image_index_path, :page_header_image,
-              :admin_return_media_path, :admin_preview_page_path,
-              @slickr_page.additional_page_edit_paths
-            ].flatten)
-          end
         end
       end
 
@@ -64,15 +51,6 @@ if defined?(ActiveAdmin)
         destroy! do |format|
           format.html do
             redirect_to admin_slickr_pages_path and return if resource.valid?
-          end
-          format.json do
-            render json: Slickr::Page.roots.not_draft.decorate.to_json(
-              only: %i[id title],
-              methods: %i[
-                expanded subtitle edit_page_path published
-                admin_delete_page_path
-              ]
-            )
           end
         end
       end

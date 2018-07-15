@@ -33,7 +33,7 @@ export default class PdfLinkInput extends React.Component {
   componentWillMount() {
     let textAreaStoreIndex = 0
     const megadraftTextAreas = document.querySelectorAll(
-      '.megadraft-text-editor + li textarea'
+      '.megadraft-text-editor + .text textarea'
     );
 
     Array.prototype.forEach.call(megadraftTextAreas, function(textarea, index) {

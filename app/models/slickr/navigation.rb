@@ -74,7 +74,7 @@ module Slickr
           admin_delete_navigation_path: n.admin_delete_navigation_path,
           change_position_admin_navigation: n.change_position_admin_navigation,
           admin_edit_page_path: n.admin_edit_page_path,
-          published: n.slickr_page.published?,
+          published: n.slickr_page.try(:published?),
           ancestor_ids: n.ancestry.split('/').map(&:to_i),
           parent_id: n.parent.id
         }

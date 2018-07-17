@@ -27,8 +27,11 @@ module Slickr
     end
 
     # load the Active Admin engine files into the core application
+    # load them in first to allow app user to override
     initializer :slickr do
-      ActiveAdmin.application.load_paths += Dir[File.dirname(__FILE__) + '/admin']
+      # ActiveAdmin.application.load_paths += Dir[File.dirname(__FILE__) + '/admin']
+      ActiveAdmin.application.load_paths
+                 .unshift Dir[File.dirname(__FILE__) + '/my_engine/admin']
     end
 
     # load the Slickr Settings everytime

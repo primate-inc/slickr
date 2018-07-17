@@ -31,7 +31,7 @@ module Slickr
     initializer :slickr do
       # ActiveAdmin.application.load_paths += Dir[File.dirname(__FILE__) + '/admin']
       ActiveAdmin.application.load_paths
-                 .unshift Dir[File.dirname(__FILE__) + '/my_engine/admin']
+                 .unshift Dir[File.dirname(__FILE__) + '/admin']
     end
 
     # load the Slickr Settings everytime

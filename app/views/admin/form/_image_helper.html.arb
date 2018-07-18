@@ -6,7 +6,7 @@ li class: 'image-picker' do
         field: field,
         id: f.object.send(field).try(:slickr_media_upload).try(:id),
         path: f.object.send(field).try(:slickr_media_upload).try(:image_url, :m_limit),
-        label: local_variables.include?(:label) ? label : field.to_s.humanize,
+        label: local_variables.include?(:label) ? label.humanize : field.to_s.humanize,
         hint: local_variables.include?(:hint) ? hint : '',
         errors: f.object.errors.messages[field]
       },

@@ -7,6 +7,7 @@ import mainAppReducers from 'slickr_extensions/page_edit/reducers/additional_red
 import choosingPageHeaderImage from './choosing_page_header_image'
 import textAreaIndex from './text_area_index'
 import label from './label'
+import labelText from './label_text'
 import textArea from './text_area'
 import imageObject from './image_object'
 import choosingActiveAdminImage from './choosing_active_admin_image'
@@ -18,6 +19,7 @@ const slickrReducers = {
   editorState,
   textAreaIndex,
   label,
+  labelText,
   textArea,
   imageObject,
   choosingActiveAdminImage,

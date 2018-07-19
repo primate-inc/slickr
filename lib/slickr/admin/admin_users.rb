@@ -68,7 +68,11 @@ ActiveAdmin.register AdminUser, as: "Users" do
     def create
       create! do |format|
         format.html do
-          redirect_to admin_user_path(resource), notice: 'User created'
+          if resource.valid?
+            redirect_to admin_user_path(resource), notice: 'User created'
+          else
+            render :new
+          end
         end
       end
     end
@@ -82,7 +86,11 @@ ActiveAdmin.register AdminUser, as: "Users" do
 
       update! do |format|
         format.html do
-          redirect_to admin_user_path(resource), notice: 'User updated'
+          if resource.valid?
+            redirect_to admin_user_path(resource), notice: 'User updated'
+          else
+            render :edit
+          end
         end
       end
     end

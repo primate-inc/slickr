@@ -4,17 +4,20 @@ import ReactDOM from 'react-dom';
 export default class Content extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-      navigationImagePath: '',
       pageSelectVisible: this.props.values.child_type === 'Page' ? true : false,
       linkVisible: this.props.values.child_type === 'Page' ? false : true
     }
   }
 
-  componentWillUnmount() {
-    this.setState({
-      navigationImagePath: this.props.navigation.navigation_image.path
-    })
+  componentDidUpdate(prevProps) {
+    if(this.props.navigation.navigation_image.id !== prevProps.navigation.navigation_image.id) {
+      this.props.setFieldValue(
+        'slickr_navigation_image_attributes',
+        { slickr_media_upload_id: this.props.navigation.navigation_image.id }
+      )
+    }
   }
 
   componentWillUnmount() {
@@ -36,17 +39,12 @@ export default class Content extends React.Component {
     }
   }
 
-  updateTrueFalse = () => (e) => {
-    let box = e.target.closest('.true_false');
-    if(e.target.checked === true) {
-      box.classList.add('checked');
-      this.props.setFieldValue(
-        'slickr_navigation_image_attributes',
-        { allow_destroy: true }
-      )
-    } else {
-      box.classList.remove('checked');
-    }
+  removeImage = () => (e) => {
+    this.props.setFieldValue(
+      'slickr_navigation_image_attributes',
+      { allow_destroy: true }
+    )
+    this.props.actions.updateNavImage({ id: null, path: null })
   }
 
   render() {
@@ -159,44 +157,29 @@ export default class Content extends React.Component {
                 let imagePath = this.props.navigation.navigation_image.path
 
                 if(!(imagePath == null)) {
-                  if(this.state.imagePath !== imagePath) {
-                    setFieldValue(
-                      'slickr_navigation_image_attributes',
-                      { slickr_media_upload_id: mediaUploadId }
-                    )
-                    this.setState({
-                      imagePath: imagePath
-                    })
-                  }
                   return (
-                    <p className="inline-hints">
+                    <div className="inline-hints">
                       <img src={imagePath} />
-                    </p>
+                      <div className={`image-picker-remove ${mediaUploadId == null ? 'no_image' : 'has_image'}`}>
+                        <div className="true_false image boolean input optional">
+                          <div className="edit-wrapper">
+                            <label className='label_remove' htmlFor='remove_navigation_image'>
+                              <input type="checkbox"
+                                     name='remove_navigation_image'
+                                     id='remove_navigation_image'
+                                     onClick={this.removeImage()} />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   )
                 }
               })()}
               <p className='hint-text'>Navigation image</p>
             </div>
           </li>
-          {(() => {
-            let imagePath = this.props.navigation.navigation_image.path
-            if(imagePath != null) {
-              return (
-                <li className="true_false image boolean input optional">
-                  <div className="edit-wrapper">
-                    <label htmlFor="remove_navigation_image">
-                      <input type="checkbox"
-                             name="remove_navigation_image"
-                             id="remove_navigation_image"
-                             value="1"
-                             onChange={handleChange}
-                             onClick={this.updateTrueFalse()} />Remove image
-                    </label>
-                  </div>
-                </li>
-              )
-            }
-          })()}
+
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
               <label htmlFor="text">Text</label>

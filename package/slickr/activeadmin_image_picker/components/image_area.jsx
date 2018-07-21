@@ -12,6 +12,15 @@ export default class ImageArea extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.imageObject.id !== prevProps.imageObject.id) {
+      this.setState({
+        imagePath: this.props.imageObject.path,
+        slickr_media_upload_id: this.props.imageObject.id
+      })
+    }
+  }
+
   openImagePicker = () => (e) => {
     e.preventDefault();
     let page
@@ -28,18 +37,10 @@ export default class ImageArea extends React.Component {
   }
 
   updateTrueFalse = () => (e) => {
-    let box = e.target.closest('.true_false');
-    if(e.target.checked === true) {
-      box.classList.add('checked');
-      this.setState({
-        slickr_media_upload_id: 'nil'
-      })
-    } else {
-      box.classList.remove('checked');
-      this.setState({
-        slickr_media_upload_id: this.props.imageObject.id
-      })
-    }
+    this.setState({
+      imagePath: null,
+      slickr_media_upload_id: 'nil'
+    })
   }
 
   render() {
@@ -77,20 +78,14 @@ export default class ImageArea extends React.Component {
             </label>
             <input type="file" onClick={this.openImagePicker()} />
             {(() => {
-              let mediaUploadId = this.props.imageObject.id
-              let imagePath = this.props.imageObject.path
+              let mediaUploadId = this.state.slickr_media_upload_id
+              let imagePath = this.state.imagePath
 
-              if(imagePath != null) {
-                if(this.state.imagePath !== imagePath) {
-                  this.setState({
-                    imagePath: imagePath,
-                    slickr_media_upload_id: mediaUploadId
-                  })
-                }
+              if(this.state.imagePath != null) {
                 return (
                   <div className="inline-hints">
                     <img src={imagePath} />
-                    <div className={`image-picker-remove ${this.props.imageObject.id == null ? 'no_image' : 'has_image'}`}>
+                    <div className={`image-picker-remove ${mediaUploadId == null ? 'no_image' : 'has_image'}`}>
                       <div className="true_false image boolean input optional">
                         <div className="edit-wrapper">
                           <label className='label_remove' htmlFor={`remove_${this.props.imageObject.field}`}>

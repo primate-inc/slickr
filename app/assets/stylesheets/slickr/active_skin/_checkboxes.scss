@@ -25,13 +25,6 @@
             transform: scale(1.25);
           }
         }
-
-        &.checked {
-          .label_remove {
-            border: 2px solid $alert; border-radius: 50%; border-width: 0;
-            background-color: $alert;
-          }
-        }
       }
     }
   }

@@ -7,7 +7,6 @@ export default class ImageArea extends React.Component {
     super(props);
 
     this.state = {
-      imagePath: this.props.imageObject.path,
       slickr_media_upload_id: this.props.imageObject.id
     }
   }
@@ -15,7 +14,6 @@ export default class ImageArea extends React.Component {
   componentDidUpdate(prevProps) {
     if(this.props.imageObject.id !== prevProps.imageObject.id) {
       this.setState({
-        imagePath: this.props.imageObject.path,
         slickr_media_upload_id: this.props.imageObject.id
       })
     }
@@ -36,11 +34,11 @@ export default class ImageArea extends React.Component {
     }
   }
 
-  updateTrueFalse = () => (e) => {
+  removeImage = () => (e) => {
     this.setState({
-      imagePath: null,
       slickr_media_upload_id: 'nil'
     })
+    this.props.actions.updateActiveAdminImage({ id: null, path: null })
   }
 
   render() {
@@ -78,10 +76,10 @@ export default class ImageArea extends React.Component {
             </label>
             <input type="file" onClick={this.openImagePicker()} />
             {(() => {
-              let mediaUploadId = this.state.slickr_media_upload_id
-              let imagePath = this.state.imagePath
+              let mediaUploadId = this.props.imageObject.id
+              let imagePath = this.props.imageObject.path
 
-              if(this.state.imagePath != null) {
+              if(imagePath != null) {
                 return (
                   <div className="inline-hints">
                     <img src={imagePath} />
@@ -92,7 +90,7 @@ export default class ImageArea extends React.Component {
                             <input type="checkbox"
                                    name={`remove_${this.props.imageObject.field}`}
                                    id={`remove_${this.props.imageObject.field}`}
-                                   onClick={this.updateTrueFalse()} />
+                                   onClick={this.removeImage()} />
                           </label>
                         </div>
                       </div>

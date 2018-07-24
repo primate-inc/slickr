@@ -39,7 +39,8 @@ module Slickr
         :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
         :link_text, :ancestry, 'slickr_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
-        :page_header, :page_intro, :page_subheader, :page_intro, :slug
+        :page_header, :page_intro, :page_subheader, :page_intro, :slug,
+        :aasm_state, :publish_schedule_time
       ).arrange_serializable(order: :position)[0]['children']
     end
 
@@ -59,7 +60,7 @@ module Slickr
     end
 
     def tree_children
-      children.order(:position).decorate.map do |n|
+      children.includes(:slickr_page).order(:position).decorate.map do |n|
         {
           id: n.id,
           title: n.title,
@@ -72,7 +73,10 @@ module Slickr
           admin_edit_navigation_path: n.admin_edit_navigation_path,
           admin_delete_navigation_path: n.admin_delete_navigation_path,
           change_position_admin_navigation: n.change_position_admin_navigation,
-          admin_edit_page_path: n.admin_edit_page_path
+          admin_edit_page_path: n.admin_edit_page_path,
+          published: n.child_published?,
+          ancestor_ids: n.ancestry.split('/').map(&:to_i),
+          parent_id: n.parent.id
         }
       end
     end

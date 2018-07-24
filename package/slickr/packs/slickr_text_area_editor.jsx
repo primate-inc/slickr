@@ -45,7 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const dataNode = element.childNodes[0]
       let data = JSON.parse(dataNode.getAttribute('data'))
 
-      data.input = data.input === '' ? emptyDraftObject : JSON.parse(data.input)
+      const required = data.input.required
+      let labelText = data.input.label
+      if(required) { labelText = `${labelText}*` }
+
+      if(data.input.field === '') {
+        data.input.field = emptyDraftObject
+      } else {
+        data.input.field = JSON.parse(data.input.field)
+      }
 
       const decorators = [
         {
@@ -62,10 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
         pageState: JSON.parse(pageState),
         textAreaIndex: index,
         label: label,
+        labelText: labelText,
         textArea: textArea,
         modalIsOpen: false,
         loadedImages: {},
-        editorState: editorStateFromRaw(data.input, compositeDecorator)
+        editorState: editorStateFromRaw(data.input.field, compositeDecorator)
       }
 
       const middlewares = [thunk];

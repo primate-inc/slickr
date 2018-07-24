@@ -63,6 +63,15 @@ if defined?(ActiveAdmin)
         resource.save
       end
       resource.update_attribute(:position, params[:new_position])
+      respond_to do |format|
+        format.json do
+          render json: {
+            id: resource.id,
+            ancestor_ids: resource.ancestry.split('/').map(&:to_i),
+            parent_id: resource.parent.id
+          }
+        end
+      end
     end
 
     controller do

@@ -21,7 +21,9 @@ class CreateSlickrPages < ActiveRecord::Migration[5.1]
       t.text      :og_image
       t.text      :og_image_2
       t.datetime  :published_at
-      t.datetime  :publishing_scheduled_for
+      t.date      :publish_schedule_date
+      t.datetime  :publish_schedule_time
+
 
       t.timestamps
     end

@@ -27,8 +27,8 @@ export const saveNodePosition = (node, parent_id, new_position) => {
         console.error(err)
       } else {
         dispatch({
-          type: 'NAVIGATIONS_UPDATED',
-          title: resp.body
+          type: 'NAVIGATION_POSITION_UPDATED',
+          payload: resp.body
         })
       }
     })

@@ -69,62 +69,80 @@ const Tree = ({store, navigations, actions}) => (
       canDrag={canDrag}
       canDrop={canDrop}
       onChange={ treeData => { updateState(treeData, actions)}}
-      generateNodeProps={({ node, path }) => ({
-        buttons: [
-          <div>
-            {(() => {
-              if(node.admin_edit_page_path) {
-                return (
-                  <button onClick={() =>
-                    FollowLink(node.admin_edit_page_path)
-                  }>
-                    <svg className="svg-icon" viewBox="0 0 20 20">
-                      <use xlinkHref="#svg-preview"></use>
-                    </svg>
-                    View
-                  </button>
-                )
-              }
-            })()}
-          </div>,
-          <button onClick={() =>
-            FollowLink(node.admin_edit_navigation_path)
-          }>
-            <svg className="svg-icon" viewBox="0 0 20 20">
-              <use xlinkHref="#svg-edit"></use>
-            </svg>
-            Edit
-          </button>,
-          <div>
-            {(() => {
-              if(
-                  (node.child_type == 'Page' || node.child_type == 'Header' ||
-                  node.root_type) &&
-                  (navigations[0].root_type != 'Link' || node.root_type)
-                ) {
-                return (
-                  <button onClick={() =>
-                    FollowLink(node.add_child_path)
-                  }>
-                    <svg className="svg-icon" viewBox="0 0 20 20">
-                      <use xlinkHref="#svg-plus"></use>
-                    </svg>
-                    Add Child
-                  </button>
-                )
-              }
-            })()}
-          </div>,
-          <button onClick={ () => {if(confirm('Delete the navigation?')) {
-            deleteNavigation(node.admin_delete_navigation_path, actions)
-          };}}>
-            <svg className="svg-icon" viewBox="0 0 20 20">
-              <use xlinkHref="#svg-delete"></use>
-            </svg>
-            Remove
-          </button>
-        ]
-      })}
+      generateNodeProps={({ node, path }) => {
+        const flatData = getFlatDataFromTree({
+          treeData: navigations, getNodeKey: ({ node }) => node.id
+        })
+        var nodes = flatData.map(data => data.node);
+        var unpublishedNodeIds = nodes.map(
+          node => node.published == false ? node.id : null
+        ).filter(id => id );
+        let publishStatus  = 'published'
+        if(node.ancestor_ids || node.root_type == 'Page') {
+          if(node.published == false ||
+             node.ancestor_ids.some(r=> unpublishedNodeIds.indexOf(r) >= 0) ) {
+            publishStatus = 'unpublished'
+          }
+        }
+
+        return {
+          className: publishStatus,
+          buttons: [
+            <div>
+              {(() => {
+                if(node.admin_edit_page_path) {
+                  return (
+                    <button onClick={() =>
+                      FollowLink(node.admin_edit_page_path)
+                    }>
+                      <svg className="svg-icon" viewBox="0 0 20 20">
+                        <use xlinkHref="#svg-preview"></use>
+                      </svg>
+                      View
+                    </button>
+                  )
+                }
+              })()}
+            </div>,
+            <button onClick={() =>
+              FollowLink(node.admin_edit_navigation_path)
+            }>
+              <svg className="svg-icon" viewBox="0 0 20 20">
+                <use xlinkHref="#svg-edit"></use>
+              </svg>
+              Edit
+            </button>,
+            <div>
+              {(() => {
+                if(
+                    (node.child_type == 'Page' || node.child_type == 'Header' ||
+                    node.root_type) &&
+                    (navigations[0].root_type != 'Link' || node.root_type)
+                  ) {
+                  return (
+                    <button onClick={() =>
+                      FollowLink(node.add_child_path)
+                    }>
+                      <svg className="svg-icon" viewBox="0 0 20 20">
+                        <use xlinkHref="#svg-plus"></use>
+                      </svg>
+                      Add Child
+                    </button>
+                  )
+                }
+              })()}
+            </div>,
+            <button onClick={ () => {if(confirm('Delete the navigation?')) {
+              deleteNavigation(node.admin_delete_navigation_path, actions)
+            };}}>
+              <svg className="svg-icon" viewBox="0 0 20 20">
+                <use xlinkHref="#svg-delete"></use>
+              </svg>
+              Remove
+            </button>
+          ]
+        }
+      }}
     />
   </div>
 )

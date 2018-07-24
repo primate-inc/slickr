@@ -7,8 +7,15 @@ export default class ImageArea extends React.Component {
     super(props);
 
     this.state = {
-      imagePath: this.props.imageObject.path,
       slickr_media_upload_id: this.props.imageObject.id
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.imageObject.id !== prevProps.imageObject.id) {
+      this.setState({
+        slickr_media_upload_id: this.props.imageObject.id
+      })
     }
   }
 
@@ -27,17 +34,11 @@ export default class ImageArea extends React.Component {
     }
   }
 
-  updateTrueFalse = () => (e) => {
-    let box = e.target.closest('.true_false');
-    if(e.target.checked === true) {
-      this.setState({
-        slickr_media_upload_id: 'nil'
-      })
-    } else {
-      this.setState({
-        slickr_media_upload_id: this.props.imageObject.id
-      })
-    }
+  removeImage = () => (e) => {
+    this.setState({
+      slickr_media_upload_id: 'nil'
+    })
+    this.props.actions.updateActiveAdminImage({ id: null, path: null })
   }
 
   render() {
@@ -79,16 +80,22 @@ export default class ImageArea extends React.Component {
               let imagePath = this.props.imageObject.path
 
               if(imagePath != null) {
-                if(this.state.imagePath !== imagePath) {
-                  this.setState({
-                    imagePath: imagePath,
-                    slickr_media_upload_id: mediaUploadId
-                  })
-                }
                 return (
-                  <p className="inline-hints">
+                  <div className="inline-hints">
                     <img src={imagePath} />
-                  </p>
+                    <div className={`image-picker-remove ${mediaUploadId == null ? 'no_image' : 'has_image'}`}>
+                      <div className="true_false image boolean input optional">
+                        <div className="edit-wrapper">
+                          <label className='label_remove' htmlFor={`remove_${this.props.imageObject.field}`}>
+                            <input type="checkbox"
+                                   name={`remove_${this.props.imageObject.field}`}
+                                   id={`remove_${this.props.imageObject.field}`}
+                                   onClick={this.removeImage()} />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 )
               }
             })()}
@@ -101,21 +108,8 @@ export default class ImageArea extends React.Component {
             })()}
           </div>
         </div>,
-        <div key={`${this.props.textAreaIndex}-3`}
-             className={`image-picker-remove ${this.props.imageObject.id == null ? 'no_image' : 'has_image'}`}>
-          <div className="true_false image boolean input optional">
-            <div className="edit-wrapper">
-              <label htmlFor={`remove_${this.props.imageObject.field}`}>
-                <input type="checkbox"
-                       name={`remove_${this.props.imageObject.field}`}
-                       id={`remove_${this.props.imageObject.field}`}
-                       onClick={this.updateTrueFalse()} />Remove image
-              </label>
-            </div>
-          </div>
-        </div>,
         <ImagePickerModal
-          key={`${this.props.textAreaIndex}-4`}
+          key={`${this.props.textAreaIndex}-3`}
           modalIsOpen={this.props.modalIsOpen}
           actions={actions}
           loadedImages={this.props.loadedImages}

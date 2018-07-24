@@ -2,7 +2,13 @@ li class: 'megadraft-text-editor' do
   f.content_tag :div,
     class: 'megadraft-data',
     data: {
-      input: "#{f.object.send(field)}",
+      input: {
+        field: f.object.send(field),
+        label: local_variables.include?(:label) ? label.humanize : field.to_s.humanize,
+        required: f.object.class.validators_on(field).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator },
+        hint: local_variables.include?(:hint) ? hint : '',
+        errors: f.object.errors.messages[field]
+      },
       pageState: slickr_editor_paths
     }.to_json do
     end

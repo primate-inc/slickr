@@ -27,8 +27,13 @@ module Slickr
     end
 
     # load the Active Admin engine files into the core application
+    # load them in first to allow app user to override
     initializer :slickr do
-      ActiveAdmin.application.load_paths += Dir[File.dirname(__FILE__) + '/admin']
+      # ActiveAdmin.application.load_paths += Dir[File.dirname(__FILE__) + '/admin']
+      engine_path = Bundler.rubygems.find_name('slickr_cms').first
+                           .full_gem_path
+      engine_admin_path = engine_path + '/lib/slickr/admin'
+      ActiveAdmin.application.load_paths.unshift engine_admin_path
     end
 
     # load the Slickr Settings everytime

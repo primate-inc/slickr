@@ -62,14 +62,14 @@ module Slickr
     # pathnames to build upon the main pathnames
     # example result
     # [{:page_id=>3, :path=>"/level1/level2/level3"}]
-    def build_additonal_page_paths(
-      nav_trees, main_page_paths
-    )
+    def build_additonal_page_paths(nav_trees, main_page_paths)
       navs = nav_trees.map { |root| root if root['root_type'] == 'Page' }
       navs.compact.map do |hash|
-        start_path = path_finder(main_page_paths, hash)[:path]
-        iterate_children_for_pathnames(hash, "#{start_path}/")
-      end.flatten
+        start_path_info = path_finder(main_page_paths, hash)
+        unless start_path_info.nil?
+          iterate_children_for_pathnames(hash, "#{start_path_info[:path]}/")
+        end
+      end.flatten.compact
     end
 
     # will iterate the children of the hash passed in.
@@ -83,10 +83,14 @@ module Slickr
     # array of hashed with keys of page_id and path
     def build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
-        new_pathname = pathname + hash['slug']
-        array.push(page_id: hash['page_id'], path: new_pathname)
-        hash['children'].map do |child_hash|
-          build_page_pathnames(child_hash, "#{new_pathname}/", array)
+        schedule_passed = false
+        schedule_passed = publish_page(hash) if hash['publish_schedule_time']
+        if hash['aasm_state'] == 'published' || schedule_passed
+          new_pathname = pathname + hash['slug']
+          array.push(page_id: hash['page_id'], path: new_pathname)
+          hash['children'].map do |child_hash|
+            build_page_pathnames(child_hash, "#{new_pathname}/", array)
+          end
         end
       elsif hash['child_type'] == 'Header'
         no_link = hash['link'].blank?
@@ -96,6 +100,15 @@ module Slickr
         end
       end
       array
+    end
+
+    def publish_page(hash)
+      return false if Time.current < hash['publish_schedule_time']
+      page = Page.find(hash['slickr_page_id'])
+      page.update_attributes(
+        publish_schedule_date: nil, publish_schedule_time: nil
+      )
+      page.publish!
     end
 
     #####################
@@ -120,12 +133,13 @@ module Slickr
       nav_trees.map do |root|
         menu_hash[root['title']] = root['children'].map do |child_hash|
           parent_link = if root['root_type'] == 'Page'
-                          path_finder(pathnames, root)[:path]
+                          path_info = path_finder(pathnames, root)
+                          path_info.nil? ? nil : path_info[:path]
                         else
                           '/'
                         end
-          build_nav(child_hash, pathnames, parent_link)
-        end
+          build_nav(child_hash, pathnames, parent_link) unless parent_link.nil?
+        end.compact
       end
       menu_hash
     end
@@ -141,6 +155,8 @@ module Slickr
     #   :link=>"/menu", :link_text=>"Menu", "children"=>[]
     # }
     def build_nav(child_hash, pathnames, parent_link)
+      return unless child_hash['aasm_state'] == 'published' ||
+                    child_hash['aasm_state'].nil?
       parent_link = if child_hash['child_type'] == 'Page'
                       path_finder(pathnames, child_hash)[:path]
                     else
@@ -158,7 +174,7 @@ module Slickr
                   end
       menu_hash['children'] = child_hash['children'].map do |hash|
         build_nav(hash, pathnames, parent_link)
-      end
+      end.compact
       menu_hash
     end
 

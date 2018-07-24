@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import icons from "megadraft/lib/icons";
-import page_store from 'slickr_cms/package/slickr/packs/slickr_page_edit.jsx'
-import text_editor_store from 'slickr_cms/package/slickr/packs/slickr_text_area_editor.jsx'
+import text_editor_store from 'slickr_cms/package/slickr/packs/slickr_text_area_editor.jsx';
 
 export default class PdfLinkInput extends React.Component {
   constructor(props) {
@@ -21,10 +20,9 @@ export default class PdfLinkInput extends React.Component {
     var promise = new Promise((resolve, reject) => {
       (function waitForData(){
         if(text_editor_store[index]) {
-          if ('pdf_path' in text_editor_store[index].getState().loadedPdfs) return resolve();
-          setTimeout(waitForData, 30);
-        } else {
-          if ('pdf_path' in page_store.getState().loadedPdfs) return resolve();
+          if ('pdf_path' in text_editor_store[index].getState().loadedPdfs) {
+            return resolve();
+          }
           setTimeout(waitForData, 30);
         }
       })();
@@ -34,15 +32,19 @@ export default class PdfLinkInput extends React.Component {
 
   componentWillMount() {
     let textAreaStoreIndex = 0
-    let textareaList = document.getElementsByTagName('textarea');
+    const megadraftTextAreas = document.querySelectorAll(
+      '.megadraft-text-editor + .text textarea'
+    );
 
-    Array.prototype.forEach.call(textareaList, function(textarea, index) {
-      if (textarea.classList.contains('active_textarea')) textAreaStoreIndex = index
+    Array.prototype.forEach.call(megadraftTextAreas, function(textarea, index) {
+      if (textarea.classList.contains('active_textarea')) {
+        textAreaStoreIndex = index
+      }
     })
     this.props.onChange('load_pdfs')
 
     this.loadData(textAreaStoreIndex).then(() => {
-      let pdfs = text_editor_store[textAreaStoreIndex] ? text_editor_store[textAreaStoreIndex].getState().loadedPdfs : page_store.getState().loadedPdfs
+      let pdfs = text_editor_store[textAreaStoreIndex].getState().loadedPdfs
       this.setState({
         pdfs: pdfs,
         loading: false

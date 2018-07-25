@@ -36,6 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .getAttribute('data')
     ).pageState
 
+    const allowedUploadInfo = JSON.parse(
+      document.getElementsByClassName('image-picker')[0]
+      .childNodes[0]
+      .getAttribute('data')
+    ).allowedUploadInfo
+
     let elements = document.getElementsByClassName('megadraft-text-editor')
     Array.prototype.forEach.call(elements, function(element, index) {
       const nextElementSibling = element.nextElementSibling
@@ -68,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const initialState = {
         pageState: JSON.parse(pageState),
+        allowedUploadInfo: allowedUploadInfo,
         textAreaIndex: index,
         label: label,
         labelText: labelText,

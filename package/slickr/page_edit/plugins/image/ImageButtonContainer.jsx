@@ -7,7 +7,10 @@ import * as MediaGalleryActions from '../../../media_gallery/actions';
 import cx from 'classnames';
 import ImageButton from "./ImageButton.jsx";
 
-const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState, choosingPageHeaderImage, choosingNavImage}) => (
+const ImageButtonContainer = ({
+  modalIsOpen, actions, loadedImages, editorState, choosingPageHeaderImage,
+  choosingNavImage, allowedUploadInfo
+}) => (
   <div>
     <ImageButton modalIsOpen={modalIsOpen}
                  actions={actions}
@@ -15,6 +18,7 @@ const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState, 
                  editorState={editorState}
                  choosingPageHeaderImage={choosingPageHeaderImage}
                  choosingNavImage={choosingNavImage}
+                 allowedUploadInfo={allowedUploadInfo}
     />
   </div>
 )
@@ -22,7 +26,8 @@ const ImageButtonContainer = ({modalIsOpen, actions, loadedImages, editorState, 
 ImageButtonContainer.propTypes = {
   actions: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
-  loadedImages: PropTypes.object.isRequired
+  loadedImages: PropTypes.object.isRequired,
+  allowedUploadInfo: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -31,7 +36,8 @@ const mapStateToProps = state => ({
   loadedImages: state.loadedImages,
   editorState: state.editorState,
   choosingPageHeaderImage: state.choosingPageHeaderImage,
-  choosingNavImage: state.choosingNavImage
+  choosingNavImage: state.choosingNavImage,
+  allowedUploadInfo: state.allowedUploadInfo
 })
 
 const mapDispatchToProps = dispatch => ({

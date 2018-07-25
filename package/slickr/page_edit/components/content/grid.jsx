@@ -19,29 +19,33 @@ export default class Grid extends React.Component {
         'id': this.props.images[index].id,
         'slickr_upload_path': this.props.images[index].build_for_gallery.displayPath,
         'additional_info': this.props.images[index].additional_info,
-        'media_upload_helper_path': '/admin/slickr_media_uploads/return_media_path'
+        'media_upload_helper_path': '/admin/slickr_media_uploads/return_media_path',
+        'mime_type': this.props.images[index].build_for_gallery.mimeType
       }
     };
-    let standardImageData = {
-      id: this.props.images[index].id,
-      path: this.props.images[index].build_for_gallery.displayPath
-    }
 
-    if(this.props.choosingPageHeaderImage) {
-      this.props.actions.toggleChoosingPageHeaderImage();
-      this.props.actions.updatePageHeaderImage(standardImageData)
-    } else if(this.props.choosingNavImage) {
-      this.props.actions.toggleChoosingImage();
-      this.props.actions.updateNavImage(standardImageData)
-    } else if(this.props.choosingActiveAdminImage) {
-      this.props.actions.toggleChoosingActiveAdminImage();
-      this.props.actions.updateActiveAdminImage(standardImageData)
-    } else {
-      this.props.actions.changeEditorState(
-        insertDataBlock(this.props.editorState, megadraftImageData)
-      )
+    if(this.props.allowedUploadInfo.file_mime_types.indexOf(megadraftImageData.image.mime_type) === -1) {
+      let standardImageData = {
+        id: this.props.images[index].id,
+        path: this.props.images[index].build_for_gallery.displayPath
+      }
+
+      if(this.props.choosingPageHeaderImage) {
+        this.props.actions.toggleChoosingPageHeaderImage();
+        this.props.actions.updatePageHeaderImage(standardImageData)
+      } else if(this.props.choosingNavImage) {
+        this.props.actions.toggleChoosingImage();
+        this.props.actions.updateNavImage(standardImageData)
+      } else if(this.props.choosingActiveAdminImage) {
+        this.props.actions.toggleChoosingActiveAdminImage();
+        this.props.actions.updateActiveAdminImage(standardImageData)
+      } else {
+        this.props.actions.changeEditorState(
+          insertDataBlock(this.props.editorState, megadraftImageData)
+        )
+      }
+      this.props.actions.toggleImagePicker()
     }
-    this.props.actions.toggleImagePicker()
   }
 
   render () {

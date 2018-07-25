@@ -12,7 +12,7 @@ let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].con
 
 const MyTextAreaEditor = ({
   store, actions, modalIsOpen, page, editorState, pageState, textAreaIndex,
-  label, labelText, textArea
+  label, labelText, textArea, allowedUploadInfo
 }) => {
   return(
     <TextArea actions={actions}
@@ -23,6 +23,7 @@ const MyTextAreaEditor = ({
               label={label}
               labelText={labelText}
               textArea={textArea}
+              allowedUploadInfo={allowedUploadInfo}
     />
   )
 }
@@ -33,6 +34,7 @@ const slickrPropTypes = {
   modalIsOpen: PropTypes.bool.isRequired,
   loadedImages: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
+  allowedUploadInfo: PropTypes.object.isRequired
 }
 
 MyTextAreaEditor.propTypes = slickrPropTypes
@@ -45,7 +47,8 @@ const mapStateToProps = state => ({
   textAreaIndex: state.textAreaIndex,
   label: state.label,
   labelText: state.labelText,
-  textArea: state.textArea
+  textArea: state.textArea,
+  allowedUploadInfo: state.allowedUploadInfo
 })
 
 const mapDispatchToProps = dispatch => ({

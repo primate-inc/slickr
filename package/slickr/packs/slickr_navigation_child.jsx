@@ -9,11 +9,16 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import ReactModal from 'react-modal';
 
-const navigationState = document.getElementById('navigation-data').dataset.navigation_data
+const navigationState = document.getElementById('navigation-data')
+                                .dataset.navigation_data
 const parent = document.getElementById('navigation-data').dataset.parent
 const rootNav = document.getElementById('navigation-data').dataset.root_nav
-const childTypes = document.getElementById('navigation-data').dataset.child_types
-const selectablePages = document.getElementById('navigation-data').dataset.selectable_pages
+const childTypes = document.getElementById('navigation-data')
+                           .dataset.child_types
+const selectablePages = document.getElementById('navigation-data')
+                                .dataset.selectable_pages
+const allowedUploadInfo = document.getElementById('navigation-data')
+                                  .dataset.allowed_upload_info
 
 const initialState = {
   navigationState: JSON.parse(navigationState),
@@ -22,7 +27,8 @@ const initialState = {
   childTypes: JSON.parse(childTypes),
   selectablePages: JSON.parse(selectablePages),
   modalIsOpen: false,
-  loadedImages: {}
+  loadedImages: {},
+  allowedUploadInfo: JSON.parse(allowedUploadInfo)
 }
 
 const middlewares = [thunk];

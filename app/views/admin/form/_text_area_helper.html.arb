@@ -9,7 +9,8 @@ li class: 'megadraft-text-editor' do
         hint: local_variables.include?(:hint) ? hint : '',
         errors: f.object.errors.messages[field]
       },
-      pageState: slickr_editor_paths
+      pageState: slickr_editor_paths,
+      allowedUploadInfo:  Slickr::MediaUpload.allowed_upload_info
     }.to_json do
     end
 end

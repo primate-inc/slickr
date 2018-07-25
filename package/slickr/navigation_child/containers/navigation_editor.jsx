@@ -9,7 +9,7 @@ import * as MediaGalleryActions from '../../media_gallery/actions';
 
 const NavigationEditor = ({
     navigation, parent, rootNav, childTypes, selectablePages, modalIsOpen,
-    loadedImages, choosingNavImage, actions, store
+    loadedImages, choosingNavImage, allowedUploadInfo, actions, store
 }) => {
   return(
     <NavigationWrapper  navigation={navigation}
@@ -20,31 +20,34 @@ const NavigationEditor = ({
                         modalIsOpen={modalIsOpen}
                         loadedImages={loadedImages}
                         choosingNavImage={choosingNavImage}
-                        actions={actions} />
+                        actions={actions}
+                        allowedUploadInfo={allowedUploadInfo} />
   )
 }
 
 NavigationEditor.propTypes = {
-  navigation:       PropTypes.object.isRequired,
-  parent:           PropTypes.object.isRequired,
-  rootNav:          PropTypes.object.isRequired,
-  childTypes:       PropTypes.array.isRequired,
-  selectablePages:  PropTypes.array.isRequired,
-  modalIsOpen:      PropTypes.bool.isRequired,
-  loadedImages:     PropTypes.object.isRequired,
-  choosingNavImage: PropTypes.bool.isRequired,
-  actions:          PropTypes.object.isRequired
+  navigation:         PropTypes.object.isRequired,
+  parent:             PropTypes.object.isRequired,
+  rootNav:            PropTypes.object.isRequired,
+  childTypes:         PropTypes.array.isRequired,
+  selectablePages:    PropTypes.array.isRequired,
+  modalIsOpen:        PropTypes.bool.isRequired,
+  loadedImages:       PropTypes.object.isRequired,
+  choosingNavImage:   PropTypes.bool.isRequired,
+  actions:            PropTypes.object.isRequired,
+  allowedUploadInfo:  PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  navigation:       state.navigationState,
-  parent:           state.parent,
-  rootNav:          state.rootNav,
-  childTypes:       state.childTypes,
-  selectablePages:  state.selectablePages,
-  modalIsOpen:      state.modalIsOpen,
-  loadedImages:     state.loadedImages,
-  choosingNavImage: state.choosingNavImage
+  navigation:         state.navigationState,
+  parent:             state.parent,
+  rootNav:            state.rootNav,
+  childTypes:         state.childTypes,
+  selectablePages:    state.selectablePages,
+  modalIsOpen:        state.modalIsOpen,
+  loadedImages:       state.loadedImages,
+  choosingNavImage:   state.choosingNavImage,
+  allowedUploadInfo:  state.allowedUploadInfo
 })
 
 const mapDispatchToProps = dispatch => ({

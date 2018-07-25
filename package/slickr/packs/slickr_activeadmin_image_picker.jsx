@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .getAttribute('data')
     ).pageState
 
+    const allowedUploadInfo = JSON.parse(
+      document.getElementsByClassName('image-picker')[0]
+      .childNodes[0]
+      .getAttribute('data')
+    ).allowedUploadInfo
+
     let elements = document.getElementsByClassName('image-picker')
     Array.prototype.forEach.call(elements, function(element, index) {
       const nextElementSibling = element.nextElementSibling
@@ -25,9 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const dataNode = element.childNodes[0]
       let data = JSON.parse(dataNode.getAttribute('data'))
-
+      
       const initialState = {
         pageState: JSON.parse(pageState),
+        allowedUploadInfo: allowedUploadInfo,
         imageObject: data.input,
         textAreaIndex: index,
         label: label,

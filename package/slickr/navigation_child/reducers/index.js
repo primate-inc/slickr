@@ -12,7 +12,8 @@ const rootReducer = combineReducers ({
   parent: (state = {}) => state,
   rootNav: (state = {}) => state,
   childTypes: (state = []) => state,
-  selectablePages: (state = []) => state
+  selectablePages: (state = []) => state,
+  allowedUploadInfo: (state = {}) => state
 })
 
 export default rootReducer

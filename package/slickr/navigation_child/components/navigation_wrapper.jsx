@@ -14,7 +14,7 @@ const NavigationWrapper = (
   {childTypes, parent, rootNav, selectablePages, navigation, actions, values,
    touched, errors, dirty, isSubmitting, handleChange, setFieldValue,
    handleBlur, handleSubmit, handleReset, loadedImages, modalIsOpen,
-   choosingNavImage
+   choosingNavImage, allowedUploadInfo
   }) => {
     return(
       <div >
@@ -57,6 +57,7 @@ const NavigationWrapper = (
             actions={actions}
             loadedImages={loadedImages}
             choosingNavImage={choosingNavImage}
+            allowedUploadInfo={allowedUploadInfo}
           />
         </form>
       </div>

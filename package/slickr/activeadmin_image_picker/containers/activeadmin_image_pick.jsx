@@ -16,7 +16,8 @@ let _csrf_token = () => {
 
 const ActiveadminImagePick = ({ store, actions, modalIsOpen, textAreaIndex,
                                 label, textArea, page, loadedImages,
-                                imageObject, choosingActiveAdminImage }) => {
+                                imageObject, choosingActiveAdminImage,
+                                allowedUploadInfo }) => {
   return(
     <ImageArea actions={actions}
                       page={page}
@@ -27,6 +28,7 @@ const ActiveadminImagePick = ({ store, actions, modalIsOpen, textAreaIndex,
                       loadedImages={loadedImages}
                       imageObject={imageObject}
                       choosingActiveAdminImage={choosingActiveAdminImage}
+                      allowedUploadInfo={allowedUploadInfo}
     />
   )
 }
@@ -37,7 +39,8 @@ const slickrPropTypes = {
   actions: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   loadedImages: PropTypes.object.isRequired,
-  choosingActiveAdminImage: PropTypes.bool.isRequired
+  choosingActiveAdminImage: PropTypes.bool.isRequired,
+  allowedUploadInfo: PropTypes.object.isRequired
 }
 
 ActiveadminImagePick.propTypes = slickrPropTypes
@@ -50,7 +53,8 @@ const mapStateToProps = state => ({
   textAreaIndex: state.textAreaIndex,
   label: state.label,
   textArea: state.textArea,
-  choosingActiveAdminImage: state.choosingActiveAdminImage
+  choosingActiveAdminImage: state.choosingActiveAdminImage,
+  allowedUploadInfo: state.allowedUploadInfo
 })
 
 const mapDispatchToProps = dispatch => ({

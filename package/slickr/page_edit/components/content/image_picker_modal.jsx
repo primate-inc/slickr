@@ -76,7 +76,8 @@ export default class ImagePickerModal extends React.Component {
       return ([
         <div key='1' style={{overflow: "auto", height: "100%"}}>
           <div id="media-gallery">
-            <NewImage actions={this.props.actions} />
+            <NewImage actions={this.props.actions}
+                      allowedUploadInfo={this.props.allowedUploadInfo} />
             <div id='modal_image_gallery_wrapper'>
               <Grid
                 actions={this.props.actions}
@@ -85,6 +86,7 @@ export default class ImagePickerModal extends React.Component {
                 choosingPageHeaderImage={this.props.choosingPageHeaderImage}
                 choosingNavImage={this.props.choosingNavImage}
                 choosingActiveAdminImage={this.props.choosingActiveAdminImage}
+                allowedUploadInfo={this.props.allowedUploadInfo}
               />
             </div>
           </div>

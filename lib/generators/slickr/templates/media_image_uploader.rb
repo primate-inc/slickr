@@ -6,6 +6,9 @@ require 'image_processing/vips'
 module Slickr
   # MediaImageUploader
   class MediaImageUploader < Shrine
+    ALLOWED_TYPES = %w[image/jpg image/jpeg image/png].freeze
+    MAX_SIZE      = 10 * 1024 * 1024 # 10 MB
+
     plugin :delete_raw # automatically delete processed files after uploading
     plugin :delete_promoted
     plugin :processing
@@ -13,10 +16,8 @@ module Slickr
     plugin :versions
 
     Attacher.validate do
-      validate_max_size 10.megabytes, message: 'is too large (max is 10 MB)'
-      validate_mime_type_inclusion [
-        'image/jpg', 'image/jpeg', 'image/png'
-      ]
+      validate_max_size MAX_SIZE, message: 'is too large (max is 10 MB)'
+      validate_mime_type_inclusion ALLOWED_TYPES
     end
 
     process(:store) do |io, _context|
@@ -64,7 +65,7 @@ module Slickr
           m_fit: m_fit, s_fit: s_fit, thumb_fit: thumb_fit
         }
       rescue Vips::Error
-        { original: io }
+        {}
       ensure
         original.close!
       end

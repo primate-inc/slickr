@@ -1,3 +1,6 @@
-<div id="media-data-array" data-media_data_array="<%= @slickr_media_uploads.map { |media| JSON.parse(media.to_json(methods: [:build_for_gallery, :admin_edit_path, :admin_update_path, :admin_batch_delete_path])) }.to_json %>"></div>
+<div id="media-data-array"
+        data-media_data_array="<%= @slickr_media_uploads.map { |media| JSON.parse(media.to_json(methods: [:build_for_gallery, :admin_edit_path, :admin_update_path, :admin_batch_delete_path])) }.to_json %>"
+        data-allowed_upload_info="<%= Slickr::MediaUpload.allowed_upload_info.to_json %>">
+</div>
 <div id='media-gallery'></div>
 <%= javascript_pack_tag 'slickr_media_gallery' %>

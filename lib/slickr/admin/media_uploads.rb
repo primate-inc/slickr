@@ -92,8 +92,8 @@ if defined?(ActiveAdmin)
         create! do |format|
           format.html { redirect_to admin_slickr_images_path }
           format.json do
-            if @slickr_media_upload.image.try(:keys).try(:count) == 1 ||
-               @slickr_media_upload.file.try(:keys).try(:count) == 1
+            if @slickr_media_upload.image.try(:keys).try(:count) == 0 ||
+               @slickr_media_upload.file.try(:keys).try(:count) == 0
               # when image processing has failed
               json_return = @slickr_media_upload.to_json(
                 methods: %i[

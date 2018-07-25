@@ -2,6 +2,8 @@ require 'image_processing/mini_magick'
 
 module Slickr
   class MediaUpload < ApplicationRecord
+    DROP_AREA_TEXT = 'Maximum size 10Mb | .jpeg, .jpg, .png and .pdf files only'
+
     self.table_name = 'slickr_media_uploads'
 
     include Slickr::MediaImageUploader[:image] rescue NameError
@@ -15,8 +17,20 @@ module Slickr
       }.to_json)
     end)
 
+    def self.allowed_upload_info
+      allowed_mime_types = Slickr::MediaFileUploader::ALLOWED_TYPES +
+                           Slickr::MediaImageUploader::ALLOWED_TYPES
+      drop_area_text = DROP_AREA_TEXT
+      {
+        allowed_mime_types: allowed_mime_types.join(', '),
+        file_mime_types: Slickr::MediaFileUploader::ALLOWED_TYPES.to_json,
+        image_mime_types: Slickr::MediaImageUploader::ALLOWED_TYPES.to_json,
+        drop_area_text: drop_area_text
+      }
+    end
+
     def build_for_gallery
-      image.present? ? build_image : build_pdf
+      image.present? ? build_image : build_file
     end
 
     def admin_edit_path
@@ -61,8 +75,8 @@ module Slickr
 
     private
 
-    def build_pdf
-      return build_empty_image if file.keys.count == 1
+    def build_file
+      return build_empty_image if file.keys.count == 0
       {
         id: id,
         src: file_url(:large),
@@ -78,7 +92,7 @@ module Slickr
     end
 
     def build_image
-      return build_empty_image if image.keys.count == 1
+      return build_empty_image if image.keys.count == 0
       {
         id: id,
         src: image_url(:xl_limit),

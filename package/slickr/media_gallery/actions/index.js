@@ -1,5 +1,6 @@
 import request from 'superagent';
 import pdfPlaceholder from '../files/pdf_image.jpg';
+import docPlaceholder from '../files/doc_image.jpg';
 require('es6-promise/auto');
 import browserImageSize from 'browser-image-size'
 let _csrf_param = () => {
@@ -78,8 +79,14 @@ export const createImage = payload => {
   const random = Math.random().toString(36).substring(7);
   let preview;
   return function(dispatch, getState) {
+    const isFile = getState().allowedUploadInfo
+                             .file_mime_types
+                             .indexOf(payload.file.type) > -1
+
     if(payload.file.type === 'application/pdf') {
       preview = pdfPlaceholder
+    } else if(isFile) {
+      preview = docPlaceholder
     } else {
       preview = payload.file.preview
     }
@@ -88,7 +95,7 @@ export const createImage = payload => {
         return size
       })
       .then(function (size) {
-        dispatch(addUpload(uploadArrayObject(payload, random, size)))
+        dispatch(addUpload(uploadArrayObject(payload, isFile, random, size)))
       })
       .then(function () {
         payload.formData.append(_csrf_param(), _csrf_token())
@@ -184,21 +191,23 @@ export function updateUploadState(data) {
 
 // helper functions
 
-export function uploadArrayObject(payload, random, size) {
+export function uploadArrayObject(payload, isFile, random, size) {
  return {
    id: random,
    state: 'started',
    upload: payload.upload,
-   build_for_gallery : buildForGallery(payload, size),
+   build_for_gallery : buildForGallery(payload, isFile, size),
    additional_info: {'alt_text': ''},
    uploadProgressValue: 0
  }
 }
 
-export function buildForGallery(payload, size) {
+export function buildForGallery(payload, isFile, size) {
   let preview
   if(payload.file.type === 'application/pdf') {
     preview = pdfPlaceholder
+  } else if(isFile) {
+    preview = docPlaceholder
   } else {
     preview = payload.file.preview
   }

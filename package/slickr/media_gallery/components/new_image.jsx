@@ -13,7 +13,8 @@ export default class NewImage extends React.Component {
   onDrop(files) {
     files.forEach((file)=> {
       const formData = new FormData();
-      if(file.type === 'application/pdf') {
+
+      if(this.props.allowedUploadInfo.file_mime_types.indexOf(file.type) > -1) {
         formData.append('slickr_media_upload[file]', file);
       } else {
         formData.append('slickr_media_upload[image]', file);
@@ -31,7 +32,7 @@ export default class NewImage extends React.Component {
           <Dropzone
             className='dropzone'
             activeClassName='dropzone-acive'
-            accept='image/jpeg, image/png, image/jpg, application/pdf'
+            accept={this.props.allowedUploadInfo.allowed_mime_types}
             onDrop={this.onDrop}
           >
             <p className='main_text'>Drag and drop images here,
@@ -40,7 +41,7 @@ export default class NewImage extends React.Component {
               </span>.
             </p>
             <p className='large-cta__hint'>
-              Maximum size 10Mb | .jpeg, .jpg, .png and .pdf files only
+              {this.props.allowedUploadInfo.drop_area_text}
             </p>
           </Dropzone>
         </div>

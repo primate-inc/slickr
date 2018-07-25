@@ -8,17 +8,23 @@ import reducers from '../media_gallery/reducers';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-const imageData = document.getElementById('media-data-array').dataset.media_data_array
+const imageData = document.getElementById('media-data-array')
+                          .dataset.media_data_array
+const allowedUploadInfo = document.getElementById('media-data-array')
+                                  .dataset.allowed_upload_info
 
-const loadedImages = {
-  loadedImages: JSON.parse(imageData)
+const imagesAndInfo = {
+  loadedImages: JSON.parse(imageData),
+  allowedUploadInfo: JSON.parse(allowedUploadInfo)
 }
 
 const middlewares = [thunk];
 if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);
 }
-const store = createStore(reducers, loadedImages, applyMiddleware(...middlewares))
+const store = createStore(
+  reducers, imagesAndInfo, applyMiddleware(...middlewares)
+)
 
 document.addEventListener('DOMContentLoaded', () => {
   render(

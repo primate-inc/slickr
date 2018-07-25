@@ -4,7 +4,8 @@ import selectedImages from './selected_images'
 
 const rootReducer = combineReducers ({
   loadedImages,
-  selectedImages
+  selectedImages,
+  allowedUploadInfo: (state = {}) => state
 })
 
 export default rootReducer

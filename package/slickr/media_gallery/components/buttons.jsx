@@ -23,7 +23,9 @@ export default class Buttons extends React.Component {
 
   showEditButton() {
     if (this.props.selectedImages.length === 1){
-      if(this.props.selectedImages[0].mimeType === 'application/pdf') {
+      const mimeType = this.props.selectedImages[0].mimeType
+
+      if(this.props.allowedUploadInfo.file_mime_types.indexOf(mimeType) > -1) {
         return <a href='#' className='actions hidden'>Edit</a>
       } else {
         var href = this.props.selectedImages[0].editPath

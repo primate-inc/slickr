@@ -7,22 +7,28 @@ import Buttons from '../components/buttons.jsx';
 import React, { Component } from 'react';
 import * as ImageActions from '../actions'
 
-const MediaGallery = ({store, images, selectedImages, actions}) => (
+const MediaGallery = (
+  { store, images, selectedImages, allowedUploadInfo, actions }
+) => (
     <div>
-      <Buttons selectedImages={selectedImages} actions={actions} />
-      <NewImage actions={actions} />
+      <Buttons selectedImages={selectedImages}
+               actions={actions}
+               allowedUploadInfo={allowedUploadInfo} />
+      <NewImage actions={actions} allowedUploadInfo={allowedUploadInfo} />
       <Grid images={images} actions={actions} />
     </div>
   );
 
 MediaGallery.propTypes = {
   images: PropTypes.array.isRequired,
-  selectedImages: PropTypes.array.isRequired
+  selectedImages: PropTypes.array.isRequired,
+  allowedUploadInfo: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   images: state.loadedImages,
-  selectedImages: state.selectedImages
+  selectedImages: state.selectedImages,
+  allowedUploadInfo: state.allowedUploadInfo
 })
 
 const mapDispatchToProps = dispatch => ({

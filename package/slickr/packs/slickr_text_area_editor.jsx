@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ).pageState
 
     const allowedUploadInfo = JSON.parse(
-      document.getElementsByClassName('image-picker')[0]
+      document.getElementsByClassName('megadraft-text-editor')[0]
       .childNodes[0]
       .getAttribute('data')
     ).allowedUploadInfo

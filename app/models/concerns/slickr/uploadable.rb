@@ -44,9 +44,11 @@ module Slickr
     end
 
     def present_if_required(method_symbol)
-      return unless send(method_symbol).slickr_media_upload_id.nil? ||
-                    send(method_symbol).slickr_media_upload_id.zero? ||
-                    send(method_symbol).slickr_media_upload_id.blank?
+      unless send(method_symbol).nil?
+        return unless send(method_symbol).slickr_media_upload_id.nil? ||
+                      send(method_symbol).slickr_media_upload_id.zero? ||
+                      send(method_symbol).slickr_media_upload_id.blank?
+      end
       errors.add(method_symbol, "can't be blank")
     end
   end

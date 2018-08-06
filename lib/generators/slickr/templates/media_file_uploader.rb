@@ -56,11 +56,12 @@ module Slickr
           l_fit =     pipeline.resize_to_fit!(127, 180)
           thumb_fit = pipeline.resize_to_fit!(127, 180)
         end
-        file.close!
 
         { original: io, large: l_fit, thumb: thumb_fit }
       rescue Vips::Error
         {}
+      ensure
+        file.close!
       end
     end
 

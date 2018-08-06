@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   %w[404 500].each do |code|
     get code, to: 'errors#show', code: code
   end
+  get '/slickr_media_upload',
+      to: 'slickr_media_uploads#index',
+      as: :slickr_media_upload_file_download
   constraints(MultiContraint.new([SlickrNavRouteHelper])) do
     get '*slug' => 'pages#show', as: 'show_page'
   end

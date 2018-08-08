@@ -52,3 +52,7 @@
     }
   }
 }
+
+.logged_in #wrapper .formtastic .image-picker + .text .file input[type="file"] {
+  height: auto !important;
+}

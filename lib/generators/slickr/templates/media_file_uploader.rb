@@ -6,7 +6,7 @@ require 'image_processing/vips'
 module Slickr
   # MediaFileUploader
   class MediaFileUploader < Shrine
-    ALLOWED_TYPES = %w[application/pdf application/vnd.ms-excel].freeze
+    ALLOWED_TYPES = %w[application/pdf].freeze
     MAX_SIZE      = 10 * 1024 * 1024 # 10 MB
 
     plugin :delete_raw # automatically delete processed files after uploading

@@ -75,9 +75,9 @@ module Slickr
       path = super[/^(.*[\\\/])/]
       version = context[:version]
       is_original = version.nil? || version == :original
-      return path + context[:metadata]['filename'] if is_original
+      return path + context[:metadata]['filename'].tr(' ', '_') if is_original
       orig_filename = context[:record].image_data['metadata']['filename']
-      filename = "#{version}-#{orig_filename}"
+      filename = "#{version}-#{orig_filename.tr(' ', '_')}"
       path + filename
     end
   end

@@ -37,11 +37,7 @@ module Slickr
         end
         display_image.open # refresh updated file
       else
-        display_image = File.join(
-          Slickr::Engine.root,
-          'package/slickr/media_gallery/files/doc_image.jpg'
-        )
-        File.open(display_image, 'rb')
+        display_image = document_image('doc')
       end
 
       begin
@@ -59,7 +55,16 @@ module Slickr
 
         { original: io, large: l_fit, thumb: thumb_fit }
       rescue Vips::Error
-        {}
+        if io.mime_type == 'application/pdf'
+          display_image = document_image('pdf')
+          pipeline = ImageProcessing::Vips.source(display_image)
+
+          l_fit =     pipeline.resize_to_fit!(127, 180)
+          thumb_fit = pipeline.resize_to_fit!(127, 180)
+          { original: io, large: l_fit, thumb: thumb_fit }
+        else
+          {}
+        end
       ensure
         file.close!
       end
@@ -75,6 +80,14 @@ module Slickr
       image_type = context[:metadata]['filename'].split('.')[-1]
       filename = "#{version}-#{orig_filename_without_type}.#{image_type}"
       path + filename
+    end
+
+    def document_image(type)
+      image = File.join(
+        Slickr::Engine.root,
+        "package/slickr/media_gallery/files/#{type}_image.jpg"
+      )
+      File.open(image, 'rb')
     end
   end
 end

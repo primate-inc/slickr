@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {MegadraftPlugin, MegadraftIcons, DraftJS} from "megadraft";
-const {BlockContent, CommonBlock, BlockData, BlockInput} = MegadraftPlugin;
+const {BlockContent, 
+  // CommonBlock, 
+  BlockData, BlockInput} = MegadraftPlugin;
+import CommonBlock from "../../../text_area_editor/components/CommonBlock"
 import icons from "megadraft/lib/icons";
 import ImageBlockStyle from "./ImageBlockStyle.jsx";
 

@@ -78,6 +78,7 @@ export default class Editor extends React.Component {
     // eg customOptions: { customAction: this.props.actions.customAction }
     var megadraftOptions = {
       customOptions: {},
+      additionalOption: { options: "Im additional..." },
       standardDisplayOptions: {
         displayOptions: [
           {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
@@ -90,6 +91,7 @@ export default class Editor extends React.Component {
         defaultDisplay: 'full'
       }
     }
+    console.log('megadraftOptions: ', megadraftOptions);
     var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin, YouTubePlugin]
     let mergedPlugins = plugins.concat(mainAppPlugins)
 

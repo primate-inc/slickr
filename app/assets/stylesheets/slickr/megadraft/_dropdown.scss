@@ -4,16 +4,33 @@
  * License: MIT
  */
 
-.dropdown__wrapper {
+.dropdown__wrapper1 {
   border-radius: 2px;
-  position: initial !important;
+  position: relative !important;
   background: #fff;
-  color: #999;
+  color: #999 !important;
   cursor: pointer;
   font-weight: bold;
   z-index: 10;
 
   &--open {
+    position: absolute;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    color: #333;
+  }
+}
+
+.dropdown__wrapper2 {
+  border-radius: 2px;
+  position: relative !important;
+  background: #fff;
+  color: #999 !important;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 10;
+
+  &--open {
+    position: absolute;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
     color: #333;
   }

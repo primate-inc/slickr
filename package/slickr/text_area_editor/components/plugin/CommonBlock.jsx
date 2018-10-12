@@ -19,70 +19,81 @@ import {
 export default class CommonBlock extends Component {
   constructor(props) {
     super(props);
-
-    // this._handleDisplayChange = this._handleDisplayChange.bind(this);
   }
 
-  // _handleDisplayChange(newValue) {
-  //   this.props.container.updateData({ display: newValue, display2: newValue });
-  // }
-
-  _additionalOption = (additionalOption, data) => {
-    // return additionalOption.map(() => {
-      // console.log('options: ', options);
-      const options = additionalOption;
-
-      return (
-        <Dropdown
-          items={additionalOption.displayOptions}
-          selected={data.display || additionalOption.defaultDisplay}
-          // onChange={this._handleDisplayChange}
-        />
-      );
-    // });
-  };
-
-  render() {
-    const data = this.props.data;
+  _dropDownBuilder = (props) => {
+    const data = props.data;
     const defaults = {
       defaultDisplay: DEFAULT_DISPLAY_KEY,
       displayOptions: DEFAULT_DISPLAY_OPTIONS
     };
     let options = this.props.blockProps.plugin.options || {};
     options = { ...defaults, ...options };
-    console.log('CB props: ', this.props);
+    // console.log('CB props: ', this.props);
     let additionalOption = this.props.additionalOption || {};
-    console.log('additionalOption: ', additionalOption);
+    // console.log('additionalOption: ', additionalOption);
 
-    return (
-      <BlockWrapper>
-        <BlockControls>
-          <div style={{display: 'flex'}}>
-            <div
-              style={{color: 'orange', padding: '0px 100px'}}
-            >
+    // return additionalOption.map(() => {
+      // console.log('options: ', options);
+
+      if(additionalOption) {
+        return (
+          <div style={{display: "flex"}}>
+            <div>
               <Dropdown
-                key='1'
-                container={this.props.container}
                 items={options.displayOptions}
-                selected={data.display || options.defaultDisplay}
-                // onChange={this._handleDisplayChange}
+                selected={data.display || additionalOption.defaultDisplay}
               />
             </div>
-            {/* { additionalOption ? this._additionalOption(additionalOption, data) : null } */}
-
-            <div
-              style={{color: 'pink', padding: '0px 100px'}}
-            >
+            <div>
               <DropdownMkII
-                key='2'
                 container={this.props.container}
                 items={additionalOption.displayOptions}
                 selected={data.appearance || additionalOption.defaultDisplay}
-                // onChange={this._handleDisplayChange}
               />
             </div>
           </div>
+        );
+      } else {
+        return (
+          <Dropdown
+            items={options.displayOptions}
+            selected={data.display || additionalOption.defaultDisplay}
+          />
+        );
+      }
+
+      // <div style={{display: 'flex'}}>
+      //       <div
+      //         style={{color: 'orange', padding: '0px 100px'}}
+      //       >
+      //         <Dropdown
+      //           container={this.props.container}
+      //           items={options.displayOptions}
+      //           selected={data.display || options.defaultDisplay}
+      //         />
+      //       </div>
+      //       {/* { additionalOption ? this._additionalOption(additionalOption, data) : null } */}
+
+      //       {
+      //         additionalOption ?
+      //         <div style={{color: 'pink', padding: '0px 100px'}}>
+      //           <DropdownMkII
+      //             container={this.props.container}
+      //             items={additionalOption.displayOptions}
+      //             selected={data.appearance || additionalOption.defaultDisplay}
+      //           />
+      //         </div> :
+      //         null
+      //       }
+      //     </div>
+  };
+
+  render() {
+    return (
+      <BlockWrapper>
+        <BlockControls>
+          { this._dropDownBuilder(this.props) }
           <BlockActionGroup items={this.props.actions} />
         </BlockControls>
 

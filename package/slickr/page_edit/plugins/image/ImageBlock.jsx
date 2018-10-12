@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {MegadraftPlugin, MegadraftIcons, DraftJS} from "megadraft";
-const {BlockContent,
+import { MegadraftPlugin, MegadraftIcons, DraftJS } from "megadraft";
+const { BlockContent,
   // CommonBlock,
-  BlockData, BlockInput} = MegadraftPlugin;
+  BlockData, BlockInput } = MegadraftPlugin;
 import CommonBlock from "../../../text_area_editor/components/plugin/CommonBlock"
 import icons from "megadraft/lib/icons";
 import ImageBlockStyle from "./ImageBlockStyle.jsx";
@@ -31,7 +31,6 @@ export default class ImageBlock extends React.Component {
   }
 
   render(){
-    console.log('MegadraftIcons: ', MegadraftIcons);
     const defaults = {
       defaultDisplay: DEFAULT_DISPLAY_KEY,
       displayOptions: DEFAULT_DISPLAY_OPTIONS
@@ -39,30 +38,68 @@ export default class ImageBlock extends React.Component {
     const additionalOption = {
       ...defaults,
       displayOptions: [
-        {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
+        {"key": "sit_right", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITRIGHT"},
+        {"key": "sit_left", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITLEFT"},
         {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
-        {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-        {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-        {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
-        {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
+        // {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+        // {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+        // {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
+        // {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
       ],
-      defaultDisplay: 'full'
+      defaultDisplay: 'sit_right'
     };
+    // const additionalOptions = {
+    //   optionType:{ optionType: 'Transition',
+    //     defeault: 'none',
+    //     options: {
+    //       [
+    //         {"key": "sit_right", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITRIGHT"},
+    //         {"key": "sit_left", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITLEFT"},
+    //         {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL", speedOptions: []}
+    //       ]
+    //     }
+    //   },
+    //   [ {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+    //     {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+    //     {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
+    //     {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
+    //   ]
+    // };
+
+    console.log(this.props.data.appearance)
+
+    const appearance = this.props.data.appearance;
+
+    let behavior = {}
+    if (appearance === "sit_right") {
+      behavior = { textAlign: "right" }
+    } else if (appearance === "sit_left") {
+      behavior = { textAlign: "left" }
+    }
+
+
+    const newStyle = { image:{ backgroundColor: 'red', margin: '10px', padding: '10px' } }
+
+    const styles = {...ImageBlockStyle.image, ...newStyle.image }
 
     return (
       <CommonBlock {...this.props} additionalOption={additionalOption} actions={this.actions}>
         <BlockContent>
-          <img style={ImageBlockStyle.image}
-               src={`${this.props.data.image.media_upload_helper_path}?id=${this.props.data.image.id}`}
-               alt={this.props.data.image.additional_info.alt_text}
-          />
+          <div
+            style={behavior}
+          >
+            <img style={styles}
+                src={`${this.props.data.image.media_upload_helper_path}?id=${this.props.data.image.id}`}
+                alt={this.props.data.image.additional_info.alt_text}
+            />
+          </div>
         </BlockContent>
-        {/*<BlockData>
+        <BlockData>
           <BlockInput
             placeholder="Caption"
             value={this.props.data.caption}
             onChange={this.handleCaptionChange} />
-        </BlockData>*/}
+        </BlockData>
       </CommonBlock>
     );
   }

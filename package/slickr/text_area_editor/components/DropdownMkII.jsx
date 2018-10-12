@@ -95,7 +95,7 @@ export default class Dropdown extends Component {
 
     const { isOpen } = this.state;
 
-    const wrapperClassName = classNames("dropdown__wrapper", {
+    const wrapperClassName = classNames("dropdown__wrapper2", {
       "dropdown__wrapper--open": isOpen
     });
 
@@ -106,7 +106,7 @@ export default class Dropdown extends Component {
     const arrowClassName = classNames("dropdown__arrow", {
       "dropdown__arrow--open": isOpen
     });
-    console.log(this.props)
+
     return (
       <div className={wrapperClassName} onClick={this.toggleDropDown}>
         <DropdownItem

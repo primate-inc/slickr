@@ -76,6 +76,10 @@ export default class Editor extends React.Component {
     // megadraftOptions passed in as blockProps when set from plugin.jsx
     // use customOptions to pass in any extra info to plugin block
     // eg customOptions: { customAction: this.props.actions.customAction }
+
+    // This has changed, now when you build a plugin you pass the Option
+    // props directly to the commonBlock via the plugin import of the local
+    // commonBlock we have created for slickr then the commonBlock builds as required
     var megadraftOptions = {
       customOptions: {},
       standardDisplayOptions: {

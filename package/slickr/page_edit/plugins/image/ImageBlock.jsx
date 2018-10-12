@@ -31,62 +31,66 @@ export default class ImageBlock extends React.Component {
   }
 
   render(){
+    const Options = {
+      customOptions: {},
+      standardDisplayOptions: {
+        displayOptions: [
+          {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
+          {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
+          {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+          {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+          {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
+          {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
+        ],
+        defaultDisplay: 'full'
+      }
+    }
+
     const defaults = {
       defaultDisplay: DEFAULT_DISPLAY_KEY,
       displayOptions: DEFAULT_DISPLAY_OPTIONS
     };
-    const additionalOption = {
+    const appearanceOptions = {
       ...defaults,
       displayOptions: [
-        {"key": "sit_right", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITRIGHT"},
-        {"key": "sit_left", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITLEFT"},
-        {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
-        // {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-        // {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-        // {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
-        // {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
+        {"key": "right", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT RIGHT"},
+        {"key": "left", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT LEFT"},
+        {"key": "center", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT CENTER"}
       ],
-      defaultDisplay: 'sit_right'
+      defaultDisplay: 'center'
     };
-    // const additionalOptions = {
-    //   optionType:{ optionType: 'Transition',
-    //     defeault: 'none',
-    //     options: {
-    //       [
-    //         {"key": "sit_right", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITRIGHT"},
-    //         {"key": "sit_left", "icon": MegadraftIcons.MediaSmallIcon, "label": "SITLEFT"},
-    //         {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL", speedOptions: []}
-    //       ]
-    //     }
-    //   },
-    //   [ {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-    //     {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-    //     {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
-    //     {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
-    //   ]
-    // };
+    const behaviourOptions = {
+      ...defaults,
+      optionType: 'Transition',
+      defaultDisplay: 'none',
+      displayOptions: [
+        {"key": "none", "icon": MegadraftIcons.MediaSmallIcon, "label": "NONE"},
+        {"key": "width 2s", "icon": MegadraftIcons.MediaSmallIcon, "label": "TRANSITION", speedOptions: [] },
+        {"key": "center", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT CENTER", speedOptions: []},
+      ]
+    };
 
-    console.log(this.props.data.appearance)
+    console.log(this.props.data.appearance ? this.props.data.appearance : 'none')
 
-    const appearance = this.props.data.appearance;
+    const appearance = this.props.data.appearance ? this.props.data.appearance : 'center'
+    const transition = this.props.data.transition ? this.props.data.transition : 'none'
+    let behaviour = { textAlign: appearance }
+    // , transition: transition
+    // -webkit-transition: width 2s; /* Safari */
+    // transition: width 2s;
 
-    let behavior = {}
-    if (appearance === "sit_right") {
-      behavior = { textAlign: "right" }
-    } else if (appearance === "sit_left") {
-      behavior = { textAlign: "left" }
-    }
-
-
-    const newStyle = { image:{ backgroundColor: 'red', margin: '10px', padding: '10px' } }
-
+    const newStyle = { image:{ backgroundColor: 'pink', margin: '10px', padding: '16px' } }
     const styles = {...ImageBlockStyle.image, ...newStyle.image }
 
     return (
-      <CommonBlock {...this.props} additionalOption={additionalOption} actions={this.actions}>
+      <CommonBlock {...this.props}
+        appearanceOptions={appearanceOptions}
+        behaviourOptions={behaviourOptions}
+        actions={this.actions}
+      >
         <BlockContent>
           <div
-            style={behavior}
+            style={behaviour}
           >
             <img style={styles}
                 src={`${this.props.data.image.media_upload_helper_path}?id=${this.props.data.image.id}`}

@@ -12,7 +12,7 @@ const ImagePlugin = (options) => ({
   type: "image",
   buttonComponent: ImageButtonContainer,
   blockComponent: ImageBlock,
-  options: options.standardDisplayOptions,
+  layoutOptions: options.standardDisplayOptions,
   ...options.customOptions
 });
 

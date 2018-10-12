@@ -7,6 +7,9 @@ import ImagePlugin from "../../page_edit/plugins/image/plugin.jsx";
 import VimeoPlugin from "../../page_edit/plugins/vimeo/plugin.jsx";
 import YouTubePlugin from "../../page_edit/plugins/you_tube/plugin.jsx";
 import icons from "megadraft/lib/icons";
+
+import ErrorBoundary from "./ErrorBoundary.jsx"
+
 import h1 from "../../page_edit/text_editor_icons/h1.jsx"
 import h2 from "../../page_edit/text_editor_icons/h2.jsx"
 import h3 from "../../page_edit/text_editor_icons/h3.jsx"
@@ -98,18 +101,18 @@ export default class Editor extends React.Component {
     let mergedPlugins = plugins.concat(mainAppPlugins)
 
     return (
-      [
-        <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.labelText}</label>,
-        <textarea key={`${this.props.textAreaIndex}-1`} onChange={this.hightlightActive} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>,
-        <MegadraftEditor
-          key={`${this.props.textAreaIndex}-2`}
-          editorState={this.props.editorState}
-          onChange={this.changeEditorState}
-          plugins={mergedPlugins}
-          actions={mergedActions}
-          entityInputs={mergedEntityInputs}
-        />
-      ]
+        <ErrorBoundary>
+          <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.labelText}</label>,
+          <textarea key={`${this.props.textAreaIndex}-1`} onChange={this.hightlightActive} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>,
+          <MegadraftEditor
+            key={`${this.props.textAreaIndex}-2`}
+            editorState={this.props.editorState}
+            onChange={this.changeEditorState}
+            plugins={mergedPlugins}
+            actions={mergedActions}
+            entityInputs={mergedEntityInputs}
+          />
+        </ErrorBoundary>
     );
   }
 }

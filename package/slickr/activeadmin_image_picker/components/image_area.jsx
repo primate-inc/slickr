@@ -66,7 +66,7 @@ export default class ImageArea extends React.Component {
                   id={this.props.textArea.id}
                   className='hidden'
                   name={textAreaName}
-                  value={this.state.slickr_media_upload_id}>
+                  value={this.state.slickr_media_upload_id ? this.state.slickr_media_upload_id : '' }>
         </textarea>,
         <div key={`${this.props.textAreaIndex}-2`}
              className={`file input admin-big-title ${this.props.imageObject.id == null ? 'no_image' : 'has_image'} ${error ? 'has_error' : ''}`}>

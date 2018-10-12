@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const dataNode = element.childNodes[0]
       let data = JSON.parse(dataNode.getAttribute('data'))
-      
+
       const initialState = {
         pageState: JSON.parse(pageState),
         allowedUploadInfo: allowedUploadInfo,
@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
         label: label,
         textArea: textArea
       }
+
+      // initialState.textArea.value = '';
 
       const middlewares = [thunk];
       if (process.env.NODE_ENV === `development`) {

@@ -111,8 +111,8 @@ export default class Editor extends React.Component {
 
     return (
         <ErrorBoundary>
-          <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.labelText}</label>,
-          <textarea key={`${this.props.textAreaIndex}-1`} onChange={this.hightlightActive} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>,
+          <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.labelText}</label>
+          <textarea key={`${this.props.textAreaIndex}-1`} onChange={this.hightlightActive} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>
           <MegadraftEditor
             key={`${this.props.textAreaIndex}-2`}
             editorState={this.props.editorState}

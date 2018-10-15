@@ -95,7 +95,7 @@ export default class Dropdown extends Component {
 
     const { isOpen } = this.state;
 
-    const wrapperClassName = classNames("dropdown__wrapper1", {
+    const wrapperClassName = classNames("dropdown__wrapper3", {
       "dropdown__wrapper--open": isOpen
     });
 

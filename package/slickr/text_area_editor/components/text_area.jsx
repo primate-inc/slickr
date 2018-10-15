@@ -9,6 +9,11 @@ import YouTubePlugin from "../../page_edit/plugins/you_tube/plugin.jsx";
 import icons from "megadraft/lib/icons";
 
 import ErrorBoundary from "./ErrorBoundary.jsx"
+import {
+  DEFAULT_DISPLAY_OPTIONS,
+  DEFAULT_DISPLAY_KEY
+} from "./plugin/defaults";
+import ImageWidgetConfig from "./ImageWidgetConfig.jsx"
 
 import h1 from "../../page_edit/text_editor_icons/h1.jsx"
 import h2 from "../../page_edit/text_editor_icons/h2.jsx"
@@ -97,7 +102,11 @@ export default class Editor extends React.Component {
     //     defaultDisplay: 'full'
     //   }
     // }
-    var plugins = [ImagePlugin(), VimeoPlugin, YouTubePlugin]
+
+    var imageConfig = ImageWidgetConfig()
+
+    var plugins = [ImagePlugin(imageConfig), VimeoPlugin, YouTubePlugin]
+    console.log('ImageWidgetConfig: ', ImageWidgetConfig);
     let mergedPlugins = plugins.concat(mainAppPlugins)
 
     return (

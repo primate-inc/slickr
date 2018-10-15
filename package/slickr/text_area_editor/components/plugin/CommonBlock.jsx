@@ -23,12 +23,13 @@ export default class CommonBlock extends Component {
   }
 
   _dropDownBuilder = (props) => {
-    // console.log('CB props: ', props);
+    console.log('CB props: ', props);
     const data = props.data;
 
-    const layoutOptions = props.layoutOptions || {};
-    const appearanceOptions = this.props.appearanceOptions || {};
-    const behaviourOptions = this.props.behaviourOptions || {};
+    const layoutOptions = this.props.blockProps.plugin.layoutOptions || {};
+    const appearanceOptions = this.props.blockProps.plugin.appearanceOptions || {};
+    const behaviourOptions = this.props.blockProps.plugin.behaviourOptions || {};
+
 
     if( behaviourOptions ) {
       return (

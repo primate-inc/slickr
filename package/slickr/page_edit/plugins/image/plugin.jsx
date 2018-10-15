@@ -11,10 +11,11 @@ const ImagePlugin = (options) => ({
   title: "Image",
   type: "image",
   buttonComponent: ImageButtonContainer,
-  blockComponent: ImageBlock
-  //  ,
-  // layoutOptions: options.standardDisplayOptions,
-  // ...options.customOptions
+  blockComponent: ImageBlock,
+  layoutOptions: options.standardDisplayOptions,
+  appearanceOptions: options.appearanceOptions,
+  behaviourOptions: options.behaviourOptions,
+  ...options.customOptions
 });
 
 export default ImagePlugin;

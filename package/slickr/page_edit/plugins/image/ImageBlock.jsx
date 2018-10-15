@@ -15,7 +15,6 @@ import {
 export default class ImageBlock extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
 
     this.actions = [{
@@ -31,25 +30,23 @@ export default class ImageBlock extends React.Component {
   }
 
   render(){
-    const Options = {
-      customOptions: {},
-      standardDisplayOptions: {
-        displayOptions: [
-          {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
-          {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
-          {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-          {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-          {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
-          {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
-        ],
-        defaultDisplay: 'full'
-      }
-    }
 
     const defaults = {
       defaultDisplay: DEFAULT_DISPLAY_KEY,
       displayOptions: DEFAULT_DISPLAY_OPTIONS
     };
+    const layoutOptions = {
+      ...defaults,
+      displayOptions: [
+        {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
+        {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
+        {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+        {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+        {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
+        {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
+      ],
+      defaultDisplay: 'full'
+    }
     const appearanceOptions = {
       ...defaults,
       displayOptions: [
@@ -70,8 +67,6 @@ export default class ImageBlock extends React.Component {
       ]
     };
 
-    console.log(this.props.data.appearance ? this.props.data.appearance : 'none')
-
     const appearance = this.props.data.appearance ? this.props.data.appearance : 'center'
     const transition = this.props.data.transition ? this.props.data.transition : 'none'
     let behaviour = { textAlign: appearance }
@@ -84,6 +79,7 @@ export default class ImageBlock extends React.Component {
 
     return (
       <CommonBlock {...this.props}
+        layoutOptions={layoutOptions}
         appearanceOptions={appearanceOptions}
         behaviourOptions={behaviourOptions}
         actions={this.actions}

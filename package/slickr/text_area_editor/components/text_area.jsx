@@ -83,21 +83,21 @@ export default class Editor extends React.Component {
     // This has changed, now when you build a plugin you pass the Option
     // props directly to the commonBlock via the plugin import of the local
     // commonBlock we have created for slickr then the commonBlock builds as required
-    var megadraftOptions = {
-      customOptions: {},
-      standardDisplayOptions: {
-        displayOptions: [
-          {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
-          {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
-          {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-          {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-          {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
-          {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
-        ],
-        defaultDisplay: 'full'
-      }
-    }
-    var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin, YouTubePlugin]
+    // var megadraftOptions = {
+    //   customOptions: {},
+    //   standardDisplayOptions: {
+    //     displayOptions: [
+    //       {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
+    //       {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
+    //       {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+    //       {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+    //       {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
+    //       {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
+    //     ],
+    //     defaultDisplay: 'full'
+    //   }
+    // }
+    var plugins = [ImagePlugin(), VimeoPlugin, YouTubePlugin]
     let mergedPlugins = plugins.concat(mainAppPlugins)
 
     return (

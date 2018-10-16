@@ -13,12 +13,12 @@ const ImageWidgetConfig = () => ({
   standardDisplayOptions: {
     ...defaults,
     displayOptions: [
-      {"key": "normal_img-layout", "icon": MegadraftIcons.MediaSmallIcon, "label": "NORMAL"},
+      {"key": "normal_img-layout", "icon": MegadraftIcons.MediaMediumIcon, "label": "NORMAL"},
       {"key": "float-right_img-layout", "icon": MegadraftIcons.MediaSmallIcon, "label": "FlOAT RIGHT"},
       {"key": "float-left_img-layout", "icon": MegadraftIcons.MediaSmallIcon, "label": "FlOAT LEFT"},
       {"key": "cover_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "COVER"},
       {"key": "letter-box_img-layout", "icon": MegadraftIcons.MediaSmallIcon, "label": "LETTER BOX"},
-      {"key": "larger_img-layout", "icon": MegadraftIcons.MediaSmallIcon, "label": "LARGE"},
+      {"key": "larger_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
       {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"}
     ],
     defaultDisplay: 'normal_img-layout'

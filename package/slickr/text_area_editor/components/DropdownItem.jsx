@@ -6,7 +6,7 @@
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import cx from "classnames";
 
 export default class DropdownItem extends Component {
   static propTypes = {
@@ -18,17 +18,21 @@ export default class DropdownItem extends Component {
   render() {
     const item = this.props.item;
     const Icon = item.icon;
-    const className = classNames("dropdown__item ", this.props.className);
+    const containerClasses = cx({"dropdown__item ": true, [this.props.className]: true});
+    const iconClasses = cx({
+      "dropdown__item__icon": true,
+      [item.classname]: item.classname ? true : false
+    });
     console.log(this.props.item);
 
     return (
       <div
-        className={className}
+        className={containerClasses}
         onClick={this.props.onClick}
         onMouseDown={this.props.onMouseDown}
         onMouseUp={this.props.onMouseDown}
       >
-        <Icon className={"float-right_img-layout" == item.key ? "dropdown__item__icon float-right_svg" : "dropdown__item__icon"} />
+        <Icon className={iconClasses} />
         <span className="dropdown__item__text">{this.props.item.label}</span>
 
         {this.props.children}

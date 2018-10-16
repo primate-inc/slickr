@@ -41,7 +41,7 @@ export default class ImageBlock extends React.Component {
 
     // const newStyle = { image:{ backgroundColor: 'pink', margin: '10px', padding: '16px' } }
     // const styles = {...ImageBlockStyle.image, ...newStyle.image }
-    console.log('props: ', this.props);
+    // console.log('props: ', this.props);
 
     return (
       <CommonBlock {...this.props} actions={this.actions}>

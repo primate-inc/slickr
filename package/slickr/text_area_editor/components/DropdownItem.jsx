@@ -17,16 +17,14 @@ export default class DropdownItem extends Component {
 
   render() {
     const item = this.props.item;
-    console.log('item: ', item);
     const Icon = item.icon;
     const containerClasses = cx({
       "dropdown__item ": true,
-      [this.props.className]: true,
-      [item.classname]: item.classname ? true : false
+      [this.props.className]: true
     });
     const iconClasses = cx({
       "dropdown__item__icon": true,
-      // [item.classname]: item.classname ? true : false
+      [item.classname]: item.classname ? true : false
     });
 
     return (

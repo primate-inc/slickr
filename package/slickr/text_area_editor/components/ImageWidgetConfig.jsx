@@ -27,9 +27,8 @@ const ImageWidgetConfig = () => ({
     ...defaults,
     displayOptions: [
       {"key": "appearance-none", "icon": MegadraftIcons.MediaSmallIcon, "label": "NONE"},
-      {"key": "right", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT RIGHT"},
-      {"key": "left", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT LEFT"},
-      {"key": "center", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT CENTER"}
+      {"key": "slide-in", "icon": MegadraftIcons.MediaSmallIcon, "label": "SLIDE IN"},
+      {"key": "fade-in", "icon": MegadraftIcons.MediaSmallIcon, "label": "FADE IN"}
     ],
     defaultDisplay: 'appearance-none'
   },
@@ -37,11 +36,11 @@ const ImageWidgetConfig = () => ({
     ...defaults,
     optionType: 'Transition',
     displayOptions: [
-      {"key": "center", "icon": MegadraftIcons.MediaSmallIcon, "label": "SIT CENTER"},
-      {"key": "behaviour-none", "icon": MegadraftIcons.MediaSmallIcon, "label": "NONE"},
-      // {"key": "fade-in-left", "icon": MegadraftIcons.MediaSmallIcon, "label": "TRANSITION", speedOptions: [] },
+      {"key": "normal-speed", "icon": MegadraftIcons.MediaSmallIcon, "label": "NORMAL SPEED"},
+      {"key": "slow-speed", "icon": MegadraftIcons.MediaSmallIcon, "label": "SLOW SPEED"},
+      {"key": "fast-speed", "icon": MegadraftIcons.MediaSmallIcon, "label": "FAST SPEED"}
     ],
-    defaultDisplay: 'behaviour-none'
+    defaultDisplay: 'normal-speed'
   }
 });
 

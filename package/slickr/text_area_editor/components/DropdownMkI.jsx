@@ -18,7 +18,7 @@ export default class Dropdown extends Component {
     items: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string.isRequired,
-        classname: PropTypes.string.isRequired,
+        classname: PropTypes.string,
         icon: PropTypes.func.isRequired,
         label: PropTypes.string.isRequired
       })
@@ -44,8 +44,6 @@ export default class Dropdown extends Component {
   }
 
   onChange(item) {
-    console.log('selected: ', item);
-    
     this.props.container.updateData({ display: item.key, classname: item.classname });
   }
 

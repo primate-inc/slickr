@@ -19,7 +19,7 @@ const ImageWidgetConfig = () => ({
       {"key": "xxl_fit", "classname": "cover_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "COVER"},
       {"key": "xxl_fill", "classname": "letter-box_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "LETTER BOX"},
       {"key": "xl_limit", "classname": "larger_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-      {"key": "xxl_fit", "classname": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"}
+      {"key": "xxl_limit", "classname": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"}
     ],
     defaultDisplay: 'l_limit'
   },

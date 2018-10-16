@@ -35,12 +35,13 @@ export default class ImageBlock extends React.Component {
       defaultDisplay: DEFAULT_DISPLAY_KEY,
       displayOptions: DEFAULT_DISPLAY_OPTIONS
     };
-    const layout = this.props.data.display ? this.props.data.display : 'normal_img-layout'
-    const appearance = this.props.data.appearance ? this.props.data.appearance : 'center'
-    const transition = this.props.data.transition ? this.props.data.transition : 'none'
+    const layout = this.props.data.classname ? this.props.data.classname : 'normal_img-layout'
+    // const appearance = this.props.data.appearance ? this.props.data.appearance : 'center'
+    // const transition = this.props.data.transition ? this.props.data.transition : 'none'
 
-    const newStyle = { image:{ backgroundColor: 'pink', margin: '10px', padding: '16px' } }
-    const styles = {...ImageBlockStyle.image, ...newStyle.image }
+    // const newStyle = { image:{ backgroundColor: 'pink', margin: '10px', padding: '16px' } }
+    // const styles = {...ImageBlockStyle.image, ...newStyle.image }
+    console.log('props: ', this.props);
 
     return (
       <CommonBlock {...this.props} actions={this.actions}>

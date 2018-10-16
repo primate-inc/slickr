@@ -18,6 +18,7 @@ export default class Dropdown extends Component {
     items: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string.isRequired,
+        classname: PropTypes.string.isRequired,
         icon: PropTypes.func.isRequired,
         label: PropTypes.string.isRequired
       })

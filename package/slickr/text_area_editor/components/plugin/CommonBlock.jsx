@@ -23,7 +23,7 @@ export default class CommonBlock extends Component {
   }
 
   _dropDownBuilder = (props) => {
-    console.log('CB props: ', props);
+    // console.log('CB props: ', props);
     const data = props.data;
 
     const layoutOptions = this.props.blockProps.plugin.layoutOptions || {"nope":"no layout options passed to CommonBlock"};

@@ -18,6 +18,7 @@ export default class Dropdown extends Component {
     items: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string.isRequired,
+        classname: PropTypes.string.isRequired,
         icon: PropTypes.func.isRequired,
         label: PropTypes.string.isRequired
       })
@@ -42,8 +43,10 @@ export default class Dropdown extends Component {
     return items.length == 0 ? true : false;
   }
 
-  onChange(selected) {
-    this.props.container.updateData({ display: selected });
+  onChange(item) {
+    console.log('selected: ', item);
+    
+    this.props.container.updateData({ display: item.key, classname: item.classname });
   }
 
   renderItem(item) {
@@ -52,7 +55,7 @@ export default class Dropdown extends Component {
         <DropdownItem
           item={item}
           className="dropdown__option"
-          onClick={() => this.onChange(item.key)}
+          onClick={() => this.onChange(item)}
         />
       </li>
     );

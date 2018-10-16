@@ -85,9 +85,9 @@ export default class Editor extends React.Component {
     // use customOptions to pass in any extra info to plugin block
     // eg customOptions: { customAction: this.props.actions.customAction }
 
-    // This has changed, now when you build a plugin you pass the Option
-    // props directly to the commonBlock via the plugin import of the local
-    // commonBlock we have created for slickr then the commonBlock builds as required
+    // This has changed, now when you build a plugin you pass the Options in from a config
+    // file(example ImageWidgetConfig.jsx) then import it into this file, and pass it to the desired
+    // Plugin (example "ImagePlugin(imageConfig)")
     // var megadraftOptions = {
     //   customOptions: {},
     //   standardDisplayOptions: {
@@ -103,10 +103,10 @@ export default class Editor extends React.Component {
     //   }
     // }
 
-    var imageConfig = ImageWidgetConfig()
+    const imageConfig = ImageWidgetConfig()
 
-    var plugins = [ImagePlugin(imageConfig), VimeoPlugin, YouTubePlugin]
-    console.log('ImageWidgetConfig: ', ImageWidgetConfig);
+    const plugins = [ImagePlugin(imageConfig), VimeoPlugin, YouTubePlugin]
+
     let mergedPlugins = plugins.concat(mainAppPlugins)
 
     return (

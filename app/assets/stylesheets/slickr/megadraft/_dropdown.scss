@@ -4,38 +4,6 @@
  * License: MIT
  */
 
-.dropdown__wrapper1 {
-  border-radius: 2px;
-  position: relative;
-  background: #fff;
-  color: #999;
-  cursor: pointer;
-  font-weight: bold;
-  z-index: 10;
-
-  &--open {
-    position: absolute;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-    color: #333;
-  }
-}
-
-.dropdown__wrapper2 {
-  border-radius: 2px;
-  position: relative;
-  background: #fff;
-  color: #999;
-  cursor: pointer;
-  font-weight: bold;
-  z-index: 10;
-
-  &--open {
-    position: absolute;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-    color: #333;
-  }
-}
-
 .dropdown {
   display: none;
   list-style: none;

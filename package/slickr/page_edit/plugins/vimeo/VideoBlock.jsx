@@ -3,7 +3,10 @@ import {MegadraftPlugin, MegadraftIcons, DraftJS} from "megadraft";
 import VideoBlockStyle from "./VideoBlockStyle.js";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
-const {BlockContent, BlockData, BlockInput, CommonBlock} = MegadraftPlugin;
+const {BlockContent, BlockData, BlockInput
+  // , CommonBlock
+} = MegadraftPlugin;
+import CommonBlock from "../../../text_area_editor/components/plugin/CommonBlock"
 
 export default class VideoBlock extends Component {
   constructor(props) {

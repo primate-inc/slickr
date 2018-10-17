@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, Globo.com (https://github.com/globocom)
+ * Copyright (c) 2016, Primate.co.uk (https://github.com/primate-inc/slickr)
  *
  * License: MIT
  */
@@ -18,6 +18,10 @@ import AppearanceOptionsLeftRight from "./icons/appearanceOptionsLeftRight";
 import AppearanceOptionsRightLeft from "./icons/appearanceOptionsRightLeft";
 import AppearanceOptionsTopBottom from "./icons/appearanceOptionsTopBottom";
 
+import SpeedOptionsSlow from "./icons/SpeedOptionsSlow";
+import SpeedOptionsMedium from "./icons/SpeedOptionsMedium";
+import SpeedOptionsFast from "./icons/SpeedOptionsFast";
+
 const icons = {
   LayoutOptionsNormal,
   LayoutOptionsLetterbox,
@@ -31,15 +35,9 @@ const icons = {
   AppearanceOptionsLeftRight,
   AppearanceOptionsRightLeft,
   AppearanceOptionsTopBottom,
-  // CropIcon,
-  // MediaBigIcon,
-  // MediaMediumIcon,
-  // MediaSmallIcon,
-  // DropdownArrow,
-  // ErrorIcon,
-  // UnlinkIcon,
-  // CloseIcon,
-  // MoreIcon
+  SpeedOptionsSlow,
+  SpeedOptionsMedium,
+  SpeedOptionsFast
 };
 
 export default icons;

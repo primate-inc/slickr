@@ -6,34 +6,20 @@
 
 import ExampleComponent from "./icons/exampleComponent";
 import AppearanceOptionsNone from "./icons/appearanceOptionsNone";
-// import ULIcon from "./icons/ul";
-// import OLIcon from "./icons/ol";
-// import H2Icon from "./icons/h2";
-// import BlockQuoteIcon from "./icons/exampleComponent";
-// import LinkIcon from "./icons/link";
-// import CrossIcon from "./icons/cross";
-// import ImageIcon from "./icons/image";
-// import VideoIcon from "./icons/video";
-// import EditIcon from "./icons/edit";
-// import DeleteIcon from "./icons/delete";
-// import CropIcon from "./icons/crop";
-// import MediaBigIcon from "./icons/mediaBig";
-// import MediaMediumIcon from "./icons/mediaMedium";
-// import MediaSmallIcon from "./icons/mediaSmall";
-// import DropdownArrow from "./icons/dropdownArrow";
-// import ErrorIcon from "./icons/error";
-// import UnlinkIcon from "./icons/unlink";
-// import CloseIcon from "./icons/close";
-// import MoreIcon from "./icons/more";
+import AppearanceOptionsBottomTop from "./icons/appearanceOptionsBottomTop";
+import AppearanceOptionsFade from "./icons/appearanceOptionsFade";
+import AppearanceOptionsLeftRight from "./icons/appearanceOptionsLeftRight";
+import AppearanceOptionsRightLeft from "./icons/appearanceOptionsRightLeft";
+import AppearanceOptionsTopBottom from "./icons/appearanceOptionsTopBottom";
 
 const icons = {
   ExampleComponent,
   AppearanceOptionsNone,
-  // ULIcon,
-  // OLIcon,
-  // H2Icon,
-  // BlockQuoteIcon,
-  // LinkIcon,
+  AppearanceOptionsBottomTop,
+  AppearanceOptionsFade,
+  AppearanceOptionsLeftRight,
+  AppearanceOptionsRightLeft,
+  AppearanceOptionsTopBottom,
   // CrossIcon,
   // ImageIcon,
   // VideoIcon,

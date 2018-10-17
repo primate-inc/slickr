@@ -4,6 +4,8 @@
  * License: MIT
  */
 
+ //This is where you add mooding widget dropdownIcons
+
 import LayoutOptionsNormal from "./icons/layoutOptionsNormal";
 import LayoutOptionsLetterbox from "./icons/layoutOptionsLetterbox";
 import LayoutOptionsLarge from "./icons/layoutOptionsLarge";
@@ -12,17 +14,20 @@ import LayoutOptionsFloatLeft from "./icons/layoutOptionsFloatLeft";
 import LayoutOptionsFloatRight from "./icons/layoutOptionsFloatRight";
 
 import AppearanceOptionsNone from "./icons/appearanceOptionsNone";
-import AppearanceOptionsBottomTop from "./icons/appearanceOptionsBottomTop";
 import AppearanceOptionsFade from "./icons/appearanceOptionsFade";
 import AppearanceOptionsLeftRight from "./icons/appearanceOptionsLeftRight";
 import AppearanceOptionsRightLeft from "./icons/appearanceOptionsRightLeft";
 import AppearanceOptionsTopBottom from "./icons/appearanceOptionsTopBottom";
+import AppearanceOptionsBottomTop from "./icons/appearanceOptionsBottomTop";
 
-import SpeedOptionsSlow from "./icons/SpeedOptionsSlow";
-import SpeedOptionsMedium from "./icons/SpeedOptionsMedium";
-import SpeedOptionsFast from "./icons/SpeedOptionsFast";
+import SpeedOptionsSlow from "./icons/speedOptionsSlow";
+import SpeedOptionsMedium from "./icons/speedOptionsMedium";
+import SpeedOptionsFast from "./icons/speedOptionsFast";
+import SpeedOptionsViewPort from "./icons/speedOptionsViewPort";
 
-const icons = {
+
+
+const dropDownIcons = {
   LayoutOptionsNormal,
   LayoutOptionsLetterbox,
   LayoutOptionsLarge,
@@ -30,14 +35,15 @@ const icons = {
   LayoutOptionsFloatLeft,
   LayoutOptionsFloatRight,
   AppearanceOptionsNone,
-  AppearanceOptionsBottomTop,
   AppearanceOptionsFade,
   AppearanceOptionsLeftRight,
   AppearanceOptionsRightLeft,
   AppearanceOptionsTopBottom,
+  AppearanceOptionsBottomTop,
   SpeedOptionsSlow,
   SpeedOptionsMedium,
-  SpeedOptionsFast
+  SpeedOptionsFast,
+  SpeedOptionsViewPort
 };
 
-export default icons;
+export default dropDownIcons;

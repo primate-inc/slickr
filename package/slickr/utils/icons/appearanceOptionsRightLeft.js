@@ -2,6 +2,9 @@ import React from 'react'
 
 const appearanceOptionsRightLeft = props => (
   <svg
+    className="dropdown__item__icon"
+    width={24}
+    height={24}
     version={1.1}
     id="Layer_1"
     x={0}

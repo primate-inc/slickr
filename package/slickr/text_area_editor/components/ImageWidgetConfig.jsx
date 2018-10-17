@@ -9,7 +9,7 @@ const defaults = {
   displayOptions: DEFAULT_DISPLAY_OPTIONS
 };
 
-import Icons from "../../utils/icons"
+import dropDownIcons from "../../utils/dropDownIcons"
 
 //Example icon import Icons.AppearanceOptionsNone
 
@@ -17,22 +17,24 @@ const ImageWidgetConfig = () => ({
   standardDisplayOptions: {
     ...defaults,
     displayOptions: [
-      {"key": "l_limit", "classname": "normal_img-layout", "icon": MegadraftIcons.MediaMediumIcon, "label": "NORMAL"},
-      {"key": "m_fit", "classname": "float-left_img-layout", "icon": MegadraftIcons.MediaSmallIcon, "label": "FlOAT LEFT"},//m_fit needs work, since there cant be two m_limits
-      {"key": "m_limit", "classname": "float-right_img-layout", "icon": MegadraftIcons.MediaSmallIcon, "label": "FlOAT RIGHT"},
-      {"key": "xxl_fit", "classname": "cover_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "COVER"},
-      {"key": "xxl_fill", "classname": "letter-box_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "LETTER BOX"},
-      {"key": "xl_limit", "classname": "larger_img-layout", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-      {"key": "xxl_limit", "classname": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"}
+      {"key": "l_limit", "classname": "normal_img-layout", "icon": dropDownIcons.LayoutOptionsNormal, "label": "NORMAL"},
+      {"key": "m_fit", "classname": "float-left_img-layout", "icon": dropDownIcons.LayoutOptionsFloatLeft, "label": "FlOAT LEFT"},//m_fit needs work, since there cant be two m_limits
+      {"key": "m_limit", "classname": "float-right_img-layout", "icon": dropDownIcons.LayoutOptionsFloatRight, "label": "FlOAT RIGHT"},
+      {"key": "xxl_fill", "classname": "cover_img-layout", "icon": dropDownIcons.LayoutOptionsCover, "label": "COVER"},
+      {"key": "xxl_fit", "classname": "letter-box_img-layout", "icon": dropDownIcons.LayoutOptionsLetterbox, "label": "LETTER BOX"},
+      {"key": "xl_limit", "classname": "large_img-layout", "icon": dropDownIcons.LayoutOptionsLarge, "label": "LARGE"}
     ],
     defaultDisplay: 'l_limit'
   },
   appearanceOptions: {
     ...defaults,
     displayOptions: [
-      {"key": "appearance-none", "icon": MegadraftIcons.MediaSmallIcon, "label": "NONE"},
-      {"key": "slide-in", "icon": MegadraftIcons.MediaSmallIcon, "label": "SLIDE IN"},
-      {"key": "fade-in", "icon": MegadraftIcons.MediaSmallIcon, "label": "FADE IN"}
+      {"key": "appearance-none", "icon": dropDownIcons.AppearanceOptionsNone, "label": "NONE"},
+      {"key": "fade-in", "icon": dropDownIcons.AppearanceOptionsFade, "label": "FADE IN"},
+      {"key": "slide-in_from_left", "icon": dropDownIcons.AppearanceOptionsLeftRight, "label": "FADE IN"},
+      {"key": "slide-in_from_right", "icon": dropDownIcons.AppearanceOptionsRightLeft, "label": "SLIDE IN"},
+      {"key": "slide-in_from_top", "icon": dropDownIcons.AppearanceOptionsTopBottom, "label": "SLIDE IN FROM TOP"},
+      {"key": "slide-in_from_bottom", "icon": dropDownIcons.AppearanceOptionsBottomTop, "label": "SLIDE IN FROM BOTTOM"}
     ],
     defaultDisplay: 'appearance-none'
   },
@@ -40,9 +42,10 @@ const ImageWidgetConfig = () => ({
     ...defaults,
     optionType: 'Transition',
     displayOptions: [
-      {"key": "normal-speed", "icon": MegadraftIcons.MediaSmallIcon, "label": "NORMAL SPEED"},
-      {"key": "slow-speed", "icon": MegadraftIcons.MediaSmallIcon, "label": "SLOW SPEED"},
-      {"key": "fast-speed", "icon": MegadraftIcons.MediaSmallIcon, "label": "FAST SPEED"}
+      {"key": "slow-speed", "icon": dropDownIcons.SpeedOptionsSlow, "label": "SLOW SPEED"},
+      {"key": "normal-speed", "icon": dropDownIcons.SpeedOptionsMedium, "label": "NORMAL SPEED"},
+      {"key": "fast-speed", "icon": dropDownIcons.SpeedOptionsFast, "label": "FAST SPEED"},
+      {"key": "view-port", "icon": dropDownIcons.SpeedOptionsViewPort, "label": "VIEW PORT"}
     ],
     defaultDisplay: 'normal-speed'
   }

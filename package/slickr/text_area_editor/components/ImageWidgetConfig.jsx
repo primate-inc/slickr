@@ -9,6 +9,10 @@ const defaults = {
   displayOptions: DEFAULT_DISPLAY_OPTIONS
 };
 
+import Icons from "../../utils/icons"
+
+//Example icon import Icons.AppearanceOptionsNone
+
 const ImageWidgetConfig = () => ({
   standardDisplayOptions: {
     ...defaults,

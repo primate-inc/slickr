@@ -4,7 +4,13 @@
  * License: MIT
  */
 
-import ExampleComponent from "./icons/exampleComponent";
+import LayoutOptionsNormal from "./icons/layoutOptionsNormal";
+import LayoutOptionsLetterbox from "./icons/layoutOptionsLetterbox";
+import LayoutOptionsLarge from "./icons/layoutOptionsLarge";
+import LayoutOptionsCover from "./icons/layoutOptionsCover";
+import LayoutOptionsFloatLeft from "./icons/layoutOptionsFloatLeft";
+import LayoutOptionsFloatRight from "./icons/layoutOptionsFloatRight";
+
 import AppearanceOptionsNone from "./icons/appearanceOptionsNone";
 import AppearanceOptionsBottomTop from "./icons/appearanceOptionsBottomTop";
 import AppearanceOptionsFade from "./icons/appearanceOptionsFade";
@@ -13,18 +19,18 @@ import AppearanceOptionsRightLeft from "./icons/appearanceOptionsRightLeft";
 import AppearanceOptionsTopBottom from "./icons/appearanceOptionsTopBottom";
 
 const icons = {
-  ExampleComponent,
+  LayoutOptionsNormal,
+  LayoutOptionsLetterbox,
+  LayoutOptionsLarge,
+  LayoutOptionsCover,
+  LayoutOptionsFloatLeft,
+  LayoutOptionsFloatRight,
   AppearanceOptionsNone,
   AppearanceOptionsBottomTop,
   AppearanceOptionsFade,
   AppearanceOptionsLeftRight,
   AppearanceOptionsRightLeft,
   AppearanceOptionsTopBottom,
-  // CrossIcon,
-  // ImageIcon,
-  // VideoIcon,
-  // EditIcon,
-  // DeleteIcon,
   // CropIcon,
   // MediaBigIcon,
   // MediaMediumIcon,

@@ -7,10 +7,6 @@ const { BlockContent,
 import CommonBlock from "../../../text_area_editor/components/plugin/CommonBlock"
 import icons from "megadraft/lib/icons";
 import ImageBlockStyle from "./ImageBlockStyle.jsx";
-import {
-  DEFAULT_DISPLAY_OPTIONS,
-  DEFAULT_DISPLAY_KEY
-} from "../../../text_area_editor/components/plugin/defaults";
 
 export default class ImageBlock extends React.Component {
   constructor(props) {
@@ -31,16 +27,10 @@ export default class ImageBlock extends React.Component {
 
   render(){
 
-    const defaults = {
-      defaultDisplay: DEFAULT_DISPLAY_KEY,
-      displayOptions: DEFAULT_DISPLAY_OPTIONS
-    };
     const layout = this.props.data.classname ? this.props.data.classname : 'normal_img-layout'
     const appearance = this.props.data.appearance ? this.props.data.appearance : 'appearance-none'
     const behaviour = this.props.data.behaviour ? this.props.data.behaviour : 'normal-speed'
 
-    // const newStyle = { image:{ backgroundColor: 'pink', margin: '10px', padding: '16px' } }
-    // const styles = {...ImageBlockStyle.image, ...newStyle.image }
     console.log('props: ', this.props);
     const styles = appearance + ' ' + behaviour;
 

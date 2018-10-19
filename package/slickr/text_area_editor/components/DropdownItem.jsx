@@ -6,7 +6,8 @@
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import cx from "classnames";
+
+// import cx from "classnames";
 
 export default class DropdownItem extends Component {
   static propTypes = {
@@ -18,25 +19,16 @@ export default class DropdownItem extends Component {
   render() {
     const item = this.props.item;
     const Icon = item.icon;
-    const containerClasses = cx({
-      "dropdown__item ": true,
-      [this.props.className]: true
-    });
-    const iconClasses = cx({
-      "dropdown__item__icon": true,
-      [item.classname]: item.classname ? true : false
-    });
 
     return (
       <div
-        className={containerClasses}
+        className="dropdown__item"
         onClick={this.props.onClick}
         onMouseDown={this.props.onMouseDown}
         onMouseUp={this.props.onMouseDown}
       >
-        <Icon className={iconClasses} />
+        <Icon className="dropdown__item__icon"/>
         <span className="dropdown__item__text">{this.props.item.label}</span>
-
         {this.props.children}
       </div>
     );

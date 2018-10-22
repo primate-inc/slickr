@@ -26,12 +26,9 @@ export default class ImageBlock extends React.Component {
   }
 
   render(){
-
     const layout = this.props.data.classname ? this.props.data.classname : 'normal_img-layout'
     const appearance = this.props.data.appearance ? this.props.data.appearance : 'appearance-none'
     const behaviour = this.props.data.behaviour ? this.props.data.behaviour : 'normal-speed'
-
-    console.log('props: ', this.props);
     const styles = appearance + ' ' + behaviour;
 
     return (

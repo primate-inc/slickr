@@ -20,7 +20,7 @@ const ImageWidgetConfig = () => ({
       {"key": "l_limit", "classname": "normal_img-layout", "icon": dropDownIcons.LayoutOptionsNormal, "label": "NORMAL"},
       {"key": "m_fit", "classname": "float-left_img-layout", "icon": dropDownIcons.LayoutOptionsFloatLeft, "label": "FlOAT LEFT"},//m_fit needs work, since there cant be two m_limits
       {"key": "m_limit", "classname": "float-right_img-layout", "icon": dropDownIcons.LayoutOptionsFloatRight, "label": "FlOAT RIGHT"},
-      {"key": "xxl_fill", "classname": "cover_img-layout", "icon": dropDownIcons.LayoutOptionsCover, "label": "COVER"},
+      {"key": "xxl_fit", "classname": "cover_img-layout", "icon": dropDownIcons.LayoutOptionsCover, "label": "COVER"},
       {"key": "xxl_fit", "classname": "letter-box_img-layout", "icon": dropDownIcons.LayoutOptionsLetterbox, "label": "LETTER BOX"},
       {"key": "xl_limit", "classname": "large_img-layout", "icon": dropDownIcons.LayoutOptionsLarge, "label": "LARGE"}
     ],

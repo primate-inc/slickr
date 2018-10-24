@@ -103,9 +103,10 @@ export default class Editor extends React.Component {
     //   }
     // }
 
-    const imageConfig = ImageWidgetConfig()
 
-    const plugins = [ ImagePlugin(imageConfig), VimeoPlugin, YouTubePlugin]
+    const plugins = [ 
+      // ImagePlugin(imageConfig), 
+      VimeoPlugin, YouTubePlugin]
 
     let mergedPlugins = plugins.concat(mainAppPlugins)
 

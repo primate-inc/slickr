@@ -13,8 +13,6 @@ export default class ImageBlock extends React.Component {
     super(props);
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
 
-    console.log(props.data);
-
     this.actions = [{
       "key": "delete",
       "icon": icons.DeleteIcon,

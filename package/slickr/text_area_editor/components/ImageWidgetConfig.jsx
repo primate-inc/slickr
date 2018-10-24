@@ -21,7 +21,7 @@ const ImageWidgetConfig = () => ({
       {"key": "m_fit", "classname": "float-left_img-layout", "icon": dropDownIcons.LayoutOptionsFloatLeft, "label": "FlOAT LEFT"},//m_fit needs work, since there cant be two m_limits
       {"key": "m_limit", "classname": "float-right_img-layout", "icon": dropDownIcons.LayoutOptionsFloatRight, "label": "FlOAT RIGHT"},
       {"key": "xxl_fit", "classname": "cover_img-layout", "icon": dropDownIcons.LayoutOptionsCover, "label": "COVER"},
-      {"key": "xxl_fit", "classname": "letter-box_img-layout", "icon": dropDownIcons.LayoutOptionsLetterbox, "label": "LETTER BOX"},
+      {"key": "xl_fit", "classname": "letter-box_img-layout", "icon": dropDownIcons.LayoutOptionsLetterbox, "label": "LETTER BOX"},
       {"key": "xl_limit", "classname": "large_img-layout", "icon": dropDownIcons.LayoutOptionsLarge, "label": "LARGE"}
     ],
     defaultDisplay: 'l_limit'
@@ -31,8 +31,8 @@ const ImageWidgetConfig = () => ({
     displayOptions: [
       {"key": "appearance-none", "icon": dropDownIcons.AppearanceOptionsNone, "label": "NONE"},
       {"key": "fade-in", "icon": dropDownIcons.AppearanceOptionsFade, "label": "FADE IN"},
-      {"key": "slide-in_from_left", "icon": dropDownIcons.AppearanceOptionsLeftRight, "label": "FADE IN"},
-      {"key": "slide-in_from_right", "icon": dropDownIcons.AppearanceOptionsRightLeft, "label": "SLIDE IN"},
+      {"key": "slide-in_from_left", "icon": dropDownIcons.AppearanceOptionsLeftRight, "label": "SLIDE IN FROM LEFT"},
+      {"key": "slide-in_from_right", "icon": dropDownIcons.AppearanceOptionsRightLeft, "label": "SLIDE IN FROM RIGHT"},
       {"key": "slide-in_from_top", "icon": dropDownIcons.AppearanceOptionsTopBottom, "label": "SLIDE IN FROM TOP"},
       {"key": "slide-in_from_bottom", "icon": dropDownIcons.AppearanceOptionsBottomTop, "label": "SLIDE IN FROM BOTTOM"}
     ],

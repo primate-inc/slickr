@@ -58,6 +58,7 @@
     "yup": "^0.22.0"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",

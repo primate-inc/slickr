@@ -15,7 +15,6 @@
     "react"
   ],
   "plugins": [
-    "@babel/plugin-syntax-jsx",
     "syntax-dynamic-import",
     "transform-object-rest-spread",
     [

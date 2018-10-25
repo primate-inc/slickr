@@ -12,10 +12,6 @@ import DropdownMkIII from "../DropdownMkIII";
 import BlockActionGroup from "../plugin/BlockActionGroup";
 import BlockControls from "../plugin/BlockControls";
 import BlockWrapper from "../plugin/BlockWrapper";
-// import {
-//   DEFAULT_DISPLAY_OPTIONS,
-//   DEFAULT_DISPLAY_KEY
-// } from "./defaults"; //imported into plugin for plugin config
 
 export default class CommonBlock extends Component {
   constructor(props) {
@@ -23,7 +19,6 @@ export default class CommonBlock extends Component {
   }
 
   _dropDownBuilder = (props) => {
-    // console.log('CB props: ', props);
     const data = props.data;
 
     const layoutOptions = this.props.blockProps.plugin.layoutOptions || {"nope":"no layout options passed to CommonBlock"};

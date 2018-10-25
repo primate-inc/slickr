@@ -2,7 +2,8 @@ import React from 'react';
 import TitleBarButtons from './title_bar_buttons.jsx'
 import PropTypes from 'prop-types'
 import Content from "./content.jsx";
-import ImagePickerModal from '../../page_edit/components/content/image_picker_modal.jsx';
+// import ImagePickerModal from '../../page_edit/components/content/image_picker_modal.jsx';
+// Removed to prevent duplicate when imageWidget is pulled in by the extentions plugin feature
 import { Formik } from 'formik';
 import Yup from 'yup';
 
@@ -52,13 +53,13 @@ const NavigationWrapper = (
                        loadedImages={loadedImages} />
             </div>
           </div>
-          <ImagePickerModal
+          {/* <ImagePickerModal
             modalIsOpen={modalIsOpen}
             actions={actions}
             loadedImages={loadedImages}
             choosingNavImage={choosingNavImage}
             allowedUploadInfo={allowedUploadInfo}
-          />
+          /> */}
         </form>
       </div>
     )

@@ -30,7 +30,7 @@ export default class ImageBlock extends React.Component {
     const appearance = this.props.data.appearance ? this.props.data.appearance : 'appearance-none'
     const behaviour = this.props.data.behaviour ? this.props.data.behaviour : 'normal-speed'
     const styles = appearance + ' ' + behaviour;
-    console.log('<------- heellow from Slicker CommonBlock xoxo --------->');
+
     return (
       <CommonBlock {...this.props} actions={this.actions}>
         <BlockContent>

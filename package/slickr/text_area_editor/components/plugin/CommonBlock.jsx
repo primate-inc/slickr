@@ -83,6 +83,7 @@ export default class CommonBlock extends Component {
   };
 
   render() {
+    console.log('<------- heellow from Slicker CommonBlock xoxo --------->');
     return (
       <BlockWrapper>
         <BlockControls>

@@ -89,7 +89,7 @@
     }
   }
   .megadraft-text-editor {
-    display: none !important;
+    // display: none !important;
      & + .text {
        textarea:not(.notHidden) {
          display: none !important;

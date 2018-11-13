@@ -91,9 +91,9 @@
   .megadraft-text-editor {
     // display: none !important;
      & + .text {
-       textarea:not(.notHidden) {
-         display: none !important;
-       }
+      //  textarea:not(.notHidden) {
+      //    display: none !important;
+      //  }
        .megadraft {
          min-height: 5em; margin-bottom: 5em;
          .megadraft-editor {

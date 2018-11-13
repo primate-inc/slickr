@@ -91,7 +91,7 @@
   .megadraft-text-editor {
     display: none !important;
      & + .text {
-       textarea {
+       textarea:not(.notHidden) {
          display: none !important;
        }
        .megadraft {

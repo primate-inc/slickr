@@ -15,7 +15,7 @@ class PagesController < ApplicationController
                               og_url: request.original_url,
                               og_image: '',
                               twitter_title: (@slickr_page.twitter_title.present? ? @slickr_page.twitter_title : og_title),
-                              twitter_description: (@slickr_page.twitter_description.present? ? @slickr_page.twitter_title : og_description),
+                              twitter_description: (@slickr_page.twitter_description.present? ? @slickr_page.twitter_description : og_description),
                               twitter_image: ''
                             }
     raise AbstractController::ActionNotFound.new unless @slickr_page

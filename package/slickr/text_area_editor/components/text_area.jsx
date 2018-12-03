@@ -1,11 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {MegadraftEditor, MegadraftIcons} from "megadraft";
+import {MegadraftEditor} from "megadraft";
 import {editorStateToJSON, DraftJS} from "megadraft";
 import LinkInput from '../../page_edit/components/content/megadraft_link_input_override.js'
-import ImagePlugin from "../../page_edit/plugins/image/plugin.jsx";
-import VimeoPlugin from "../../page_edit/plugins/vimeo/plugin.jsx";
-import YouTubePlugin from "../../page_edit/plugins/you_tube/plugin.jsx";
 import icons from "megadraft/lib/icons";
 
 import ErrorBoundary from "./ErrorBoundary.jsx"
@@ -13,7 +9,6 @@ import {
   DEFAULT_DISPLAY_OPTIONS,
   DEFAULT_DISPLAY_KEY
 } from "./plugin/defaults";
-import ImageWidgetConfig from "./ImageWidgetConfig.jsx"
 
 import h1 from "../../page_edit/text_editor_icons/h1.jsx"
 import h2 from "../../page_edit/text_editor_icons/h2.jsx"
@@ -81,33 +76,7 @@ export default class Editor extends React.Component {
   }
 
   render() {
-    // megadraftOptions passed in as blockProps when set from plugin.jsx
-    // use customOptions to pass in any extra info to plugin block
-    // eg customOptions: { customAction: this.props.actions.customAction }
-
-    // This has changed, now when you build a plugin you pass the Options in from a config
-    // file(example ImageWidgetConfig.jsx) then import it into this file, and pass it to the desired
-    // Plugin (example "ImagePlugin(imageConfig)")
-    // var megadraftOptions = {
-    //   customOptions: {},
-    //   standardDisplayOptions: {
-    //     displayOptions: [
-    //       {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
-    //       {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
-    //       {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-    //       {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-    //       {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
-    //       {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
-    //     ],
-    //     defaultDisplay: 'full'
-    //   }
-    // }
-
-
-    const plugins = [
-      // ImagePlugin(imageConfig),
-      // VimeoPlugin, YouTubePlugin
-    ]
+    const plugins = []
 
     let mergedPlugins = plugins.concat(mainAppPlugins)
 

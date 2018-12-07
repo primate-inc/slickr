@@ -74,46 +74,64 @@ export default class ImageArea extends React.Component {
             <label htmlFor="slickr_image_id">
               {`${this.props.imageObject.label}${hint}`}
             </label>
-            <div type="file" onClick={this.openImagePicker()} style={{
-              display: 'flex',
-              flexDirection: 'column',
-              lineHeight: '30px',
-            }}>
-              <span style={{ color: 'black', fontWeight: '500', marginTop: '16%' }}>Add Image here...</span>
-              <span style={{ color: '#469cff', fontWeight: '500' }}>select files from your computer</span>
-              <span style={{ color: '#a8a8a8' }}>Maximum size 2mb | .jpg .png images only</span>
-            </div>
-            {(() => {
-              let mediaUploadId = this.props.imageObject.id
-              let imagePath = this.props.imageObject.path
+              <div style={{
+                width: '100%', marginTop: '5px',
+                marginRight: '5px',
+                border: '#CCCCCC solid 1px',
+                backgroundColor: '#FFF',
+              }}>
+              <div
+                style={{
+                  margin: '16px',
+                  border: '#CCCCCC dashed 1px',
+                  backgroundColor: '#FFF',
+                  height: '90%'
+                }}
+              >
+                <div type="file" onClick={this.openImagePicker()} style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  lineHeight: '30px',
+                }}>
+                {this.props.imageObject.id == null ? 'no_image' : 'has_image'}
+                  <span style={{ color: 'black', fontWeight: '500', marginTop: '16%' }}>Add Image here...</span>
+                  <span style={{ color: '#469cff', fontWeight: '500' }}>select files from your computer</span>
+                  <span style={{ color: '#a8a8a8' }}>Maximum size 2mb | .jpg .png images only</span>
+                </div>
+                {(() => {
+                  let mediaUploadId = this.props.imageObject.id
+                  let imagePath = this.props.imageObject.path
 
-              if(imagePath != null) {
-                return (
-                  <div className="inline-hints">
-                    <img src={imagePath} />
-                    <div className={`image-picker-remove ${mediaUploadId == null ? 'no_image' : 'has_image'}`}>
-                      <div className="true_false image boolean input optional">
-                        <div className="edit-wrapper">
-                          <label className='label_remove' htmlFor={`remove_${this.props.imageObject.field}`}>
-                            <input type="checkbox"
-                                   name={`remove_${this.props.imageObject.field}`}
-                                   id={`remove_${this.props.imageObject.field}`}
-                                   onClick={this.removeImage()} />
-                          </label>
+                  if(imagePath != null) {
+                    return (
+                      <div className="inline-hints">
+                        <img src={imagePath} />
+                        <div className={`image-picker-remove ${mediaUploadId == null ? 'no_image' : 'has_image'}`}>
+                          <div className="true_false image boolean input optional">
+                            <div className="edit-wrapper">
+                              <label className='label_remove' htmlFor={`remove_${this.props.imageObject.field}`}>
+                                <input type="checkbox"
+                                        name={`remove_${this.props.imageObject.field}`}
+                                        id={`remove_${this.props.imageObject.field}`}
+                                        onClick={this.removeImage()} />
+                              </label>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                )
-              }
-            })()}
-            {(() => {
-              if(error) {
-                return (
-                  <p class="inline-errors">{error}</p>
-                )
-              }
-            })()}
+                    )
+                  }
+                })()}
+                {(() => {
+                  if(error) {
+                    return (
+                      <p class="inline-errors">{error}</p>
+                    )
+                  }
+                })()}
+              </div>
+            </div>
+
           </div>
         </div>,
         <ImagePickerModal

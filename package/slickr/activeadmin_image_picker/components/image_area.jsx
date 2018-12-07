@@ -74,7 +74,15 @@ export default class ImageArea extends React.Component {
             <label htmlFor="slickr_image_id">
               {`${this.props.imageObject.label}${hint}`}
             </label>
-            <input type="file" onClick={this.openImagePicker()} />
+            <div type="file" onClick={this.openImagePicker()} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              lineHeight: '30px',
+            }}>
+              <span style={{ color: 'black', fontWeight: '500', marginTop: '16%' }}>Add Image here...</span>
+              <span style={{ color: '#469cff', fontWeight: '500' }}>select files from your computer</span>
+              <span style={{ color: '#a8a8a8' }}>Maximum size 2mb | .jpg .png images only</span>
+            </div>
             {(() => {
               let mediaUploadId = this.props.imageObject.id
               let imagePath = this.props.imageObject.path

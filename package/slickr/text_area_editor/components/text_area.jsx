@@ -77,12 +77,20 @@ export default class Editor extends React.Component {
 
   render() {
     const plugins = []
-
+    // let hint;
+    // if(this.props.textAreaIndex.hint == '') {
+    //   hint = ''
+    // } else {
+    //   hint = ` (${this.props.imageObject.hint}) `
+    // }
     let mergedPlugins = plugins.concat(mainAppPlugins)
+    console.log('this.props.textAreaIndex: ', this.props.textAreaIndex);
 
     return (
         <ErrorBoundary>
           <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.labelText}</label>
+          {/* <span key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.labelText}</span>
+          {`${this.props.imageObject.label}${hint}`} */}
           <textarea key={`${this.props.textAreaIndex}-1`} onChange={this.hightlightActive} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>
           <MegadraftEditor
             key={`${this.props.textAreaIndex}-2`}

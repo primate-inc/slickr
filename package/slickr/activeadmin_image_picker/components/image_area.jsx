@@ -91,13 +91,9 @@ export default class ImageArea extends React.Component {
                 <div type="file" onClick={this.openImagePicker()} style={{
                   height: '85%',
                   textAlign: '-webkit-center',
-                  height: '300px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
                 }}>
                 {this.props.imageObject.id == null ?
-                  <div>
+                  <div style={{ height: '300px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <p style={{ color: 'black', fontWeight: '500' }}>Add Image here...</p>
                     <p style={{ color: '#469cff', fontWeight: '500' }}>select files from your computer</p>
                     <p style={{ color: '#a8a8a8' }}>Maximum size 2mb | .jpg .png images only</p>

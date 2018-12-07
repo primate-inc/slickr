@@ -70,7 +70,7 @@ export default class ImageArea extends React.Component {
         </textarea>,
         <div key={`${this.props.textAreaIndex}-2`}
              className={`file input admin-big-title ${this.props.imageObject.id == null ? 'no_image' : 'has_image'} ${error ? 'has_error' : ''}`}>
-          <div className="edit-wrapper">
+          <div className="edit-wrapper" style={{ width: '100%' }}>
             <label htmlFor="slickr_image_id">
               {`${this.props.imageObject.label}${hint}`}
             </label>
@@ -93,10 +93,15 @@ export default class ImageArea extends React.Component {
                   flexDirection: 'column',
                   lineHeight: '30px',
                 }}>
-                {this.props.imageObject.id == null ? 'no_image' : 'has_image'}
-                  <span style={{ color: 'black', fontWeight: '500', marginTop: '16%' }}>Add Image here...</span>
-                  <span style={{ color: '#469cff', fontWeight: '500' }}>select files from your computer</span>
-                  <span style={{ color: '#a8a8a8' }}>Maximum size 2mb | .jpg .png images only</span>
+                {this.props.imageObject.id == null ?
+                  <div>
+                    <span style={{ color: 'black', fontWeight: '500', marginTop: '16%' }}>Add Image here...</span>
+                    <span style={{ color: '#469cff', fontWeight: '500' }}>select files from your computer</span>
+                    <span style={{ color: '#a8a8a8' }}>Maximum size 2mb | .jpg .png images only</span>
+                  </div>
+                  :
+                  null;
+                }
                 </div>
                 {(() => {
                   let mediaUploadId = this.props.imageObject.id

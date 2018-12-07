@@ -89,12 +89,12 @@ export default class ImageArea extends React.Component {
                 }}
               >
                 <div type="file" onClick={this.openImagePicker()} style={{
-                  width: '55%',
                   height: '85%',
-                  position: "absolute",
-                  justifyContent: "center",
                   textAlign: '-webkit-center',
-                  height: '300px'
+                  height: '300px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                 }}>
                 {this.props.imageObject.id == null ?
                   <div>

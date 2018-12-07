@@ -100,7 +100,7 @@ export default class ImageArea extends React.Component {
                     <span style={{ color: '#a8a8a8' }}>Maximum size 2mb | .jpg .png images only</span>
                   </div>
                   :
-                  null;
+                  null
                 }
                 </div>
                 {(() => {

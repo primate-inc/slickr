@@ -14,7 +14,7 @@ module SlickrHelper
   include ActionView::Helpers::OutputSafetyHelper
 
   def format_with_markdown(content)
-    renderer = SlickrHelper::CustomRender.new(filter_html: true)
+    renderer = SlickrHelper::CustomRender.new(filter_html: true, hard_wrap: true)
     markdown = Redcarpet::Markdown.new(renderer, {})
     markdown.render(content)
   end

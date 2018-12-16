@@ -19,6 +19,11 @@ module SlickrHelper
     markdown.render(content)
   end
 
+  def format_with_full_markdown(content)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, {})
+    markdown.render(content)
+  end
+
   def slickr_page_title
     [
       @slickr_page_title,

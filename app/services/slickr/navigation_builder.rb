@@ -105,6 +105,7 @@ module Slickr
     def publish_page(hash)
       return false if Time.current < hash['publish_schedule_time']
       page = Page.find(hash['slickr_page_id'])
+      return false if page.published?
       page.update_attributes(
         publish_schedule_date: nil, publish_schedule_time: nil
       )

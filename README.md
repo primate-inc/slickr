@@ -39,6 +39,12 @@ and finally
 yarn install
 ```
 
+If running the generator again you can run:
+
+```bash
+rails g slickr:install --skip
+```
+
 ## Stylesheets
 
 Firstly, please comment out the default Active Admin stylesheets.

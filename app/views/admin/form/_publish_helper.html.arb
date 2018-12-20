@@ -1,0 +1,23 @@
+f.inputs for: [
+  :publish_state, f.object.publish_state || Slickr::PublishState.new
+] do |ff|
+  ff.input :publish_schedule_date,
+           as: :datepicker,
+           label: 'Scheduled date',
+           datepicker_options: {
+             dateFormat: 'dd-MM-yy'
+           },
+           input_html: {
+             value: ff.object
+               .publish_schedule_date.try(:strftime, '%d-%B-%Y')
+           }
+  ff.input :publish_schedule_time,
+           as: :time_picker,
+           label: 'Scheduled time',
+           wrapper_html: { class: 'clockpicker', 'data-autoclose': 'true' },
+           input_html: {
+             value: ff.object
+               .publish_schedule_time
+               .try(:localtime).try(:strftime, '%H:%M')
+           }
+end

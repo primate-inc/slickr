@@ -22,12 +22,12 @@ module Slickr
     #     }
     # }
     def nav_helper
-      nav_trees = nav_trees = Slickr::Navigation.all_nav_trees
-      return if nav_trees.nil?
-      pathnames = all_pages_pathnames(nav_trees)
+      @nav_trees = Slickr::Navigation.all_nav_trees
+      return if @nav_trees.nil?
+      pathnames = all_pages_pathnames
       {
         pathnames: pathnames,
-        nav_menus: all_nav_menus(nav_trees, pathnames)
+        nav_menus: all_nav_menus(pathnames)
       }
     end
 
@@ -39,19 +39,17 @@ module Slickr
 
     # example result
     # [{:page_id=>1, :path=>"/level1"}, {:page_id=>2, :path=>"/level1/level2"}]
-    def all_pages_pathnames(nav_trees)
-      main_page_paths = build_main_page_paths(nav_trees)
-      additonal_page_paths = build_additonal_page_paths(
-        nav_trees, main_page_paths
-      )
+    def all_pages_pathnames
+      main_page_paths = build_main_page_paths
+      additonal_page_paths = build_additonal_page_paths(main_page_paths)
       main_page_paths + additonal_page_paths
     end
 
     # build up all of the pathnames nested under a root_type of 'Root'
     # example result
     # [{:page_id=>1, :path=>"/level1"}, {:page_id=>2, :path=>"/level1/level2"}]
-    def build_main_page_paths(nav_trees)
-      navs = nav_trees.map { |root| root if root['root_type'] == 'Root' }
+    def build_main_page_paths
+      navs = @nav_trees.map { |root| root if root['root_type'] == 'Root' }
       navs.compact.map do |hash|
         iterate_children_for_pathnames(hash, '/')
       end.flatten
@@ -62,8 +60,8 @@ module Slickr
     # pathnames to build upon the main pathnames
     # example result
     # [{:page_id=>3, :path=>"/level1/level2/level3"}]
-    def build_additonal_page_paths(nav_trees, main_page_paths)
-      navs = nav_trees.map { |root| root if root['root_type'] == 'Page' }
+    def build_additonal_page_paths(main_page_paths)
+      navs = @nav_trees.map { |root| root if root['root_type'] == 'Page' }
       navs.compact.map do |hash|
         start_path_info = path_finder(main_page_paths, hash)
         unless start_path_info.nil?
@@ -105,11 +103,26 @@ module Slickr
     def publish_page(hash)
       return false if Time.current < hash['publish_schedule_time']
       page = Page.find(hash['slickr_page_id'])
-      return false if page.published?
+      return true if page.published?
       page.update_attributes(
         publish_schedule_date: nil, publish_schedule_time: nil
       )
       page.publish!
+      update_nav_tree(hash['id'])
+    end
+
+    # Deeply iterate through the tree to find the hash with matching id to
+    # update. Using the @nav_trees inst var, the info within the tree can be
+    # updated to ensure that all nav menus will show the newly published page
+    def update_nav_tree(id, subtrees = nil)
+      trees = subtrees.nil? ? @nav_trees : subtrees
+      trees.each do |branch|
+        if branch['id'] == id
+          branch['aasm_state'] = 'published'
+          branch['publish_schedule_time'] = nil
+        end
+        update_nav_tree(id, branch['children']) unless branch['children'] == []
+      end
     end
 
     #####################
@@ -129,9 +142,9 @@ module Slickr
     #       :title=>"Menu", :image=>nil
     #     }]
     # }
-    def all_nav_menus(nav_trees, pathnames)
+    def all_nav_menus(pathnames)
       menu_hash = {}
-      nav_trees.map do |root|
+      @nav_trees.map do |root|
         menu_hash[root['title']] = root['children'].map do |child_hash|
           parent_link = if root['root_type'] == 'Page'
                           path_info = path_finder(pathnames, root)

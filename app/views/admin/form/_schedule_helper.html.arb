@@ -1,5 +1,5 @@
 f.inputs for: [
-  :publish_state, f.object.publish_state || Slickr::PublishState.new
+  :schedule, f.object.schedule || Slickr::Schedule.new
 ] do |ff|
   ff.input :publish_schedule_date,
            as: :datepicker,

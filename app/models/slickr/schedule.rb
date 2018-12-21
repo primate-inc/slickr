@@ -1,12 +1,16 @@
 module Slickr
-  class PublishState < ApplicationRecord
-    self.table_name = 'slickr_publish_states'
+  class Schedule < ApplicationRecord
+    self.table_name = 'slickr_schedules'
 
-    belongs_to :publishable_state, polymorphic: true
+    belongs_to :schedulable, polymorphic: true
 
     before_save :set_date_in_publish_schedule_time
     after_save :destroy_if_no_schedule
     after_save :destroy_if_schedule_now_or_past
+
+    scope(:now_or_past, lambda do
+      where('publish_schedule_time <= ?', Time.current.utc)
+    end)
 
     private
 
@@ -25,6 +29,7 @@ module Slickr
     end
 
     def destroy_if_schedule_now_or_past
+      return if publish_schedule_time.nil?
       destroy if publish_schedule_time <= Time.current.utc
     end
   end

@@ -23,7 +23,7 @@ module Slickr
         migration_template "migrations/create_slickr_navigations.rb", "db/migrate/create_slickr_navigations.rb"
         migration_template "migrations/create_slickr_media_uploads.rb", "db/migrate/create_slickr_media_uploads.rb"
         migration_template "migrations/create_slickr_uploads.rb", "db/migrate/create_slickr_uploads.rb"
-        migration_template "migrations/create_slickr_publish_state.rb", "db/migrate/create_slickr_publish_state.rb"
+        migration_template "migrations/create_slickr_schedules.rb", "db/migrate/create_slickr_schedules.rb"
 
         puts "Database migrations added"
       end

@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Slickr
+  # Schedule class
   class Schedule < ApplicationRecord
     self.table_name = 'slickr_schedules'
 

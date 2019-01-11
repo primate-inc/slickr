@@ -1,6 +1,8 @@
 include SlickrHelper
 if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::Page do
+    include Slickr::SharedAdminActions
+
     menu priority: 1
     actions :all, except: :show
     before_action :set_paper_trail_whodunnit
@@ -72,31 +74,6 @@ if defined?(ActiveAdmin)
       end
     end
 
-    member_action :publish, method: :put do
-      if resource.valid?
-        resource.publish! and Slickr::EventLog.create(
-          action: :publish, eventable: resource, admin_user: current_admin_user
-        )
-      end
-      respond_to do |format|
-        format.html { redirect_to edit_resource_path, notice: 'Published' }
-        format.json { render json: @slickr_page.as_json }
-      end
-    end
-
-    member_action :unpublish, method: :put do
-      if resource.valid?
-        resource.unpublish! and Slickr::EventLog.create(
-          action: :unpublish, eventable: resource,
-          admin_user: current_admin_user
-        )
-      end
-      respond_to do |format|
-        format.html { redirect_to edit_resource_path, notice: 'Unpublished' }
-        format.json { render json: @slickr_page.as_json }
-      end
-    end
-
     member_action :create_draft, method: :post do
       draft = resource.create_draft
       if draft.valid?
@@ -125,30 +102,10 @@ if defined?(ActiveAdmin)
     end
 
     action_item :preview, only: [:edit] do
-      link_to preview_admin_slickr_page_path(resource, slickr_page: resource),
+      link_to preview_admin_slickr_page_path(resource),
               target: '_blank' do
         '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
               xlink:href="#svg-preview"></use></svg>Preview'.html_safe
-      end
-    end
-
-    action_item :publish, only: [:edit] do
-      unless resource.published?
-        link_to publish_admin_slickr_page_path(resource, slickr_page: resource),
-                method: :put do
-          '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="#svg-publish"></use></svg>Publish'.html_safe
-        end
-      end
-    end
-
-    action_item :unpublish, only: [:edit] do
-      if resource.published?
-        link_to unpublish_admin_slickr_page_path(resource, slickr_page: resource),
-                method: :put do
-          '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="#svg-cross"></use></svg>Unpublish'.html_safe
-        end
       end
     end
   end

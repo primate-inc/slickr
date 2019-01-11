@@ -6,6 +6,7 @@ module Slickr
     self.table_name = 'slickr_navigations'
 
     include Slickr::Uploadable
+    include Slickr::Schedulable
 
     has_ancestry
     acts_as_list scope: [:ancestry]
@@ -40,7 +41,7 @@ module Slickr
         :link_text, :ancestry, 'slickr_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
         :page_header, :page_intro, :page_subheader, :page_intro, :slug,
-        :aasm_state, :publish_schedule_time
+        :aasm_state
       ).arrange_serializable(order: :position)[0]['children']
     end
 

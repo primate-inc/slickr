@@ -22,6 +22,7 @@ module Slickr
     #     }
     # }
     def nav_helper
+      Slickr::Schedule.now_or_past.destroy_all
       @nav_trees = Slickr::Navigation.all_nav_trees
       return if @nav_trees.nil?
       pathnames = all_pages_pathnames
@@ -81,9 +82,7 @@ module Slickr
     # array of hashed with keys of page_id and path
     def build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
-        schedule_passed = false
-        schedule_passed = publish_page(hash) if hash['publish_schedule_time']
-        if hash['aasm_state'] == 'published' || schedule_passed
+        if hash['aasm_state'] == 'published'
           new_pathname = pathname + hash['slug']
           array.push(page_id: hash['page_id'], path: new_pathname)
           hash['children'].map do |child_hash|
@@ -98,31 +97,6 @@ module Slickr
         end
       end
       array
-    end
-
-    def publish_page(hash)
-      return false if Time.current < hash['publish_schedule_time']
-      page = Page.find(hash['slickr_page_id'])
-      return true if page.published?
-      page.update_attributes(
-        publish_schedule_date: nil, publish_schedule_time: nil
-      )
-      page.publish!
-      update_nav_tree(hash['id'])
-    end
-
-    # Deeply iterate through the tree to find the hash with matching id to
-    # update. Using the @nav_trees inst var, the info within the tree can be
-    # updated to ensure that all nav menus will show the newly published page
-    def update_nav_tree(id, subtrees = nil)
-      trees = subtrees.nil? ? @nav_trees : subtrees
-      trees.each do |branch|
-        if branch['id'] == id
-          branch['aasm_state'] = 'published'
-          branch['publish_schedule_time'] = nil
-        end
-        update_nav_tree(id, branch['children']) unless branch['children'] == []
-      end
     end
 
     #####################

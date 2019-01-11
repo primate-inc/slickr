@@ -17,7 +17,6 @@ module Slickr
       # eg could use before_destroy on the model to perform some work before the
       # record is destroyed
       scope(:published, lambda do
-        Slickr::Schedule.now_or_past.destroy_all
         not_published_ids = Slickr::Schedule.where(
           schedulable_type: klass.to_s
         ).pluck(:schedulable_id)

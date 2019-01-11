@@ -5,6 +5,7 @@ module Slickr
 
     extend FriendlyId
     include Slickr::Uploadable
+    include Slickr::Schedulable
     include AASM
 
     has_paper_trail only: %i[title aasm_state content published_content drafts],

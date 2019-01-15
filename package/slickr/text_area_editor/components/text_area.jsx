@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {MegadraftEditor, MegadraftIcons} from "megadraft";
 import {editorStateToJSON, DraftJS} from "megadraft";
+import { DefaultDraftBlockRenderMap } from "draft-js"
+import Immutable from "immutable";
 import LinkInput from '../../page_edit/components/content/megadraft_link_input_override.js'
 import ImagePlugin from "../../page_edit/plugins/image/plugin.jsx";
 import VimeoPlugin from "../../page_edit/plugins/vimeo/plugin.jsx";
@@ -13,6 +15,7 @@ import h3 from "../../page_edit/text_editor_icons/h3.jsx"
 import h4 from "../../page_edit/text_editor_icons/h4.jsx"
 import h5 from "../../page_edit/text_editor_icons/h5.jsx"
 import h6 from "../../page_edit/text_editor_icons/h6.jsx"
+import mainAppBlockStyles from 'slickr_extensions/page_edit/additional_megadraft_block_styles.js'
 import mainAppPlugins from 'slickr_extensions/page_edit/plugins/plugin_list.js'
 import mainAppEntityInputs from 'slickr_extensions/page_edit/components/content/additional_entity_inputs.js'
 import mainAppActions from 'slickr_extensions/page_edit/additional_megadraft_actions.js'
@@ -93,11 +96,20 @@ export default class Editor extends React.Component {
     var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin, YouTubePlugin]
     let mergedPlugins = plugins.concat(mainAppPlugins)
 
+    const additionalBlocks = Immutable.Map(
+      mainAppBlockStyles.map( bs => {
+        return [
+          bs.type, { wrapper: <div className={bs.className} />}
+        ]
+      })
+    )
+
     return (
       [
         <label key={`${this.props.textAreaIndex}-0`} htmlFor={this.props.label.htmlFor} className={this.props.label.className}>{this.props.labelText}</label>,
         <textarea key={`${this.props.textAreaIndex}-1`} onChange={this.hightlightActive} id={this.props.textArea.id} name={this.props.textArea.name} defaultValue={editorStateToJSON(this.props.editorState)}></textarea>,
         <MegadraftEditor
+          blockRenderMap={DefaultDraftBlockRenderMap.merge(additionalBlocks)}
           key={`${this.props.textAreaIndex}-2`}
           editorState={this.props.editorState}
           onChange={this.changeEditorState}

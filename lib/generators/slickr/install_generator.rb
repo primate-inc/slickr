@@ -291,6 +291,7 @@ module Slickr
 
       def page_edit_megadraft_extensions
         template "javascript_extensions/page_edit/additional_megadraft_actions.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_actions.js"
+        template "javascript_extensions/page_edit/additional_megadraft_block_styles.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_block_styles.js"
         template "javascript_extensions/page_edit/additional_megadraft_decorators.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_decorators.js"
         template "javascript_extensions/page_edit/actions/additional_actions.js", "app/javascript/slickr_extensions/page_edit/actions/additional_actions.js"
         template "javascript_extensions/page_edit/components/content/additional_entity_inputs.js", "app/javascript/slickr_extensions/page_edit/components/content/additional_entity_inputs.js"

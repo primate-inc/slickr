@@ -6,7 +6,8 @@ ActiveAdmin.register Slickr::Page do
                 slickr_page_header_image_attributes: [:slickr_media_upload_id],
                 schedule_attributes: [
                   :publish_schedule_date, :publish_schedule_time
-                ]
+                ],
+                slickr_navigation_image_attributes: [:slickr_media_upload_id]
 
   form do |f|
     if object.new_record?

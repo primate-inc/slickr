@@ -38,14 +38,14 @@ module Slickr
 
     aasm(:status, column: :aasm_state) do
       state :draft, initial: true
-      state :published
+      state :live_version
 
-      event :publish do
-        transitions from: :draft, to: :published
+      event :make_live do
+        transitions from: :draft, to: :live_version
       end
 
-      event :unpublish do
-        transitions from: :published, to: :draft
+      event :make_draft do
+        transitions from: :live_version, to: :draft
       end
     end
 
@@ -105,14 +105,6 @@ module Slickr
 
     def preview_page
       Rails.application.routes.url_helpers.preview_admin_slickr_page_path(self.id)
-    end
-
-    def admin_unpublish_path
-      Rails.application.routes.url_helpers.unpublish_admin_slickr_page_path(self.id)
-    end
-
-    def admin_publish_path
-      Rails.application.routes.url_helpers.publish_admin_slickr_page_path(self.id)
     end
 
     def admin_delete_page_path

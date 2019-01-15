@@ -4,7 +4,12 @@
 class PagesController < ApplicationController
   def show
     slug =  params[:slug].class == Symbol ? params[:slug] : params[:slug].split('/').last
-    @slickr_page = Slickr::Page.where(slug: slug, aasm_state: :published).first
+    @slickr_page = Slickr::Page.left_outer_joins(:schedule)
+                               .select('*', 'slickr_schedules.id AS schedule_id')
+                               .find_by(
+                                 'slug = ? AND slickr_schedules.id IS NULL',
+                                 slug
+                               )
     @slickr_page_title = @slickr_page.page_title
     og_title = @slickr_page.og_title.present? ? @slickr_page.og_title : @slickr_page.page_title
     og_description = @slickr_page.og_description.present? ? @slickr_page.og_description : @slickr_page.meta_description

@@ -36,12 +36,14 @@ module Slickr
     end
 
     def build_tree_structure
-      subtree.left_outer_joins(:slickr_navigation_image, :slickr_page).select(
+      subtree.left_outer_joins(
+        :slickr_navigation_image, [slickr_page: :schedule]
+      ).select(
         :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
         :link_text, :ancestry, 'slickr_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
         :page_header, :page_intro, :page_subheader, :page_intro, :slug,
-        :aasm_state
+        'slickr_schedules.publish_schedule_time AS schedule_time'
       ).arrange_serializable(order: :position)[0]['children']
     end
 

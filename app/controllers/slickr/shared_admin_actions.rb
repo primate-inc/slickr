@@ -9,8 +9,8 @@ module Slickr
 
       base.send(:action_item, :publish, only: :edit) do
         if resource.schedule
-          class_underscore = resource.class.name.parameterize.underscore
-          link = "publish_admin_#{class_underscore}_path"
+          table_single = resource.class.table_name.singularize
+          link = "publish_admin_#{table_single}_path"
           link_to send(link, resource), method: :put do
             '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="#svg-publish"></use></svg>Publish'.html_safe
@@ -20,8 +20,8 @@ module Slickr
 
       base.send(:action_item, :unpublish, only: :edit) do
         unless resource.schedule
-          class_underscore = resource.class.name.parameterize.underscore
-          link = "unpublish_admin_#{class_underscore}_path"
+          table_single = resource.class.table_name.singularize
+          link = "unpublish_admin_#{table_single}_path"
           link_to send(link, resource), method: :put do
             '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="#svg-cross"></use></svg>Unpublish'.html_safe

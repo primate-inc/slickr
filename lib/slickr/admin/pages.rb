@@ -3,6 +3,7 @@ if defined?(ActiveAdmin)
   ActiveAdmin.register Slickr::Page do
     include Slickr::SharedAdminActions
 
+    includes :schedule
     menu priority: 1
     actions :all, except: :show
     before_action :set_paper_trail_whodunnit
@@ -18,8 +19,11 @@ if defined?(ActiveAdmin)
       column 'Layout' do |page|
         page.layout.humanize
       end
-      column 'State' do |page|
-        page.aasm_state.humanize
+      # column 'State' do |page|
+      #   page.aasm_state.humanize
+      # end
+      column 'Published' do |cs|
+        cs.published?
       end
       actions
     end

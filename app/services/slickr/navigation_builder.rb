@@ -82,7 +82,7 @@ module Slickr
     # array of hashed with keys of page_id and path
     def build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
-        if hash['aasm_state'] == 'published'
+        if hash['schedule_time'].nil?
           new_pathname = pathname + hash['slug']
           array.push(page_id: hash['page_id'], path: new_pathname)
           hash['children'].map do |child_hash|
@@ -143,8 +143,7 @@ module Slickr
     #   :link=>"/menu", :link_text=>"Menu", "children"=>[]
     # }
     def build_nav(child_hash, pathnames, parent_link)
-      return unless child_hash['aasm_state'] == 'published' ||
-                    child_hash['aasm_state'].nil?
+      return unless child_hash['schedule_time'].nil?
       parent_link = if child_hash['child_type'] == 'Page'
                       path_finder(pathnames, child_hash)[:path]
                     else

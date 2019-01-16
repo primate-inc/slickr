@@ -15,6 +15,10 @@ module Slickr
       where('publish_schedule_time <= ?', Time.current.utc)
     end)
 
+    scope(:ids_of_type, lambda do |klass_string|
+      where(schedulable_type: klass_string).pluck(:schedulable_id)
+    end)
+
     private
 
     def set_date_in_publish_schedule_time

@@ -120,9 +120,13 @@ config.slickr_http_basic_auth_password = 'Bloggs'
 
 [Media Library](docs/media_library.md)
 
+## Scheduling
+
+[Scheduling](docs/scheduling.md)
+
 ## Helpers
 
-[Heleprs](docs/helpers.md)
+[Helpers](docs/helpers.md)
 
 ## Error pages
 

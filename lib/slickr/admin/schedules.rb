@@ -7,9 +7,11 @@ if defined?(ActiveAdmin)
 
     filter :schedulable_type,
            as: :select,
-           collection: ::Slickr::ScheduleDecorator.decorate(
-             ::Slickr::Schedule.select('DISTINCT(schedulable_type)')
-           ).as_select
+           collection: proc {
+             ::Slickr::ScheduleDecorator.decorate(
+               ::Slickr::Schedule.select('DISTINCT(schedulable_type)')
+             ).as_select
+           }
     filter :publish_schedule_time
 
     index do

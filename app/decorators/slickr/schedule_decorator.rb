@@ -8,6 +8,7 @@ module Slickr
     def as_select
       pluck(:schedulable_type)
         .map { |type| [type.constantize.model_name.human, type] }
+        .uniq
     end
   end
 end

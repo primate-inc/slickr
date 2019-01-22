@@ -27,7 +27,7 @@ module Slickr
     has_one :published_draft, class_name: 'Slickr::Page::Draft'
 
     before_create :create_content_areas
-    after_create :create_draft, :activate_draft
+    after_create :create_draft, :activate_draft, :make_unpublished
     before_save :set_date_in_publish_schedule_time
 
     validates_presence_of :title, :layout, unless: :type_draft?
@@ -37,8 +37,8 @@ module Slickr
     scope :not_draft, -> { where(type: nil) }
 
     aasm(:status, column: :aasm_state) do
-      state :draft, initial: true
-      state :live_version
+      state :live_version, initial: true
+      state :draft
 
       event :make_live do
         transitions from: :draft, to: :live_version
@@ -101,6 +101,14 @@ module Slickr
 
     def activate_draft
       drafts.first.activate
+    end
+
+    def make_unpublished
+      Slickr::Schedule.create(
+        schedulable: self,
+        publish_schedule_date: Date.today + 100.years,
+        publish_schedule_time: Time.now + 100.years
+      )
     end
 
     def preview_page

@@ -8,3 +8,4 @@ test/dummy/tmp/
 node_modules
 public/packs
 tmp
+*.lock

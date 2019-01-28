@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   # Images
   s.add_dependency 'shrine', '~> 2.0'
   s.add_dependency 'fastimage', '~> 2.1'
-  s.add_dependency 'image_processing', '>= 1.0'
+  s.add_dependency 'image_processing', '>= 1.7'
   s.add_dependency 'image_optim', '~> 0.26'
   s.add_dependency 'image_optim_pack', '~> 0.5'
 

@@ -97,6 +97,7 @@ module Slickr
 
     def create_draft
       drafts.create
+      drafts.first.make_draft!
     end
 
     def activate_draft

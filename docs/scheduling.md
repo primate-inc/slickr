@@ -25,6 +25,35 @@ The schedule is checked and amended if necessary on every page load so there is
 no need for the likes of cron jobs to run to remove the schedule once the date
 has passed.
 
+If you would like the record to be unpublished on create you can do the
+following:
+
+```ruby
+class Blog < ApplicationRecord
+  include Slickr::Schedulable
+  slickr_schedulable on_create: :unpublish
+
+  ...
+end
+```
+
+## Ability
+
+If you need to control which admin user roles can alter the schedule you can add
+something like the following to the ```initialize``` method of
+the ```Ability``` class:
+
+```ruby
+...
+if user.role?('admin')
+  can :manage, :all
+elsif user.role?('editor')
+  can %i[create read], [Blog]
+  can %i[update publish], [Blog]
+end
+...
+```
+
 ## Active Admin
 
 ```ruby

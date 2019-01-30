@@ -5,7 +5,19 @@ module Slickr
   module Schedulable
     extend ActiveSupport::Concern
 
+    module ClassMethods
+      attr_reader :slickr_schedulable_opts
+
+      private
+
+      def slickr_schedulable(opts = {})
+        @slickr_schedulable_opts = opts
+      end
+    end
+
     included do
+      after_create :schedule_if_requested
+
       has_one :schedule,
               class_name: 'Slickr::Schedule',
               as: :schedulable,
@@ -32,6 +44,22 @@ module Slickr
 
       def published?
         schedule.nil?
+      end
+
+      private
+
+      def schedule_if_requested
+        opts = self.class.try(:slickr_schedulable_opts)
+        return if opts.nil?
+        make_unpublished if opts[:on_create] == :unpublish
+      end
+
+      def make_unpublished
+        Slickr::Schedule.create(
+          schedulable: self,
+          publish_schedule_date: Date.today + 100.years,
+          publish_schedule_time: Time.now + 100.years
+        )
       end
     end
   end

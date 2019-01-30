@@ -13,6 +13,9 @@ module Slickr
 
     friendly_id :title, use: %i[slugged finders]
 
+    slickr_schedulable on_create: :unpublish
+
+    belongs_to :admin_user, optional: true
     has_one_slickr_upload(:slickr_page_header_image, :header_image)
     has_many_slickr_uploads(:slickr_page_gallery_images, :gallery_images)
     has_many :slickr_navigations,
@@ -27,8 +30,7 @@ module Slickr
     has_one :published_draft, class_name: 'Slickr::Page::Draft'
 
     before_create :create_content_areas
-    after_create :create_draft, :activate_draft, :make_unpublished
-    before_save :set_date_in_publish_schedule_time
+    after_create :create_draft, :activate_draft
 
     validates_presence_of :title, :layout, unless: :type_draft?
     validates_presence_of :publish_schedule_date, if: :publish_schedule_time?
@@ -96,20 +98,12 @@ module Slickr
     end
 
     def create_draft
-      drafts.create
+      drafts.create(admin_user_id: admin_user_id)
       drafts.first.make_draft!
     end
 
     def activate_draft
       drafts.first.activate
-    end
-
-    def make_unpublished
-      Slickr::Schedule.create(
-        schedulable: self,
-        publish_schedule_date: Date.today + 100.years,
-        publish_schedule_time: Time.now + 100.years
-      )
     end
 
     def preview_page
@@ -149,15 +143,6 @@ module Slickr
 
     def type_draft?
       type == 'Slickr::Page::Draft'
-    end
-
-    def set_date_in_publish_schedule_time
-      return if publish_schedule_date.nil?
-      self.publish_schedule_time = Time.new(
-        publish_schedule_date.year, publish_schedule_date.month,
-        publish_schedule_date.day, self.publish_schedule_time.hour,
-        self.publish_schedule_time.min, 0
-      )
     end
   end
 end

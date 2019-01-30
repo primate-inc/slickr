@@ -2,7 +2,7 @@ ActiveAdmin.register Slickr::Page do
   permit_params :page_title, :meta_description, :title, :page_intro,
                 :page_header, :page_subheader, :layout, :slug, :og_title,
                 :og_description, :twitter_title, :twitter_description,
-                :content, :slug,
+                :content, :slug, :admin_user_id,
                 slickr_page_header_image_attributes: [:slickr_media_upload_id],
                 schedule_attributes: [
                   :publish_schedule_date, :publish_schedule_time
@@ -18,6 +18,8 @@ ActiveAdmin.register Slickr::Page do
             [l[:template].humanize, l[:template]]
           end
         )
+        input :admin_user_id,
+              input_html: { value: current_admin_user.id }, as: :hidden
       end
       actions
     else

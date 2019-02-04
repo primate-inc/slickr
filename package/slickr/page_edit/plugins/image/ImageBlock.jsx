@@ -24,6 +24,7 @@ export default class ImageBlock extends React.Component {
   }
 
   render(){
+    // console.log('image', this.props.data.image);
     return (
       <CommonBlock {...this.props} actions={this.actions}>
         <BlockContent>
@@ -32,12 +33,20 @@ export default class ImageBlock extends React.Component {
                alt={this.props.data.image.additional_info.alt_text}
           />
         </BlockContent>
-        {/*<BlockData>
+        <BlockData>
+          <BlockInput
+            placeholder="Atl Tag"
+            value={this.props.data.image.additional_info.alt_text}
+            onChange={this.handleAltTagChange} />
           <BlockInput
             placeholder="Caption"
-            value={this.props.data.caption}
+            value={this.props.data.image.additional_info.img_title}
             onChange={this.handleCaptionChange} />
-        </BlockData>*/}
+          <BlockInput
+            placeholder="Credit"
+            value={this.props.data.image.additional_info.img_credit}
+            onChange={this.handleCaptionChange} />
+        </BlockData>
       </CommonBlock>
     );
   }

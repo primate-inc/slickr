@@ -62,10 +62,13 @@ ActiveAdmin.register Blog do
 
   includes :schedule
 
-  permit_params ...,
-                schedule_attributes: %i[
-                  publish_schedule_date publish_schedule_time
-                ]
+  permit_params do
+    params = [
+      :title, ...
+    ]
+    Slickr::PermitAdditionalAdminParams.push_to_params(resource, params)
+    params
+  end
 
   filter :published_filter,
          as: :select,

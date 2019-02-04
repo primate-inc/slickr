@@ -108,6 +108,10 @@ config.slickr_http_basic_auth_user = 'Joe'
 config.slickr_http_basic_auth_password = 'Bloggs'
 ```
 
+## Updates
+
+[Updates](docs/updates.md)
+
 ## Navigation
 
 [Navigation](docs/navigation.md)

@@ -1,13 +1,14 @@
 ActiveAdmin.register Slickr::Page do
-  permit_params :page_title, :meta_description, :title, :page_intro,
-                :page_header, :page_subheader, :layout, :slug, :og_title,
-                :og_description, :twitter_title, :twitter_description,
-                :content, :slug, :admin_user_id,
-                slickr_page_header_image_attributes: [:slickr_media_upload_id],
-                schedule_attributes: [
-                  :publish_schedule_date, :publish_schedule_time
-                ],
-                slickr_navigation_image_attributes: [:slickr_media_upload_id]
+  permit_params do
+    params = [
+      :page_title, :title, :page_intro, :page_header, :page_subheader, :layout,
+      :slug, :content, :slug, :admin_user_id,
+      slickr_page_header_image_attributes: [:slickr_media_upload_id],
+      slickr_navigation_image_attributes: [:slickr_media_upload_id]
+    ]
+    Slickr::PermitAdditionalAdminParams.push_to_params(resource, params)
+    params
+  end
 
   form do |f|
     if object.new_record?
@@ -51,18 +52,10 @@ ActiveAdmin.register Slickr::Page do
           end
         end
         tab 'SEO' do
-          inputs do
-            input :page_title
-            input :meta_description, as: :text
-          end
+          render 'admin/form/meta_tag_seo_helper', f: f
         end
         tab 'Social Media' do
-          inputs do
-            input :og_title, as: :string, label: 'Facebook og title'
-            input :og_description, as: :text, label: 'Facebook og description'
-            input :twitter_title, as: :string
-            input :twitter_description, as: :text
-          end
+          render 'admin/form/meta_tag_social_helper', f: f
         end
         tab 'Config' do
           inputs do

@@ -1,0 +1,26 @@
+f.inputs for: [
+  :meta_tag, f.object.meta_tag || Slickr::MetaTag.new
+] do |ff|
+  ff.input :og_title, as: :text, label: 'OG title'
+  ff.input :og_description, as: :text, label: 'OG description'
+end
+f.inputs do
+  f.render 'admin/form/image_helper',
+           f: f,
+           field: :"#{resource.class.table_name.singularize}_meta_og_image",
+           label: 'OG Image'
+  f.input :"#{resource.class.table_name.singularize}_meta_og_image", as: :text
+end
+f.inputs for: [
+  :meta_tag, f.object.meta_tag || Slickr::MetaTag.new
+] do |ff|
+  ff.input :twitter_title, as: :text
+  ff.input :twitter_description, as: :text
+end
+f.inputs do
+  f.render 'admin/form/image_helper',
+           f: f,
+           field: :"#{resource.class.table_name.singularize}_meta_twitter_image",
+           label: 'Twitter Image'
+  f.input :"#{resource.class.table_name.singularize}_meta_twitter_image", as: :text
+end

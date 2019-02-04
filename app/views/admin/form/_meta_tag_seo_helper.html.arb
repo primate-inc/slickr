@@ -1,0 +1,6 @@
+f.inputs for: [
+  :meta_tag, f.object.meta_tag || Slickr::MetaTag.new
+] do |ff|
+  ff.input :title_tag, label: 'Title tag'
+  ff.input :meta_description, as: :text
+end

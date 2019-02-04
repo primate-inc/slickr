@@ -10,19 +10,7 @@ class PagesController < ApplicationController
                                  'slug = ? AND slickr_schedules.id IS NULL',
                                  slug
                                )
-    @slickr_page_title = @slickr_page.page_title
-    og_title = @slickr_page.og_title.present? ? @slickr_page.og_title : @slickr_page.page_title
-    og_description = @slickr_page.og_description.present? ? @slickr_page.og_description : @slickr_page.meta_description
-    @slickr_meta_override = {
-                              meta_description: @slickr_page.meta_description,
-                              og_title: og_title,
-                              og_description: og_description,
-                              og_url: request.original_url,
-                              og_image: '',
-                              twitter_title: (@slickr_page.twitter_title.present? ? @slickr_page.twitter_title : og_title),
-                              twitter_description: (@slickr_page.twitter_description.present? ? @slickr_page.twitter_description : og_description),
-                              twitter_image: ''
-                            }
+    insert_slickr_meta_tags(@slickr_page)
     raise AbstractController::ActionNotFound.new unless @slickr_page
     render layout: false
   end

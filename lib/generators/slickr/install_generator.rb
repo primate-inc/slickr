@@ -25,6 +25,7 @@ module Slickr
         migration_template "migrations/create_slickr_uploads.rb", "db/migrate/create_slickr_uploads.rb"
         migration_template "migrations/create_slickr_schedules.rb", "db/migrate/create_slickr_schedules.rb"
         migration_template "migrations/add_admin_user_id_to_slickr_pages.rb", "db/migrate/add_admin_user_id_to_slickr_pages.rb"
+        migration_template "migrations/create_slickr_meta_tags.rb", "db/migrate/create_slickr_meta_tags.rb"
 
         puts "Database migrations added"
       end

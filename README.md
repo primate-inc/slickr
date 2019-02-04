@@ -124,6 +124,10 @@ config.slickr_http_basic_auth_password = 'Bloggs'
 
 [Scheduling](docs/scheduling.md)
 
+## Meta Tags
+
+[Meta Tags](docs/meta_tags.md)
+
 ## Helpers
 
 [Helpers](docs/helpers.md)

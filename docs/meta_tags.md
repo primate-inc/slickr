@@ -62,5 +62,27 @@ ActiveAdmin.register Blog do
   end
 
   ...
+
+  controller do
+    include Slickr::SharedAdminController
+
+    ...
+  end
+
+  ...
 end
 ```
+
+The ```Slickr::SharedAdminController``` module will override
+the ```find_resource``` method in ActiveAdmin like so:
+
+```ruby
+def find_resource
+  return if params[:id].nil?
+  scoped_collection.find(params[:id])
+end
+```
+
+Feel free to roll your own override but be sure to add the first line
+in your own method otherwise the ```push_to_params``` method will cause
+an exception.

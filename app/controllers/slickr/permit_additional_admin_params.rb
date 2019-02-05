@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 module Slickr
+  # PermitAdditionalAdminParams module
   module PermitAdditionalAdminParams
     extend self
 
     def push_to_params(resource, params)
+      return if resource.nil?
       if resource.class.send(:reflect_on_association, :schedule)
         params.push schedule_attributes
       end

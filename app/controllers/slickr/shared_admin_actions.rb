@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Slickr
+  # SharedAdminActions module
   module SharedAdminActions
     extend ActiveSupport::Concern
 

@@ -29,6 +29,8 @@ if defined?(ActiveAdmin)
     end
 
     controller do
+      include Slickr::SharedAdminController
+
       def create
         super do |format|
           create_resource_event_log(:create) if resource.valid?
@@ -59,10 +61,6 @@ if defined?(ActiveAdmin)
             redirect_to admin_slickr_pages_path and return if resource.valid?
           end
         end
-      end
-
-      def find_resource
-        scoped_collection.friendly.find(params[:id])
       end
 
       def scoped_collection

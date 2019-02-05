@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Slickr
+  # Metatags module
   module Metatags
     extend ActiveSupport::Concern
 

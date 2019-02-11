@@ -6,7 +6,7 @@ ActiveAdmin.register Slickr::Page do
       slickr_page_header_image_attributes: [:slickr_media_upload_id],
       slickr_navigation_image_attributes: [:slickr_media_upload_id]
     ]
-    Slickr::PermitAdditionalAdminParams.push_to_params(resource, params)
+    Slickr::PermitAdditionalAdminParams.push_to_params(Slickr::Page, params)
     params
   end
 

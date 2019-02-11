@@ -38,7 +38,7 @@ ActiveAdmin.register Blog do
     params = [
       :title, ...
     ]
-    Slickr::PermitAdditionalAdminParams.push_to_params(resource, params)
+    Slickr::PermitAdditionalAdminParams.push_to_params(Blog, params)
     params
   end
 

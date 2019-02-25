@@ -55,8 +55,12 @@ module Slickr
         end
       end
 
-      base.send(:action_item, :preview, only: [:edit, :show], method: :get, if: Proc.new { base.config.resource_class_name.classify.respond_to?(:slickr_previwable_opts) && base.config.resource_class_name.classify.constantize.slickr_previewable_opts && base.config.resource_class_name.classify.constantize.slickr_previewable_opts[:preview_enabled] }) do
-        link_to 'Preview', send("preview_admin_#{base.config.resource_name.to_s.downcase}_path"), target: '_blank'
+      base.send(:action_item, :preview, only: [:edit, :show], method: :get, if: Proc.new {
+        base.config.resource_class_name.classify.constantize.respond_to?(:slickr_previewable_opts) &&
+        base.config.resource_class_name.classify.constantize.slickr_previewable_opts &&
+        base.config.resource_class_name.classify.constantize.slickr_previewable_opts[:preview_enabled]
+      }) do
+        link_to 'Preview', send("preview_admin_#{base.config.resource_name.singular.downcase}_path"), target: '_blank'
       end
 
 
@@ -65,9 +69,7 @@ module Slickr
       ###############
 
       base.send(:member_action, :preview, method: :get) do
-        if resource.valid?
-          render layout: resource.class.slickr_previewable_opts[:layout], template: resource.class.slickr_previewable_opts[:template], locals: resource.class.slickr_previewable_opts[:locals]
-        end
+        render layout: resource.class.slickr_previewable_opts[:layout], template: resource.class.slickr_previewable_opts[:template], locals: resource.class.slickr_previewable_opts[:locals]
       end
 
       base.send(:member_action, :publish, method: :put) do

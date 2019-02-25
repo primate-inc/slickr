@@ -11,6 +11,9 @@ module Slickr
     after_save :destroy_if_no_schedule
     after_save :destroy_if_schedule_now_or_past
 
+    validates_presence_of :publish_schedule_date, if: :publish_schedule_time?
+    validates_presence_of :publish_schedule_time, if: :publish_schedule_date?
+
     scope(:now_or_past, lambda do
       where('publish_schedule_time <= ?', Time.current.utc)
     end)

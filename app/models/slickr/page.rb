@@ -34,8 +34,6 @@ module Slickr
     after_create :create_draft, :activate_draft
 
     validates_presence_of :title, :layout, unless: :type_draft?
-    validates_presence_of :publish_schedule_date, if: :publish_schedule_time?
-    validates_presence_of :publish_schedule_time, if: :publish_schedule_date?
 
     scope :not_draft, -> { where(type: nil) }
 

@@ -33,7 +33,7 @@ module Slickr
 
       base.send(:action_item, :publish, only: :edit) do
         if resource.schedule && authorized?(:publish, resource.class)
-          table_single = resource.class.table_name.singularize
+          table_single = resource.class.name.underscore.singularize.downcase.gsub("/","_")
           link = "publish_admin_#{table_single}_path"
           link_to send(link, resource), method: :put do
             '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -45,7 +45,7 @@ module Slickr
       base.send(:action_item, :unpublish, only: :edit) do
         if authorized?(:publish, resource.class)
           unless resource.schedule
-            table_single = resource.class.table_name.singularize
+            table_single = resource.class.name.underscore.singularize.downcase.gsub("/","_")
             link = "unpublish_admin_#{table_single}_path"
             link_to send(link, resource), method: :put do
               '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -60,7 +60,7 @@ module Slickr
         base.config.resource_class_name.classify.constantize.slickr_previewable_opts &&
         base.config.resource_class_name.classify.constantize.slickr_previewable_opts[:preview_enabled]
       }) do
-        link_to 'Preview', send("preview_admin_#{base.config.resource_name.singular.downcase}_path"), target: '_blank'
+        link_to 'Preview', send("preview_admin_#{base.config.resource_class_name.gsub(/^[^0-9a-z ]+/i, '').underscore}_path"), target: '_blank'
       end
 
 

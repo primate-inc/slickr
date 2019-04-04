@@ -99,7 +99,7 @@ export const createImage = payload => {
       })
       .then(function () {
         payload.formData.append(_csrf_param(), _csrf_token())
-        request.post('/admin/slickr_media_uploads')
+        request.post(getState().additionalInfo.create_path)
           .send(payload.formData).set('Accept', 'application/json')
           .on('progress', function(e){
             dispatch(updateUploadProgress({

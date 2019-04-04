@@ -24,7 +24,8 @@ const slickrReducers = {
   imageObject,
   choosingActiveAdminImage,
   choosingPageHeaderImage,
-  allowedUploadInfo: (state = {}) => state
+  allowedUploadInfo: (state = {}) => state,
+  additionalInfo: (state = {}) => state
 }
 
 const mergedReducers = Object.assign(slickrReducers, mainAppReducers);

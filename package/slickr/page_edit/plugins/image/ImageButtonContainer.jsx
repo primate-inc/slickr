@@ -9,7 +9,7 @@ import ImageButton from "./ImageButton.jsx";
 
 const ImageButtonContainer = ({
   modalIsOpen, actions, loadedImages, editorState, choosingPageHeaderImage,
-  choosingNavImage, allowedUploadInfo
+  choosingNavImage, allowedUploadInfo, additionalInfo
 }) => (
   <div>
     <ImageButton modalIsOpen={modalIsOpen}
@@ -19,6 +19,7 @@ const ImageButtonContainer = ({
                  choosingPageHeaderImage={choosingPageHeaderImage}
                  choosingNavImage={choosingNavImage}
                  allowedUploadInfo={allowedUploadInfo}
+                 additionalInfo={additionalInfo}
     />
   </div>
 )
@@ -27,7 +28,8 @@ ImageButtonContainer.propTypes = {
   actions: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   loadedImages: PropTypes.object.isRequired,
-  allowedUploadInfo: PropTypes.object.isRequired
+  allowedUploadInfo: PropTypes.object.isRequired,
+  additionalInfo: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -37,7 +39,8 @@ const mapStateToProps = state => ({
   editorState: state.editorState,
   choosingPageHeaderImage: state.choosingPageHeaderImage,
   choosingNavImage: state.choosingNavImage,
-  allowedUploadInfo: state.allowedUploadInfo
+  allowedUploadInfo: state.allowedUploadInfo,
+  additionalInfo: state.additionalInfo
 })
 
 const mapDispatchToProps = dispatch => ({

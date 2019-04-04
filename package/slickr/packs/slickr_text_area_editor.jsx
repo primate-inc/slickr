@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .getAttribute('data')
     ).allowedUploadInfo
 
+    const additionalInfo = JSON.parse(
+      document.getElementsByClassName('megadraft-text-editor')[0]
+      .childNodes[0]
+      .getAttribute('data')
+    ).additionalInfo
+
     let elements = document.getElementsByClassName('megadraft-text-editor')
     Array.prototype.forEach.call(elements, function(element, index) {
       const nextElementSibling = element.nextElementSibling
@@ -75,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const initialState = {
         pageState: JSON.parse(pageState),
         allowedUploadInfo: allowedUploadInfo,
+        additionalInfo: additionalInfo,
         textAreaIndex: index,
         label: label,
         labelText: labelText,

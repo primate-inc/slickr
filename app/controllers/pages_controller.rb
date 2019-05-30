@@ -16,7 +16,7 @@ class PagesController < ApplicationController
                               og_image: '',
                               twitter_title: (@slickr_page.twitter_title.present? ? @slickr_page.twitter_title : og_title),
                               twitter_description: (@slickr_page.twitter_description.present? ? @slickr_page.twitter_description : og_description),
-                              twitter_image: ''
+                              twitter_image: @slickr_page.header_image.present? ? @slickr_page.header_image.image[:xl_fit].url : ''
                             }
     raise AbstractController::ActionNotFound.new unless @slickr_page
     render layout: false

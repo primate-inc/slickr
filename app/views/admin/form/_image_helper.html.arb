@@ -11,7 +11,7 @@ li class: 'image-picker' do
         errors: f.object.errors.messages[field]
       },
       pageState: slickr_editor_paths,
-      allowedUploadInfo:  Slickr::MediaUpload.allowed_upload_info,
+      allowedUploadInfo: Slickr::MediaUpload.allowed_upload_info,
       additionalInfo: Slickr::MediaUpload.additional_info
     }.to_json do
     end

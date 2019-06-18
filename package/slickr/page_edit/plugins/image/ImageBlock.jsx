@@ -92,7 +92,7 @@ export default class ImageBlock extends React.Component {
         </BlockContent>
         <BlockData>
           <BlockInput
-            placeholder="Atl text"
+            placeholder="Alt text"
             value={this.props.data.image.additional_info.alt_text}
             onChange={this.handleAltTextChange} />
           <BlockInput

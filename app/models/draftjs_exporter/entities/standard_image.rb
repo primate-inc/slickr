@@ -13,7 +13,7 @@ class DraftjsExporter::Entities::StandardImage
      end
 
      additional = OpenStruct.new(data[:data][:image][:additional_info])
-     args[:alt] = additional.try(:alt_text)
+     args[:alt] = additional[:alt_text].present? ? additional[:alt_text] : ''
      args[:"data-img_caption"] = additional.try(:img_title)
      args[:"data-img_credit"] = additional.try(:img_credit)
 

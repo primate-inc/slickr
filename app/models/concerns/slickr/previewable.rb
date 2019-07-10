@@ -11,7 +11,7 @@ module Slickr
       private
 
       def slickr_previewable(opts = {})
-        options = { preview_enabled: true, layout: 'layouts/application', template: "#{self.name.pluralize.underscore.downcase}/show", locals: {} }.merge(opts)
+        options = { preview_enabled: true, layout: 'layouts/application', template: "#{self.model_name.plural}/show", locals: {} }.merge(opts)
         @slickr_previewable_opts = options
       end
     end

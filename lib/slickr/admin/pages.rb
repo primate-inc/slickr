@@ -126,33 +126,33 @@ if defined?(ActiveAdmin)
               locals: { slickr_page: resource, content: html_output }
     end
 
-    # action_item :preview, only: [:edit] do
-    #   if resource[:layout] == "standard"
-    #     child_navi = Slickr::Navigation.find_by(slickr_page_id: resource.id)
-    #     if child_navi.nil?
-    #       link_to_if false, preview_admin_slickr_page_path(resource, slickr_page: resource),
-    #               target: '_blank' do
-    #         '<a class="_blank" id="disabled" title="This Cannot be Previewed till it has been added to a Navigation Tree" ><svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-    #               xlink:href="#svg-preview"></use></svg>Preview</a>'.html_safe
-    #       end
-    #     else
-    #       parent_navi = child_navi.parent
-    #       parent_page = Slickr::Page.find(parent_navi.slickr_page_id)
+    action_item :preview, only: [:edit] do
+      if resource[:layout] == "standard"
+        child_navi = Slickr::Navigation.find_by(slickr_page_id: resource.id)
+        if child_navi.nil?
+          link_to_if false, preview_admin_slickr_page_path(resource, slickr_page: resource),
+                  target: '_blank' do
+            '<a class="_blank" id="disabled" title="This Cannot be Previewed till it has been added to a Navigation Tree" ><svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xlink:href="#svg-preview"></use></svg>Preview</a>'.html_safe
+          end
+        else
+          parent_navi = child_navi.parent
+          parent_page = Slickr::Page.find(parent_navi.slickr_page_id)
 
-    #       link_to preview_admin_slickr_page_path(parent_page, slickr_page: parent_page),
-    #               target: '_blank' do
-    #       '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-    #               xlink:href="#svg-preview"></use></svg>Preview'.html_safe
-    #       end
-    #     end
-    #   else
-    #     link_to preview_admin_slickr_page_path(resource, slickr_page: resource),
-    #             target: '_blank' do
-    #       '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-    #             xlink:href="#svg-preview"></use></svg>Preview'.html_safe
-    #     end
-    #   end
-    # end
+          link_to preview_admin_slickr_page_path(parent_page, slickr_page: parent_page),
+                  target: '_blank' do
+          '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xlink:href="#svg-preview"></use></svg>Preview'.html_safe
+          end
+        end
+      else
+        link_to preview_admin_slickr_page_path(resource, slickr_page: resource),
+                target: '_blank' do
+          '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="#svg-preview"></use></svg>Preview'.html_safe
+        end
+      end
+    end
     # action_item :preview, only: [:edit] do
     #   if resource[:layout] == "standard"
     #   link_to preview_admin_slickr_page_path(resource, slickr_page: resource),

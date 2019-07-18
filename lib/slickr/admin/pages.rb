@@ -128,7 +128,7 @@ if defined?(ActiveAdmin)
 
     action_item :preview, only: [:edit] do
       link_to preview_admin_slickr_page_path(resource, slickr_page: resource),
-              target: '_blank slickr-preview' do
+              target: '_blank', class: 'slickr-preview' do
         '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
               xlink:href="#svg-preview"></use></svg>Preview'.html_safe
       end

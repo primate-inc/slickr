@@ -124,23 +124,23 @@ if defined?(ActiveAdmin)
              locals: { slickr_page: resource, content: html_output }
     end
 
-    action_item :preview, only: [:edit] do
-      link_to preview_admin_slickr_page_path(resource, slickr_page: resource),
-              target: '_blank' do
-        '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-              xlink:href="#svg-preview"></use></svg>Preview'.html_safe
-      end
-    end
+  #  action_item :preview, only: [:edit] do
+  #    link_to preview_admin_slickr_page_path(resource, slickr_page: resource),
+  #            target: '_blank' do
+  #      '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+  #            xlink:href="#svg-preview"></use></svg>Preview'.html_safe
+  #    end
+  #  end
 
-    action_item :publish, only: [:edit] do
-      unless resource.published?
-        link_to publish_admin_slickr_page_path(resource, slickr_page: resource),
-                method: :put do
-          '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="#svg-publish"></use></svg>Publish'.html_safe
-        end
-      end
-    end
+  #  action_item :publish, only: [:edit] do
+  #    unless resource.published?
+  #      link_to publish_admin_slickr_page_path(resource, slickr_page: resource),
+  #              method: :put do
+  #        '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+  #              xlink:href="#svg-publish"></use></svg>Publish'.html_safe
+  #      end
+  #    end
+  #  end
 
     action_item :unpublish, only: [:edit] do
       if resource.published?

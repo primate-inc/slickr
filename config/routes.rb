@@ -18,7 +18,7 @@ module SlickrNavRouteHelper
   def self.matches?(request)
     request = request.path
 
-    path_info = Slickr::NavigationBuilder.new.nav_helpe[:pathnames]
+    path_info = Slickr::NavigationBuilder.new.nav_helper[:pathnames]
     routes = path_info.map { |path| path[:path] }
     request.in?(routes)
   end

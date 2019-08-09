@@ -17,7 +17,7 @@ end
 module SlickrNavRouteHelper
   def self.matches?(request)
     request = request.path
-    is_preview = params[:action] == "preview"
+    is_preview = false
     path_info = Slickr::NavigationBuilder.new.nav_helper(is_preview)[:pathnames]
     routes = path_info.map { |path| path[:path] }
     request.in?(routes)

@@ -58,3 +58,11 @@ yarn unlink slickr_cms
 
 from the main app but note that you'll have to ``` yarn install ``` again as the
 slickr_cms node module will be removed.
+
+
+
+
+to bundle non-js files you have to use this line of code in the other programs Gemfile:
+```bash
+    gem "slickr_cms", :path => "/Users/<user-name>/slickr"
+```

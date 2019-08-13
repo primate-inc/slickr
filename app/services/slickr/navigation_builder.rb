@@ -21,10 +21,13 @@ module Slickr
     #         }]
     #     }
     # }
-    def nav_helper
+    def nav_helper(is_preview)
+      @is_preview = is_preview
       nav_trees = nav_trees = Slickr::Navigation.all_nav_trees
       return if nav_trees.nil?
       pathnames = all_pages_pathnames(nav_trees)
+
+      puts all_nav_menus(nav_trees, pathnames)
       {
         pathnames: pathnames,
         nav_menus: all_nav_menus(nav_trees, pathnames)
@@ -85,7 +88,7 @@ module Slickr
       if hash['child_type'] == 'Page'
         schedule_passed = false
         schedule_passed = publish_page(hash) if hash['publish_schedule_time']
-        if hash['aasm_state'] == 'published' || schedule_passed
+        if hash['aasm_state'] == 'published' || schedule_passed || @is_preview
           new_pathname = pathname + hash['slug']
           array.push(page_id: hash['page_id'], path: new_pathname)
           hash['children'].map do |child_hash|
@@ -156,15 +159,16 @@ module Slickr
     # }
     def build_nav(child_hash, pathnames, parent_link)
       return unless child_hash['aasm_state'] == 'published' ||
-                    child_hash['aasm_state'].nil?
+                    child_hash['aasm_state'].nil? || @is_preview
       parent_link = if child_hash['child_type'] == 'Page'
-                      path_finder(pathnames, child_hash)[:path]
+                      path = path_finder(pathnames, child_hash)
+                      path ? path[:path] : parent_link
                     else
                       parent_link
                     end
       menu_hash = case child_hash['child_type']
                   when 'Page'
-                    build_page_nav(child_hash, pathnames)
+                    build_page_nav(child_hash, pathnames, parent_link)
                   when 'Header'
                     build_header_nav(child_hash)
                   when 'Custom Link'
@@ -178,7 +182,9 @@ module Slickr
       menu_hash
     end
 
-    def build_page_nav(hash, pathnames)
+    def build_page_nav(hash, pathnames, parent_link)
+      path = path_finder(pathnames, hash)
+      path ? path[:path] : parent_link
       {
         title: hash['title'],
         image: {
@@ -189,7 +195,7 @@ module Slickr
           text: hash['text'], page_header: hash['page_header'],
           page_subheader: hash['page_subheader'], page_intro: hash['page_intro']
         },
-        link: path_finder(pathnames, hash)[:path], link_text: hash['link_text']
+        link: path, link_text: hash['link_text']
       }
     end
 
@@ -218,9 +224,14 @@ module Slickr
     # example result
     # {:page_id=>1, :path=>"/page-1"}
     def path_finder(pathnames, hash)
-      pathnames.select do |path|
+      path = pathnames.select do |path|
+        # if path[:page_id] != hash['page_id']
+          # puts path[:path]
+          # puts path[:id]
+        # end
         path[:page_id] == hash['page_id']
       end[0]
+      path
     end
   end
 end

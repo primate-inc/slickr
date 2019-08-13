@@ -139,7 +139,7 @@ if defined?(ActiveAdmin)
         if child_navi.nil?
           link_to_if false, preview_admin_slickr_page_path(resource, slickr_page: resource),
                   target: '_blank' do
-            '<a class="_blank" id="disabled" title="This Cannot be Previewed till it has been added to a Navigation Tree" ><svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+            '<a class="_blank" id="disabled-preview-action-item" title="This Cannot be Previewed till it has been added to a Navigation Tree" ><svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="#svg-preview"></use></svg>Preview</a>'.html_safe
           end
         else

@@ -27,7 +27,6 @@ module Slickr
       return if nav_trees.nil?
       pathnames = all_pages_pathnames(nav_trees)
 
-      puts all_nav_menus(nav_trees, pathnames)
       {
         pathnames: pathnames,
         nav_menus: all_nav_menus(nav_trees, pathnames)

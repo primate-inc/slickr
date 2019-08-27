@@ -159,33 +159,37 @@ module Slickr
 
       def extend_babel_to_use_stage_1
         dest_file = ".babelrc"
-        existing_content = File.read(dest_file)
-        new_content = '"stage-1"'
+        if File.exists?(dest_file)
+          existing_content = File.read(dest_file)
+          new_content = '"stage-1"'
 
-        unless existing_content.include? new_content
-          gsub_file(dest_file, '"react"') do |match|
-            "#{match},\n    #{new_content}"
+          unless existing_content.include? new_content
+            gsub_file(dest_file, '"react"') do |match|
+              "#{match},\n    #{new_content}"
+            end
+
+            puts "Babel extended to use stage-1"
+          else
+            puts "Babel already using stage-1"
           end
-
-          puts "Babel extended to use stage-1"
-        else
-          puts "Babel already using stage-1"
         end
       end
 
       def extend_babel_to_ignore_node_modules
         dest_file = ".babelrc"
-        existing_content = File.read(dest_file)
-        new_content = '"ignore": "node_modules",'
+        if File.exists?(dest_file)
+          existing_content = File.read(dest_file)
+          new_content = '"ignore": "node_modules",'
 
-        unless existing_content.include? new_content
-          gsub_file(dest_file, '"presets": [') do |match|
-            "#{new_content}\n  #{match}"
+          unless existing_content.include? new_content
+            gsub_file(dest_file, '"presets": [') do |match|
+              "#{new_content}\n  #{match}"
+            end
+
+            puts "Babel extended to ignore node modules"
+          else
+            puts "Babel already ignoring node modules"
           end
-
-          puts "Babel extended to ignore node modules"
-        else
-          puts "Babel already ignoring node modules"
         end
       end
 

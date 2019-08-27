@@ -34,5 +34,5 @@ Rails.application.routes.draw do
     get '*slug' => 'pages#show', as: 'show_page'
   end
 
-  root 'pages#show', slug: :home
+  root 'pages#show', slug: 'home'
 end

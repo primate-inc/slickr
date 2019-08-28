@@ -1,0 +1,18 @@
+<% url = news_path(content) %>
+<% image_url = content.try(:thumbnail).try(:image_url, :m_fill) || content.try(:header_image).try(:image_url, :m_fill) %>
+<% title = content.title %>
+<% category = content.category %>
+<% date = content.date.strftime("%B %-d, %Y") if content.try(:date) %>
+
+<% if content.present? %>
+  <div class='card'>
+    <%= link_to url, class: "card_inner" do %>
+      <div class='card_image' style="background-image: url('#{image_url}')"></div>
+      <div class='card_title'><%= title %></div>
+      <div class='card_footer'>
+        <div class='card_footer-date'><%= date %></div>
+        <div class='card_footer-category'><%= I18n.t(category, scope: %i[activerecord attributes news_articles category_options]) %></div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

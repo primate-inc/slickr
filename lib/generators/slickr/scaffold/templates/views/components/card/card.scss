@@ -1,0 +1,101 @@
+.card {
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
+
+  @include screen(medium) {
+    flex: 0 0 50%;
+    width: 50%;
+
+    &:nth-child(odd) {
+      transform: translateY(-10rem);
+    }
+  }
+
+  &_inner {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    padding: $gap/2;
+
+    background-color: transparent;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: background-color .2s ease-out;
+
+    @include ie { display: block; }
+
+    &:hover {
+      background-color: $c-grey-5;
+      transition: background-color .5s ease-out;
+    }
+
+    &--button {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &_load-more.button {
+    margin: $gap 0 0;
+  }
+
+  &_image,
+  &_title,
+  &_footer {
+    flex: 1;
+  }
+
+  &_image {
+    padding-top: 120%;
+    margin-bottom: 1rem;
+
+    width: 100%;
+    height: auto;
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  &_title {
+    @extend %h3;
+    margin-bottom: .5rem;
+
+    @include ie {
+      display: table-row;
+    }
+  }
+
+  &_footer {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    margin: 0 -.5rem;
+
+    @include ie {
+      display: block;
+    }
+
+    &-date,
+    &-category {
+      @extend %para;
+      margin: 0 .5rem .25rem;
+    }
+
+    &-date {
+
+    }
+
+    &-category {
+      color: $c-primary;
+    }
+  }
+}

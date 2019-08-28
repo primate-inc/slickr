@@ -4,7 +4,7 @@ module Slickr
   module Generators
     module Scaffold
       class NewsArticlesGenerator < ActiveRecord::Generators::Base
-        source_root File.expand_path("../templates", __FILE__)
+        source_root File.expand_path("./templates", __FILE__)
         desc "Running Slickr scaffold for News Articles"
         argument :name, type: :string, default: "news_articles"
 
@@ -24,7 +24,7 @@ module Slickr
         end
 
         def news_articles_translations
-          template "config/locales/models/news_articles.en.yml", "config/locales/models/news_articles.en.yml"
+          template "config/locals/models/news_articles.en.yml", "config/locals/models/news_articles.en.yml"
           puts "Add translations"
         end
 
@@ -34,13 +34,24 @@ module Slickr
         end
 
         def news_articles_js
-          template "javascript/controllers/news_articles.js", "app/javascript/application/javascripts/controllers/news_articles.js"
-          template "javascript/news_articles.js", "app/javascript/news_articles.js"
+          template "javascripts/controllers/news_articles.js", "app/javascripts/controllers/news_articles.js"
+          template "javascripts/news_articles.js", "app/javascripts/news_articles.js"
           puts "Add js"
         end
 
         def news_articles_views
-          directory "views", "app/views/"
+          template "views/components/button/_button.html.erb", "app/views/components/button/_button.html.erb"
+          template "views/components/button/button.js", "app/views/components/button/button.js"
+          template "views/components/button/button.scss", "app/views/components/button/button.scss"
+          template "views/components/button/button.story.html", "app/views/components/button/button.story.html"
+          template "views/components/card/_card.html.erb", "app/views/components/card/_card.html.erb"
+          template "views/components/card/card.scss", "app/views/components/card/card.scss"
+          template "views/news_articles/filters/filters.html", "app/views/news_articles/filters/filters.html"
+          template "views/news_articles/listing/listing.html", "app/views/news_articles/listing/listing.html"
+          template "views/news_articles/_articles.html.erb", "app/views/news_articles/_articles.html.erb"
+          template "views/news_articles/index.html.erb", "app/views/news_articles/index.html.erb"
+          template "views/news_articles/index.js.erb", "app/views/news_articles/index.js.erb"
+          template "views/news_articles/show.html.erb", "app/views/news_articles/show.html.erb"
           puts "Add views"
         end
 

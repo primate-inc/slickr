@@ -20,13 +20,13 @@ ActiveAdmin.register NewsArticle do
   end
 
   filter :title
-  filter :category, as: :select, collection: lambda {
+  filter :category, as: :select, collection: lambda do
     Hash[
       ::NewsArticle::CATEGORIES.map do |c|
         [I18n.t(c, scope: %i[activerecord attributes news category_options]), c]
       end
     ]
-  }
+  end
 
   index do
     selectable_column

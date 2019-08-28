@@ -1,0 +1,8 @@
+<%= render partial: 'components/card/card', collection: @news, as: :content %>
+<% unless @news.last_page? %>
+  <div class='card' id='news_load_more'>
+    <div class='card_inner card_inner--button'>
+      <%= render 'components/button/button', custom_class: 'card_load-more', type: 'border', text: 'Load more...', data_attributes: { page: @news.next_page, action: 'click->news#loadMore' } %>
+    </div>
+  </div>
+<% end %>

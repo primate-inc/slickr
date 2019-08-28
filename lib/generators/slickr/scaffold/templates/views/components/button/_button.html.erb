@@ -1,0 +1,20 @@
+<% type ||= nil %>
+<% text ||= 'Button' %>
+<% link ||= nil %>
+<% custom_class ||= nil %>
+<% data_attributes ||= nil %>
+
+<% base_class = 'button' %>
+<% border_class = type == 'border' ? 'button--border' : nil %>
+<% ghost_class = type == 'ghost' ? 'button--ghost' : nil %>
+<% classes = [base_class, border_class, ghost_class, custom_class].reject(&:blank?).join(' ') %>
+
+<% if link.blank? %>
+  <button class=classes data=(data_attributes if data_attributes)>
+    <%= text %>
+  </button>
+<% else %>
+  <%= link_to link, class: classes, data: (data_attributes if data_attributes) do %>
+    <%= text %>
+  <% end %>
+<% end %>

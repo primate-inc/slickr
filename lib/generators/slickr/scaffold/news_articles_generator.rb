@@ -4,7 +4,7 @@ module Slickr
   module Generators
     module Scaffold
       class NewsArticlesGenerator < ActiveRecord::Generators::Base
-        source_root File.expand_path("./templates", __FILE__)
+        source_root File.expand_path("../templates", __FILE__)
         desc "Running Slickr scaffold for News Articles"
         argument :name, type: :string, default: "news_articles"
 

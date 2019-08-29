@@ -24,7 +24,7 @@ module Slickr
         end
 
         def news_articles_translations
-          template "config/locals/models/news_articles.en.yml", "config/locals/models/news_articles.en.yml"
+          template "config/locales/models/news_articles.en.yml", "config/locales/models/news_articles.en.yml"
           puts "Add translations"
         end
 

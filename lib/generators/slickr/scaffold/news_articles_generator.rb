@@ -34,24 +34,13 @@ module Slickr
         end
 
         def news_articles_js
-          template "javascripts/controllers/news_articles.js", "app/javascripts/controllers/news_articles.js"
-          template "javascripts/news_articles.js", "app/javascripts/news_articles.js"
+          template "javascript/controllers/news_articles.js", "app/javascript/controllers/news_articles.js"
+          template "javascript/news_articles.js", "app/javascript/news_articles.js"
           puts "Add js"
         end
 
         def news_articles_views
-          template "views/components/button/_button.html.erb", "app/views/components/button/_button.html.erb"
-          template "views/components/button/button.js", "app/views/components/button/button.js"
-          template "views/components/button/button.scss", "app/views/components/button/button.scss"
-          template "views/components/button/button.story.html", "app/views/components/button/button.story.html"
-          template "views/components/card/_card.html.erb", "app/views/components/card/_card.html.erb"
-          template "views/components/card/card.scss", "app/views/components/card/card.scss"
-          template "views/news_articles/filters/filters.html.erb", "app/views/news_articles/filters/filters.html.erb"
-          template "views/news_articles/listing/listing.html.erb", "app/views/news_articles/listing/listing.html.erb"
-          template "views/news_articles/_articles.html.erb", "app/views/news_articles/_articles.html.erb"
-          template "views/news_articles/index.html.erb", "app/views/news_articles/index.html.erb"
-          template "views/news_articles/index.js.erb", "app/views/news_articles/index.js.erb"
-          template "views/news_articles/show.html.erb", "app/views/news_articles/show.html.erb"
+          directory "views", "app/views/"
           puts "Add views"
         end
 

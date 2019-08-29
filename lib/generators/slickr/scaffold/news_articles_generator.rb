@@ -29,7 +29,7 @@ module Slickr
         end
 
         def db_migrations
-          migration_template "migrations/create_news_articles.rb", "db/migrate/create_slickr_pages.rb"
+          migration_template "migrations/create_news_articles.rb", "db/migrate/create_news_articles.rb"
           puts "Database migrations added"
         end
 
@@ -46,8 +46,8 @@ module Slickr
           template "views/components/button/button.story.html", "app/views/components/button/button.story.html"
           template "views/components/card/_card.html.erb", "app/views/components/card/_card.html.erb"
           template "views/components/card/card.scss", "app/views/components/card/card.scss"
-          template "views/news_articles/filters/filters.html", "app/views/news_articles/filters/filters.html"
-          template "views/news_articles/listing/listing.html", "app/views/news_articles/listing/listing.html"
+          template "views/news_articles/filters/filters.html.erb", "app/views/news_articles/filters/filters.html.erb"
+          template "views/news_articles/listing/listing.html.erb", "app/views/news_articles/listing/listing.html.erb"
           template "views/news_articles/_articles.html.erb", "app/views/news_articles/_articles.html.erb"
           template "views/news_articles/index.html.erb", "app/views/news_articles/index.html.erb"
           template "views/news_articles/index.js.erb", "app/views/news_articles/index.js.erb"

@@ -197,7 +197,7 @@ export function uploadArrayObject(payload, isFile, random, size) {
    state: 'started',
    upload: payload.upload,
    build_for_gallery : buildForGallery(payload, isFile, size),
-   additional_info: {'alt_text': ''},
+   additional_info: {'alt_text': '', img_title: '', img_credit: '', img_link: ''},
    uploadProgressValue: 0
  }
 }

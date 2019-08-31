@@ -34,7 +34,7 @@ module Slickr
         end
 
         def news_articles_js
-          template "javascript/controllers/news_articles.js", "app/javascript/controllers/news_articles.js"
+          template "javascript/controllers/news_articles.js", "app/javascript/application/javascripts/controllers/news_articles.js"
           template "javascript/news_articles.js", "app/javascript/news_articles.js"
           puts "Add js"
         end

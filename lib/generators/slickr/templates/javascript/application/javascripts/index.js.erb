@@ -1,0 +1,50 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
+// vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file. JavaScript code in this file should be added after the last require_* statement.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+//= require rails-ujs
+//= require activestorage
+//= require turbolinks
+//= require_tree .
+
+import Rails from 'rails-ujs';
+// import Turbolinks from 'turbolinks';
+import * as ActiveStorage from 'activestorage';
+
+Rails.start();
+// Turbolinks.start();
+ActiveStorage.start();
+
+import { Application } from "stimulus"
+import { definitionsFromContext } from "stimulus/webpack-helpers"
+
+const application = Application.start()
+const context = require.context("./controllers", true, /\.js$/)
+application.load(definitionsFromContext(context))
+
+// require('jquery');
+import 'babel-polyfill'
+import 'core-js'
+import 'whatwg-fetch'
+import 'element-closest-polyfill'
+
+<% js_glob = Rails.application.root.join('app', 'views', 'components', '**', '*.{js}') %>
+<% Dir.glob(js_glob).each do |file| %>
+  import '<%= file %>';
+<% end %>
+
+<% js_glob = Rails.application.root.join('app', 'views', 'modules', '**', '*.{js}') %>
+<% Dir.glob(js_glob).each do |file| %>
+  import '<%= file %>';
+<% end %>
+
+import './news';
+import './highlight';

@@ -4,7 +4,7 @@
     <span class='news_filters-toggle-icon'>Show Filter</span>
   </label>
 
-  <%= form_for_filterrific @filters, html: { class: "news_filters-form", data: { action: 'change->news#filter', target: 'news.filterForm', url: news_articles_path(format: :js) } } do |f| %>
+  <%= form_for_filterrific @filters, html: { class: "news_filters-form", data: { action: 'change->news_articles#filter', target: 'news_articles.filterForm', url: news_articles_path(format: :js) } } do |f| %>
     <% NewsArticle::CATEGORIES.each do |category| %>
       <div class='news_filters-category'>
         <%= f.check_box :has_category, { multiple: true, id: category, tabindex: '-1', "aria-controls" => 'selectionInfo' }, category, false %>

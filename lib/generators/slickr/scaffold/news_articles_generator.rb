@@ -34,7 +34,7 @@ module Slickr
         end
 
         def news_articles_js
-          template "javascript/controllers/news_articles.js", "app/javascript/controllers/news_articles.js"
+          template "javascript/controllers/news_articles.js", "app/javascript/application/javascripts/controllers/news_articles.js"
           template "javascript/news_articles.js", "app/javascript/news_articles.js"
           puts "Add js"
         end
@@ -54,6 +54,12 @@ module Slickr
         def news_articles_routes
           route "resources :news_articles, only: %i[index show]"
           puts "Added news articles routes"
+        end
+
+        def news_articles_packages
+          run "yarn add axios"
+          run "yarn add querystring"
+          puts "Added news articles packages"
         end
       end
     end

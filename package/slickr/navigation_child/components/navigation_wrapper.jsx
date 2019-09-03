@@ -17,7 +17,7 @@ const NavigationWrapper = (
    choosingNavImage, allowedUploadInfo
   }) => {
     return(
-      <div >
+      <div>
         <form onSubmit={handleSubmit} id='page_edit_content_grid'>
           <div className="title_bar" id="title_bar">
             <div id="titlebar_left">
@@ -69,7 +69,7 @@ export default Formik({
     child_type:                         props.navigation.child_type,
     slickr_page_id:                     props.navigation.slickr_page_id,
     title:                              props.navigation.title,
-    slickr_navigation_image_attributes: {},
+    slickr_navigation_image_attributes: {slickr_media_upload_id: props.navigation.navigation_image.id},
     text:                               props.navigation.text,
     link:                               props.navigation.link,
     link_text:                          props.navigation.link_text

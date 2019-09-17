@@ -28,10 +28,12 @@ if defined?(ActiveAdmin)
       column 'Published' do |cs|
         cs.published?
       end
-      actions defaults: false do |page|
-        item "Edit", edit_admin_slickr_page_path(page)
-        item "Delete", discard_admin_slickr_page_path(page)
+      column :actions do |page|
+        div class: 'table_actions' do
+          (link_to 'View', preview_admin_slickr_page_path(page))
+        end
       end
+      actions
     end
 
     controller do

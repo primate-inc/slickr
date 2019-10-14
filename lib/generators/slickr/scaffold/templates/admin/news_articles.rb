@@ -91,7 +91,7 @@ ActiveAdmin.register NewsArticle do
           input :category,
                 as: :select,
                 collection: Hash[
-                  ::News::CATEGORIES.map do |c|
+                  ::NewsArticle::CATEGORIES.map do |c|
                     [I18n.t(c, scope: %i[activerecord attributes news category_options]), c]
                   end]
 

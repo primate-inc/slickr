@@ -1,19 +1,10 @@
-<% meta_date = '21 NOV 2019' %>
-<% meta_by = @news.person.try(:first_name).present? ? " by #{@news.person.first_name} #{@news.person.last_name}" : "" %>
+<% meta_date = I18n.l(@news_article.date, format: :long) %>
+<% meta_by = @news_article.admin_user.try(:first_name).present? ? " by #{@news_article.admin_user.full_name}" : "" %>
 <% meta = meta_date + meta_by %>
-<% image_url = @news.try(:header_image).try(:image_url, :xl_fill) || '' %>
+<% image_url = @news_article.try(:header_image).try(:image_url, :xl_fill) || '' %>
 
-<%= render 'modules/hero/hero-news', title: @news.header, meta: meta, image: image_url %>
-
-<section class='section'>
-  <div class='row'>
-    <div class='column'>
-      <p class='para-intro'><%= @news.subheader %></p>
-      <div class='content'>
-        <%= draftjs_to_html(@news, :content) %>
-      </div>
-    </div>
-  </div>
-</section>
-
-<%= render 'modules/contact-us/contact-us' %>
+<h1> <%= @news_article.header %></h1>
+<%= image_tag image_url, alt: '' %>
+<p class='para-intro'><%= @news_article.subheader %></p>
+<p><%= meta %></p>
+<%= draftjs_to_html(@news_article, :content) %>

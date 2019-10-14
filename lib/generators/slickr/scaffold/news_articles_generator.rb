@@ -34,7 +34,7 @@ module Slickr
         end
 
         def news_articles_js
-          template "javascript/controllers/news_articles.js", "app/javascript/application/javascripts/controllers/news_articles.js"
+          template "javascript/controllers/news_articles_controller.js", "app/javascript/application/javascripts/controllers/news_articles_controller.js"
           template "javascript/news_articles.js", "app/javascript/news_articles.js"
           puts "Add js"
         end
@@ -52,7 +52,7 @@ module Slickr
         end
 
         def news_articles_routes
-          route "resources :news_articles, only: %i[index show]"
+          route "resources :news_articles, only: %i[index show], path: 'news'"
           puts "Added news articles routes"
         end
 

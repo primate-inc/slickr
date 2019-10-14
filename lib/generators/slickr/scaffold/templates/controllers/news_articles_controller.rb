@@ -25,8 +25,8 @@ class NewsArticlesController < ApplicationController
   end
 
   def show
-    @news = NewsArticle.is_published.friendly.find(params[:id])
-    insert_slickr_meta_tags(@news)
+    @news_article = NewsArticle.is_published.friendly.find(params[:id])
+    insert_slickr_meta_tags(@news_article)
   end
 
   private

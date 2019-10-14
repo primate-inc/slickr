@@ -13,6 +13,8 @@ class NewsArticle < ApplicationRecord
 
   friendly_id :title, use: %i[slugged finders]
 
+  belongs_to :admin_user
+
   has_one_slickr_upload(:news_header_image, :header_image, true)
   has_one_slickr_upload(:news_thumbnail, :thumbnail)
 

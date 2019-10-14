@@ -1,0 +1,6 @@
+<% image_url = @event.try(:header_image).try(:image_url, :xl_fill) || '' %>
+
+<h1> <%= @event.header %></h1>
+<%= image_tag image_url, alt: '' %>
+<p class='para-intro'><%= @event.subheader %></p>
+<%= draftjs_to_html(@event, :content) %>

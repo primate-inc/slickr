@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
-# Scaffold News Articles Controller
-class NewsArticlesController < ApplicationController
+# Scaffold Events Controller
+class EventsController < ApplicationController
   protect_from_forgery except: :index
   before_action :assign_meta_data, only: %i[index]
 
   def index
-    @filters = initialize_filterrific(NewsArticle, filter_params) || return
-    @news = @filters.find.is_published.order(date: :desc).page(params[:page])
+    @filters = initialize_filterrific(Event, filter_params) || return
+    @events = @filters.find.is_published.order(start_time: :desc)
+                      .page(params[:page])
 
     respond_to do |format|
       format.html do
         render :index,
-               layout: '../slickr_page_templates/news',
-               locals: { articles: @news }
+               layout: '../slickr_page_templates/events',
+               locals: { articles: @events }
       end
-      # format.json { render json: @news.to_json }
+      # format.json { render json: @events.to_json }
       format.js { render :index, layout: false }
     end
   rescue ActiveRecord::RecordNotFound => e
@@ -25,8 +26,8 @@ class NewsArticlesController < ApplicationController
   end
 
   def show
-    @news_article = NewsArticle.is_published.friendly.find(params[:id])
-    insert_slickr_meta_tags(@news_article)
+    @event = Event.is_published.friendly.find(params[:id])
+    insert_slickr_meta_tags(@event)
   end
 
   private

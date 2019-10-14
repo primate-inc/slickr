@@ -1,0 +1,7 @@
+en:
+  activerecord:
+    attributes:
+      events:
+        category_options:
+          category_1: Category 1
+          category_2: Category 2

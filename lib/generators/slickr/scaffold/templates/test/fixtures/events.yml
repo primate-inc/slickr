@@ -1,0 +1,9 @@
+example_article:
+  title: "Example article"
+  slug: 'example-article'
+  category: "category_1"
+  thumbnail: test
+  start_time: Mon, 14 Oct 2019 15:00:00 +0100
+  end_time: Mon, 14 Oct 2019 15:00:00 +0100
+  location: "Primate Inc."
+  content: "{\"blocks\":[{\"key\":\"286ce4\",\"text\":\"text\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"

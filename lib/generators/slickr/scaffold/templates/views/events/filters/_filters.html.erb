@@ -1,0 +1,17 @@
+<div class='events_filters'>
+  <input class='events_filters-toggle-input' type="checkbox" id="filter_toggle" />
+  <label class='events_filters-toggle' for="filter_toggle">
+    <span class='events_filters-toggle-icon'>Show Filter</span>
+  </label>
+
+  <%= form_for_filterrific @filters, html: { class: "events_filters-form", data: { action: 'change->events#filter', target: 'events.filterForm', url: events_path(format: :js) } } do |f| %>
+    <% Event::CATEGORIES.each do |category| %>
+      <div class='events_filters-category'>
+        <%= f.check_box :has_category, { multiple: true, id: category, tabindex: '-1', "aria-controls" => 'selectionInfo' }, category, false %>
+        <%= f.label :has_category, t(category, scope: %i[activerecord attributes events category_options]), for: category %>
+      </div>
+    <% end %>
+
+    <%= link_to 'Clear filter', reset_filterrific_url, class: 'events_filters-clear' %>
+  <% end %>
+</div>

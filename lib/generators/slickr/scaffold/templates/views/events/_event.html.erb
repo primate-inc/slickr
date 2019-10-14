@@ -1,0 +1,13 @@
+<% image_url = event.try(:thumbnail).try(:image_url, :m_fill) || content.try(:header_image).try(:image_url, :m_fill) %>
+<% date = event.date.strftime("%B %-d, %Y") if event.try(:date) %>
+
+<div class='card'>
+  <%= link_to event_path(event), class: "card_inner" do %>
+    <div class='card_image' style="background-image: url('#{image_url}')"></div>
+    <div class='card_title'><%= event.title  %></div>
+    <div class='card_footer'>
+      <div class='card_footer-date'><%= event.start_time.strftime("%B %-d %Y - %T") %></div>
+      <div class='card_footer-category'><%= I18n.t(event.category, scope: %i[activerecord attributes events category_options]) %></div>
+    </div>
+  <% end %>
+</div>

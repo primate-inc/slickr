@@ -1,4 +1,4 @@
-<%= render partial: 'components/card/card', collection: @news, as: :content %>
+<%= render @news %>
 <% unless @news.last_page? %>
   <div class='card' id='news_load_more'>
     <div class='card_inner card_inner--button'>

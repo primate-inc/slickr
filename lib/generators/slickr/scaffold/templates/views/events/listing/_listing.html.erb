@@ -1,0 +1,8 @@
+<%= render @events %>
+<% unless @events.last_page? %>
+  <div class='card' id='events_load_more'>
+    <div class='card_inner card_inner--button'>
+      <%= render 'components/button/button', custom_class: 'card_load-more', type: 'border', text: 'Load more...', data_attributes: { page: @events.next_page, action: 'click->news#loadMore' } %>
+    </div>
+  </div>
+<% end %>

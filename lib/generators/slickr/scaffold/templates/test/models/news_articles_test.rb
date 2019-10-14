@@ -26,6 +26,7 @@ class NewsArtcileTest < ActiveSupport::TestCase
     should have_db_column(:created_at).of_type(:datetime)
     should have_db_column(:updated_at).of_type(:datetime)
 
+    should have_db_index(:admin_user_id)
     should have_db_index(:slug)
   end
 

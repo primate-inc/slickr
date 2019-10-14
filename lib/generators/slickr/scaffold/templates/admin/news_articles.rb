@@ -11,7 +11,7 @@ ActiveAdmin.register NewsArticle do
   permit_params do
     params = [
       :title, :date, :header, :subheader, :category, :header_image, :thumbnail,
-      :content,
+      :content, :admin_user_id,
       news_header_image_attributes: [:slickr_media_upload_id],
       news_thumbnail_attributes: [:slickr_media_upload_id]
     ]
@@ -20,28 +20,42 @@ ActiveAdmin.register NewsArticle do
   end
 
   filter :title
+  filter :featured
   filter :category, as: :select, collection: lambda {
     Hash[
       ::NewsArticle::CATEGORIES.map do |c|
-        [I18n.t(c, scope: %i[activerecord attributes news category_options]), c]
+        [I18n.t(c,
+                scope: %i[
+                  activerecord attributes news_articles category_options
+                ]), c]
       end
     ]
   }
+  filter :admin_user, label: 'Author', as: :select, collection: (lambda do
+    AdminUser.order(last_name: :asc).map do |au|
+      ["#{au.full_name} (#{au.email})", au]
+    end
+  end)
 
   index do
     selectable_column
     id_column
     column :title
     column 'Date' do |news|
-      I18n.l(news.date, :long)
+      I18n.l(news.date, format: :long)
     end
     column :category do |news|
       if news.category.nil? || news.category.empty?
         news.category
       else
         I18n.t(news.category,
-               scope: %i[activerecord attributes news category_options])
+               scope: %i[
+                 activerecord attributes news_articles category_options
+               ])
       end
+    end
+    column 'Author', :admin_user do |news|
+      news.admin_user.full_name
     end
     actions
   end
@@ -52,14 +66,16 @@ ActiveAdmin.register NewsArticle do
         attributes_table do
           row :title
           row :date do
-            I18n.l(news.date, :long)
+            I18n.l(news.date, format: :long)
           end
           row :category do
             if news.category.nil? || news.category.empty?
               news.category
             else
               I18n.t(news.category,
-                     scope: %i[activerecord attributes news category_options])
+                     scope: %i[
+                       activerecord attributes news_articles category_options
+                     ])
             end
           end
           row :header
@@ -92,9 +108,20 @@ ActiveAdmin.register NewsArticle do
                 as: :select,
                 collection: Hash[
                   ::NewsArticle::CATEGORIES.map do |c|
-                    [I18n.t(c, scope: %i[activerecord attributes news category_options]), c]
+                    [I18n.t(c, scope: %i[
+                              activerecord attributes news_articles category_options
+                            ]), c]
                   end]
-
+          input :admin_user_id,
+                label: 'Author',
+                as: :select,
+                collection: (AdminUser.all.map do |author|
+                  ["#{author.full_name} (#{author.email})", author.id]
+                end)
+          input :featured,
+                label: 'Feature this article',
+                hint: '',
+                wrapper_html: { class: 'true_false'}
           render 'admin/form/image_helper',
                  f: f,
                  field: :news_header_image,
@@ -143,6 +170,6 @@ ActiveAdmin.register NewsArticle do
            locals: { article: resource }
   end
   action_item :preview, only: %i[edit show] do
-    link_to 'Preview', preview_admin_news_path(resource, article: resource)
+    link_to 'Preview', preview_admin_news_article_path(resource, article: resource)
   end
 end

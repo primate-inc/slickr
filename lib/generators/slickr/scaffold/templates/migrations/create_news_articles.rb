@@ -12,14 +12,16 @@ class CreateNewsArticles < ActiveRecord::Migration[5.1]
         t.string :thumbnail
         t.text :content
         t.date :date
+        t.references :admin_user, foreign_key: true
+
         t.timestamps
       end
     end
   end
+
   def down
     if ActiveRecord::Base.connection.tables.include?('news_articles')
       drop_table :news_articles
     end
   end
 end
-

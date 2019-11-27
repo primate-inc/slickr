@@ -17,18 +17,18 @@
 <meta content='<%= slickr_meta_data(:twitter_image) %>' name='twitter:image'>
 
 <% if Rails.env == 'production' && @slickr_settings["google_analytics_identifier"].present? %>
-  <!-- Google Analytics -->
-  <%= google_analytics_script(@slickr_settings["google_analytics_identifier"]) %>
-  <!-- End Google Analytics -->
-<% end %>
-
-<% if Rails.env == 'production' && @slickr_settings["google_tag_identifier"].present? %>
-  <!-- Google Tag Manager -->
-  <%= google_tag_manager_script(@slickr_settings["google_tag_identifier"]) %>
-  <!-- End Google Tag Manager -->
-<% end %>
-
-<% if Rails.env != 'production' %>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= @slickr_settings["google_analytics_identifier"] %>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '<%= @slickr_settings["google_analytics_identifier"] %>');
+  </script>
+<% elsif Rails.env == 'production' && @slickr_settings["google_tag_identifier"].present? %>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= @slickr_settings["google_tag_identifier"] %>"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '<%= @slickr_settings["google_tag_identifier"] %>');</script>
+<% else %>
   <!-- Analytics will be automatically uncommented in production
   <%= google_analytics_script(@slickr_settings["google_analytics_identifier"]) %>
   <%= google_tag_manager_script(@slickr_settings["google_tag_identifier"]) %>

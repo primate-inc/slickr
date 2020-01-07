@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    attributes:
+      people:
+        category_options:
+          staff: Staff
+          board: Board
+

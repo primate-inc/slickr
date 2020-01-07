@@ -19,7 +19,7 @@ module Slickr
         end
 
         def locations_gem
-          add_gem 'geokit-rails'
+          gem 'geokit-rails'
         end
 
         def locations_initializer

@@ -1,5 +1,5 @@
 class Location < ApplicationRecord
-  include Geokit::Geocoders
+  # include Geokit::Geocoders
   acts_as_list column: :order
   acts_as_geolocated rescue ActiveAdmin::DatabaseHitDuringLoad
 

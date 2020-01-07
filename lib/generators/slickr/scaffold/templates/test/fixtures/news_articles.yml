@@ -1,6 +1,9 @@
-example_article:
-  title: "Example article"
-  slug: 'example-article'
-  category: "news"
+example_person:
+  first_name: "Example"
+  last_name: "Person"
+  slug: 'example-person'
+  category: "staff"
+  position: "staff"
   thumbnail: test
-  content: "{\"blocks\":[{\"key\":\"286ce4\",\"text\":\"text\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"
+  published: true
+  description: "{\"blocks\":[{\"key\":\"286ce4\",\"text\":\"text\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"

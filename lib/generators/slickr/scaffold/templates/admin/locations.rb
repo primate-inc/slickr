@@ -28,7 +28,7 @@ ActiveAdmin.register Location do
       input :address
       input :address_2
       input :city
-      input :country
+      input :country, :string
       input :postcode
       input :phone
       input :email

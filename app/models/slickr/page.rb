@@ -138,6 +138,14 @@ module Slickr
            .return_media_path_admin_slickr_media_uploads_path
     end
 
+    def page_path
+      nav_helper = Slickr::NavigationBuilder.new.nav_helper
+      return if nav_helper.blank?
+      page_link = nav_helper[:pathnames].find{ |p| p[:page_id] == self.id }
+      return 'Add this page to navigation to generate its URL' if page_link.blank?
+      page_link[:path]
+    end
+
     private
 
     def type_draft?

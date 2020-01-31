@@ -65,6 +65,7 @@ ActiveAdmin.register Slickr::Page do
                     [l[:template].humanize, l[:template]]
                   end)
             input :slug
+            render 'admin/form/published_helper', f: f, object: object
           end
         end
         tab 'Schedule' do

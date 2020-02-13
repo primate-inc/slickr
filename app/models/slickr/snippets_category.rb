@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Snippets category model
 module Slickr
+  # Snippets category model
   class SnippetsCategory < ApplicationRecord
     self.table_name = 'slickr_snippets_categories'
     has_many :slickr_snippets,

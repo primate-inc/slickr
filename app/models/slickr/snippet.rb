@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Slickr
+  # Snippets
   class Snippet < ApplicationRecord
     self.table_name = 'slickr_snippets'
 
@@ -13,8 +16,6 @@ module Slickr
 
     include Slickr::Uploadable
     has_one_slickr_upload(:snippet_main_image, :main_image)
-
-    KINDS = %i[general investment_vehicle faq leadership agm]
 
     scope :published, -> { where(published: true) }
   end

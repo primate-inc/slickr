@@ -6,10 +6,6 @@ ActiveAdmin.register Slickr::Snippet do
   config.paginate   = false
   reorderable
 
-  # ::Snippet::KINDS.each do |kind|
-  #   scope "#{kind.to_s.humanize}", :"of_#{kind}_kind"
-  # end
-
   filter :title
   filter :slickr_snippets_category, label: 'Category', as: :select
    index as: :reorderable_table do

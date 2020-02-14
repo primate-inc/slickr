@@ -53,12 +53,14 @@ module Slickr
     scope(:no_root_or_page_navs, lambda do
       includes(:slickr_navigations)
       .where(type: nil, slickr_navigations: { id: nil })
+      .order(title: :asc)
     end)
 
     scope(:has_root_or_page_navs, lambda do
       includes(:slickr_navigations)
       .where(type: nil)
       .where.not(slickr_navigations: { id: nil })
+      .order(title: :asc)
     end)
 
     def content

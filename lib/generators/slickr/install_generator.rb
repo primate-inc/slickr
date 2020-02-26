@@ -25,8 +25,8 @@ module Slickr
         migration_template "migrations/add_admin_user_id_to_slickr_pages.rb", "db/migrate/add_admin_user_id_to_slickr_pages.rb"
         migration_template "migrations/create_slickr_meta_tags.rb", "db/migrate/create_slickr_meta_tags.rb"
         migration_template "migrations/add_trackable_to_devise.rb", "db/migrate/add_trackable_to_devise.rb"
-        migration_template "migrations/create_snippets.rb", "db/migrate/create_snippets.rb"
-        migration_template "migrations/create_snippets_categories.rb", "db/migrate/create_snippets_categories.rb"
+        migration_template "migrations/create_slickr_snippets.rb", "db/migrate/create_snippets.rb"
+        migration_template "migrations/create_slickr_snippets_categories.rb", "db/migrate/create_snippets_categories.rb"
 
         puts "Database migrations added"
       end

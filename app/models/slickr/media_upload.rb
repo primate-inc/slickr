@@ -105,19 +105,19 @@ module Slickr
     end
 
     def build_image
-      return build_empty_image if image.keys.count == 0
+      return build_empty_image if image_data['derivatives'].blank?
       {
         id: id,
         src: image_url(:xl_limit),
         displayPath: image_url(:m_limit),
         thumbnail: image_url(:s_limit),
-        thumbnailWidth: image[:s_limit].data['metadata']['width'],
-        thumbnailHeight: image[:s_limit].data['metadata']['height'],
-        caption: image[:original].data['metadata']['filename'],
+        thumbnailWidth: image(:s_limit).width,
+        thumbnailHeight: image(:s_limit).height,
+        caption: image.original_filename,
         isSelected: false,
         editPath: admin_edit_path,
         returnMediaPath: return_media_path,
-        mimeType: image[:original].data['metadata']['mime_type']
+        mimeType: image.mime_type
       }
     end
 

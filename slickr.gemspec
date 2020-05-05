@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   # User authentication
   s.add_dependency 'devise', '~> 4.3'
   # Images
-  s.add_dependency 'shrine', '~> 2.0'
+  s.add_dependency 'shrine', '>= 3'
   s.add_dependency 'fastimage', '~> 2.1'
   s.add_dependency 'image_processing', '>= 1.7'
   s.add_dependency 'image_optim', '~> 0.26'

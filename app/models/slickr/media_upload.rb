@@ -88,7 +88,7 @@ module Slickr
     private
 
     def build_file
-      return build_empty_image if file.keys.count == 0
+      return build_empty_image unless file.respond_to?(:keys)
       {
         id: id,
         src: file_url(:large),
@@ -105,7 +105,7 @@ module Slickr
     end
 
     def build_image
-      return build_empty_image if image_data['derivatives'].blank?
+      return build_empty_image unless image_data['derivatives']
       {
         id: id,
         src: image_url(:xl_limit),

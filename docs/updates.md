@@ -3,6 +3,23 @@
 Below is instructions on steps to take in order to upgrade the CMS on your
 site. Please follow the steps in order and work from version to version.
 
+## Version 0.xx
+
+### Update Shrine
+
+To use pre-update images in the Slickr media gallery, you'll have
+to run this script to change the current images to use the derivations
+object structure:
+
+```ruby
+Slickr::MediaUpload.find_each do |image|
+  next if image.image_data.blank?
+  image.image_attacher.write
+  image.image_attacher.atomic_persist
+end
+```
+Images already added to elements to the site will work fine.
+
 ## Version 0.14
 
 1. Install updates from Slickr

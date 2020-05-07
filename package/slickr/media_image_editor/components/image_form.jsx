@@ -11,13 +11,13 @@ const ImageForm = ({page, values, touched, errors, dirty, isSubmitting, handleCh
   } else {
     buttonText = 'Crop & Update Image'
   }
-  
+
   return(
     <form id='image_editor_form' onSubmit={handleSubmit}>
       <fieldset>
         <ol>
           <li className="input string">
-            <label htmlFor="img_title">Image Title</label>
+            <label htmlFor="img_title">Image Caption</label>
             <input type="text"
                    name="img_title"
                    value={values.img_title}
@@ -28,6 +28,13 @@ const ImageForm = ({page, values, touched, errors, dirty, isSubmitting, handleCh
             <input type="text"
                    name="alt_text"
                    value={values.alt_text}
+                   onChange={handleChange} />
+          </li>
+          <li className="input string">
+            <label htmlFor="img_credit">Credit</label>
+            <input type="text"
+                   name="img_credit"
+                   value={values.img_credit}
                    onChange={handleChange} />
           </li>
         </ol>
@@ -42,6 +49,7 @@ export default Formik({
     id: props.image.id,
     alt_text: props.image.additional_info['alt_text'],
     img_title: props.image.additional_info['img_title'],
+    img_credit: props.image.additional_info['img_credit'],
     crop_data: props.image.crop_data
   }),
   handleSubmit: (values, { props, setErrors, setSubmitting }) => {
@@ -52,7 +60,11 @@ export default Formik({
 
     props.actions.updateImage({
       id: values.id,
-      additional_info: {alt_text: values.alt_text, img_title: values.img_title}
+      additional_info: {
+        alt_text: values.alt_text,
+        img_title: values.img_title,
+        img_credit: values.img_credit
+      }
     })
   }
 })(ImageForm)

@@ -2,6 +2,7 @@
 defaults: &defaults
   site_title: ''
   google_analytics_identifier: ''
+  google_tag_identifier: ''
   email: ''
   meta_description: ''
   facebook_og_title: ''

@@ -17,12 +17,13 @@ module Slickr
         migration_template "migrations/add_roles_names_and_avatars_to_admin_users.rb", "db/migrate/add_roles_names_and_avatars_to_admin_users.rb"
         migration_template "migrations/add_subheader_to_slickr_pages.rb", "db/migrate/add_subheader_to_slickr_pages.rb"
         migration_template "migrations/add_header_image_to_slickr_pages.rb", "db/migrate/add_header_image_to_slickr_pages.rb"
-        migration_template "migrations/rename_slickr_pages_og_title_2_and_og_description_2.rb", "db/migrate/rename_slickr_pages_og_title_2_and_og_description_2.rb"
         migration_template "migrations/create_slickr_settings.rb", "db/migrate/create_slickr_settings.rb"
-        migration_template "migrations/rename_slickr_pages_meta_title.rb", "db/migrate/rename_slickr_pages_meta_title.rb"
         migration_template "migrations/create_slickr_navigations.rb", "db/migrate/create_slickr_navigations.rb"
         migration_template "migrations/create_slickr_media_uploads.rb", "db/migrate/create_slickr_media_uploads.rb"
         migration_template "migrations/create_slickr_uploads.rb", "db/migrate/create_slickr_uploads.rb"
+        migration_template "migrations/create_slickr_schedules.rb", "db/migrate/create_slickr_schedules.rb"
+        migration_template "migrations/add_admin_user_id_to_slickr_pages.rb", "db/migrate/add_admin_user_id_to_slickr_pages.rb"
+        migration_template "migrations/create_slickr_meta_tags.rb", "db/migrate/create_slickr_meta_tags.rb"
 
         puts "Database migrations added"
       end
@@ -156,74 +157,32 @@ module Slickr
         end
       end
 
-      def extend_babel_to_use_stage_1
-        dest_file = ".babelrc"
-        existing_content = File.read(dest_file)
-        new_content = '"stage-1"'
-
-        unless existing_content.include? new_content
-          gsub_file(dest_file, '"react"') do |match|
-            "#{match},\n    #{new_content}"
-          end
-
-          puts "Babel extended to use stage-1"
-        else
-          puts "Babel already using stage-1"
-        end
-      end
-
-      def extend_babel_to_ignore_node_modules
-        dest_file = ".babelrc"
-        existing_content = File.read(dest_file)
-        new_content = '"ignore": "node_modules",'
-
-        unless existing_content.include? new_content
-          gsub_file(dest_file, '"presets": [') do |match|
-            "#{new_content}\n  #{match}"
-          end
-
-          puts "Babel extended to ignore node modules"
-        else
-          puts "Babel already ignoring node modules"
-        end
-      end
 
       def extend_package_json
-        dest_file = "package.json"
-        existing_content = File.read(dest_file)
-        new_content_1 = '"slickr_cms": "git+https://github.com/primate-inc/slickr#master"'
-        new_content_2 = '"babel-preset-stage-1": "^6.24.1"'
-        new_content_3 = '"ignore-loader": "^0.1.2"'
-
-        unless existing_content.include? new_content_1
-          gsub_file(dest_file, '"dependencies": {') do |match|
-            "#{match}\n    #{new_content_1},"
-          end
-
-          puts "Package.json extended to Slickr"
-        else
-          puts "Package.json already using Slickr"
-        end
-
-        unless existing_content.include? new_content_2
-          gsub_file(dest_file, '"devDependencies": {') do |match|
-            "#{match}\n    #{new_content_2},"
-          end
-
-          puts "Babel extended to use stage-1"
-        else
-          puts "Babel already using stage-1"
-        end
-
-        unless existing_content.include? new_content_3
-          gsub_file(dest_file, '"devDependencies": {') do |match|
-            "#{match}\n    #{new_content_3},"
-          end
-
-          puts "Package.json extended to use ignore-loader"
-        else
-          puts "Package.json already using ignore-loader"
-        end
+        packages = [
+          'file:../slickr',
+          '@babel/core',
+          '@babel/plugin-proposal-class-properties',
+          '@babel/plugin-proposal-decorators',
+          '@babel/plugin-proposal-do-expressions',
+          '@babel/plugin-proposal-export-default-from',
+          '@babel/plugin-proposal-export-namespace-from',
+          '@babel/plugin-proposal-function-sent',
+          '@babel/plugin-proposal-json-strings',
+          '@babel/plugin-proposal-logical-assignment-operators',
+          '@babel/plugin-proposal-nullish-coalescing-operator',
+          '@babel/plugin-proposal-numeric-separator',
+          '@babel/plugin-proposal-optional-chaining',
+          '@babel/plugin-proposal-pipeline-operator',
+          '@babel/plugin-proposal-throw-expressions',
+          '@babel/plugin-syntax-dynamic-import',
+          '@babel/plugin-syntax-import-meta',
+          '@babel/preset-env',
+          '@babel/preset-react',
+          'ignore-loader'
+        ]
+        run "yarn add #{packages.join(' ')}"
+        # run 'npm install https://github.com/primate-inc/slickr#master --save'
       end
 
       def extend_admin_user_class
@@ -290,6 +249,7 @@ module Slickr
 
       def page_edit_megadraft_extensions
         template "javascript_extensions/page_edit/additional_megadraft_actions.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_actions.js"
+        template "javascript_extensions/page_edit/additional_megadraft_block_styles.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_block_styles.js"
         template "javascript_extensions/page_edit/additional_megadraft_decorators.js", "app/javascript/slickr_extensions/page_edit/additional_megadraft_decorators.js"
         template "javascript_extensions/page_edit/actions/additional_actions.js", "app/javascript/slickr_extensions/page_edit/actions/additional_actions.js"
         template "javascript_extensions/page_edit/components/content/additional_entity_inputs.js", "app/javascript/slickr_extensions/page_edit/components/content/additional_entity_inputs.js"

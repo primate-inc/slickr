@@ -19,7 +19,7 @@ export default class Grid extends React.Component {
         'id': this.props.images[index].id,
         'slickr_upload_path': this.props.images[index].build_for_gallery.displayPath,
         'additional_info': this.props.images[index].additional_info,
-        'media_upload_helper_path': '/admin/slickr_media_uploads/return_media_path',
+        'media_upload_helper_path': this.props.images[index].build_for_gallery.returnMediaPath,
         'mime_type': this.props.images[index].build_for_gallery.mimeType
       }
     };

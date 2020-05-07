@@ -146,3 +146,50 @@ use in your views:
 
 replacing the instance variable with that generated in your controller and the
 second argument with whatever field has the DraftJS content.
+
+## Adding new context style
+
+To add a new style to your context menu:
+
+1. Add new block to `DRAFTJS_CONFIG` in `app/models/slickr/page.rb`:
+```ruby
+'two-column' => {
+  element: "p",
+  wrapper: [
+    "div", { className: 'print_columns'}
+  ]
+}
+```
+2. Add new block to `app/javascript/slickr_extensions/page_edit/additional_megadraft_block_styles.js`:
+```javascript
+const additionalBlockStyles = [
+  {
+    type: 'two-column',
+    className: 'print_columns',
+  },
+];
+
+export default additionalBlockStyles;
+```
+
+3. Add new action and icon to `app/javascript/slickr_extensions/page_edit/additional_megadraft_actions.js`:
+```javascript
+import FaTwoCol from 'react-icons/lib/fa/columns';
+
+...
+
+const additionalActions = [
+   { type: "entity", label: "PDF Link", style: "link", entity: "PDF_LINK", icon: FaPdf },
+   { type: "block", label: "Two columns", style: "two-column", entity: "TWO_COLUMN", icon: FaTwoCol }
+]
+```
+
+4. Add some styles to make it distinguishable to `app/assets/stylesheets/active_admin/main.scss`:
+```scss
+.DraftEditor-editorContainer {
+   .print_columns {
+     padding: 1em;
+     border: 1px solid grey;
+   }
+}
+```

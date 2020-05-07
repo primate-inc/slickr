@@ -1,9 +1,14 @@
 ActiveAdmin.register Slickr::Page do
-  permit_params :page_title, :meta_description, :title, :page_intro,
-                :page_header, :page_subheader, :layout, :slug, :og_title,
-                :og_description, :twitter_title, :twitter_description,
-                :content, :slug, :publish_schedule_date, :publish_schedule_time,
-                slickr_page_header_image_attributes: [:slickr_media_upload_id]
+  permit_params do
+    params = [
+      :page_title, :title, :page_intro, :page_header, :page_subheader, :layout,
+      :slug, :content, :slug, :admin_user_id,
+      slickr_page_header_image_attributes: [:slickr_media_upload_id],
+      slickr_navigation_image_attributes: [:slickr_media_upload_id]
+    ]
+    Slickr::PermitAdditionalAdminParams.push_to_params(Slickr::Page, params)
+    params
+  end
 
   form do |f|
     if object.new_record?
@@ -14,6 +19,8 @@ ActiveAdmin.register Slickr::Page do
             [l[:template].humanize, l[:template]]
           end
         )
+        input :admin_user_id,
+              input_html: { value: current_admin_user.id }, as: :hidden
       end
       actions
     else
@@ -45,18 +52,10 @@ ActiveAdmin.register Slickr::Page do
           end
         end
         tab 'SEO' do
-          inputs do
-            input :page_title
-            input :meta_description, as: :text
-          end
+          render 'admin/form/meta_tag_seo_helper', f: f
         end
         tab 'Social Media' do
-          inputs do
-            input :og_title, as: :string, label: 'Facebook og title'
-            input :og_description, as: :text, label: 'Facebook og description'
-            input :twitter_title, as: :string
-            input :twitter_description, as: :text
-          end
+          render 'admin/form/meta_tag_social_helper', f: f
         end
         tab 'Config' do
           inputs do
@@ -69,24 +68,7 @@ ActiveAdmin.register Slickr::Page do
           end
         end
         tab 'Schedule' do
-          inputs do
-            input :publish_schedule_date,
-                  as: :datepicker,
-                  label: 'Scheduled date',
-                  datepicker_options: {
-                    dateFormat: 'dd-MM-yy'
-                  },
-                  input_html: { value: f.object.new_record? \
-                    ? Date.today.try(:strftime, '%d-%B-%Y')
-                    : f.object.publish_schedule_date.try(:strftime, '%d-%B-%Y') }
-            input :publish_schedule_time,
-                  as: :time_picker,
-                  label: 'Scheduled time',
-                  wrapper_html: { class: 'clockpicker', 'data-autoclose': 'true' },
-                  input_html: { value: f.object.new_record? \
-                    ? Time.now.try(:strftime, '%H:%M')
-                    : f.object.publish_schedule_time.try(:localtime).try(:strftime, '%H:%M') }
-          end
+          render 'admin/form/schedule_helper', f: f
         end
       end
       actions

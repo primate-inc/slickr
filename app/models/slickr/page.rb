@@ -5,6 +5,8 @@ module Slickr
 
     extend FriendlyId
     include Slickr::Uploadable
+    include Slickr::Schedulable
+    include Slickr::Metatagable
     include AASM
 
     has_paper_trail only: %i[title aasm_state content published_content drafts],
@@ -12,6 +14,9 @@ module Slickr
 
     friendly_id :title, use: %i[slugged finders]
 
+    slickr_schedulable on_create: :unpublish
+
+    belongs_to :admin_user, optional: true
     has_one_slickr_upload(:slickr_page_header_image, :header_image)
     has_many_slickr_uploads(:slickr_page_gallery_images, :gallery_images)
     has_many :slickr_navigations,
@@ -27,24 +32,21 @@ module Slickr
 
     before_create :create_content_areas
     after_create :create_draft, :activate_draft
-    before_save :set_date_in_publish_schedule_time
 
     validates_presence_of :title, :layout, unless: :type_draft?
-    validates_presence_of :publish_schedule_date, if: :publish_schedule_time?
-    validates_presence_of :publish_schedule_time, if: :publish_schedule_date?
 
     scope :not_draft, -> { where(type: nil) }
 
     aasm(:status, column: :aasm_state) do
-      state :draft, initial: true
-      state :published
+      state :live_version, initial: true
+      state :draft
 
-      event :publish do
-        transitions from: :draft, to: :published
+      event :make_live do
+        transitions from: :draft, to: :live_version
       end
 
-      event :unpublish do
-        transitions from: :published, to: :draft
+      event :make_draft do
+        transitions from: :live_version, to: :draft
       end
     end
 
@@ -95,7 +97,8 @@ module Slickr
     end
 
     def create_draft
-      drafts.create
+      drafts.create(admin_user_id: admin_user_id)
+      drafts.first.make_draft!
     end
 
     def activate_draft
@@ -104,14 +107,6 @@ module Slickr
 
     def preview_page
       Rails.application.routes.url_helpers.preview_admin_slickr_page_path(self.id)
-    end
-
-    def admin_unpublish_path
-      Rails.application.routes.url_helpers.unpublish_admin_slickr_page_path(self.id)
-    end
-
-    def admin_publish_path
-      Rails.application.routes.url_helpers.publish_admin_slickr_page_path(self.id)
     end
 
     def admin_delete_page_path
@@ -147,15 +142,6 @@ module Slickr
 
     def type_draft?
       type == 'Slickr::Page::Draft'
-    end
-
-    def set_date_in_publish_schedule_time
-      return if publish_schedule_date.nil?
-      self.publish_schedule_time = Time.new(
-        publish_schedule_date.year, publish_schedule_date.month,
-        publish_schedule_date.day, self.publish_schedule_time.hour,
-        self.publish_schedule_time.min, 0
-      )
     end
   end
 end

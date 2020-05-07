@@ -19,6 +19,8 @@ const selectablePages = document.getElementById('navigation-data')
                                 .dataset.selectable_pages
 const allowedUploadInfo = document.getElementById('navigation-data')
                                   .dataset.allowed_upload_info
+const additionalInfo = document.getElementById('navigation-data')
+                               .dataset.additional_info
 
 const initialState = {
   navigationState: JSON.parse(navigationState),
@@ -28,7 +30,8 @@ const initialState = {
   selectablePages: JSON.parse(selectablePages),
   modalIsOpen: false,
   loadedImages: {},
-  allowedUploadInfo: JSON.parse(allowedUploadInfo)
+  allowedUploadInfo: JSON.parse(allowedUploadInfo),
+  additionalInfo: JSON.parse(additionalInfo)
 }
 
 const middlewares = [thunk];

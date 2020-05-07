@@ -1,0 +1,6 @@
+en:
+  activerecord:
+    models:
+      slickr/schedule:
+        one: 'Schedule'
+        other: 'Schedules'

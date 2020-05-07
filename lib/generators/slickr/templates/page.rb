@@ -3,6 +3,8 @@ require_dependency Slickr::Engine.config.root.join(
 ).to_s
 
 class Slickr::Page
+  include Slickr::Metatagable
+  
   LAYOUTS = [
     { template: 'standard', exclude: [:page_header, :page_subheader, :page_intro] },
     { template: 'contact' },

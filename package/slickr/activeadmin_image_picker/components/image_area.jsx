@@ -115,6 +115,7 @@ export default class ImageArea extends React.Component {
           loadedImages={this.props.loadedImages}
           choosingActiveAdminImage={this.props.choosingActiveAdminImage}
           allowedUploadInfo={this.props.allowedUploadInfo}
+          additionalInfo={this.props.additionalInfo}
         />
       ]
     );

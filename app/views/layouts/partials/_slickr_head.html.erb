@@ -11,12 +11,12 @@
 
 
 <!-- Twitter Card data -->
-<meta content='summary' name='twitter:card'>
+<meta content='summary_large_image' name='twitter:card'>
 <meta content='<%= slickr_meta_data(:twitter_title) %>' name='twitter:title'>
 <meta content='<%= slickr_meta_data(:twitter_description) %>' name='twitter:description'>
 <meta content='<%= slickr_meta_data(:twitter_image) %>' name='twitter:image'>
 
-<% if Rails.env == 'production' %>
+<% if Rails.env == 'production' && @slickr_settings["google_analytics_identifier"].present? %>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -25,6 +25,9 @@
     ga('create', '<%= @slickr_settings["google_analytics_identifier"] %>', 'auto');
     ga('send', 'pageview');
   </script>
+<% elsif Rails.env == 'production' && @slickr_settings["google_tag_identifier"].present? %>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= @slickr_settings["google_tag_identifier"] %>"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '<%= @slickr_settings["google_tag_identifier"] %>');</script>
 <% else %>
   <!-- Analytics will be automatically uncommented in production
   <script>

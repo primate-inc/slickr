@@ -12,10 +12,13 @@ const imageData = document.getElementById('media-data-array')
                           .dataset.media_data_array
 const allowedUploadInfo = document.getElementById('media-data-array')
                                   .dataset.allowed_upload_info
+const additionalInfo = document.getElementById('media-data-array')
+                               .dataset.additional_info
 
 const imagesAndInfo = {
   loadedImages: JSON.parse(imageData),
-  allowedUploadInfo: JSON.parse(allowedUploadInfo)
+  allowedUploadInfo: JSON.parse(allowedUploadInfo),
+  additionalInfo: JSON.parse(additionalInfo)
 }
 
 const middlewares = [thunk];

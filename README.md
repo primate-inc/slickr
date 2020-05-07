@@ -39,6 +39,12 @@ and finally
 yarn install
 ```
 
+If running the generator again you can run:
+
+```bash
+rails g slickr:install --skip
+```
+
 ## Stylesheets
 
 Firstly, please comment out the default Active Admin stylesheets.
@@ -102,6 +108,10 @@ config.slickr_http_basic_auth_user = 'Joe'
 config.slickr_http_basic_auth_password = 'Bloggs'
 ```
 
+## Updates
+
+[Updates](docs/updates.md)
+
 ## Navigation
 
 [Navigation](docs/navigation.md)
@@ -114,9 +124,17 @@ config.slickr_http_basic_auth_password = 'Bloggs'
 
 [Media Library](docs/media_library.md)
 
+## Scheduling
+
+[Scheduling](docs/scheduling.md)
+
+## Meta Tags
+
+[Meta Tags](docs/meta_tags.md)
+
 ## Helpers
 
-[Heleprs](docs/helpers.md)
+[Helpers](docs/helpers.md)
 
 ## Error pages
 

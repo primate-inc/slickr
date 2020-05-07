@@ -29,6 +29,13 @@ module Slickr
       }
     end
 
+    def self.additional_info
+      {
+        create_path: Rails.application.routes.url_helpers
+                          .admin_slickr_media_uploads_path
+      }
+    end
+
     def build_for_gallery
       image.present? ? build_image : build_file
     end
@@ -40,6 +47,11 @@ module Slickr
 
     def admin_update_path
       Rails.application.routes.url_helpers.admin_slickr_media_upload_path(id)
+    end
+
+    def return_media_path
+      Rails.application.routes.url_helpers
+           .return_media_path_admin_slickr_media_uploads_path
     end
 
     def admin_batch_delete_path
@@ -87,6 +99,7 @@ module Slickr
         caption: file[:original].data['metadata']['filename'],
         isSelected: false,
         editPath: admin_edit_path,
+        returnMediaPath: return_media_path,
         mimeType: file[:original].data['metadata']['mime_type']
       }
     end
@@ -103,6 +116,7 @@ module Slickr
         caption: image[:original].data['metadata']['filename'],
         isSelected: false,
         editPath: admin_edit_path,
+        returnMediaPath: return_media_path,
         mimeType: image[:original].data['metadata']['mime_type']
       }
     end

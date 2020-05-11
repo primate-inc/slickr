@@ -3,7 +3,7 @@ require 'rails/generators/active_record'
 module Slickr
   module Generators
     class InstallGenerator < ActiveRecord::Generators::Base
-      source_root File.expand_path("../templates", __FILE__)
+      source_root File.expand_path("./templates", __FILE__)
       desc "Running Slickr generators"
       argument :name, type: :string, default: "application"
 
@@ -24,7 +24,6 @@ module Slickr
         migration_template "migrations/create_slickr_schedules.rb", "db/migrate/create_slickr_schedules.rb"
         migration_template "migrations/add_admin_user_id_to_slickr_pages.rb", "db/migrate/add_admin_user_id_to_slickr_pages.rb"
         migration_template "migrations/create_slickr_meta_tags.rb", "db/migrate/create_slickr_meta_tags.rb"
-        migration_template "migrations/add_trackable_to_devise.rb", "db/migrate/add_trackable_to_devise.rb"
         migration_template "migrations/create_snippets.rb", "db/migrate/create_snippets.rb"
         migration_template "migrations/create_snippets_categories.rb", "db/migrate/create_snippets_categories.rb"
 

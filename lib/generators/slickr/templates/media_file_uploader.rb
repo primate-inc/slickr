@@ -10,10 +10,8 @@ module Slickr
     MAX_SIZE      = 10 * 1024 * 1024 # 10 MB
 
     plugin :delete_raw # automatically delete processed files after uploading
-    plugin :delete_promoted
     plugin :processing
     plugin :store_dimensions
-    plugin :versions
 
     Attacher.validate do
       validate_max_size MAX_SIZE, message: 'is too large (max is 10 MB)'

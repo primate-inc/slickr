@@ -1,0 +1,10 @@
+<% meta_date = I18n.l(@news_article.date, format: :long) %>
+<% meta_by = @news_article.admin_user.try(:first_name).present? ? " by #{@news_article.admin_user.full_name}" : "" %>
+<% meta = meta_date + meta_by %>
+<% image_url = @news_article.try(:header_image).try(:image_url, :xl_fill) || '' %>
+
+<h1> <%= @news_article.header %></h1>
+<%= image_tag image_url, alt: '' %>
+<p class='para-intro'><%= @news_article.subheader %></p>
+<p><%= meta %></p>
+<%= draftjs_to_html(@news_article, :content) %>

@@ -46,7 +46,7 @@ if defined?(ActiveAdmin)
     collection_action :return_media_path, method: :get do
       media = Slickr::MediaUpload.find(params[:id])
       path = media.image_url(:m_limit)
-      mime_type = media.image_data['original']['metadata']['mime_type']
+      mime_type = media.image.mime_type
 
       if path.starts_with?('/')
         file = File.join(Rails.root, 'public', path)
@@ -92,7 +92,7 @@ if defined?(ActiveAdmin)
         create! do |format|
           format.html { redirect_to admin_slickr_images_path }
           format.json do
-            if @slickr_media_upload.image.try(:keys).try(:count) == 0 ||
+            if @slickr_media_upload.image_data.try(:keys).try(:count) == 0 ||
                @slickr_media_upload.file.try(:keys).try(:count) == 0
               # when image processing has failed
               json_return = @slickr_media_upload.to_json(

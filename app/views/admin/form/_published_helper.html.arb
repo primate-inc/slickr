@@ -1,0 +1,4 @@
+f.input :page_path,
+      input_html: { readonly: true },
+      hint: "This path follows the domain name, #{request.base_url}"
+span "This page is not published." if !object.published?

@@ -24,6 +24,9 @@ module Slickr
         migration_template "migrations/create_slickr_schedules.rb", "db/migrate/create_slickr_schedules.rb"
         migration_template "migrations/add_admin_user_id_to_slickr_pages.rb", "db/migrate/add_admin_user_id_to_slickr_pages.rb"
         migration_template "migrations/create_slickr_meta_tags.rb", "db/migrate/create_slickr_meta_tags.rb"
+        migration_template "migrations/add_trackable_to_devise.rb", "db/migrate/add_trackable_to_devise.rb"
+        migration_template "migrations/create_snippets.rb", "db/migrate/create_snippets.rb"
+        migration_template "migrations/create_snippets_categories.rb", "db/migrate/create_snippets_categories.rb"
 
         puts "Database migrations added"
       end
@@ -44,6 +47,14 @@ module Slickr
         template "slickr_pages.rb", "app/admin/slickr_pages.rb"
 
         puts "ActiveAdmin Slickr::Page"
+      end
+
+      def activeadmin_slickr_snippets
+        template "slickr_snippets.rb", "app/admin/slickr_snippets.rb"
+        template "slickr_snippets_categories.rb", "app/admin/slickr_snippets_categories.rb"
+
+        puts "ActiveAdmin Slickr::Snippet"
+        puts "ActiveAdmin Slickr::SnippetsCategory"
       end
 
       def activeadmin_media_uploads

@@ -3,7 +3,7 @@ require 'rails/generators/active_record'
 module Slickr
   module Generators
     class InstallGenerator < ActiveRecord::Generators::Base
-      source_root File.expand_path("./templates", __FILE__)
+      source_root File.expand_path("../templates", __FILE__)
       desc "Running Slickr generators"
       argument :name, type: :string, default: "application"
 

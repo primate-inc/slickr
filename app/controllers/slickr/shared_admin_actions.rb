@@ -55,12 +55,12 @@ module Slickr
         end
       end
 
-      base.send(:action_item, :preview, only: [:edit, :show], method: :get, if: Proc.new {
+      base.send(:action_item, :"preview_#{base.config.resource_name.singular_route_key}", only: [:edit, :show], method: :get, if: Proc.new {
         base.config.resource_class_name.classify.constantize.respond_to?(:slickr_previewable_opts) &&
         base.config.resource_class_name.classify.constantize.slickr_previewable_opts &&
         base.config.resource_class_name.classify.constantize.slickr_previewable_opts[:preview_enabled]
       }) do
-        link_to 'Preview', send("preview_admin_#{base.config.resource_class_name.gsub(/^[^0-9a-z ]+/i, '').underscore}_path"), target: '_blank'
+        link_to 'Preview', send("preview_#{base.config.resource_name.singular_route_key}_admin_#{base.config.resource_name.singular_route_key}_path"), target: '_blank'
       end
 
 
@@ -68,8 +68,8 @@ module Slickr
       # Member actions
       ###############
 
-      base.send(:member_action, :preview, method: :get) do
-        render layout: resource.class.slickr_previewable_opts[:layout], template: resource.class.slickr_previewable_opts[:template], locals: resource.class.slickr_previewable_opts[:locals]
+      base.send(:member_action, :"preview_#{base.config.resource_name.singular_route_key}", method: :get) do
+        render layout: resource.slickr_previewable_layout, template: resource.slickr_previewable_template, locals: resource.slickr_previewable_locals
       end
 
       base.send(:member_action, :publish, method: :put) do

@@ -7,6 +7,7 @@ module Slickr
     include Slickr::Uploadable
     include Slickr::Schedulable
     include Slickr::Metatagable
+    include Slickr::Previewable
     include AASM
 
     has_paper_trail only: %i[title aasm_state content published_content drafts],
@@ -15,6 +16,7 @@ module Slickr
     friendly_id :title, use: %i[slugged finders]
 
     slickr_schedulable on_create: :unpublish
+    slickr_previewable(template: lambda {|p| "slickr_page_templates/#{p.layout}"}, locals: lambda {|p| { slickr_page: p, content: draftjs_to_html(p, :content) } }, layout: false  )
 
     belongs_to :admin_user, optional: true
     has_one_slickr_upload(:slickr_page_header_image, :header_image)

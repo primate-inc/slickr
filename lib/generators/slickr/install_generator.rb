@@ -189,11 +189,19 @@ module Slickr
           '@babel/plugin-syntax-import-meta',
           '@babel/preset-env',
           '@babel/preset-react',
-          'ignore-loader'
+          'ignore-loader',
+          'core-js@3'
         ]
         run "yarn add #{packages.join(' ')}"
         # run 'npm install https://github.com/primate-inc/slickr#master --save'
       end
+
+      def babel_config
+        template "babel.config.js", "babel.config.js"
+
+        puts "New Babel config"
+      end
+
 
       def extend_admin_user_class
         dest_file = "app/models/admin_user.rb"

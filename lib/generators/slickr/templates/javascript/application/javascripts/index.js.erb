@@ -31,8 +31,8 @@ const context = require.context("./controllers", true, /\.js$/)
 application.load(definitionsFromContext(context))
 
 // require('jquery');
-import 'babel-polyfill'
-import 'core-js'
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import 'whatwg-fetch'
 import 'element-closest-polyfill'
 

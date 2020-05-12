@@ -96,20 +96,6 @@ if defined?(ActiveAdmin)
       redirect_to edit_resource_path
     end
 
-    member_action :preview, method: :get do
-      html_output = draftjs_to_html(resource, :content)
-      render layout: false,
-             template: "slickr_page_templates/#{resource.choose_template}",
-             locals: { slickr_page: resource, content: html_output }
-    end
-
-    action_item :preview, only: [:edit] do
-      link_to preview_admin_slickr_page_path(resource),
-              target: '_blank' do
-        '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-              xlink:href="#svg-preview"></use></svg>Preview'.html_safe
-      end
-    end
   end
 
   private

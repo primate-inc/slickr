@@ -69,6 +69,7 @@ module Slickr
       ###############
 
       base.send(:member_action, :"preview_#{base.config.resource_name.singular_route_key}", method: :get) do
+        resource.slickr_previewable_instance_variables.each { |name, value| instance_variable_set("@#{name}", value) }
         render layout: resource.slickr_previewable_layout, template: resource.slickr_previewable_template, locals: resource.slickr_previewable_locals
       end
 

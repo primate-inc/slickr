@@ -23,6 +23,13 @@ module Slickr
         self.class.slickr_previewable_opts[:template]
     end
 
+    def slickr_previewable_instance_variables
+      return [] if self.class.slickr_previewable_opts[:instance_variables].nil?
+      self.class.slickr_previewable_opts[:instance_variables].is_a?(Proc) ?
+        self.class.slickr_previewable_opts[:instance_variables].call(self) :
+        self.class.slickr_previewable_opts[:instance_variables]
+    end
+
     module ClassMethods
       attr_reader :slickr_previewable_opts
 

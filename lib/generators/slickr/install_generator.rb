@@ -7,16 +7,18 @@ module Slickr
       desc "Running Slickr generators"
       argument :name, type: :string, default: "application"
 
+      def install_papetrail
+        puts "Installing Papertrail"
+        generate "paper_trail:install --with-changes"
+        generate "paper_trail_association_tracking:install"
+        puts "Installed Papertrail"
+      end
+
       def db_migrations
         migration_template "migrations/create_slickr_pages.rb", "db/migrate/create_slickr_pages.rb"
-        migration_template "migrations/create_versions.rb", "db/migrate/create_versions.rb"
-        migration_template "migrations/add_object_changes_to_versions.rb", "db/migrate/add_object_changes_to_versions.rb"
-        migration_template "migrations/change_slickr_pages_page_id_attribute.rb", "db/migrate/change_slickr_pages_page_id_attribute.rb"
         migration_template "migrations/add_meta_data_to_versions.rb", "db/migrate/add_meta_data_to_versions.rb"
         migration_template "migrations/create_slickr_event_logs.rb", "db/migrate/create_slickr_event_logs.rb"
         migration_template "migrations/add_roles_names_and_avatars_to_admin_users.rb", "db/migrate/add_roles_names_and_avatars_to_admin_users.rb"
-        migration_template "migrations/add_subheader_to_slickr_pages.rb", "db/migrate/add_subheader_to_slickr_pages.rb"
-        migration_template "migrations/add_header_image_to_slickr_pages.rb", "db/migrate/add_header_image_to_slickr_pages.rb"
         migration_template "migrations/create_slickr_settings.rb", "db/migrate/create_slickr_settings.rb"
         migration_template "migrations/create_slickr_navigations.rb", "db/migrate/create_slickr_navigations.rb"
         migration_template "migrations/create_slickr_media_uploads.rb", "db/migrate/create_slickr_media_uploads.rb"
@@ -35,6 +37,7 @@ module Slickr
 
         puts "Shrine initializer"
       end
+
 
       def slickr_yml
         template "slickr.yml", "config/slickr.yml"

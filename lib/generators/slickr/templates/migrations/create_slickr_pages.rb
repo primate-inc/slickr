@@ -6,7 +6,7 @@ class CreateSlickrPages < ActiveRecord::Migration[5.1]
       t.string    :aasm_state
       t.json      :content, default: "[]"
       t.string    :type
-      t.integer   :page_id
+      t.integer   :slickr_page_id
       t.integer   :active_draft_id
       t.integer   :published_draft_id
       t.text      :page_header
@@ -20,6 +20,8 @@ class CreateSlickrPages < ActiveRecord::Migration[5.1]
       t.text      :og_description_2
       t.text      :og_image
       t.text      :og_image_2
+      t.text      :page_subheader
+      t.string    :page_header_image
       t.datetime  :published_at
       t.date      :publish_schedule_date
       t.datetime  :publish_schedule_time

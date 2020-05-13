@@ -7,16 +7,8 @@ module Slickr
       desc "Running Slickr generators"
       argument :name, type: :string, default: "application"
 
-      def install_papetrail
-        puts "Installing Papertrail"
-        generate "paper_trail:install --with-changes"
-        generate "paper_trail_association_tracking:install"
-        puts "Installed Papertrail"
-      end
-
       def db_migrations
         migration_template "migrations/create_slickr_pages.rb", "db/migrate/create_slickr_pages.rb"
-        migration_template "migrations/add_meta_data_to_versions.rb", "db/migrate/add_meta_data_to_versions.rb"
         migration_template "migrations/create_slickr_event_logs.rb", "db/migrate/create_slickr_event_logs.rb"
         migration_template "migrations/add_roles_names_and_avatars_to_admin_users.rb", "db/migrate/add_roles_names_and_avatars_to_admin_users.rb"
         migration_template "migrations/create_slickr_settings.rb", "db/migrate/create_slickr_settings.rb"

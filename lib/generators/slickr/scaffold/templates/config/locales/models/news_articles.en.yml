@@ -1,7 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      news_articles:
-        category_options:
-          blog: Blog
-          news: News

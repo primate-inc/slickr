@@ -10,7 +10,7 @@ ActiveAdmin.register Slickr::MediaUpload do
 
   collection_action :return_pdf_path, method: :get do
     pdf = Slickr::MediaUpload.find(params[:id])
-    path = pdf.file_url(:original)
+    path = pdf.file_url
     redirect_to path
   end
 end

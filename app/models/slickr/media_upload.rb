@@ -13,7 +13,7 @@ module Slickr
 
     scope(:pdf_files, lambda do
       where('file_data @> ?', {
-        original: { metadata: { mime_type: 'application/pdf' } }
+        metadata: { mime_type: 'application/pdf' }
       }.to_json)
     end)
 
@@ -88,19 +88,19 @@ module Slickr
     private
 
     def build_file
-      return build_empty_image unless file.respond_to?(:keys)
+      return build_empty_image unless file_data['derivatives']
       {
         id: id,
         src: file_url(:large),
         displayPath: file_url(:large),
         thumbnail: file_url(:thumb),
-        thumbnailWidth: file[:thumb].data['metadata']['width'],
-        thumbnailHeight: file[:thumb].data['metadata']['height'],
-        caption: file[:original].data['metadata']['filename'],
+        thumbnailWidth: file(:thumb).width,
+        thumbnailHeight: file(:thumb).height,
+        caption: file.original_filename,
         isSelected: false,
         editPath: admin_edit_path,
         returnMediaPath: return_media_path,
-        mimeType: file[:original].data['metadata']['mime_type']
+        mimeType: file.mime_type
       }
     end
 

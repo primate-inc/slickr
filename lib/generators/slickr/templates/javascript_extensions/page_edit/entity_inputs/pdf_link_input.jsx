@@ -69,7 +69,7 @@ export default class PdfLinkInput extends React.Component {
       (file, index) => (
         {
           value: `${this.state.pdfs.pdf_path}?id=${file.id}`,
-          label: file.file_data.original.metadata.filename
+          label: file.file_data.metadata.filename
         }
       )
     )

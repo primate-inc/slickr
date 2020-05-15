@@ -15,6 +15,21 @@ class Blog < ApplicationRecord
 end
 ```
 
+You can set the fields to be as defaults for title and description
+by adding defaults to your model by telling what attribute you want
+to use.
+
+```ruby
+  slickr_metatagable(
+    defaults: true,
+    title: :blog_title,
+    description: :blog_description
+  )
+```
+Now when you update the resource, it will save empty fields as the
+defaults, or update them only if they are the same. This way you can
+you create overrides when necessary.
+
 ## Controller
 
 ```ruby

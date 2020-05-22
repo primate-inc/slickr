@@ -30,6 +30,18 @@ module Slickr
         puts "Shrine initializer"
       end
 
+      def add_activity
+        template "public_activity.rb", "config/initializers/public_activity.rb"
+        generate 'public_activity:migration'
+        insert_into_file 'app/controllers/application_controller.rb', :before => /^end/ do
+          <<-CODE
+           include PublicActivity::StoreController
+          CODE
+        end
+
+        puts "Added Public Activity"
+      end
+
 
       def slickr_yml
         template "slickr.yml", "config/slickr.yml"

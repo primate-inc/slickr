@@ -31,6 +31,7 @@ module Slickr
       # Actions items
       ###############
 
+
       base.send(:action_item, :publish, only: :edit) do
         if resource.schedule && authorized?(:publish, resource.class)
           table_single = resource.class.name.underscore.singularize.downcase.gsub("/","_")
@@ -67,6 +68,13 @@ module Slickr
       ###############
       # Member actions
       ###############
+
+      base.send(:member_action, :discard, method: :get) do
+        if defined?(resource.discard)
+          resource.discard
+        end
+        redirect_to collection_path
+      end
 
       base.send(:member_action, :"preview_#{base.config.resource_name.singular_route_key}", method: :get) do
         resource.slickr_previewable_instance_variables.each { |name, value| instance_variable_set("@#{name}", value) }

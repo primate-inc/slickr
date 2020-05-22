@@ -40,6 +40,8 @@ Gem::Specification.new do |s|
   s.add_dependency "friendly_id", ">= 5.1.0"
   s.add_dependency "aasm", "~> 4.12.2"
   s.add_dependency "paper_trail", ">= 7.0.0"
+  s.add_dependency "public_activity"
+  s.add_dependency 'discard', '~> 1.2'
   # s.add_dependency "paper_trail-association_tracking"
   s.add_dependency "draftjs_exporter", "~> 0.0.7"
   s.add_dependency "draper", "~> 3.1.0"

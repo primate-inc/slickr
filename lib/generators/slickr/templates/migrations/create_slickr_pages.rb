@@ -25,10 +25,12 @@ class CreateSlickrPages < ActiveRecord::Migration[5.1]
       t.datetime  :published_at
       t.date      :publish_schedule_date
       t.datetime  :publish_schedule_time
+      t.datetime  :discarded_at
 
 
       t.timestamps
     end
     add_index :slickr_pages, :slug, unique: true
+    add_index :slickr_pages, :discarded_at
   end
 end

@@ -8,7 +8,11 @@ module Slickr
     include Slickr::Schedulable
     include Slickr::Metatagable
     include Slickr::Previewable
+    include Discard::Model
     include AASM
+
+    include PublicActivity::Model
+    tracked owner: Proc.new { |controller, model| controller.current_admin_user }
 
     has_paper_trail only: %i[title aasm_state content published_content drafts],
                     meta: { content_changed: :content_changed? }

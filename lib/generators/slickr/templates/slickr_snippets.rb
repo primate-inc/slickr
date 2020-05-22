@@ -8,12 +8,15 @@ ActiveAdmin.register Slickr::Snippet do
 
   filter :title
   filter :slickr_snippets_category, label: 'Category', as: :select
-   index as: :reorderable_table do
+  index as: :reorderable_table do
     selectable_column
     id_column
     column :title
     column 'Category', :slickr_snippets_category
-    actions
+    actions defaults: false do |snippet|
+      item "Edit", edit_admin_slickr_snippet_path(snippet)
+      item "Delete", discard_admin_slickr_page_path(snippet)
+    end
   end
 
   form do |f|
@@ -64,5 +67,8 @@ ActiveAdmin.register Slickr::Snippet do
         draftjs_to_html(snippet, :content) unless snippet.content.nil?
       end
     end
+  end
+  controller do
+    include Slickr::SharedAdminController
   end
 end

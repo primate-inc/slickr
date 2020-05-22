@@ -10,11 +10,12 @@ module Slickr
     default_scope { order(position: :asc) }
 
     belongs_to :slickr_snippets_category,
-               foreign_key: 'slickr_snippet_category_id',
-               class_name: 'Slickr::SnippetCategory',
+               foreign_key: 'slickr_snippets_category_id',
+               class_name: 'Slickr::SnippetsCategory',
                optional: true
 
     include Slickr::Uploadable
+    include Discard::Model
     has_one_slickr_upload(:snippet_main_image, :main_image)
 
     scope :published, -> { where(published: true) }

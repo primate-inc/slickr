@@ -5,7 +5,7 @@ if defined?(ActiveAdmin)
 
     includes :schedule
     menu priority: 1
-    actions :all, except: :show
+    actions :all, except: [:show]
     before_action :set_paper_trail_whodunnit
     decorate_with Slickr::PageDecorator
 
@@ -25,7 +25,10 @@ if defined?(ActiveAdmin)
       column 'Published' do |cs|
         cs.published?
       end
-      actions
+      actions defaults: false do |page|
+        item "Edit", edit_admin_slickr_page_path(page)
+        item "Delete", discard_admin_slickr_page_path(page)
+      end
     end
 
     controller do
@@ -33,7 +36,6 @@ if defined?(ActiveAdmin)
 
       def create
         super do |format|
-          create_resource_event_log(:create) if resource.valid?
           format.html do
             redirect_to edit_resource_url and return if resource.valid?
             render :new
@@ -43,7 +45,6 @@ if defined?(ActiveAdmin)
 
       def update
         update! do |format|
-          create_resource_event_log(:update) if resource.valid?
           format.html do
             if resource.valid?
               redirect_to edit_admin_slickr_page_path(resource)
@@ -55,7 +56,6 @@ if defined?(ActiveAdmin)
       end
 
       def destroy
-        create_resource_event_log(:delete) if resource.valid?
         destroy! do |format|
           format.html do
             redirect_to admin_slickr_pages_path and return if resource.valid?
@@ -64,7 +64,7 @@ if defined?(ActiveAdmin)
       end
 
       def scoped_collection
-        Slickr::Page.not_draft
+        end_of_association_chain.kept.not_draft
       end
 
       def user_for_paper_trail
@@ -78,21 +78,11 @@ if defined?(ActiveAdmin)
 
     member_action :create_draft, method: :post do
       draft = resource.create_draft
-      if draft.valid?
-        Slickr::EventLog.create(
-          action: :create, eventable: draft, admin_user: current_admin_user
-        )
-      end
       redirect_to edit_resource_path
     end
 
     member_action :delete_draft, method: :delete do
       resource.delete_draft(draft_id)
-      if draft.valid?
-        Slickr::EventLog.create(
-          action: :delete, eventable: draft, admin_user: current_admin_user
-        )
-      end
       redirect_to edit_resource_path
     end
 

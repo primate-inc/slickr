@@ -8,11 +8,20 @@ module Slickr
     include Slickr::Schedulable
     include Slickr::Metatagable
     include Slickr::Previewable
-    include Discard::Model
+    include Slickr::Restorable
     include AASM
+    slickr_restorable
 
     include PublicActivity::Model
-    tracked owner: Proc.new { |controller, model| controller.current_admin_user }
+    tracked(
+      on: {
+        create: proc {|model, controller| model.class.name != 'Slickr::Page::Draft' },
+        update: proc {|model, controller| model.class.name != 'Slickr::Page::Draft' },
+        destroy: proc {|model, controller| model.class.name != 'Slickr::Page::Draft' }
+      },
+      params: { title: :title, type: 'Page' },
+      owner: Proc.new { |controller, model| controller.current_admin_user }
+    )
 
     has_paper_trail only: %i[title aasm_state content published_content drafts],
                     meta: { content_changed: :content_changed? }

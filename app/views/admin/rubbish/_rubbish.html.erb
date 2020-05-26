@@ -1,0 +1,30 @@
+<div class='index_as_table'>
+  <div class='table_tools'>
+    <div class="scopes">
+      <ul class="table_tools_segmented_control scope-default-group">
+        <% Slickr::Rubbish.restorable_classes.each do |restorable_class| %>
+          <% classes = ['scope', restorable_class[:restorable_method].to_s] %>
+          <% classes << 'selected' if params[:filter] == restorable_class[:restorable_method].to_s || (restorable_class[:restorable_method].to_s == 'slickr_pages' && params[:filter] == nil) %>
+          <li class="<%= classes.join(" ") %>">
+            <%= link_to restorable_class[:restorable_method].to_s.gsub(/^slickr_/, '').humanize.capitalize, admin_rubbish_path(filter: restorable_class[:restorable_method]) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <%=
+    Arbre::Context.new({collection: @collection}, self) do
+      paginated_collection(collection.page(1)) do
+        table_for(collection, class: 'index_table') do
+          column(:id) {|record| record.id }
+          column :title
+          column :discarded_at
+          column :actions do |record|
+            ((defined?(record.undiscard) ? link_to('Restore', send("restore_admin_#{record.model_name.singular_route_key}_path", record)) : nil) +
+            link_to('Delete', send("admin_#{record.model_name.singular_route_key}_path", record), method: :delete))
+          end
+        end
+      end
+    end
+  %>
+</div>

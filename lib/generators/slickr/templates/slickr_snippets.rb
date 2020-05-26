@@ -1,4 +1,5 @@
 ActiveAdmin.register Slickr::Snippet do
+  include Slickr::SharedAdminActions
   permit_params :title, :content, :header, :subheader, :published, :slickr_snippets_category_id,
                 snippet_main_image_attributes: [:slickr_media_upload_id]
 
@@ -15,7 +16,7 @@ ActiveAdmin.register Slickr::Snippet do
     column 'Category', :slickr_snippets_category
     actions defaults: false do |snippet|
       item "Edit", edit_admin_slickr_snippet_path(snippet)
-      item "Delete", discard_admin_slickr_page_path(snippet)
+      item "Delete", discard_admin_slickr_snippet_path(snippet)
     end
   end
 
@@ -70,5 +71,12 @@ ActiveAdmin.register Slickr::Snippet do
   end
   controller do
     include Slickr::SharedAdminController
+    def scoped_collection
+      if ['restore', 'destroy'].include?(params[:action])
+        end_of_association_chain.discarded
+      else
+        end_of_association_chain.kept
+      end
+    end
   end
 end

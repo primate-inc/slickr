@@ -14,7 +14,7 @@ module Slickr
         has_many :slickr_event_logs
 
         def display_name
-          first_name || email
+          first_name.present? ? first_name : email
         end
 
         def full_name

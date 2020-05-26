@@ -64,7 +64,11 @@ if defined?(ActiveAdmin)
       end
 
       def scoped_collection
-        end_of_association_chain.kept.not_draft
+        if ['restore', 'destroy'].include?(params[:action])
+          end_of_association_chain.discarded
+        else
+          end_of_association_chain.kept.not_draft
+        end
       end
 
       def user_for_paper_trail
@@ -86,14 +90,5 @@ if defined?(ActiveAdmin)
       redirect_to edit_resource_path
     end
 
-  end
-
-  private
-
-  def create_resource_event_log(action)
-    Slickr::EventLog.create(
-      action: action, eventable: resource,
-      admin_user: current_admin_user
-    )
   end
 end

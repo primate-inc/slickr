@@ -15,7 +15,13 @@ module Slickr
                optional: true
 
     include Slickr::Uploadable
-    include Discard::Model
+    include Slickr::Restorable
+    slickr_restorable
+    include PublicActivity::Model
+    tracked(
+      params: { title: :title, type: 'Snippet' },
+      owner: Proc.new { |controller, model| controller.current_admin_user }
+    )
     has_one_slickr_upload(:snippet_main_image, :main_image)
 
     scope :published, -> { where(published: true) }

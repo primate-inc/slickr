@@ -69,9 +69,18 @@ module Slickr
       # Member actions
       ###############
 
+      base.send(:member_action, :restore, method: :get) do
+        if defined?(resource.undiscard)
+          resource.undiscard
+          resource.create_activity key: "#{base.config.resource_name.singular_route_key}.restore" if defined?(resource.create_activity)
+        end
+        redirect_to admin_rubbish_path(filter: base.config.resource_name.route_key)
+      end
+
       base.send(:member_action, :discard, method: :get) do
         if defined?(resource.discard)
           resource.discard
+          resource.create_activity key: "#{base.config.resource_name.singular_route_key}.remove" if defined?(resource.create_activity)
         end
         redirect_to collection_path
       end
@@ -86,10 +95,7 @@ module Slickr
           resource.schedule.update(
             publish_schedule_date: nil, publish_schedule_time: nil
           )
-          Slickr::EventLog.create(
-            action: :publish, eventable: resource,
-            admin_user: current_admin_user
-          )
+          resource.create_activity key: "#{base.config.resource_name.singular_route_key}.publish" if defined?(resource.create_activity)
         end
         respond_to do |format|
           format.html { redirect_to edit_resource_path, notice: 'Published' }
@@ -104,10 +110,7 @@ module Slickr
             publish_schedule_date: Date.today + 100.years,
             publish_schedule_time: Time.now + 100.years
           )
-          Slickr::EventLog.create(
-            action: :unpublish, eventable: resource,
-            admin_user: current_admin_user
-          )
+          resource.create_activity key: "#{base.config.resource_name.singular_route_key}.unpublish" if defined?(resource.create_activity)
         end
         respond_to do |format|
           format.html { redirect_to edit_resource_path, notice: 'Unpublished' }

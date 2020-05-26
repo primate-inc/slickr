@@ -9,32 +9,11 @@
   <p id="dashboard_title_bar__activity"><%= t('.activity') %></p>
 </div>
 <ul id="dashboard__events_list">
-<% Slickr::EventLog.includes(:eventable, :admin_user).order(created_at: :desc).all.each do |e| %>
-  <li>
-    <div class="dashboard__events_list-item">
-      <header class="dashboard__events-item__date">
-        <%= t("date_time_html".to_sym,
-          scope: [:activerecord, :models, :event_log, :eventable, :actions],
-          date: e.created_at.strftime("%d %b %Y"),
-          time: e.created_at.strftime("%H:%M"))
-        %>
-      </header>
-      <section class="dashboard__events-item__content">
-        <% if e.admin_user.admin_user_avatar %>
-          <%= image_tag e.admin_user.admin_user_avatar.image_url(:thumb_fill), class: "dashboard__events-item__avatar display_avatar" %>
-        <% end %>
-        <%= t("action_html".to_sym,
-          scope: [:activerecord, :models, :event_log, :eventable, :actions],
-          action: Verbs::Conjugator.conjugate(e.action, :tense => :past, :aspect => :perfective),
-          user: e.admin_user.display_name,
-          class: e.eventable.class.name.downcase.gsub("slickr::", ""),
-          title: e.eventable.try(:display_title))
-        %>
-      </section>
-      <section class="dashboard__events-item__alert">
-
-      </section>
-    </div>
-  </li>
-<% end if false %>
+  <%= render_activities(@activities, layout: :activity) %>
 </ul>
+<div id='index_footer'>
+  <%= paginate @activities %>
+  <div class='pagination_information'>
+    <%= page_entries_info @activities %>
+  </div>
+</div>

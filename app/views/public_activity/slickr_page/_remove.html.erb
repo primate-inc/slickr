@@ -1,0 +1,5 @@
+<% if activity.trackable %>
+  <span><%= link_to activity.trackable.title, admin_rubbish_path %></span>
+<% else %>
+  <span><%= activity.parameters[:title] %></span>
+<% end %>

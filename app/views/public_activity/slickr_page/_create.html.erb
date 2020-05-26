@@ -1,0 +1,5 @@
+<% if activity.trackable %>
+  <span><%= link_to activity.parameters[:title], edit_admin_slickr_page_path(activity.trackable) %></span>
+<% else %>
+  <span><%= activity.parameters[:title] %></span>
+<% end %>

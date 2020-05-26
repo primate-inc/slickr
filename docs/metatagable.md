@@ -1,4 +1,4 @@
-# Meta Tags
+# Metatagable
 
 You can quickly add the ability to include meta tags to your models in Slickr.
 

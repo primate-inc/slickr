@@ -15,7 +15,6 @@ module Slickr
         options = { restorable_method: self.model_name.route_key.to_sym,restorable_model: self.model_name }.merge(opts)
         Slickr::Rubbish.add_restorable(options)
       end
-
     end
   end
 end

@@ -120,17 +120,33 @@ config.slickr_http_basic_auth_password = 'Bloggs'
 
 [Image Processing](docs/image_processing.md)
 
-## Media Library
+## Main modules
 
-[Media Library](docs/media_library.md)
+Slickr comes with set of default modules which you can apply to new content types.
+You probably want to use Uploadable on most of your models. Previewable and
+Metatagable should probably go together as they both are very helpful for models with
+individual pages. You may also want to consider Schedulable when you generate
+individual model items pages.
 
-## Scheduling
+### Previewable
 
-[Scheduling](docs/scheduling.md)
+Previewable allow generation of admin preview of the webpages. [Read more](docs/previewable.md)
 
-## Meta Tags
+### Metatagable
 
-[Meta Tags](docs/meta_tags.md)
+Metatagable enables additional Open Graph fields configuration for pages. [Read more](docs/metatagable.md)
+
+### Restorable
+
+Restorable enables soft deletes on modeles. [Read more](docs/restorable.md)
+
+### Schedulable
+
+Schedulable enables items future scheduling. [Read more](docs/scheduling.md)
+
+### Uploadable
+
+Uploadable adds the media library functionality to model. [Read more](docs/media_management.md)
 
 ## Helpers
 

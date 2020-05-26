@@ -1,4 +1,4 @@
-# Media Library
+# Uploadable
 
 Slickr has been developed so that separate uploaders are no longer required
 for each of your models and all models can share from the same media library.

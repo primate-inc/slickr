@@ -12,7 +12,7 @@ let _csrf_token = () => { return document.getElementsByName("csrf-token")[0].con
 
 const MyTextAreaEditor = ({
   store, actions, modalIsOpen, page, editorState, pageState, textAreaIndex,
-  label, labelText, textArea, allowedUploadInfo, additionalInfo
+  label, labelText, textArea, allowedUploadInfo, additionalInfo, tags
 }) => {
   return(
     <TextArea actions={actions}
@@ -21,6 +21,7 @@ const MyTextAreaEditor = ({
               modalIsOpen={modalIsOpen}
               textAreaIndex={textAreaIndex}
               label={label}
+              tags={tags}
               labelText={labelText}
               textArea={textArea}
               allowedUploadInfo={allowedUploadInfo}
@@ -48,6 +49,7 @@ const mapStateToProps = state => ({
   editorState: state.editorState,
   textAreaIndex: state.textAreaIndex,
   label: state.label,
+  tags: state.tags,
   labelText: state.labelText,
   textArea: state.textArea,
   allowedUploadInfo: state.allowedUploadInfo,

@@ -24,6 +24,7 @@ const slickrReducers = {
   imageObject,
   choosingActiveAdminImage,
   choosingPageHeaderImage,
+  tags: (state = []) => state,
   allowedUploadInfo: (state = {}) => state,
   additionalInfo: (state = {}) => state
 }

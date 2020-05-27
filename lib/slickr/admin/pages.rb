@@ -89,6 +89,5 @@ if defined?(ActiveAdmin)
       resource.delete_draft(draft_id)
       redirect_to edit_resource_path
     end
-
   end
 end

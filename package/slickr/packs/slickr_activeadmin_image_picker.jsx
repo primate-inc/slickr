@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         additionalInfo: additionalInfo,
         imageObject: data.input,
         textAreaIndex: index,
+        tags: data.tags,
         label: label,
         textArea: textArea
       }

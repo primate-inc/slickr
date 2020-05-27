@@ -10,7 +10,7 @@ module Slickr
     end
 
     module ClassMethods
-      def has_one_slickr_upload(method_symbol, delegate_method_symbol, required=false)
+      def has_one_slickr_upload(method_symbol, delegate_method_symbol, required=false, options={})
         has_one method_symbol,
                 -> { where(uploadable_type: method_symbol.to_s) },
                 foreign_key: 'uploadable_id',
@@ -26,7 +26,7 @@ module Slickr
         end
       end
 
-      def has_many_slickr_uploads(method_symbol, delegate_method_symbol, required=false)
+      def has_many_slickr_uploads(method_symbol, delegate_method_symbol, required=false, options={})
         has_many method_symbol,
                  -> { where(uploadable_type: method_symbol.to_s) },
                  foreign_key: 'uploadable_id',

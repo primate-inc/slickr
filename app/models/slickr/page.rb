@@ -32,7 +32,7 @@ module Slickr
     slickr_previewable(template: lambda {|p| "slickr_page_templates/#{p.layout}"}, locals: lambda {|p| { slickr_page: p, content: draftjs_to_html(p, :content) } }, layout: false  )
 
     belongs_to :admin_user, optional: true
-    has_one_slickr_upload(:slickr_page_header_image, :header_image)
+    has_one_slickr_upload(:slickr_page_header_image, :header_image, false )
     has_many_slickr_uploads(:slickr_page_gallery_images, :gallery_images)
     has_many :slickr_navigations,
              foreign_key: 'slickr_page_id',

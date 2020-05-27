@@ -9,6 +9,7 @@ li class: 'megadraft-text-editor' do
         hint: local_variables.include?(:hint) ? hint : '',
         errors: f.object.errors.messages[field]
       },
+      tags: [f.object.model_name.element.gsub(/^slickr_/,''), field.to_s.gsub(f.object.model_name.param_key, '').humanize.parameterize.underscore],
       pageState: slickr_editor_paths,
       allowedUploadInfo:  Slickr::MediaUpload.allowed_upload_info,
       additionalInfo: Slickr::MediaUpload.additional_info

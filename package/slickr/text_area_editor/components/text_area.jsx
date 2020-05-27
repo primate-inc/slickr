@@ -80,7 +80,7 @@ export default class Editor extends React.Component {
     // use customOptions to pass in any extra info to plugin block
     // eg customOptions: { customAction: this.props.actions.customAction }
     var megadraftOptions = {
-      customOptions: {},
+      customOptions: { tags: this.props.tags },
       standardDisplayOptions: {
         displayOptions: [
           {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},

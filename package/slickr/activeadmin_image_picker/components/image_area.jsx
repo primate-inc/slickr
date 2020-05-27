@@ -111,6 +111,7 @@ export default class ImageArea extends React.Component {
         <ImagePickerModal
           key={`${this.props.textAreaIndex}-3`}
           modalIsOpen={this.props.modalIsOpen}
+          tags={this.props.tags}
           actions={actions}
           loadedImages={this.props.loadedImages}
           choosingActiveAdminImage={this.props.choosingActiveAdminImage}

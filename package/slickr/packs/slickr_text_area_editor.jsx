@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         label: label,
         labelText: labelText,
         textArea: textArea,
+        tags: data.tags,
         modalIsOpen: false,
         loadedImages: {},
         editorState: editorStateFromRaw(data.input.field, compositeDecorator)

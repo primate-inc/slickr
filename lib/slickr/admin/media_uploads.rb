@@ -7,7 +7,7 @@ if defined?(ActiveAdmin)
     config.filters = false
     config.per_page = MEDIA_PER_PAGE
 
-    permit_params :image, :file, additional_info: {}
+    permit_params :image, :file, :media_tag_list, additional_info: {}
 
     breadcrumb do
       if params[:action] == 'index'

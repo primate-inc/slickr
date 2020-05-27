@@ -7,6 +7,10 @@ module Slickr
       desc "Running Slickr generators"
       argument :name, type: :string, default: "application"
 
+      def add_gems
+        gem 'acts-as-taggable-on', '~> 6.0'
+      end
+
       def db_migrations
         migration_template "migrations/create_slickr_pages.rb", "db/migrate/create_slickr_pages.rb"
         migration_template "migrations/create_slickr_event_logs.rb", "db/migrate/create_slickr_event_logs.rb"
@@ -177,7 +181,7 @@ module Slickr
 
       def extend_package_json
         packages = [
-          'https://github.com/primate-inc/slickr#master',
+          'file:../slickr',
           '@babel/core',
           '@babel/plugin-proposal-class-properties',
           '@babel/plugin-proposal-decorators',
@@ -296,6 +300,10 @@ module Slickr
         template "slickr_page_template.html.erb", "app/views/slickr_page_templates/standard.html.erb"
 
         puts "Sample page templates added"
+      end
+
+      def install_acts_as_taggable
+        run 'rake acts_as_taggable_on_engine:install:migrations'
       end
     end
   end

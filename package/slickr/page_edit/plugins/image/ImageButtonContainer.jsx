@@ -9,11 +9,12 @@ import ImageButton from "./ImageButton.jsx";
 
 const ImageButtonContainer = ({
   modalIsOpen, actions, loadedImages, editorState, choosingPageHeaderImage,
-  choosingNavImage, allowedUploadInfo, additionalInfo
+  choosingNavImage, allowedUploadInfo, additionalInfo, tags
 }) => (
   <div>
     <ImageButton modalIsOpen={modalIsOpen}
                  actions={actions}
+                 tags={tags}
                  loadedImages={loadedImages}
                  editorState={editorState}
                  choosingPageHeaderImage={choosingPageHeaderImage}
@@ -34,7 +35,9 @@ ImageButtonContainer.propTypes = {
 
 const mapStateToProps = state => ({
   active_tab: state.activeTab,
+  tags: state.tags,
   modalIsOpen: state.modalIsOpen,
+  tags: state.tags,
   loadedImages: state.loadedImages,
   editorState: state.editorState,
   choosingPageHeaderImage: state.choosingPageHeaderImage,

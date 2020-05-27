@@ -4,6 +4,10 @@ module Slickr
   class MediaUpload < ApplicationRecord
     DROP_AREA_TEXT = 'Maximum size 10Mb | .jpeg, .jpg, .png and .pdf files only'
 
+    if defined?(acts_as_taggable_on)
+      acts_as_taggable_on :media_tags
+    end
+
     self.table_name = 'slickr_media_uploads'
 
     include Slickr::MediaImageUploader[:image] rescue NameError

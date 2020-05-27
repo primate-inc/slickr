@@ -181,7 +181,7 @@ module Slickr
 
       def extend_package_json
         packages = [
-          'file:../slickr',
+          'https://github.com/primate-inc/slickr#master',
           '@babel/core',
           '@babel/plugin-proposal-class-properties',
           '@babel/plugin-proposal-decorators',

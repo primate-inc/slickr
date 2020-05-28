@@ -73,6 +73,9 @@ export default class ImageArea extends React.Component {
           <div className="edit-wrapper">
             <label htmlFor="slickr_image_id">
               {`${this.props.imageObject.label}${hint}`}
+              { this.props.imageObject.required ?
+                    <abbr title="required">*</abbr> :
+                    null }
             </label>
             <input type="file" onClick={this.openImagePicker()} />
             {(() => {

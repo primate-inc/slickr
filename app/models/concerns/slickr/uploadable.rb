@@ -21,9 +21,7 @@ module Slickr
                 through: method_symbol,
                 source: :slickr_media_upload,
                 class_name: 'Slickr::MediaUpload'
-        validate do |object|
-          object.present_if_required(method_symbol) if required == true
-        end
+        validates_with SlickrImagePresentValidator, method_symbol: method_symbol, required: required
       end
 
       def has_many_slickr_uploads(method_symbol, delegate_method_symbol, required=false, options={})

@@ -1,3 +1,6 @@
+## 0.18.0.1
+Update to image presence validation and view
+
 ## 0.18.0.0
 
 Update to javascript packages loading path. Changed which files are copied and using organisation scope @primate-inc.

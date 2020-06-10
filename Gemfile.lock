@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/activeadmin/activeadmin.git
-  revision: 9e52b6f3380848eb043223e4b86f2132a50447a7
+  remote: https://github.com/activeadmin/activeadmin.git
+  revision: b5cbf7759af9c2c299942f94ada1892b10d8d907
   branch: master
   specs:
     activeadmin (2.7.0)
@@ -16,8 +16,8 @@ GIT
       sprockets (>= 3.0, < 4.1)
 
 GIT
-  remote: git://github.com/primate-inc/active_admin_slickr.git
-  revision: 3f9eb3ab73d0f461dfaed04d46459176c120a8a8
+  remote: https://github.com/primate-inc/active_admin_slickr.git
+  revision: ecf4f32b532a77c39df9ad543612e43a56ed86cc
   branch: master
   specs:
     active_admin_slickr (0.1.44)
@@ -26,7 +26,7 @@ GIT
 PATH
   remote: .
   specs:
-    slickr_cms (0.17.0.0)
+    slickr_cms (0.18.0.1)
       aasm (~> 4.12.2)
       activeadmin (>= 1.2.1)
       activeadmin_reorderable (~> 0.1.2)
@@ -207,22 +207,22 @@ GEM
       has_scope (~> 0.6)
       railties (>= 5.0, < 6.1)
       responders (>= 2, < 4)
-    jquery-rails (4.3.5)
+    jquery-rails (4.4.0)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    kaminari (1.2.0)
+    kaminari (1.2.1)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.2.0)
-      kaminari-activerecord (= 1.2.0)
-      kaminari-core (= 1.2.0)
-    kaminari-actionview (1.2.0)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
       actionview
-      kaminari-core (= 1.2.0)
-    kaminari-activerecord (1.2.0)
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
       activerecord
-      kaminari-core (= 1.2.0)
-    kaminari-core (1.2.0)
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)

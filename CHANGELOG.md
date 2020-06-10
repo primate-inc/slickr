@@ -1,3 +1,17 @@
+## 0.20.0.0
+Add aasm_state column to slickr_media_uploads.
+Copy new uploaders to your project.
+
+
+## 0.19.0.0
+Image processing additions
+
+Add following gems:
+
+```ruby
+gem 'delayed_job_active_record'
+```
+
 ## 0.18.0.1
 Update to image presence validation and view
 

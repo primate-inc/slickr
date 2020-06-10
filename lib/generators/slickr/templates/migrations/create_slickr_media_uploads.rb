@@ -4,6 +4,7 @@ class CreateSlickrMediaUploads < ActiveRecord::Migration[5.1]
       t.jsonb  :image_data, null: false, default: {}
       t.jsonb  :file_data, null: false, default: {}
       t.jsonb :additional_info, null: false, default: { 'alt_text': '' }
+      t.string :aasm_state
 
       t.timestamps
     end

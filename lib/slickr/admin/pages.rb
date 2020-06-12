@@ -19,9 +19,9 @@ if defined?(ActiveAdmin)
       column 'Layout' do |page|
         page.layout.humanize
       end
-      # column 'State' do |page|
-      #   page.aasm_state.humanize
-      # end
+      column 'Valid' do |page|
+        page.html_valid_symbol
+      end
       column 'Published' do |cs|
         cs.published?
       end

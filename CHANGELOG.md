@@ -1,3 +1,20 @@
+## 0.20.1.0
+Adding HTML validation health checks.
+
+Add gem:
+
+```ruby
+gem 'w3c_validators'
+```
+
+and add migration for health checks:
+
+```ruby
+rails g slickr:add_health_checks
+```
+
+
+
 ## 0.20.0.0
 Add aasm_state column to slickr_media_uploads.
 Copy new uploaders to your project.

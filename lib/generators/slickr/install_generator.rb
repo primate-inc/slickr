@@ -24,6 +24,7 @@ module Slickr
         migration_template "migrations/create_slickr_meta_tags.rb", "db/migrate/create_slickr_meta_tags.rb"
         migration_template "migrations/create_slickr_snippets.rb", "db/migrate/create_slickr_snippets.rb"
         migration_template "migrations/create_slickr_snippets_categories.rb", "db/migrate/create_slickr_snippets_categories.rb"
+        migration_template 'migrations/create_slickr_health_checks.rb', 'db/migrate/create_slickr_health_checks.rb'
 
         puts "Database migrations added"
       end

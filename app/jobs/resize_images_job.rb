@@ -27,6 +27,8 @@ class ResizeImagesJob < ApplicationJob
           pipeline.resize_to_fit(*options[:options]).call)
       end
     end
+
+    upload.save
   end
 
   def available_derivatives

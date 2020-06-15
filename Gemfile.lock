@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/activeadmin/activeadmin.git
-  revision: b5cbf7759af9c2c299942f94ada1892b10d8d907
+  remote: git://github.com/activeadmin/activeadmin.git
+  revision: 3c9c203cc3f403a50e894dc65ebbfdf98845f8f8
   branch: master
   specs:
     activeadmin (2.7.0)
@@ -9,14 +9,14 @@ GIT
       formtastic_i18n (~> 0.4)
       inherited_resources (~> 1.7)
       jquery-rails (~> 4.2)
-      kaminari (~> 1.0, >= 1.0.1)
+      kaminari (~> 1.0, >= 1.2.1)
       railties (>= 5.2, < 6.1)
       ransack (~> 2.1, >= 2.1.1)
       sassc-rails (~> 2.1)
       sprockets (>= 3.0, < 4.1)
 
 GIT
-  remote: https://github.com/primate-inc/active_admin_slickr.git
+  remote: git://github.com/primate-inc/active_admin_slickr.git
   revision: ecf4f32b532a77c39df9ad543612e43a56ed86cc
   branch: master
   specs:
@@ -26,7 +26,7 @@ GIT
 PATH
   remote: .
   specs:
-    slickr_cms (0.18.0.1)
+    slickr_cms (0.20.1.0)
       aasm (~> 4.12.2)
       activeadmin (>= 1.2.1)
       activeadmin_reorderable (~> 0.1.2)
@@ -152,7 +152,7 @@ GEM
     concurrent-ruby (1.1.6)
     content_disposition (1.0.0)
     crass (1.0.6)
-    devise (4.7.1)
+    devise (4.7.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -303,13 +303,13 @@ GEM
     redcarpet (3.4.0)
     request_store (1.5.0)
       rack (>= 1.4)
-    responders (3.0.0)
+    responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
     ruby_dep (1.5.0)
-    sassc (2.3.0)
+    sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
@@ -322,7 +322,7 @@ GEM
       down (~> 5.1)
     sitemap_generator (6.0.2)
       builder (~> 3.0)
-    sprockets (4.0.0)
+    sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.1)

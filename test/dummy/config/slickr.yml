@@ -1,0 +1,15 @@
+default: &default
+  include_webpacks:
+    '@primate-inc/slickr_cms': 'package/slickr/packs'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

@@ -52,4 +52,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'redcarpet', '~> 3.4.0'
   s.add_dependency "ancestry", "~> 3.0"
   s.add_dependency "acts-as-taggable-on", '~> 6.0'
+  s.add_dependency 'w3c_validators', '~> 1.3'
 end

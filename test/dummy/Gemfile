@@ -1,2 +1,2 @@
-
 gem 'acts-as-taggable-on', '~> 6.0'
+gem 'w3c_validators', '~> 1.3'

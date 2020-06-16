@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_31_000058) do
+ActiveRecord::Schema.define(version: 2020_06_16_151728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,15 @@ ActiveRecord::Schema.define(version: 2020_05_31_000058) do
     t.datetime "updated_at", null: false
     t.index ["admin_user_id"], name: "index_slickr_event_logs_on_admin_user_id"
     t.index ["eventable_type", "eventable_id"], name: "index_slickr_event_logs_on_eventable_type_and_eventable_id"
+  end
+
+  create_table "slickr_health_checks", force: :cascade do |t|
+    t.bigint "healthy_id"
+    t.string "healthy_type"
+    t.string "check_type"
+    t.text "check_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "slickr_media_uploads", force: :cascade do |t|
@@ -205,6 +214,16 @@ ActiveRecord::Schema.define(version: 2020_05_31_000058) do
     t.index ["additional_info"], name: "index_slickr_uploads_on_additional_info", using: :gin
     t.index ["slickr_media_upload_id"], name: "index_slickr_uploads_on_slickr_media_upload_id"
     t.index ["uploadable_type", "uploadable_id"], name: "index_slickr_uploads_on_uploadable_type_and_uploadable_id"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "slickr_event_logs", "admin_users"

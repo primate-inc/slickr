@@ -8,6 +8,7 @@ module Slickr
     include Slickr::Schedulable
     include Slickr::Metatagable
     include Slickr::Previewable
+    include Slickr::Validable
     include Slickr::Restorable
     include AASM
     slickr_restorable
@@ -23,13 +24,13 @@ module Slickr
       owner: Proc.new { |controller, model| controller.current_admin_user }
     )
 
-    has_paper_trail only: %i[title aasm_state content published_content drafts],
-                    meta: { content_changed: :content_changed? }
+    has_paper_trail only: %i[title aasm_state content published_content drafts]
 
     friendly_id :title, use: %i[slugged finders]
 
     slickr_schedulable on_create: :unpublish
-    slickr_previewable(template: lambda {|p| "slickr_page_templates/#{p.layout}"}, locals: lambda {|p| { slickr_page: p, content: draftjs_to_html(p, :content) } }, layout: false  )
+    slickr_previewable(template: lambda {|p| "slickr_page_templates/#{p.layout}"}, locals: lambda {|p| { slickr_page: p, content: draftjs_to_html(p, :content) } }, layout: false)
+    slickr_metatagable
 
     belongs_to :admin_user, optional: true
     has_one_slickr_upload(:slickr_page_header_image, :header_image, false )
@@ -112,7 +113,7 @@ module Slickr
     end
 
     def create_draft
-      drafts.create(admin_user_id: admin_user_id)
+      drafts.create(admin_user_id: admin_user_id, layout: layout)
       drafts.first.make_draft!
     end
 

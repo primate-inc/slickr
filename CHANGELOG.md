@@ -1,3 +1,7 @@
+## 0.20.1.1
+
+Moved validators out to new mixin
+
 ## 0.20.1.0
 Adding HTML validation health checks.
 

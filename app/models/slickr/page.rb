@@ -21,7 +21,7 @@ module Slickr
         destroy: proc {|model, controller| model.class.name != 'Slickr::Page::Draft' }
       },
       params: { title: :title, type: 'Page' },
-      owner: Proc.new { |controller, model| controller.current_admin_user }
+      owner: proc { |controller, model| controller.current_admin_user }
     )
 
     has_paper_trail only: %i[title aasm_state content published_content drafts]

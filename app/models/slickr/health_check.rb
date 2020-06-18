@@ -15,5 +15,13 @@ module Slickr
     def html_validation_warnings
       check_result.warnings
     end
+
+    def link_validation_errors
+      check_result.select{|r| r[:status_group] == :error }
+    end
+
+    def link_validation_warnings
+      check_result.select{|r| ![:error, :success, :success_other].include?(r[:status_group]) }
+    end
   end
 end

@@ -19,9 +19,12 @@ if defined?(ActiveAdmin)
       column 'Layout' do |page|
         page.layout.humanize
       end
-      column 'Valid' do |page|
-        page.html_valid_symbol
-      end
+      # column 'Valid' do |page|
+      #   page.html_valid_symbol
+      # end
+      # column 'Links' do |page|
+      #   page.link_valid_symbol
+      # end
       column 'Published' do |cs|
         cs.published?
       end

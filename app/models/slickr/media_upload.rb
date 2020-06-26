@@ -5,8 +5,6 @@ module Slickr
     self.table_name = 'slickr_media_uploads'
     DROP_AREA_TEXT = 'Maximum size 10Mb | .jpeg, .jpg, .png and .pdf files only'
 
-    ADDITIONAL_DERIVATIVES = {}
-
     DEFAULT_IMAGE_DERIVATIVES = {
       square: {
         square_2400: {
@@ -100,6 +98,17 @@ module Slickr
         },
         content_400: {
           type: :limit, options: [400, nil]
+        }
+      },
+      thumb: {
+        thumb_800x800: {
+          type: :pad, options: [800, 800, { extend: :white }]
+        },
+        thumb_400x400: {
+          type: :pad, options: [400, 400, { extend: :white }]
+        },
+        thumb_200x200: {
+          type: :pad, options: [200, 200, { extend: :white }]
         }
       }
     }
@@ -208,6 +217,14 @@ module Slickr
       }
     end
 
+    def add_new_derivatives(key)
+      ResizeImagesJob.perform_later(self, key)
+    end
+
+    def self.additional_derivatives
+      {}
+    end
+
     private
 
     def build_file
@@ -264,10 +281,6 @@ module Slickr
       ResizeImagesJob.perform_later(self, :landscape)
       ResizeImagesJob.perform_later(self, :panoramic)
       ResizeImagesJob.perform_later(self, :content)
-    end
-
-    def add_new_derivatives(key)
-      ResizeImagesJob.perform_later(self, key)
     end
   end
 end

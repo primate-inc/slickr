@@ -25,6 +25,9 @@ class ResizeImagesJob < ApplicationJob
       when :fit
         attacher.add_derivative(thumb_name,
           pipeline.resize_to_fit(*options[:options]).call)
+      when :pad
+        attacher.add_derivative(thumb_name,
+          pipeline.resize_and_pad(*options[:options]).call)
       end
     end
 
@@ -33,7 +36,7 @@ class ResizeImagesJob < ApplicationJob
 
   def available_derivatives
     Slickr::MediaUpload::DEFAULT_IMAGE_DERIVATIVES.merge(
-      Slickr::MediaUpload::ADDITIONAL_DERIVATIVES
+      Slickr::MediaUpload.additional_derivatives
     )
   end
 end

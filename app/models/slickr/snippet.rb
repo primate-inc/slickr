@@ -5,6 +5,15 @@ module Slickr
   class Snippet < ApplicationRecord
     self.table_name = 'slickr_snippets'
 
+    KINDS = [
+      { kind: 'Full snippet', exclude: [] },
+      { kind: 'Simple snippet', exclude: %i[image wysiwyg] },
+      { kind: 'Simple snippet with image', exclude: %i[wysiwyg] },
+      { kind: 'Rich snippet simplified', exclude: %i[subheader] },
+      { kind: 'Rich snippet simplified no image', exclude: %i[image subheader] },
+      { kind: 'Header and image', exclude: %i[wysiwyg subheader] }
+    ].freeze
+
     acts_as_list
     validates_presence_of :title
     default_scope { order(position: :asc) }
@@ -20,7 +29,7 @@ module Slickr
     include PublicActivity::Model
     tracked(
       params: { title: :title, type: 'Snippet' },
-      owner: Proc.new { |controller, model| controller.current_admin_user }
+      owner: proc { |controller, model| controller.current_admin_user }
     )
     has_one_slickr_upload(:snippet_main_image, :main_image)
 

@@ -1,7 +1,7 @@
 ActiveAdmin.register Slickr::Snippet do
   include Slickr::SharedAdminActions
   permit_params :title, :content, :header, :subheader, :published, :slickr_snippets_category_id,
-                snippet_main_image_attributes: [:slickr_media_upload_id]
+                :kind, snippet_main_image_attributes: [:slickr_media_upload_id]
 
   config.sort_order = 'position_asc'
   config.paginate   = false
@@ -24,27 +24,38 @@ ActiveAdmin.register Slickr::Snippet do
     if object.new_record?
       inputs do
         input :title
+        input :kind, as: :select, collection: Slickr::Snippet::KINDS.map { |k| k[:kind] }
         input :slickr_snippets_category,
               label: 'Category',
               as: :select
       end
       actions
     else
+      snippet_type = Slickr::Snippet::KINDS.find do |kind|
+        kind[:kind] == object.kind
+      end
+      exclude_fields = snippet_type[:exclude] ? snippet_type[:exclude] : []
       tabs do
         tab 'Content' do
           inputs do
             input :title
-            input :header
-            input :subheader
             input :slickr_snippets_category,
                   label: 'Category',
                   as: :select
-            render 'admin/form/image_helper',
-                   f: f,
-                   field: :snippet_main_image
-            input :snippet_main_image, as: :text
-            render 'admin/form/text_area_helper', f: f, field: :content
-            input :content, as: :text
+            input :header
+            unless :subheader.in? exclude_fields
+              input :subheader
+            end
+            unless :image.in? exclude_fields
+              render 'admin/form/image_helper',
+                     f: f,
+                     field: :snippet_main_image
+              input :snippet_main_image, as: :text
+            end
+            unless :wysiwyg.in? exclude_fields
+              render 'admin/form/text_area_helper', f: f, field: :content
+              input :content, as: :text
+            end
             input :published,
                   wrapper_html: { class: 'true_false' }
           end

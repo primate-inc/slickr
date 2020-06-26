@@ -32,7 +32,9 @@ module Slickr
       ###############
 
 
-      base.send(:action_item, :publish, only: :edit) do
+      base.send(:action_item, :publish, only: :edit, if: Proc.new {
+        base.config.resource_class_name.classify.constantize.respond_to?(:slickr_schedulable)
+      }) do
         if resource.schedule && authorized?(:publish, resource.class)
           table_single = resource.class.name.underscore.singularize.downcase.gsub("/","_")
           link = "publish_admin_#{table_single}_path"
@@ -43,7 +45,9 @@ module Slickr
         end
       end
 
-      base.send(:action_item, :unpublish, only: :edit) do
+      base.send(:action_item, :unpublish, only: :edit, if: Proc.new {
+        base.config.resource_class_name.classify.constantize.respond_to?(:slickr_schedulable)
+      }) do
         if authorized?(:publish, resource.class)
           unless resource.schedule
             table_single = resource.class.name.underscore.singularize.downcase.gsub("/","_")

@@ -8,8 +8,6 @@ module Slickr
     module ClassMethods
       attr_reader :slickr_schedulable_opts
 
-      private
-
       def slickr_schedulable(opts = {})
         @slickr_schedulable_opts = opts
       end

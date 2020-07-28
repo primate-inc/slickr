@@ -5,7 +5,7 @@ li class: 'image-picker' do
       input: {
         field: field,
         id: f.object.send(field).try(:slickr_media_upload).try(:id),
-        path: f.object.send(field).try(:slickr_media_upload).try(:image_url, :m_limit),
+        path: f.object.send(field).try(:slickr_media_upload).try(:image_url, :thumb_200x200),
         label: local_variables.include?(:label) ? label.humanize : field.to_s.humanize,
         required: f.object.class.validators.select {|v| v.is_a?(SlickrImagePresentValidator) }.find {|v| v.options[:method_symbol] == field}.options[:required],
         hint: local_variables.include?(:hint) ? hint : '',

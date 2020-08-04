@@ -248,8 +248,8 @@ module Slickr
       return build_empty_image unless image_data['derivatives']
       {
         id: id,
-        src: image_url(:xl_limit),
-        displayPath: image_url(:m_limit),
+        src: image_url(:thumb_400x400),
+        displayPath: image_url(:thumb_400x400),
         thumbnail: image_url(:thumb_400x400),
         thumbnailWidth: image(:thumb_400x400).width,
         thumbnailHeight: image(:thumb_400x400).height,

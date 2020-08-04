@@ -192,7 +192,7 @@ module Slickr
     end
 
     def timestamped_image_url
-      "#{image_url(:xl_limit)}?timestamp=#{DateTime.now.to_s}"
+      "#{image_url(:thumb_400x400)}?timestamp=#{DateTime.now.to_s}"
     end
 
     def crop(x, y, w, h)

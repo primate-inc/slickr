@@ -86,7 +86,7 @@ module Slickr
 
     def navigation_image
       return { id: nil, path: nil } if image.nil?
-      { id: image.id, path: image.image_url(:m_limit) }
+      { id: image.id, path: image.image_url(:thumb_400x400) }
     end
 
     def add_child_path

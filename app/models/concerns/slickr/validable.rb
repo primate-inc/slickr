@@ -6,7 +6,7 @@ module Slickr
     extend ActiveSupport::Concern
 
     included do
-      after_save :check_if_html_valid, :check_broken_links
+      # after_save :check_if_html_valid, :check_broken_links
       has_many :health_checks, as: :healthy
       has_one :validation_check, -> { where(check_type: 'html_validation') }, class_name: 'Slickr::HealthCheck', as: :healthy
       has_one :link_check, -> { where(check_type: 'link_validation') }, class_name: 'Slickr::HealthCheck', as: :healthy

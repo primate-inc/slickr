@@ -67,6 +67,8 @@ module Slickr
     end
 
     def slickr_metatagable_default
+      return false unless self.class.slickr_metatagable_opts
+
       self.class.slickr_metatagable_opts[:defaults]
     end
 

@@ -231,11 +231,11 @@ module Slickr
       return build_empty_image unless file_data['derivatives']
       {
         id: id,
-        src: file_url(:large),
-        displayPath: file_url(:large),
-        thumbnail: file_url(:thumb),
-        thumbnailWidth: file(:thumb).width,
-        thumbnailHeight: file(:thumb).height,
+        src: file_url(:thumb_400x400),
+        displayPath: file_url(:thumb_400x400),
+        thumbnail: file_url(:thumb_400x400),
+        thumbnailWidth: file(:thumb_400x400).width,
+        thumbnailHeight: file(:thumb_400x400).height,
         caption: file.original_filename,
         isSelected: false,
         editPath: admin_edit_path,

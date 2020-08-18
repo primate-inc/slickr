@@ -45,7 +45,7 @@ if defined?(ActiveAdmin)
 
     collection_action :return_media_path, method: :get do
       media = Slickr::MediaUpload.find(params[:id])
-      path = media.image_url(:m_limit)
+      path = media.image_url(:thumb_400x400)
       mime_type = media.image.mime_type
 
       if path.starts_with?('/')

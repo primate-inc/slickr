@@ -32,7 +32,7 @@ module SlickrHelper
   end
 
   def slickr_meta_data(attr)
-    meta = @slickr_settings.symbolize_keys.merge(@slickr_meta_override || {})
+    meta = @slickr_settings.symbolize_keys.merge(compact_override || {})
     meta[attr].present? ? meta[attr] : ''
   end
 
@@ -53,6 +53,14 @@ module SlickrHelper
   end
 
   private
+
+  def compact_override
+    return unless @slickr_meta_override.respond_to?(:select)
+
+    @slickr_meta_override.select do |_, value|
+      value.present?
+    end
+  end
 
   def restructure(draftjs_content)
     atomic_blocks = []

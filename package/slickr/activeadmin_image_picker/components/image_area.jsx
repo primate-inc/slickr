@@ -43,8 +43,9 @@ export default class ImageArea extends React.Component {
 
   render() {
     const actions = this.props.actions
-    const textAreaName = this.props.textArea.name.slice(0, -1) +
-                         '_attributes][slickr_media_upload_id]'
+    const textAreaName = this.props.imageObject.multiple ?
+      this.props.textArea.name :
+      this.props.textArea.name.slice(0, -1) + '_attributes][slickr_media_upload_id]'
     const error = this.props.imageObject.errors[0]
 
     let hint;

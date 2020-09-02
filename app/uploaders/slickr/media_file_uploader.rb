@@ -41,17 +41,21 @@ module Slickr
         pipeline = ImageProcessing::Vips.source(display_image)
 
         {
-          large: pipeline.resize_to_fit!(762, 1080),
-          thumb: pipeline.resize_to_fit!(127, 180)
+          optimised: pipeline.call,
+          thumb_200x200: pipeline.resize_and_pad(200, 200, extend: :white).call,
+          thumb_400x400: pipeline.resize_and_pad(400, 400, extend: :white).call,
+          thumb_800x800: pipeline.resize_and_pad(800, 800, extend: :white).call
         }
       rescue Vips::Error
-          display_image = document_image('pdf')
-          pipeline = ImageProcessing::Vips.source(display_image)
+        display_image = document_image('pdf')
+        pipeline = ImageProcessing::Vips.source(display_image)
 
-          {
-            large:     pipeline.resize_to_fit!(127, 180),
-            thumb: pipeline.resize_to_fit!(127, 180)
-          }
+        {
+          optimised: pipeline.call,
+          thumb_200x200: pipeline.resize_and_pad(200, 200, extend: :white).call,
+          thumb_400x400: pipeline.resize_and_pad(400, 400, extend: :white).call,
+          thumb_800x800: pipeline.resize_and_pad(800, 800, extend: :white).call
+        }
       ensure
         file.close!
       end

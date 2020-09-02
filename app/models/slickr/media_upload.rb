@@ -229,18 +229,19 @@ module Slickr
 
     def build_file
       return build_empty_image unless file_data['derivatives']
+
       {
         id: id,
-        src: file_url(:thumb_400x400),
-        displayPath: file_url(:thumb_400x400),
-        thumbnail: file_url(:thumb_400x400),
-        thumbnailWidth: file(:thumb_400x400).width,
-        thumbnailHeight: file(:thumb_400x400).height,
-        caption: file.original_filename,
+        src: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
+        displayPath: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
+        thumbnail: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
+        thumbnailWidth: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:width) : 200,
+        thumbnailHeight: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:height) : 200,
+        caption: file_url(:thumb_400x400).present? ? file.original_filename : '',
         isSelected: false,
-        editPath: admin_edit_path,
-        returnMediaPath: return_media_path,
-        mimeType: file.mime_type
+        editPath: file_url(:thumb_400x400).present? ? admin_edit_path : '',
+        returnMediaPath: file_url(:thumb_400x400).present? ? return_media_path : '',
+        mimeType: file_url(:thumb_400x400).present? ? file.mime_type : ''
       }
     end
 

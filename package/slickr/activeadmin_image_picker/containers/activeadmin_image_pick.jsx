@@ -18,6 +18,7 @@ const ActiveadminImagePick = ({ store, actions, modalIsOpen, textAreaIndex,
                                 label, textArea, page, loadedImages,
                                 imageObject, choosingActiveAdminImage, tags,
                                 allowedUploadInfo }) => {
+  debugger
   return(
     <ImageArea actions={actions}
                       page={page}

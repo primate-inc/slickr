@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Array.prototype.forEach.call(elements, function(element, index) {
       const nextElementSibling = element.nextElementSibling
       const label = nextElementSibling.querySelector('label')
+      debugger
       const textArea = nextElementSibling.querySelector('textarea')
 
       const dataNode = element.childNodes[0]

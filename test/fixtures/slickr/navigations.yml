@@ -1,0 +1,43 @@
+slickr_master:
+  id: 1
+  position: 1
+  title: slickr_master
+  root_type: slickr_master
+
+main_navigation:
+  id: 2
+  ancestry: 1
+  position: 1
+  root_type: Root
+  title: Top navigation
+
+top_level_page_1:
+  id: 3
+  ancestry: 1/2
+  position: 1
+  child_type: Page
+  title: Page 1
+  slickr_page: page_1
+
+top_level_custom_link_1:
+  id: 4
+  ancestry: 1/2
+  position: 2
+  child_type: Custom Link
+  title: Custom Link 1
+
+nested_level_page_1:
+  id: 5
+  ancestry: 1/2/3
+  position: 3
+  child_type: Page
+  title: Page 2
+  slickr_page: page_2
+
+nested_level_page_2:
+  id: 6
+  ancestry: 1/2/4
+  position: 3
+  child_type: Page
+  title: Page 3
+  slickr_page: page_3

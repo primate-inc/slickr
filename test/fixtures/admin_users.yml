@@ -6,6 +6,8 @@
 #
 one:
   email: admin@primate.co.uk
+  role: admin
 
 two:
   email: colin@primate.co.uk
+  role: admin

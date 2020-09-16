@@ -1,0 +1,27 @@
+home:
+  title: Home
+  layout: home
+  slug: home
+  page_header: Home
+  aasm_state: live_version
+  content: "{\"blocks\":[{\"key\":\"286ce4\",\"text\":\"text\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"
+
+page_1:
+  title: Page 1
+  layout: standard
+  page_header: Page 1
+  aasm_state: live_version
+
+page_2:
+  title: Page 2
+  layout: standard
+  page_header: Page 2
+  aasm_state: live_version
+  content: "{\"blocks\":[{\"key\":\"286ce4\",\"text\":\"text\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"
+
+page_3:
+  title: Page 3
+  layout: standard
+  page_header: Page 3
+  aasm_state: live_version
+  content: "{\"blocks\":[{\"key\":\"286ce4\",\"text\":\"text\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"

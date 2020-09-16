@@ -25,6 +25,8 @@ module Slickr
     validates_uniqueness_of :title, if: proc { |nav| nav.sub_root? }
     validate :root_type_or_child_type
     validate :page_id_if_root_is_page
+    validate :parent_not_custom_link
+    validate :of_child_bearing_type, if: proc { |nav| nav.has_children? }
 
     scope(:nav_roots, lambda do
       where.not(root_type: [nil, ''])
@@ -134,6 +136,12 @@ module Slickr
            .change_position_admin_slickr_navigation_path(id)
     end
 
+    def has_children?
+      return unless persisted?
+
+      children.any?
+    end
+
     private
 
     def root_type_or_child_type
@@ -145,6 +153,16 @@ module Slickr
     def page_id_if_root_is_page
       return unless root_type == 'Page' && slickr_page_id.blank?
       errors.add(:slickr_page_id, 'select a page')
+    end
+
+    def parent_not_custom_link
+      return unless parent&.child_type && CHILD_TYPES.reject{|t| t == 'Custom Link'}.exclude?(parent.child_type)
+      errors.add(:parent, 'cannot be child of custom link')
+    end
+
+    def of_child_bearing_type
+      return unless children && child_type == 'Custom Link'
+      errors.add(:parent, 'you must remove children before becoming a custom link')
     end
   end
 end

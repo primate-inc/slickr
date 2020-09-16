@@ -72,10 +72,19 @@ export default Formik({
     slickr_navigation_image_attributes: {slickr_media_upload_id: props.navigation.navigation_image.id},
     text:                               props.navigation.text,
     link:                               props.navigation.link,
-    link_text:                          props.navigation.link_text
+    link_text:                          props.navigation.link_text,
+    children:                           props.navigation.children,
   }),
   validationSchema: Yup.object().shape({
-    child_type: Yup.string().required('select a type').nullable(),
+    child_type:
+      Yup.string()
+         .required('select a type')
+         .nullable()
+         .when('children', (children, schema) => {
+           if (children.length > 0) {
+             return schema.oneOf(['Custom Link', 'Anchor'], 'cannot have children')
+           }
+     }),
     slickr_page_id: Yup.string()
                        .nullable()
                        .when('child_type', (child_type, schema) => {

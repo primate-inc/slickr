@@ -1,0 +1,25 @@
+li class: 'image-picker-new' do
+  content_tag :div,
+    class: 'new-image-data',
+    data: {
+      input: {
+        field: field,
+        multiple: true,
+        index: DateTime.now,
+        label: local_variables.include?(:label) ? label.humanize : field.to_s.humanize,
+        hint: local_variables.include?(:hint) ? hint : '',
+      },
+      newObject: {
+        object: object,
+        relation: relation,
+        timestamp: Time.now.to_i
+      },
+      tags: [object, relation],
+      pageState: slickr_editor_paths,
+      allowedUploadInfo: Slickr::MediaUpload.allowed_upload_info,
+      additionalInfo: Slickr::MediaUpload.additional_info
+    }.to_json do
+  end
+end
+li class: 'button_container text input optional' do
+end

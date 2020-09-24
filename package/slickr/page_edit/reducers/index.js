@@ -9,6 +9,7 @@ import textAreaIndex from './text_area_index'
 import label from './label'
 import labelText from './label_text'
 import textArea from './text_area'
+import newImageFieldId from './new_image_field_id'
 import imageObject from './image_object'
 import choosingActiveAdminImage from './choosing_active_admin_image'
 
@@ -21,10 +22,12 @@ const slickrReducers = {
   label,
   labelText,
   textArea,
+  newImageFieldId,
   imageObject,
   choosingActiveAdminImage,
   choosingPageHeaderImage,
   tags: (state = []) => state,
+  newObject: (state = {}) => state,
   allowedUploadInfo: (state = {}) => state,
   additionalInfo: (state = {}) => state
 }

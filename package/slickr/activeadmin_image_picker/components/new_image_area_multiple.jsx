@@ -2,24 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ImagePickerModal from '../../page_edit/components/content/image_picker_modal.jsx';
 
-export default class ImageArea extends React.Component {
+export default class newImageAreaMultiple extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      slickr_media_upload_id: this.props.imageObject.id
+      slickr_media_upload_id: null,
+      slickr_media_upload_path: null,
+      newObject: this.props.newObject,
+      errors: []
     }
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.imageObject.id !== prevProps.imageObject.id) {
+    if(this.props.imageObject && (this.props.imageObject.id !== prevProps.imageObject.id) && (this.props.newImageFieldId == this.props.textAreaName)) {
       this.setState({
-        slickr_media_upload_id: this.props.imageObject.id
+        slickr_media_upload_id: this.props.imageObject.id,
+        slickr_media_upload_path: this.props.imageObject.path,
       })
     }
   }
 
-  openImagePicker = () => (e) => {
+  openImagePicker(id, e) {
     e.preventDefault();
     let page
     if(Object.keys(this.props.loadedImages).length === 0) {
@@ -29,59 +33,62 @@ export default class ImageArea extends React.Component {
     }
     this.props.actions.toggleChoosingActiveAdminImage();
     this.props.actions.toggleImagePicker();
+    this.props.actions.updateNewImageFieldId(id);
     if(Object.keys(this.props.loadedImages).length === 0) {
       this.props.actions.loadImages(page);
     }
   }
 
-  removeImage = () => (e) => {
+  removeImage(id) {
+    this.props.actions.updateNewImageFieldId(id);
     this.setState({
-      slickr_media_upload_id: 'nil'
+      slickr_media_upload_id: 'nil',
+      slickr_media_upload_path: null
     })
-    this.props.actions.updateActiveAdminImage({ id: null, path: null })
+    // this.props.actions.updateActiveAdminImage({ id: null, path: null })
   }
 
   render() {
     const actions = this.props.actions
-    const textAreaName = this.props.textArea.name.slice(0, -1) +
-                         '_attributes][slickr_media_upload_id]'
-
-    const error = this.props.imageObject.errors[0]
+    const textAreaName = this.props.textAreaName
+    const uploadIdName = textAreaName + '[id]'
+    const mediaIdName = textAreaName + '[slickr_media_upload_id]'
+    const error = this.state.errors[0]
 
     let hint;
-    if(this.props.imageObject.hint == '') {
+    if(this.props.hint == '') {
       hint = ''
     } else {
-      hint = ` (${this.props.imageObject.hint}) `
+      hint = ` (${this.props.hint}) `
     }
 
     return (
       [
         <label key={`${this.props.textAreaIndex}-0`}
-               htmlFor={this.props.label.htmlFor}
-               className={`${this.props.label.className} hidden`}>
-                 {this.props.label.innerHTML}
+               htmlFor={this.props.label}
+               className={`${this.props.label} hidden`}>
+                 {this.props.label}
         </label>,
-        <textarea key={`${this.props.textAreaIndex}-1`}
+        <textarea key={`${this.props.textAreaIndex}-1.5`}
                   onChange={this.hightlightActive}
-                  id={this.props.textArea.id}
+                  id={textAreaName}
                   className='hidden'
-                  name={textAreaName}
+                  name={mediaIdName}
                   value={this.state.slickr_media_upload_id}>
         </textarea>,
         <div key={`${this.props.textAreaIndex}-2`}
-             className={`file input admin-big-title ${this.props.imageObject.id == null ? 'no_image' : 'has_image'} ${error ? 'has_error' : ''}`}>
+             className={`file input admin-big-title ${this.state.slickr_media_upload_id == null ? 'no_image' : 'has_image'} ${error ? 'has_error' : ''}`}>
           <div className="edit-wrapper">
             <label htmlFor="slickr_image_id">
-              {`${this.props.imageObject.label}${hint}`}
-              { this.props.imageObject.required ?
+              {`${this.props.label}${hint}`}
+              { this.props.newObject.required ?
                     <abbr title="required">*</abbr> :
                     null }
             </label>
-            <input type="file" onClick={this.openImagePicker()} />
+            <input type="file" onClick={this.openImagePicker.bind(this, textAreaName)} />
             {(() => {
-              let mediaUploadId = this.props.imageObject.id
-              let imagePath = this.props.imageObject.path
+              let mediaUploadId = this.state.slickr_media_upload_id
+              let imagePath = this.state.slickr_media_upload_path
 
               if(imagePath != null) {
                 return (
@@ -90,11 +97,12 @@ export default class ImageArea extends React.Component {
                     <div className={`image-picker-remove ${mediaUploadId == null ? 'no_image' : 'has_image'}`}>
                       <div className="true_false image boolean input optional">
                         <div className="edit-wrapper">
-                          <label className='label_remove' htmlFor={`remove_${this.props.imageObject.field}`}>
+                          <label onClick={this.removeImage.bind(this, textAreaName)} className='label_remove' htmlFor={`remove_${this.props.mediaIdName}`}>
                             <input type="checkbox"
-                                   name={`remove_${this.props.imageObject.field}`}
-                                   id={`remove_${this.props.imageObject.field}`}
-                                   onClick={this.removeImage()} />
+                                   name={`remove_${textAreaName}`}
+                                   data-text_area={textAreaName}
+                                   id={`remove_${textAreaName}`}
+                                   />
                           </label>
                         </div>
                       </div>
@@ -116,7 +124,7 @@ export default class ImageArea extends React.Component {
           key={`${this.props.textAreaIndex}-3`}
           modalIsOpen={this.props.modalIsOpen}
           tags={this.props.tags}
-          actions={actions}
+          actions={this.props.actions}
           loadedImages={this.props.loadedImages}
           choosingActiveAdminImage={this.props.choosingActiveAdminImage}
           allowedUploadInfo={this.props.allowedUploadInfo}

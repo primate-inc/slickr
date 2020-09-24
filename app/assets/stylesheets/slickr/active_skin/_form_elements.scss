@@ -58,7 +58,7 @@
       }
     }
   }
-  .image-picker {
+  .image-picker, .image-picker-new {
     display: none !important;
     & + .text {
       .hidden {

@@ -1,9 +1,10 @@
-import {editorStateToJSON} from "megadraft";
+import { editorStateToJSON } from "megadraft";
 import React from 'react';
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ImageArea from "../components/image_area.jsx";
+import ImageAreaMultiple from "../components/image_area_multiple.jsx";
 import * as PageActions from '../../page_edit/actions';
 import * as GalleryActions from '../../media_gallery/actions';
 
@@ -15,11 +16,24 @@ let _csrf_token = () => {
 }
 
 const ActiveadminImagePick = ({ store, actions, modalIsOpen, textAreaIndex,
-                                label, textArea, page, loadedImages,
+                                label, textArea, page, loadedImages, newImageFieldId,
                                 imageObject, choosingActiveAdminImage, tags,
                                 allowedUploadInfo }) => {
-  debugger
   return(
+    imageObject.multiple ?
+    <ImageAreaMultiple actions={actions}
+                       page={page}
+                       modalIsOpen={modalIsOpen}
+                       newImageFieldId={newImageFieldId}
+                       textAreaIndex={textAreaIndex}
+                       tags={tags}
+                       label={label}
+                       textArea={textArea}
+                       loadedImages={loadedImages}
+                       imageObject={imageObject}
+                       choosingActiveAdminImage={choosingActiveAdminImage}
+                       allowedUploadInfo={allowedUploadInfo}
+    /> :
     <ImageArea actions={actions}
                       page={page}
                       modalIsOpen={modalIsOpen}
@@ -53,9 +67,9 @@ const mapStateToProps = state => ({
   imageObject: state.imageObject,
   modalIsOpen: state.modalIsOpen,
   loadedImages: state.loadedImages,
-  textAreaIndex: state.textAreaIndex,
   label: state.label,
   textArea: state.textArea,
+  newImageFieldId: state.newImageFieldId,
   choosingActiveAdminImage: state.choosingActiveAdminImage,
   allowedUploadInfo: state.allowedUploadInfo
 })

@@ -1,0 +1,22 @@
+li class: 'image-picker' do
+  content_tag :div,
+    class: 'image-data',
+    data: {
+      input: {
+        field: field,
+        multiple: true,
+        id: f.slickr_media_upload_id,
+        upload_id: f.id,
+        index: index,
+        path: f.send(field).try(:image_url, :thumb_200x200),
+        label: local_variables.include?(:label) ? label.humanize : field.to_s.humanize,
+        hint: local_variables.include?(:hint) ? hint : '',
+        errors: f.errors.messages[field]
+      },
+      tags: [f.model_name.element.gsub(/^slickr_/,''), field.to_s.gsub(f.model_name.param_key, '').humanize.parameterize.underscore],
+      pageState: slickr_editor_paths,
+      allowedUploadInfo: Slickr::MediaUpload.allowed_upload_info,
+      additionalInfo: Slickr::MediaUpload.additional_info
+    }.to_json do
+  end
+end

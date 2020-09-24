@@ -12,6 +12,15 @@ export const toggleImagePicker = () => {
   }
 }
 
+export const updateNewImageFieldId = (id) => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: "UPDATE_NEW_IMAGE_FIELD_ID",
+      payload: id
+    })
+  }
+}
+
 export const toggleChoosingPageHeaderImage = () => {
   return function(dispatch, getState) {
     dispatch({

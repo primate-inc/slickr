@@ -19,7 +19,7 @@ module Slickr
     end
 
     Attacher.derivatives do |file|
-      if file.mime_type == 'application/pdf'
+      if Shrine.mime_type(file) == 'application/pdf'
         image = MiniMagick::Image.new(file.path)
         page = image.pages[0]
         display_image = Tempfile.new('version', binmode: true)

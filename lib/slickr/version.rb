@@ -1,3 +1,3 @@
 module Slickr
-  VERSION = '0.20.3.1'
+  VERSION = '0.20.4.1'
 end

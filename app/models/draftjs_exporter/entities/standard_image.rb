@@ -1,8 +1,6 @@
 class DraftjsExporter::Entities::StandardImage
    def call(parent_element, data)
-
-     # size = data[:data][:display].nil? ? :optmisied :
-     image = Slickr::MediaUpload.find(data[:data][:image][:id])
+     image = Slickr::MediaUpload.find_by(id: data[:data][:image][:id])
      return if image.blank?
      srcset = [ [image.image_url(:content_1200), '1200'],
                  [image.image_url(:content_800), '800'],

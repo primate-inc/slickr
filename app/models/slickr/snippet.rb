@@ -11,7 +11,8 @@ module Slickr
       { kind: 'Simple snippet with image', exclude: %i[wysiwyg] },
       { kind: 'Rich snippet simplified', exclude: %i[subheader] },
       { kind: 'Rich snippet simplified no image', exclude: %i[image subheader] },
-      { kind: 'Header and image', exclude: %i[wysiwyg subheader] }
+      { kind: 'Header and image', exclude: %i[wysiwyg subheader] },
+      { kind: 'WYSIWYG', exclude: %i[header subheader image] },
     ].freeze
 
     acts_as_list

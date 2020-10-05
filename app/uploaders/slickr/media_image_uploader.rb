@@ -30,7 +30,9 @@ module Slickr
                        original.path
       optimized = File.open(optimized_path, 'rb')
       pipeline = ImageProcessing::Vips.source(optimized)
-      record.resize
+      # if record.may_resize?
+      #   record.resize
+      # end
       {
         optimised: pipeline.call,
         thumb_200x200: pipeline.resize_and_pad(200, 200, extend: :white).call,

@@ -273,7 +273,7 @@ module Slickr
     end
 
     def send_to_processing
-      process
+      resize
     end
 
     def send_for_resizing

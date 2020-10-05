@@ -124,7 +124,7 @@ module Slickr
         transitions from: :uploaded, to: :processing
       end
       event :resize, after: :send_for_resizing do
-        transitions from: :processing, to: :resizing
+        transitions from: :processing, to: :resizing, unless: :resizing?
       end
       event :finalize do
         transitions from: :resizing, to: :ready

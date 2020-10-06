@@ -225,6 +225,12 @@ module Slickr
       {}
     end
 
+    def generate_thumbnails
+      attacher = MediaImageUploader::Attacher.from_model(self, :image)
+      attacher.promote
+      resize!
+    end
+
     private
 
     def build_file
@@ -246,6 +252,7 @@ module Slickr
     end
 
     def build_image
+      return build_empty_image if aasm_state == 'uploaded'
       return build_empty_image unless image_data['derivatives']
       {
         id: id,
@@ -272,8 +279,9 @@ module Slickr
       }
     end
 
+
     def send_to_processing
-      resize
+      delay.generate_thumbnails
     end
 
     def send_for_resizing

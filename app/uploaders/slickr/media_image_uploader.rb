@@ -21,6 +21,10 @@ module Slickr
       validate_mime_type_inclusion ALLOWED_TYPES
     end
 
+    Attacher.default_url do |derivative: nil, **|
+      url if derivative
+    end
+
     Attacher.derivatives do |original|
       image_optim = ImageOptim.new(
         pngout: false, svgo: false,
@@ -30,9 +34,6 @@ module Slickr
                        original.path
       optimized = File.open(optimized_path, 'rb')
       pipeline = ImageProcessing::Vips.source(optimized)
-      # if record.may_resize?
-      #   record.resize
-      # end
       {
         optimised: pipeline.call,
         thumb_200x200: pipeline.resize_and_pad(200, 200, extend: :white).call,

@@ -22,7 +22,7 @@ module Slickr
     end
 
     Attacher.default_url do |derivative: nil, **|
-      '/uploads/image_fallback/fallback.svg' if derivative
+      '/image_fallback/fallback.svg' if derivative
     end
 
     Attacher.derivatives do |original|

@@ -23,7 +23,7 @@ Shrine.plugin :restore_cached_data # re-extract metadata when attaching a cached
 Shrine.plugin :remove_attachment # delete attachments through checkboxes on the web form
 Shrine.plugin :validation_helpers
 Shrine.plugin :derivatives,
-  create_on_promote:      true, # automatically create derivatives on promotion
+  create_on_promote:      false, # automatically create derivatives on promotion
   versions_compatibility: true  # handle versions column format
 
 # Metadata

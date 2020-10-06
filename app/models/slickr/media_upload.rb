@@ -234,15 +234,13 @@ module Slickr
     private
 
     def build_file
-      return build_empty_image unless file_data['derivatives']
-
       {
         id: id,
         src: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
         displayPath: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
         thumbnail: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
-        thumbnailWidth: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:width) : 200,
-        thumbnailHeight: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:height) : 200,
+        thumbnailWidth: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:width) : 400,
+        thumbnailHeight: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:height) : 400,
         caption: file_url(:thumb_400x400).present? ? file.original_filename : '',
         isSelected: false,
         editPath: file_url(:thumb_400x400).present? ? admin_edit_path : '',
@@ -252,15 +250,13 @@ module Slickr
     end
 
     def build_image
-      return build_empty_image if aasm_state == 'uploaded'
-      return build_empty_image unless image_data['derivatives']
       {
         id: id,
         src: image_url(:thumb_400x400),
         displayPath: image_url(:thumb_400x400),
         thumbnail: image_url(:thumb_400x400),
-        thumbnailWidth: image(:thumb_400x400).width,
-        thumbnailHeight: image(:thumb_400x400).height,
+        thumbnailWidth: 400,
+        thumbnailHeight: 400,
         caption: image.original_filename,
         isSelected: false,
         editPath: admin_edit_path,

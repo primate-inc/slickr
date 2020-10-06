@@ -9,7 +9,7 @@ module Slickr
 
       def copy_image_fallback
         puts 'Copying image fallback'
-        template 'fallback.svg', 'public/image_fallback/fallback.svg'
+        template 'fallback.svg', 'public/uploads/image_fallback/fallback.svg'
         puts 'Copied image fallback'
       end
     end

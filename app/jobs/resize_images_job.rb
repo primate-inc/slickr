@@ -6,10 +6,15 @@ class ResizeImagesJob < ApplicationJob
       pngout: false, svgo: false,
       jpegoptim: { allow_lossy: true, max_quality: 85 }
     )
-
-    file = attacher.file.download
-
-    optimized_path = image_optim.optimize_image(file) || file
+    if upload.image(:optimised)
+      source = upload.image(:optimised)
+      file = source.download
+      optimized_path = file
+    else
+      source = attacher.image
+      file = source.download
+      optimized_path = image_optim.optimize_image(file)
+    end
 
     optimized = File.open(optimized_path, 'rb')
     pipeline = ImageProcessing::Vips.source(optimized)

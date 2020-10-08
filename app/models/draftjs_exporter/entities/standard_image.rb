@@ -2,10 +2,10 @@ class DraftjsExporter::Entities::StandardImage
    def call(parent_element, data)
      image = Slickr::MediaUpload.find_by(id: data[:data][:image][:id])
      return if image.blank?
-     srcset = [ [image.image_url(:content_1200), '1200'],
-                 [image.image_url(:content_800), '800'],
-                 [image.image_url(:content_600), '600'],
-                 [image.image_url(:content_400), '400']].map{|e| e.join(' ')}.join(', ')
+     srcset = [ [image.image_url(:content_1200), '1200w'],
+                 [image.image_url(:content_800), '800w'],
+                 [image.image_url(:content_600), '600w'],
+                 [image.image_url(:content_400), '400w']].map{|e| e.join(' ')}.join(', ')
 
      additional = OpenStruct.new(data[:data][:image][:additional_info])
      args = {}

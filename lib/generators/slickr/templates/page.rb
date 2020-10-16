@@ -4,7 +4,7 @@ require_dependency Slickr::Engine.config.root.join(
 
 class Slickr::Page
   include Slickr::Metatagable
-  
+
   LAYOUTS = [
     { template: 'standard', exclude: [:page_header, :page_subheader, :page_intro] },
     { template: 'contact' },
@@ -19,7 +19,8 @@ class Slickr::Page
       'YOUTUBE' => DraftjsExporter::Entities::YouTube.new,
       'PDF_LINK' => DraftjsExporter::Entities::TargetBlankLink.new(
         className: 'pdf__link'
-      )
+      ),
+      'CTA_LINK' => DraftjsExporter::Entities::Link.new(className: 'button')
     },
     block_map: {
       'header-one'          => { element: 'h1' },

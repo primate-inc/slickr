@@ -4,7 +4,7 @@ ActiveAdmin.register Slickr::MediaUpload do
     render json: {
       pdf_files: pdf_files,
       pdf_path: Rails.application.routes.url_helpers
-                     .return_pdf_path_admin_slickr_media_uploads_path
+                     .slickr_media_upload_file_download_path
     }.to_json
   end
 

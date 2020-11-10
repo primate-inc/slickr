@@ -10,6 +10,9 @@ class DraftjsExporter::Entities::StandardImage
      additional = OpenStruct.new(data[:data][:image][:additional_info])
      args = {}
      args[:srcset] = srcset
+     if data[:data][:display].present?
+       args[:class] = "image_#{data[:data][:display].parameterize}"
+     end
      args[:src] = image.image_url(:content_1200)
      args[:alt] = additional[:alt_text].present? ? additional[:alt_text] : ''
      args[:"data-img_caption"] = additional.try(:img_title)

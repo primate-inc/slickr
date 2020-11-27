@@ -227,6 +227,7 @@ module Slickr
 
     def generate_thumbnails
       attacher = MediaImageUploader::Attacher.from_model(self, :image)
+      attacher.atomic_persist
       attacher.promote
       resize!
     end

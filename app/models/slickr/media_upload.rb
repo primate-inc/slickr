@@ -123,6 +123,7 @@ module Slickr
       event :process do
         transitions from: :uploaded, to: :processing
       end
+
       event :resize, after: :send_for_resizing do
         transitions from: [:uploaded, :processing], to: :resizing
       end
@@ -227,7 +228,6 @@ module Slickr
 
     def generate_thumbnails
       attacher = MediaImageUploader::Attacher.from_model(self, :image)
-      attacher.atomic_persist
       attacher.promote
       resize!
     end
@@ -278,6 +278,8 @@ module Slickr
 
 
     def send_to_processing
+      attacher = MediaImageUploader::Attacher.from_model(self, :image)
+      attacher.atomic_persist
       delay.generate_thumbnails
     end
 

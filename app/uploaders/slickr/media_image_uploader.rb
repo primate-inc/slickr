@@ -10,7 +10,7 @@ module Slickr
     MAX_SIZE      = 10 * 1024 * 1024 # 10 MB
 
     # plugin :delete_raw # automatically delete processed files after uploading
-    plugin :processing
+    # plugin :processing
     plugin :store_dimensions
     plugin :derivatives
     plugin :activerecord

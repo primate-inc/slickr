@@ -227,8 +227,6 @@ module Slickr
     end
 
     def generate_thumbnails
-      attacher = MediaImageUploader::Attacher.from_model(self, :image)
-      attacher.promote
       resize!
     end
 
@@ -279,7 +277,7 @@ module Slickr
 
     def send_to_processing
       attacher = MediaImageUploader::Attacher.from_model(self, :image)
-      attacher.atomic_persist
+      Slickr::ProcessOriginalImage.new.call(attacher)
       delay.generate_thumbnails
     end
 

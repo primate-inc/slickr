@@ -1,0 +1,23 @@
+<% field_label = field_label.present? ? field_label : field.to_s.humanize %>
+<% form_class = f.object.class.table_name.singularize %>
+<% field_name = "#{form_class}[#{field}][]" %>
+<% lookup_data_set = lookup_data.present? ? lookup_data : [] %>
+<li class="string input optional stringish " id="<%= field %>_lookup_data" data-setup="<%= { field_name: field_name }.to_json %>" data-collection_data="<%= lookup_data_set.to_json %>">
+  <label class='label' for="<%= field %>_lookup_field"><%= field_label %></label>
+  <% if hint.present? %>
+    <p class="inline-hints"><%= hint %></p>
+  <% end %>
+  <div class='reorderable_relation_container' id="<%= field %>_target_list">
+    <ul class='reorderable_relation_container-list'>
+      <% values.each do |value| %>
+        <li class='reorderable_relation_container-list-item'>
+          <span class='reorder-handle'>=</span>
+          <span class='reorderable_relation_container-list-item-title'><%= value.title %></span>
+          <span class='reorderable_relation_container-list-item-remove'>x</span>
+          <input name='<%= field_name %>' type='hidden' value='<%= value.send(association_id) %>' />
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <input type='text' placeholder="Search..." name="<%= field %>_lookup_field" class="<%= field %>_lookup_field">
+</li>

@@ -132,7 +132,7 @@ module Slickr
       end
     end
 
-    after_create :send_to_processing
+    after_create :send_to_processing, if: -> (file) { file.image_data.present? }
 
     if defined?(acts_as_taggable_on)
       acts_as_taggable_on :media_tags

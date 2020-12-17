@@ -107,6 +107,15 @@ export default class Content extends React.Component {
               <p className='hint_text'></p>
             </div>
           </li>
+          <li className="input string admin-big-title">
+            <div className="edit-wrapper">
+              <label htmlFor="config_string">Config String</label>
+              <input type="text"
+                     name="config_string"
+                     value={values.config_string}
+                     onChange={handleChange} />
+            </div>
+          </li>
           <li className="input string" style={{
             display: this.state.pageSelectVisible ? 'block' : 'none'
           }}>
@@ -215,6 +224,16 @@ export default class Content extends React.Component {
                      value={values.link_text}
                      onChange={handleChange} />
               <p className='hint-text'>Navigation link text</p>
+            </div>
+          </li>
+          <li className="input string admin-big-title">
+            <div className="edit-wrapper">
+              <label htmlFor="alt_link_text">Alternative Link text</label>
+              <input type="text"
+                     name="alt_link_text"
+                     value={values.alt_link_text}
+                     onChange={handleChange} />
+              <p className='hint-text'>Alternative navigation link text</p>
             </div>
           </li>
         </ol>

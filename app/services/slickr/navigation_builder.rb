@@ -176,21 +176,25 @@ module Slickr
           text: hash['text'], page_header: hash['page_header'],
           page_subheader: hash['page_subheader'], page_intro: hash['page_intro']
         },
-        link: path_finder(pathnames, hash)[:path], link_text: hash['link_text']
+        link: path_finder(pathnames, hash)[:path], 
+        link_text: hash['link_text'], alt_link_text: hash['alt_link_text'],
+        config_string: hash['config_string']
       }
     end
 
     def build_header_nav(hash)
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
-        text: hash['text'], link: hash['link'], link_text: hash['link_text']
+        text: hash['text'], link: hash['link'], link_text: hash['link_text'],
+        alt_link_text: hash['alt_link_text'], config_string: hash['config_string']
       }
     end
 
     def build_custom_link_nav(hash)
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
-        text: hash['text'], link: hash['link'], link_text: hash['link_text']
+        text: hash['text'], link: hash['link'], link_text: hash['link_text'],
+        alt_link_text: hash['alt_link_text'], config_string: hash['config_string']
       }
     end
 
@@ -198,7 +202,8 @@ module Slickr
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: parent_link + hash['link'],
-        link_text: hash['link_text']
+        link_text: hash['link_text'], alt_link_text: hash['alt_link_text'],
+        config_string: hash['config_string']
       }
     end
 

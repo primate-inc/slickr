@@ -72,7 +72,9 @@ export default Formik({
     slickr_navigation_image_attributes: {slickr_media_upload_id: props.navigation.navigation_image.id},
     text:                               props.navigation.text,
     link:                               props.navigation.link,
-    link_text:                          props.navigation.link_text
+    link_text:                          props.navigation.link_text,
+    alt_link_text:                      props.navigation.alt_link_text,
+    config_string:                      props.navigation.config_string
   }),
   validationSchema: Yup.object().shape({
     child_type: Yup.string().required('select a type').nullable(),

@@ -41,6 +41,12 @@ Now in your main app type
 yarn link slickr_cms
 ```
 
+To make sure your local version is compiled, you should add its path to `config/webpacker.yml`
+
+```yml
+resolved_paths: ['../slickr']
+```
+
 The local engine now takes precedence over the version in the main app node_modules
 folder and when you run the dev server in the main app with
 

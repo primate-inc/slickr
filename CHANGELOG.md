@@ -1,3 +1,10 @@
+## 0.21.0
+Copy addtional migrations
+
+```ruby
+rails g slickr:add_fields_to_navigations
+```
+
 ## 0.20.1.1
 
 Moved validators out to new mixin

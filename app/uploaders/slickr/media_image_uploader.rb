@@ -6,7 +6,7 @@ require 'image_processing/vips'
 module Slickr
   # MediaImageUploader
   class MediaImageUploader < Shrine
-    ALLOWED_TYPES = %w[image/jpg image/jpeg image/png image/svg+xml].freeze
+    ALLOWED_TYPES = %w[image/gif image/jpg image/jpeg image/png image/svg+xml].freeze
     MAX_SIZE      = 10 * 1024 * 1024 # 10 MB
 
     # plugin :delete_raw # automatically delete processed files after uploading

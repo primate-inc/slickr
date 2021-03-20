@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 6.0.3.1"
+  s.add_dependency "rails", ">= 6.0"
 
   s.add_development_dependency "pg"
 
@@ -29,10 +29,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'devise', '~> 4.3'
   # Images
   s.add_dependency 'shrine', '>= 3'
-  s.add_dependency 'fastimage', '~> 2.1'
+  s.add_dependency 'fastimage', '>= 2.1'
   s.add_dependency 'image_processing', '>= 1.7'
-  s.add_dependency 'image_optim', '~> 0.26'
-  s.add_dependency 'image_optim_pack', '~> 0.5'
+  s.add_dependency 'image_optim', '>= 0.26'
+  s.add_dependency 'image_optim_pack', '>= 0.5'
+  s.add_dependency 'ruby-vips', '~> 2.0.17'
 
   # Other gems
   s.add_dependency "acts_as_tree", "~> 2.7.0"
@@ -44,14 +45,14 @@ Gem::Specification.new do |s|
   s.add_dependency 'discard', '~> 1.2'
   # s.add_dependency "paper_trail-association_tracking"
   s.add_dependency "draftjs_exporter", "~> 0.0.7"
-  s.add_dependency "draper", "~> 3.1.0"
+  s.add_dependency "draper", ">= 3.1.0"
   s.add_dependency "verbs", "~> 2.1.4"
   s.add_dependency "activeadmin_settings_cached", "~> 2.2"
   s.add_dependency "sitemap_generator", "~> 6.0.1"
   s.add_dependency "activeadmin_reorderable", "~> 0.1.2"
   s.add_dependency 'redcarpet', '~> 3.4.0'
   s.add_dependency "ancestry", "~> 3.0"
-  s.add_dependency "acts-as-taggable-on", '~> 6.0'
+  s.add_dependency "acts-as-taggable-on", '>= 6.0'
   s.add_dependency 'w3c_validators', '~> 1.3'
   s.add_dependency 'http', '~> 4.4'
 end

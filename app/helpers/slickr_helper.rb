@@ -37,7 +37,7 @@ module SlickrHelper
   end
 
   def draftjs_to_html(instance, field)
-    exporter = DraftjsExporter::HTML.new(Slickr::Page::DRAFTJS_CONFIG)
+    exporter = DraftjsExporter::HTML.new(**Slickr::Page::DRAFTJS_CONFIG)
     content = if instance.send(field).class == String
                 JSON.parse(instance.send(field))
               else

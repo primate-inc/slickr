@@ -41,16 +41,5 @@ module Slickr
         thumb_800x800: pipeline.resize_and_pad(800, 800, extend: :white).call
       }
     end
-
-    def generate_location(io, context)
-      path = super[/^(.*[\\\/])/]
-      version = context[:derivative]
-      is_original = version.nil? || version == :original
-      return path + context[:metadata]['filename'].tr(' ', '_') if is_original
-
-      orig_filename = context[:record].image_data['metadata']['filename']
-      filename = "#{version}-#{orig_filename.tr(' ', '_')}"
-      path + filename
-    end
   end
 end

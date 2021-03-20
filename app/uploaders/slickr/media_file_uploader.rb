@@ -46,18 +46,6 @@ module Slickr
       }
     end
 
-    def generate_location(io, context)
-      path = super[/^(.*[\\\/])/]
-      version = context[:version]
-      is_original = version.nil? || version == :original
-      return path + context[:metadata]['filename'] if is_original
-      orig_filename = context[:record].file_data['metadata']['filename']
-      orig_filename_without_type = (/.*(?=\.)/.match orig_filename).to_s
-      image_type = context[:metadata]['filename'].split('.')[-1]
-      filename = "#{version}-#{orig_filename_without_type}.#{image_type}"
-      path + filename
-    end
-
     def document_image(type)
       image = File.join(
         Slickr::Engine.root,

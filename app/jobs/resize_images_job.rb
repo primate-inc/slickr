@@ -11,7 +11,7 @@ class ResizeImagesJob < ApplicationJob
       file = source.download
       optimized_path = file
     else
-      source = attacher.image
+      source = attacher.file
       file = source.download
       optimized_path = image_optim.optimize_image(file)
     end

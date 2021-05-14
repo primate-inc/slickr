@@ -74,6 +74,7 @@ export default Formik({
     link:                               props.navigation.link,
     link_text:                          props.navigation.link_text,
     alt_link_text:                      props.navigation.alt_link_text,
+    alt_text:                           props.navigation.alt_text,
     config_string:                      props.navigation.config_string
   }),
   validationSchema: Yup.object().shape({

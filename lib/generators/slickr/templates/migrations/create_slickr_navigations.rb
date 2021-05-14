@@ -11,6 +11,7 @@ class CreateSlickrNavigations < ActiveRecord::Migration[5.1]
       t.string      :link
       t.string      :link_text
       t.string      :alt_link_text
+      t.string      :alt_text
       t.string      :config_string
 
       t.timestamps

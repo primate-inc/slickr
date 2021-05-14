@@ -178,7 +178,7 @@ module Slickr
         },
         link: path_finder(pathnames, hash)[:path], 
         link_text: hash['link_text'], alt_link_text: hash['alt_link_text'],
-        config_string: hash['config_string']
+        config_string: hash['config_string'], alt_text: hash['alt_text']
       }
     end
 
@@ -186,7 +186,7 @@ module Slickr
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: hash['link'], link_text: hash['link_text'],
-        alt_link_text: hash['alt_link_text'], config_string: hash['config_string']
+        alt_link_text: hash['alt_link_text'], config_string: hash['config_string'], alt_text: hash['alt_text']
       }
     end
 
@@ -194,7 +194,7 @@ module Slickr
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: hash['link'], link_text: hash['link_text'],
-        alt_link_text: hash['alt_link_text'], config_string: hash['config_string']
+        alt_link_text: hash['alt_link_text'], config_string: hash['config_string'], alt_text: hash['alt_text']
       }
     end
 
@@ -203,7 +203,7 @@ module Slickr
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: parent_link + hash['link'],
         link_text: hash['link_text'], alt_link_text: hash['alt_link_text'],
-        config_string: hash['config_string']
+        config_string: hash['config_string'], alt_text: hash['alt_text']
       }
     end
 

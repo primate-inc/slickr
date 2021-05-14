@@ -7,7 +7,7 @@ if defined?(ActiveAdmin)
     menu priority: 3
 
     permit_params :root_type, :child_type, :title, :text, :link, :link_text,
-                  :alt_link_text, :config_string,
+                  :alt_text, :alt_link_text, :config_string,
                   :page_id, :parent_id, :slickr_page_id, :ancestry,
                   slickr_navigation_image_attributes: [:slickr_media_upload_id]
 

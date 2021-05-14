@@ -199,6 +199,16 @@ export default class Content extends React.Component {
               <p className='hint-text'>Navigation text</p>
             </div>
           </li>
+          <li className="input string admin-big-title">
+            <div className="edit-wrapper">
+              <label htmlFor="text">Alt Text</label>
+              <textarea type="textarea"
+                        name="text"
+                        value={values.alt_text}
+                        onChange={handleChange} />
+              <p className='hint-text'>Navigation alt text</p>
+            </div>
+          </li>
           <li className="input string admin-big-title" style={{
             display: this.state.linkVisible ? 'block' : 'none'
           }}>

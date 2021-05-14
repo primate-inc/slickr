@@ -201,9 +201,9 @@ export default class Content extends React.Component {
           </li>
           <li className="input string admin-big-title">
             <div className="edit-wrapper">
-              <label htmlFor="text">Alt Text</label>
+              <label htmlFor="alt_text">Alt Text</label>
               <textarea type="textarea"
-                        name="text"
+                        name="alt_text"
                         value={values.alt_text}
                         onChange={handleChange} />
               <p className='hint-text'>Navigation alt text</p>

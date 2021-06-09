@@ -1,0 +1,30 @@
+default: &default
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  pool: 5
+
+development:
+  <<: *default
+  #database: cln_development
+  schema_search_path: myapp,sharedapp,public
+  min_messages: notice
+  database: <%= ENV['POSTGRES_DB'] %>
+  #host: localhost
+  #username: postgres
+  #password:
+
+test:
+  <<: *default
+  database: cln_test
+
+staging:
+  <<: *default
+  database: cln_staging
+
+production:
+  <<: *default
+  database: cln_production
+  username: cln

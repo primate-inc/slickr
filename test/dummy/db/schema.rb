@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_151728) do
+ActiveRecord::Schema.define(version: 2021_06_01_151223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,13 +54,8 @@ ActiveRecord::Schema.define(version: 2020_06_16_151728) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "role"
     t.string "first_name"
     t.string "last_name"
@@ -93,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_06_16_151728) do
     t.jsonb "image_data", default: {}, null: false
     t.jsonb "file_data", default: {}, null: false
     t.jsonb "additional_info", default: {"alt_text"=>""}, null: false
+    t.string "aasm_state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["additional_info"], name: "index_slickr_media_uploads_on_additional_info", using: :gin
@@ -123,6 +119,8 @@ ActiveRecord::Schema.define(version: 2020_06_16_151728) do
     t.text "text"
     t.string "link"
     t.string "link_text"
+    t.string "alt_link_text"
+    t.string "config_string"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ancestry"], name: "index_slickr_navigations_on_ancestry"
@@ -214,16 +212,6 @@ ActiveRecord::Schema.define(version: 2020_06_16_151728) do
     t.index ["additional_info"], name: "index_slickr_uploads_on_additional_info", using: :gin
     t.index ["slickr_media_upload_id"], name: "index_slickr_uploads_on_slickr_media_upload_id"
     t.index ["uploadable_type", "uploadable_id"], name: "index_slickr_uploads_on_uploadable_type_and_uploadable_id"
-  end
-
-  create_table "versions", force: :cascade do |t|
-    t.string "item_type", null: false
-    t.bigint "item_id", null: false
-    t.string "event", null: false
-    t.string "whodunnit"
-    t.text "object"
-    t.datetime "created_at"
-    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "slickr_event_logs", "admin_users"

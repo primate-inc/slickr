@@ -7,7 +7,7 @@ module Slickr
     include Slickr::Uploadable
     include Slickr::Schedulable
     include Slickr::Metatagable
-    include Slickr::Previewable
+    include Kubik::KubikPreviewable
     include Slickr::Validable
     include Slickr::Restorable
     include AASM

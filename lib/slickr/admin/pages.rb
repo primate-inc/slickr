@@ -84,7 +84,7 @@ if defined?(ActiveAdmin)
     end
 
     member_action :create_draft, method: :post do
-      draft = resource.create_draft
+      resource.create_draft
       redirect_to edit_resource_path
     end
 

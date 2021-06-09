@@ -1,13 +1,12 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "slickr/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   # s.name        = "slickr"
   s.name        = "slickr_cms"
-  s.version     = Slickr::VERSION
+  s.version     = '0.21.3'
   s.authors     = ["Primate"]
   s.email       = ["admin@primate.co.uk"]
   s.homepage    = "https://github.com/primate-inc/slickr"
@@ -20,6 +19,8 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 6.0.3.1"
 
   s.add_development_dependency "pg"
+  s.add_development_dependency "minitest", "~> 5.14"
+  s.add_development_dependency "warning"
 
   # Framework for admin interface
   s.add_dependency "activeadmin", ">= 1.2.1"

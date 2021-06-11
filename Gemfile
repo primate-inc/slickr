@@ -16,7 +16,7 @@ gem 'activeadmin', github: 'activeadmin', branch: 'master'
 
 group :development, :test do
   gem 'pry'
-  gem 'active_admin_slickr', github: 'primate-inc/active_admin_slickr', branch: 'master'
+  gem 'active_admin_slickr', github: 'primate-inc/active_admin_slickr', branch: 'slickr_skin'
 end
 
 group :development do

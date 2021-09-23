@@ -83,6 +83,13 @@ if defined?(ActiveAdmin)
       def info_for_paper_trail
         { admin_id: current_admin_user.id } if current_admin_user
       end
+
+      def preview
+        html_output = draftjs_to_html(resource, :content)
+        render layout: false,
+               template: "slickr_page_templates/#{resource.choose_template}",
+               locals: { slickr_page: resource, content: html_output }
+      end
     end
 
     member_action :create_draft, method: :post do
@@ -94,5 +101,21 @@ if defined?(ActiveAdmin)
       resource.delete_draft(draft_id)
       redirect_to edit_resource_path
     end
+    action_item :preview, only: [:edit] do
+      link_to preview_admin_slickr_page_path(resource),
+              target: '_blank' do
+        '<svg class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="#svg-preview"></use></svg>Preview'.html_safe
+      end
+    end
+  end
+
+  private
+
+  def create_resource_event_log(action)
+    Slickr::EventLog.create(
+      action: action, eventable: resource,
+      admin_user: current_admin_user
+    )
   end
 end

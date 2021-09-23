@@ -79,6 +79,13 @@ if defined?(ActiveAdmin)
       def info_for_paper_trail
         { admin_id: current_admin_user.id } if current_admin_user
       end
+
+      def preview
+        html_output = draftjs_to_html(resource, :content)
+        render layout: false,
+               template: "slickr_page_templates/#{resource.choose_template}",
+               locals: { slickr_page: resource, content: html_output }
+      end
     end
 
     member_action :create_draft, method: :post do
@@ -99,13 +106,6 @@ if defined?(ActiveAdmin)
         )
       end
       redirect_to edit_resource_path
-    end
-
-    member_action :preview, method: :get do
-      html_output = draftjs_to_html(resource, :content)
-      render layout: false,
-             template: "slickr_page_templates/#{resource.choose_template}",
-             locals: { slickr_page: resource, content: html_output }
     end
 
     action_item :preview, only: [:edit] do

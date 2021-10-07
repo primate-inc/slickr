@@ -29,6 +29,16 @@ module SlickrAnalyticsHelper
     HTML
   end
 
+  def google_tag_manager_noscript(identifier)
+    identifier = sanitize_id(identifier)
+    <<~HTML.html_safe
+      <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=#{identifier}"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+    HTML
+  end
+
   def sanitize_id(id)
     sanitize(id, tags: [])
   end

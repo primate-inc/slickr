@@ -18,7 +18,7 @@ module SlickrAnalyticsHelper
 
   def google_tag_manager_script(identifier)
     identifier = sanitize_id(identifier)
-    <<~HTML.html_safe
+    <<-HTML.html_safe
       <!-- Google Tag Manager -->
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -31,7 +31,7 @@ module SlickrAnalyticsHelper
 
   def google_tag_manager_noscript(identifier)
     identifier = sanitize_id(identifier)
-    <<~HTML.html_safe
+    <<-HTML.html_safe
       <!-- Google Tag Manager (noscript) -->
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=#{identifier}"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

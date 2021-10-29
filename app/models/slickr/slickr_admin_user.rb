@@ -29,6 +29,10 @@ module Slickr
           role == 'editor'
         end
 
+        def author?
+          role == 'author'
+        end
+
         def days_since_last_login
           (DateTime.now.to_date - last_sign_in_at.to_date).to_i
         end

@@ -1,4 +1,4 @@
-ActiveAdmin.register AdminUser, as: "Users" do
+ActiveAdmin.register AdminUser, as: 'SlickrUser' do
   includes :admin_user_avatar
 
   menu priority: 100
@@ -52,14 +52,14 @@ ActiveAdmin.register AdminUser, as: "Users" do
 
   action_item :edit_user, only: :show do |user|
     if authorized?(:manage, user)
-      link_to edit_admin_user_path do
+      link_to edit_admin_slickr_user_path do
         raw("<svg class='svg-icon'><use xlink:href='#svg-edit' /></svg>Edit user")
       end
     end
   end
 
   action_item :new_user, only: :index do
-    link_to new_admin_user_path do
+    link_to new_admin_slickr_user_path do
       raw("<svg class='svg-icon'><use xlink:href='#svg-plus' /></svg>Add user")
     end
   end
@@ -69,7 +69,7 @@ ActiveAdmin.register AdminUser, as: "Users" do
       create! do |format|
         format.html do
           if resource.valid?
-            redirect_to admin_user_path(resource), notice: 'User created'
+            redirect_to admin_slickr_user_path(resource), notice: 'User created'
           else
             render :new
           end

@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.add_dependency "activeadmin_settings_cached", "~> 2.2"
   s.add_dependency "sitemap_generator", "~> 6.0.1"
   s.add_dependency "activeadmin_reorderable", "~> 0.1.2"
-  s.add_dependency 'redcarpet', '~> 3.4.0'
+  s.add_dependency 'redcarpet', '>= 3.4', '< 3.6'
   s.add_dependency "ancestry", "~> 3.0"
   s.add_dependency "acts-as-taggable-on", '~> 8'
   s.add_dependency 'w3c_validators', '~> 1.3'

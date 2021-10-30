@@ -12,6 +12,9 @@ module Slickr
     include Slickr::Restorable
     include AASM
     slickr_restorable
+    after_discard do
+      slickr_navigations.destroy_all
+    end
 
     include PublicActivity::Model
     tracked(

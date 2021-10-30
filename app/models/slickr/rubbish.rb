@@ -8,7 +8,7 @@ module Slickr
     def self.add_restorable(restorable)
       @@restorable_classes << restorable
       Slickr::Rubbish.define_singleton_method(restorable[:restorable_method]) do
-        restorable[:restorable_model].name.classify.constantize.discarded
+        restorable[:restorable_model].name.classify.constantize.unscoped(:discarded)
       end
     end
 
@@ -18,7 +18,7 @@ module Slickr
 
     @@restorable_classes.each do |restorable|
       Slickr::Rubbish.define_singleton_method(restorable[:restorable_method]) do
-        restorable[:restorable_model].name.classify.discarded
+        restorable[:restorable_model].name.classify.unscoped(:discarded)
       end
     end
   end

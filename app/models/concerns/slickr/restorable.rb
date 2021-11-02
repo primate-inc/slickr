@@ -6,6 +6,8 @@ module Slickr
     extend ActiveSupport::Concern
     include Discard::Model
 
+    default_scope { kept }
+
     module ClassMethods
       attr_reader :slickr_restorable_opts
 

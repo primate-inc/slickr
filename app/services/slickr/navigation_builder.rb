@@ -83,7 +83,7 @@ module Slickr
     def build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
         if hash['schedule_time'].nil?
-          new_pathname = pathname + hash['slug']
+          new_pathname = pathname + hash['slug'].to_s
           array.push(page_id: hash['page_id'], path: new_pathname)
           hash['children'].map do |child_hash|
             build_page_pathnames(child_hash, "#{new_pathname}/", array)

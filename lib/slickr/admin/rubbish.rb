@@ -1,5 +1,3 @@
-include ActiveAdmin::DashboardHelper
-
 ActiveAdmin.register_page "Rubbish" do
   menu priority: 100, label: proc{ I18n.t("active_admin.rubbish") }
   breadcrumb do

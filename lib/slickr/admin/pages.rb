@@ -67,8 +67,8 @@ if defined?(ActiveAdmin)
       end
 
       def scoped_collection
-        if ['restore', 'destroy'].include?(params[:action])
-          end_of_association_chain.discarded
+        if %w[restore destroy].include?(params[:action])
+          end_of_association_chain.unscoped.discarded
         else
           end_of_association_chain.kept.not_draft
         end

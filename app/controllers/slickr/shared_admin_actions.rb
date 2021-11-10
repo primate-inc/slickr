@@ -78,7 +78,7 @@ module Slickr
           resource.undiscard
           resource.create_activity key: "#{base.config.resource_name.singular_route_key}.restore" if defined?(resource.create_activity)
         end
-        redirect_to admin_rubbish_path(filter: base.config.resource_name.route_key)
+        redirect_to collection_path
       end
 
       base.send(:member_action, :discard, method: :get) do
@@ -86,7 +86,7 @@ module Slickr
           resource.discard
           resource.create_activity key: "#{base.config.resource_name.singular_route_key}.remove" if defined?(resource.create_activity)
         end
-        redirect_to collection_path
+        redirect_to admin_rubbish_path(filter: base.config.resource_name.route_key)
       end
 
       base.send(:member_action, :"preview_#{base.config.resource_name.singular_route_key}", method: :get) do

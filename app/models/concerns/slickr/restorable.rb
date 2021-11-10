@@ -10,13 +10,16 @@ module Slickr
       default_scope { kept }
     end
 
-    module ClassMethods
+    class_methods do
       attr_reader :slickr_restorable_opts
 
       private
 
       def slickr_restorable(opts = {})
-        options = { restorable_method: self.model_name.route_key.to_sym, restorable_model: self.model_name }.merge(opts)
+        options = {
+          restorable_method: model_name.route_key.to_sym,
+          restorable_model: model_name
+        }.merge(opts)
         Slickr::Rubbish.add_restorable(options)
       end
     end

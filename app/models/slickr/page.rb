@@ -165,6 +165,10 @@ module Slickr
       page_link[:path]
     end
 
+    def to_s
+      title
+    end
+
     private
 
     def type_draft?

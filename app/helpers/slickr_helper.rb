@@ -46,6 +46,7 @@ module SlickrHelper
     restructure(content)
     raw(exporter.call(content.deep_symbolize_keys))
   end
+  alias display_slickr_content draftjs_to_html
 
   def slickr_editor_paths
     page = Slickr::Page.new

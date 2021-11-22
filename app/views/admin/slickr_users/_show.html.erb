@@ -2,7 +2,7 @@
   <div class='image'>
     <p class='attributes_list_attr_name'>User photo</p>
     <% if resource.admin_user_avatar.present? %>
-      <%= image_tag resource.admin_user_avatar.image_url(:m_limit) %>
+      <%= image_tag resource.admin_user_avatar.image_url(:thumb_400x400) %>
     <% end %>
   </div>
   <ol class='attributes_list'>

@@ -14,7 +14,7 @@ ActiveAdmin.register AdminUser, as: 'SlickrUser' do
     selectable_column
     column '' do |user|
       if user.admin_user_avatar
-        image_tag user.admin_user_avatar.image_url(:thumb_fill),
+        image_tag user.admin_user_avatar.image_url(:square_400),
                   class: 'display-avatar'
       end
     end
@@ -87,7 +87,7 @@ ActiveAdmin.register AdminUser, as: 'SlickrUser' do
       update! do |format|
         format.html do
           if resource.valid?
-            redirect_to admin_user_path(resource), notice: 'User updated'
+            redirect_to admin_slickr_user_path(resource), notice: 'User updated'
           else
             render :edit
           end
@@ -95,5 +95,4 @@ ActiveAdmin.register AdminUser, as: 'SlickrUser' do
       end
     end
   end
-
 end

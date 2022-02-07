@@ -1,25 +1,32 @@
-class DraftjsExporter::Entities::StandardImage
-   def call(parent_element, data)
-     image = Slickr::MediaUpload.find_by(id: data[:data][:image][:id])
-     return if image.blank?
-     srcset = [ [image.image_url(:content_1200), '1200w'],
-                 [image.image_url(:content_800), '800w'],
-                 [image.image_url(:content_600), '600w'],
-                 [image.image_url(:content_400), '400w']].map{|e| e.join(' ')}.join(', ')
+# frozen_string_literal: true
 
-     additional = OpenStruct.new(data[:data][:image][:additional_info])
-     args = {}
-     args[:srcset] = srcset
-     if data[:data][:display].present?
-       args[:class] = "image_#{data[:data][:display].parameterize}"
-     end
-     args[:src] = image.image_url(:content_1200)
-     args[:alt] = additional[:alt_text].present? ? additional[:alt_text] : ''
-     args[:"data-img_caption"] = additional.try(:img_title)
-     args[:"data-img_credit"] = additional.try(:img_credit)
+module DraftjsExporter
+  module Entities
+    # Build image embeds for WYSIWYG editor
+    class StandardImage
+      def call(parent_element, data)
+        return unless (image = Slickr::MediaUpload.find_by(id: data[:data][:image][:id]))
 
-     element = parent_element.document.create_element('img', args)
-     parent_element.replace(element)
-     element
+        additional_info = OpenStruct.new(data[:data][:image][:additional_info])
+
+        html_attributes = {}
+        html_attributes['src']              = image_from_display_key(image, data[:data][:display])
+        html_attributes['data-img_caption'] = additional_info[:img_title]
+        html_attributes['data-img_credit']  = additional_info[:img_credit]
+        html_attributes['alt']              = additional_info[:alt_text]
+
+        element = parent_element.document.create_element('img', html_attributes)
+        parent_element.replace(element)
+        element
+      end
+
+      def image_from_display_key(image, key)
+        if key
+          image.image_url(key.to_sym)
+        else
+          image.image_url(:content_1200)
+        end
+      end
+    end
   end
 end

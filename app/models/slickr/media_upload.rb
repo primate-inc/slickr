@@ -116,23 +116,34 @@ module Slickr
     include AASM
     aasm do
       state :uploaded, initial: true
-      state :processing
+      state :processed
+      state :optimised
+      state :thumbnails
       state :resizing
       state :ready
 
-      event :process do
-        transitions from: :uploaded, to: :processing
+      event :process, after: :optimise_image do
+        transitions from: [:uploaded], to: :processed
+      end
+
+      event :optimise do
+        transitions from: [:processed], to: :optimised
+      end
+
+      event :create_thumbnails, after: :process_thumbnails do
+        transitions from: [:optimised], to: :thumbnails
       end
 
       event :resize, after: :send_for_resizing do
-        transitions from: [:uploaded, :processing], to: :resizing
+        transitions from: [:thumbnails], to: :resizing
       end
+
       event :finalize do
         transitions from: :resizing, to: :ready
       end
     end
 
-    after_create :send_to_processing, if: -> (file) { file.image_data.present? }
+    after_create :process!
 
     if defined?(acts_as_taggable_on)
       acts_as_taggable_on :media_tags
@@ -149,6 +160,15 @@ module Slickr
         metadata: { mime_type: 'application/pdf' }
       }.to_json)
     end)
+
+    def process_thumbnails
+      send(:send_to_generate_thumbnails)
+    end
+
+    def optimise_image
+      optimise!
+      send(:send_to_optimising)
+    end
 
     def self.allowed_upload_info
       allowed_mime_types = Slickr::MediaFileUploader::ALLOWED_TYPES +
@@ -230,6 +250,22 @@ module Slickr
       resize!
     end
 
+    def admin_image_thumbnail
+      path = image_url(:thumb_400x400)
+      path = image_url(:optimised) if path.blank?
+      path = image_url(:original) if path.blank?
+
+      path
+    end
+
+    def admin_file_thumbnail
+      path = file_url(:thumb_400x400)
+      path = file_url(:optimised) if path.blank?
+      path = file_url(:original) if path.blank?
+
+      path
+    end
+
     private
 
     def build_file
@@ -237,7 +273,7 @@ module Slickr
         id: id,
         src: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
         displayPath: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
-        thumbnail: file_url(:thumb_400x400).present? ? file_url(:thumb_400x400) : '',
+        thumbnail: admin_file_thumbnail,
         thumbnailWidth: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:width) : 400,
         thumbnailHeight: file_url(:thumb_400x400).present? ? file(:thumb_400x400).try(:height) : 400,
         caption: file_url(:thumb_400x400).present? ? file.original_filename : '',
@@ -251,9 +287,9 @@ module Slickr
     def build_image
       {
         id: id,
-        src: image_url(:thumb_400x400),
+        src: admin_image_thumbnail,
         displayPath: image_url(:thumb_400x400),
-        thumbnail: image_url(:thumb_400x400),
+        thumbnail: admin_image_thumbnail,
         thumbnailWidth: 400,
         thumbnailHeight: 400,
         caption: image.original_filename,
@@ -274,11 +310,12 @@ module Slickr
       }
     end
 
+    def send_to_generate_thumbnails
+      CreateImageThumbnailsJob.perform_later(self)
+    end
 
-    def send_to_processing
-      attacher = MediaImageUploader::Attacher.from_model(self, :image)
-      Slickr::ProcessOriginalImage.new.call(attacher)
-      delay.generate_thumbnails
+    def send_to_optimising
+      OptimiseImageJob.perform_later(self)
     end
 
     def send_for_resizing

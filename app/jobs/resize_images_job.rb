@@ -1,47 +1,49 @@
 class ResizeImagesJob < ApplicationJob
-  def perform(upload, size)
-    attacher = upload.image_attacher
-
-    image_optim = ImageOptim.new(
-      pngout: false, svgo: false,
-      jpegoptim: { allow_lossy: true, max_quality: 85 }
-    )
-    if upload.image(:optimised)
-      source = upload.image(:optimised)
-      file = source.download
-      optimized_path = file
-    else
-      source = attacher.file
-      file = source.download
-      optimized_path = image_optim.optimize_image(file)
-    end
-
-    optimized = File.open(optimized_path, 'rb')
-    pipeline = ImageProcessing::Vips.source(optimized)
-
-    available_derivatives[size].each do |thumb_name, options|
-      case options[:type]
-      when :fill
-        attacher.add_derivative(thumb_name,
-          pipeline.resize_to_fill(*options[:options]).call)
-      when :limit
-        attacher.add_derivative(thumb_name,
-          pipeline.resize_to_limit(*options[:options]).call)
-      when :fit
-        attacher.add_derivative(thumb_name,
-          pipeline.resize_to_fit(*options[:options]).call)
-      when :pad
-        attacher.add_derivative(thumb_name,
-          pipeline.resize_and_pad(*options[:options]).call)
+  def perform(record, size)
+    if record.image_data.present?
+      attacher = record.image_attacher
+      svg = record.image.mime_type.include?('svg')
+      if svg
+        available_derivatives[size].each do |thumb_name, options|
+          attacher.add_derivative(thumb_name, record.image(:optimised).download)
+        end
+      else
+        record.image(:optimised).open do |io|
+          pipeline = ImageProcessing::Vips.source(io)
+          available_derivatives[size].each do |thumb_name, options|
+            case options[:type]
+            when :fill
+              attacher.add_derivative(
+                thumb_name,
+                pipeline.resize_to_fill(*options[:options]).call,
+              )
+            when :limit
+              attacher.add_derivative(
+                thumb_name,
+                pipeline.resize_to_limit(*options[:options]).call,
+              )
+            when :fit
+              attacher.add_derivative(
+                thumb_name,
+                pipeline.resize_to_fit(*options[:options]).call,
+              )
+            when :pad
+              attacher.add_derivative(
+                thumb_name,
+                pipeline.resize_and_pad(*options[:options]).call,
+              )
+            end
+          end
+        end
       end
-    end
 
-    upload.save
+      record.save
+    end
   end
 
   def available_derivatives
     Slickr::MediaUpload::DEFAULT_IMAGE_DERIVATIVES.merge(
-      Slickr::MediaUpload.additional_derivatives
+      Slickr::MediaUpload.additional_derivatives,
     )
   end
 end

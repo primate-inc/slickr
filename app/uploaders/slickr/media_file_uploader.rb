@@ -20,15 +20,15 @@ module Slickr
 
     Attacher.derivatives do |file|
       if Shrine.mime_type(file) == 'application/pdf'
-        image = MiniMagick::Image.new(file.path)
-        page = image.pages[0]
+        filename = '/tmp/pdf.jpg'
+        page = Vips::Image.pdfload(file.path, page: 0).jpegsave(filename)
         display_image = Tempfile.new('version', binmode: true)
 
         MiniMagick::Tool::Convert.new do |convert|
           convert.background 'white'
           convert.resize('1800x1800')
           convert.quality 100
-          convert << page.path
+          convert << filename
           convert << display_image.path
         end
         display_image.open # refresh updated file

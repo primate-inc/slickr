@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ResizeImagesJob < ApplicationJob
   def perform(record, size)
     if record.image_data.present?
@@ -40,6 +42,8 @@ class ResizeImagesJob < ApplicationJob
       record.save
     end
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def available_derivatives
     Slickr::MediaUpload::DEFAULT_IMAGE_DERIVATIVES.merge(

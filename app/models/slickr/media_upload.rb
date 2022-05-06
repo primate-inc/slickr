@@ -251,17 +251,17 @@ module Slickr
     end
 
     def admin_file_thumbnail
-      path = image_url(:thumb_400x400)
-      path = image_url(:optimised) if path.blank?
-      path = image_url(:original) if path.blank?
+      path = file_url(:thumb_400x400)
+      path = file_url(:optimised) if path.blank?
+      path = file_url(:original) if path.blank?
 
       path
     end
 
     def admin_image_thumbnail
-      path = file_url(:thumb_400x400)
-      path = file_url(:optimised) if path.blank? || path.includes?(Slickr::MediaImageUploader::FALLBACK_PATH)
-      path = file_url(:original) if path.blank? || path.includes?(Slickr::MediaImageUploader::FALLBACK_PATH)
+      path = image_url(:thumb_400x400)
+      path = image_url(:optimised) if path.blank? || path.includes?(Slickr::MediaImageUploader::FALLBACK_PATH)
+      path = image_url(:original) if path.blank? || path.includes?(Slickr::MediaImageUploader::FALLBACK_PATH)
 
       path
     end

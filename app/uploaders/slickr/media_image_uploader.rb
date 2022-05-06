@@ -6,6 +6,7 @@ require 'image_processing/vips'
 module Slickr
   # MediaImageUploader
   class MediaImageUploader < Shrine
+    FALLBACK_PATH ='/image_fallback/fallback.svg'
     ALLOWED_TYPES = %w[image/gif image/jpg image/jpeg image/png image/svg+xml image/svg].freeze
     MAX_SIZE      = 10 * 1024 * 1024 # 10 MB
 
@@ -20,7 +21,7 @@ module Slickr
     end
 
     Attacher.default_url do |derivative: nil, **|
-      '/image_fallback/fallback.svg' if derivative
+       FALLBACK_PATH if derivative
     end
 
     def generate_location(io, context)

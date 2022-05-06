@@ -260,8 +260,8 @@ module Slickr
 
     def admin_file_thumbnail
       path = file_url(:thumb_400x400)
-      path = file_url(:optimised) if path.blank?
-      path = file_url(:original) if path.blank?
+      path = file_url(:optimised) if path.blank? || path.includes?(Slickr::MediaImageUploader::FALLBACK_PATH)
+      path = file_url(:original) if path.blank? || path.includes?(Slickr::MediaImageUploader::FALLBACK_PATH)
 
       path
     end

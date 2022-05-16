@@ -8,7 +8,7 @@ module Slickr
       argument :name, type: :string, default: "application"
 
       def add_gems
-        gem 'acts-as-taggable-on', '~> 6.0'
+        gem 'acts-as-taggable-on', '~> 8'
       end
 
       def db_migrations

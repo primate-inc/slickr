@@ -142,11 +142,12 @@ Restorable enables soft deletes on modeles. [Read more](docs/restorable.md)
 
 ### Schedulable
 
-Schedulable enables items future scheduling. [Read more](docs/scheduling.md)
+Schedulable enables items future scheduling. [Read more](docs/schedulable.md)
 
 ### Uploadable
 
-Uploadable adds the media library functionality to model. [Read more](docs/media_management.md)
+Uploadable adds the media library functionality to model. [Read more](docs/uploadable.md)
+
 
 ## Helpers
 

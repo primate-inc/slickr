@@ -30,7 +30,7 @@ module Slickr
     include PublicActivity::Model
     tracked(
       params: { title: :title, type: 'Snippet' },
-      owner: proc { |controller, model| controller.current_admin_user }
+      owner: proc { |controller, model| controller&.current_admin_user }
     )
     has_one_slickr_upload(:snippet_main_image, :main_image)
 

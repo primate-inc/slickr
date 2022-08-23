@@ -88,7 +88,8 @@ module Slickr
     private
 
     def build_file
-      return build_empty_image if file.keys.count == 0
+      return build_empty_image if !file.respond_to?(:keys) || file.keys.count == 0
+
       {
         id: id,
         src: file_url(:large),
@@ -105,7 +106,8 @@ module Slickr
     end
 
     def build_image
-      return build_empty_image if image.keys.count == 0
+      return build_empty_image if !image.respond_to?(:keys) || image.keys.count == 0
+
       {
         id: id,
         src: image_url(:xl_limit),

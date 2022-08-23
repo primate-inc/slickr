@@ -50,7 +50,7 @@ class SlickrUploadInput < Formtastic::Inputs::TextInput
   def input_data
     {
       id: builder.object.send(method)&.slickr_media_upload&.id,
-      field: (builder.object.send(method)&.slickr_media_upload&.id || "rand-#{rand(1..500)}"),
+      field: object_id,
       path: builder.object.send(method)&.slickr_media_upload&.image_url(:thumb_200x200),
       label: label_text,
       required: builder.object.class.validators

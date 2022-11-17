@@ -12,27 +12,6 @@ if defined?(ActiveAdmin)
     filter :title
     filter :layout
 
-    index title: 'Pages', download_links: false do
-      selectable_column
-      id_column
-      column :title
-      column 'Layout' do |page|
-        page.layout.humanize
-      end
-      # column 'State' do |page|
-      #   page.aasm_state.humanize
-      # end
-      column 'Published' do |cs|
-        cs.published?
-      end
-      column :actions do |page|
-        div class: 'table_actions' do
-          (link_to 'View', preview_admin_slickr_page_path(page))
-        end
-      end
-      actions
-    end
-
     controller do
       include Slickr::SharedAdminController
 

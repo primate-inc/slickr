@@ -35,7 +35,6 @@ if defined?(ActiveAdmin)
       end
       actions
     end
-
     controller do
       include Slickr::SharedAdminController
 

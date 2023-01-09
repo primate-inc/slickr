@@ -4,7 +4,7 @@ MAINTAINER Bart Oleszczyk <bart@primate.co.uk>
 # Update system
 RUN apt-get -y update -qq
 # Install required libraries
-RUN apt-get install -y \
+RUN apt-get install -y --fix-broken \
             build-essential \
             git \
             curl \
@@ -25,6 +25,8 @@ RUN apt-get install -y \
             libvips-tools
 RUN mkdir /slickr
 RUN mkdir -p /vendor/bundle
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
 
 RUN gem install bundler
 

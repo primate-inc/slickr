@@ -1,0 +1,40 @@
+version: "3"
+networks:
+  development:
+volumes:
+  db_data:
+  gem_cache:
+  shared_data:
+services:
+  source:
+    build:
+      contenxt: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/slickr
+    env_file: ./.env
+    tty: true
+    stdin_open: true
+    build: .
+    command: rake
+    ports:
+      - "8080:8080"
+    environment:
+      RAILS_ENV: test
+    depends_on:
+      - slickr_sample_db
+    networks:
+      - development
+  slickr_sample_db:
+    image: postgres:12.5-alpine
+    container_name: slickr_sample_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - shared_data:/var/shared
+    networks:
+      - development
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5099:5432

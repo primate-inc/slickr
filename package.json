@@ -27,7 +27,7 @@
     "js-yaml": "^3.9.1",
     "loader-utils": "1.4.2",
     "megadraft": "^0.4.33",
-    "moment": "^2.18.1",
+    "moment": "^2.29.4",
     "node-sass": "^8.0.0",
     "path": "^0.12.7",
     "path-complete-extname": "^0.1.0",

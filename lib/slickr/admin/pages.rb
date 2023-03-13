@@ -12,7 +12,7 @@ if defined?(ActiveAdmin)
     filter :title
     filter :layout
 
-    index title: 'Pages', download_links: false do
+    index title: 'Pages' do
       selectable_column
       id_column
       column :title

@@ -22,14 +22,16 @@ module Slickr
     #     }
     # }
     def nav_helper
-      Slickr::Schedule.now_or_past.destroy_all
-      @nav_trees = Slickr::Navigation.all_nav_trees
-      return if @nav_trees.nil?
-      pathnames = all_pages_pathnames
-      {
-        pathnames: pathnames,
-        nav_menus: all_nav_menus(pathnames)
-      }
+      Rails.cache.fetch('slickr_nav_builder') do
+        Slickr::Schedule.now_or_past.destroy_all
+        @nav_trees = Slickr::Navigation.all_nav_trees
+        return if @nav_trees.nil?
+        pathnames = all_pages_pathnames
+        {
+          pathnames: pathnames,
+          nav_menus: all_nav_menus(pathnames)
+        }
+      end
     end
 
     private

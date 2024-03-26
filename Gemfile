@@ -12,7 +12,7 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin', ref: '2cf85fb03ab382a85b84cc3185c7be542969009c'
 
 group :development, :test do
   gem 'pry'

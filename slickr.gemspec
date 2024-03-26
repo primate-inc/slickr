@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", ">= 5.1"
+  s.add_dependency "rails", "~> 5.1"
 
   s.add_development_dependency "pg"
 
@@ -46,6 +46,6 @@ Gem::Specification.new do |s|
   s.add_dependency "activeadmin_settings_cached", "~> 2.2.0"
   s.add_dependency "sitemap_generator", "~> 6.0.1"
   s.add_dependency "activeadmin_reorderable", "~> 0.1.2"
-  s.add_dependency 'redcarpet', '~> 3.4.0'
+  s.add_dependency 'redcarpet', '~> 3.5.0'
   s.add_dependency "ancestry", "~> 3.0"
 end

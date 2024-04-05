@@ -22,7 +22,7 @@ module Slickr
     #     }
     # }
     def nav_helper
-      Rails.cache.fetch('slickr_nav_builder') do
+      Rails.cache.fetch('slickr_nav_builder', expires_in: 3.minutes) do
         Slickr::Schedule.now_or_past.destroy_all
         @nav_trees = Slickr::Navigation.all_nav_trees
         return if @nav_trees.nil?

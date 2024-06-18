@@ -30,7 +30,7 @@
     "megadraft": "^0.4.33",
     "minimist": "1.2.6",
     "moment": "^2.18.1",
-    "node-sass": "^8.0.0",
+    "sass": "^1.77.5",
     "path": "^0.12.7",
     "path-complete-extname": "^0.1.0",
     "postcss-cssnext": "^3.0.2",

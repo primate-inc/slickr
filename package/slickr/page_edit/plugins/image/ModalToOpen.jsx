@@ -8,7 +8,6 @@ export default class ModalToOpen extends React.Component {
         <ImagePickerModal
           modalIsOpen={this.props.modalIsOpen}
           actions={this.props.actions}
-          tags={this.props.tags}
           loadedImages={this.props.loadedImages}
           editorState={this.props.editorState}
           choosingPageHeaderImage={this.props.choosingPageHeaderImage}

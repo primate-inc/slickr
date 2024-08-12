@@ -5,41 +5,19 @@ if defined?(ActiveAdmin)
 
     includes :schedule
     menu priority: 1
-    actions :all, except: [:show]
+    actions :all, except: :show
     before_action :set_paper_trail_whodunnit
     decorate_with Slickr::PageDecorator
 
     filter :title
     filter :layout
 
-    index title: 'Pages' do
-      selectable_column
-      id_column
-      column :title
-      column 'Layout' do |page|
-        page.layout.humanize
-      end
-      # column 'Valid' do |page|
-      #   page.html_valid_symbol
-      # end
-      # column 'Links' do |page|
-      #   page.link_valid_symbol
-      # end
-      column 'Published' do |cs|
-        cs.published?
-      end
-      column :actions do |page|
-        div class: 'table_actions' do
-          (link_to 'View', preview_admin_slickr_page_path(page))
-        end
-      end
-      actions
-    end
     controller do
       include Slickr::SharedAdminController
 
       def create
         super do |format|
+          create_resource_event_log(:create) if resource.valid?
           format.html do
             redirect_to edit_resource_url and return if resource.valid?
             render :new
@@ -49,6 +27,7 @@ if defined?(ActiveAdmin)
 
       def update
         update! do |format|
+          create_resource_event_log(:update) if resource.valid?
           format.html do
             if resource.valid?
               redirect_to edit_admin_slickr_page_path(resource)
@@ -60,6 +39,7 @@ if defined?(ActiveAdmin)
       end
 
       def destroy
+        create_resource_event_log(:delete) if resource.valid?
         destroy! do |format|
           format.html do
             redirect_to admin_slickr_pages_path and return if resource.valid?
@@ -68,11 +48,7 @@ if defined?(ActiveAdmin)
       end
 
       def scoped_collection
-        if %w[restore destroy].include?(params[:action])
-          end_of_association_chain.unscoped.discarded
-        else
-          end_of_association_chain.kept.not_draft
-        end
+        Slickr::Page.not_draft
       end
 
       def user_for_paper_trail
@@ -93,13 +69,24 @@ if defined?(ActiveAdmin)
 
     member_action :create_draft, method: :post do
       draft = resource.create_draft
+      if draft.valid?
+        Slickr::EventLog.create(
+          action: :create, eventable: draft, admin_user: current_admin_user
+        )
+      end
       redirect_to edit_resource_path
     end
 
     member_action :delete_draft, method: :delete do
       resource.delete_draft(draft_id)
+      if draft.valid?
+        Slickr::EventLog.create(
+          action: :delete, eventable: draft, admin_user: current_admin_user
+        )
+      end
       redirect_to edit_resource_path
     end
+
     action_item :preview, only: [:edit] do
       link_to preview_admin_slickr_page_path(resource),
               target: '_blank' do

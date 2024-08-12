@@ -14,7 +14,7 @@ module Slickr
         has_many :slickr_event_logs
 
         def display_name
-          first_name.present? ? first_name : email
+          first_name || email
         end
 
         def full_name
@@ -27,10 +27,6 @@ module Slickr
 
         def editor?
           role == 'editor'
-        end
-
-        def author?
-          role == 'author'
         end
 
         def days_since_last_login

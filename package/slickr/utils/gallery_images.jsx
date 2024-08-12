@@ -42,7 +42,6 @@ const captionStyle = {
   maxHeight: '240px',
   overflow: 'hidden',
   position: 'absolute',
-  background: 'white',
   bottom: '0',
   width: '100%',
   color: 'white',

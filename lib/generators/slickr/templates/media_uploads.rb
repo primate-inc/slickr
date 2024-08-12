@@ -4,13 +4,13 @@ ActiveAdmin.register Slickr::MediaUpload do
     render json: {
       pdf_files: pdf_files,
       pdf_path: Rails.application.routes.url_helpers
-                     .slickr_media_upload_file_download_path
+                     .return_pdf_path_admin_slickr_media_uploads_path
     }.to_json
   end
 
   collection_action :return_pdf_path, method: :get do
     pdf = Slickr::MediaUpload.find(params[:id])
-    path = pdf.file_url
+    path = pdf.file_url(:original)
     redirect_to path
   end
 end

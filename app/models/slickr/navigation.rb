@@ -40,7 +40,7 @@ module Slickr
         :slickr_navigation_image, [slickr_page: :schedule]
       ).select(
         :id, :root_type, :child_type, :slickr_page_id, :title, :text, :link,
-        :link_text, :alt_link_text, :config_string, :ancestry, 'slickr_uploads.id AS image_id',
+        :link_text, :ancestry, 'slickr_uploads.id AS image_id',
         'slickr_pages.id AS page_id', 'slickr_pages.title AS page_title',
         :page_header, :page_intro, :page_subheader, :page_intro, :slug,
         'slickr_schedules.publish_schedule_time AS schedule_time'
@@ -86,7 +86,7 @@ module Slickr
 
     def navigation_image
       return { id: nil, path: nil } if image.nil?
-      { id: image.id, path: image.image_url(:thumb_400x400) }
+      { id: image.id, path: image.image_url(:m_limit) }
     end
 
     def add_child_path

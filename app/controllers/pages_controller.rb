@@ -2,8 +2,6 @@
 
 # Slickr Pages Controller
 class PagesController < ApplicationController
-  include SlickrPagesHelper
-
   def show
     if params[:slug].class == Symbol
       @slickr_page = Slickr::Page.left_outer_joins(:schedule)
@@ -26,6 +24,6 @@ class PagesController < ApplicationController
     end
     raise AbstractController::ActionNotFound.new unless @slickr_page
     insert_slickr_meta_tags(@slickr_page)
-    render slickr_page_render_options
+    render layout: false
   end
 end

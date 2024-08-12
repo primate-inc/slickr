@@ -1,6 +1,6 @@
 default: &default
   include_webpacks:
-    '@primate-inc/slickr_cms': 'package/slickr/packs'
+    slickr_cms: package/slickr/packs
 
 development:
   <<: *default

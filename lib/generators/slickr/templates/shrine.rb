@@ -19,12 +19,8 @@ Shrine.plugin :activerecord
 
 # Model
 Shrine.plugin :cached_attachment_data # retain cached file across form redisplays
-Shrine.plugin :restore_cached_data # re-extract metadata when attaching a cached file
 Shrine.plugin :remove_attachment # delete attachments through checkboxes on the web form
 Shrine.plugin :validation_helpers
-Shrine.plugin :derivatives,
-  create_on_promote:      false, # automatically create derivatives on promotion
-  versions_compatibility: true  # handle versions column format
 
 # Metadata
 Shrine.plugin :add_metadata # Allows extracting additional metadata values
@@ -38,12 +34,4 @@ Shrine.plugin :pretty_location # more organized directory structure on the stora
 # Shrine.plugin :backup, storage: :backup_store
 
 # Other
-Shrine.logger = Rails.logger
-
-class Shrine::Attacher
-  def promote(*)
-    create_derivatives
-    super
-  end
-end
-
+Shrine.plugin :logging, logger: Rails.logger

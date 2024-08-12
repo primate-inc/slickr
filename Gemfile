@@ -12,11 +12,12 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-gem 'activeadmin', github: 'activeadmin', branch: 'master'
+gem 'activeadmin', github: 'activeadmin'
 
 group :development, :test do
   gem 'pry'
-  gem 'active_admin_slickr', github: 'primate-inc/active_admin_slickr', branch: 'master'
+  gem 'active_admin_slickr', :git => 'https://github.com/primate-inc/active_admin_slickr.git', :branch => 'master'
+  # gem 'active_admin_slickr', :path => '/Users/primate/Documents/gems/active_admin_slickr'
 end
 
 group :development do

@@ -1,0 +1,26 @@
+<div id='split_display_with_image' class='panel'>
+  <div class='image'>
+    <p class='attributes_list_attr_name'>User photo</p>
+    <% if resource.admin_user_avatar.present? %>
+      <%= image_tag resource.admin_user_avatar.image_url(:m_limit) %>
+    <% end %>
+  </div>
+  <ol class='attributes_list'>
+    <li>
+      <p class='attributes_list_attr_name'>Email</p>
+      <p class='attributes_list_attr_value'><%= resource.email %></p>
+    </li>
+    <li>
+      <p class='attributes_list_attr_name'>First name</p>
+      <p class='attributes_list_attr_value'><%= resource.first_name %></p>
+    </li>
+    <li>
+      <p class='attributes_list_attr_name'>Last name</p>
+      <p class='attributes_list_attr_value'><%= resource.last_name %></p>
+    </li>
+    <li>
+      <p class='attributes_list_attr_name'>Role</p>
+      <p class='attributes_list_attr_value'><%= resource.role %></p>
+    </li>
+  </ol>
+</div>

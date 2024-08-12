@@ -7,14 +7,16 @@ module Slickr
       desc "Running Slickr generators"
       argument :name, type: :string, default: "application"
 
-      def add_gems
-        gem 'acts-as-taggable-on', '~> 8'
-      end
-
       def db_migrations
         migration_template "migrations/create_slickr_pages.rb", "db/migrate/create_slickr_pages.rb"
+        migration_template "migrations/create_versions.rb", "db/migrate/create_versions.rb"
+        migration_template "migrations/add_object_changes_to_versions.rb", "db/migrate/add_object_changes_to_versions.rb"
+        migration_template "migrations/change_slickr_pages_page_id_attribute.rb", "db/migrate/change_slickr_pages_page_id_attribute.rb"
+        migration_template "migrations/add_meta_data_to_versions.rb", "db/migrate/add_meta_data_to_versions.rb"
         migration_template "migrations/create_slickr_event_logs.rb", "db/migrate/create_slickr_event_logs.rb"
         migration_template "migrations/add_roles_names_and_avatars_to_admin_users.rb", "db/migrate/add_roles_names_and_avatars_to_admin_users.rb"
+        migration_template "migrations/add_subheader_to_slickr_pages.rb", "db/migrate/add_subheader_to_slickr_pages.rb"
+        migration_template "migrations/add_header_image_to_slickr_pages.rb", "db/migrate/add_header_image_to_slickr_pages.rb"
         migration_template "migrations/create_slickr_settings.rb", "db/migrate/create_slickr_settings.rb"
         migration_template "migrations/create_slickr_navigations.rb", "db/migrate/create_slickr_navigations.rb"
         migration_template "migrations/create_slickr_media_uploads.rb", "db/migrate/create_slickr_media_uploads.rb"
@@ -22,9 +24,6 @@ module Slickr
         migration_template "migrations/create_slickr_schedules.rb", "db/migrate/create_slickr_schedules.rb"
         migration_template "migrations/add_admin_user_id_to_slickr_pages.rb", "db/migrate/add_admin_user_id_to_slickr_pages.rb"
         migration_template "migrations/create_slickr_meta_tags.rb", "db/migrate/create_slickr_meta_tags.rb"
-        migration_template "migrations/create_slickr_snippets.rb", "db/migrate/create_slickr_snippets.rb"
-        migration_template "migrations/create_slickr_snippets_categories.rb", "db/migrate/create_slickr_snippets_categories.rb"
-        migration_template 'migrations/create_slickr_health_checks.rb', 'db/migrate/create_slickr_health_checks.rb'
 
         puts "Database migrations added"
       end
@@ -34,19 +33,6 @@ module Slickr
 
         puts "Shrine initializer"
       end
-
-      def add_activity
-        template "public_activity.rb", "config/initializers/public_activity.rb"
-        generate 'public_activity:migration'
-        insert_into_file 'app/controllers/application_controller.rb', :before => /^end/ do
-          <<-CODE
-           include PublicActivity::StoreController
-          CODE
-        end
-
-        puts "Added Public Activity"
-      end
-
 
       def slickr_yml
         template "slickr.yml", "config/slickr.yml"
@@ -58,14 +44,6 @@ module Slickr
         template "slickr_pages.rb", "app/admin/slickr_pages.rb"
 
         puts "ActiveAdmin Slickr::Page"
-      end
-
-      def activeadmin_slickr_snippets
-        template "slickr_snippets.rb", "app/admin/slickr_snippets.rb"
-        template "slickr_snippets_categories.rb", "app/admin/slickr_snippets_categories.rb"
-
-        puts "ActiveAdmin Slickr::Snippet"
-        puts "ActiveAdmin Slickr::SnippetsCategory"
       end
 
       def activeadmin_media_uploads
@@ -179,41 +157,75 @@ module Slickr
         end
       end
 
+      def extend_babel_to_use_stage_1
+        dest_file = ".babelrc"
+        existing_content = File.read(dest_file)
+        new_content = '"stage-1"'
+
+        unless existing_content.include? new_content
+          gsub_file(dest_file, '"react"') do |match|
+            "#{match},\n    #{new_content}"
+          end
+
+          puts "Babel extended to use stage-1"
+        else
+          puts "Babel already using stage-1"
+        end
+      end
+
+      def extend_babel_to_ignore_node_modules
+        dest_file = ".babelrc"
+        existing_content = File.read(dest_file)
+        new_content = '"ignore": "node_modules",'
+
+        unless existing_content.include? new_content
+          gsub_file(dest_file, '"presets": [') do |match|
+            "#{new_content}\n  #{match}"
+          end
+
+          puts "Babel extended to ignore node modules"
+        else
+          puts "Babel already ignoring node modules"
+        end
+      end
 
       def extend_package_json
-        packages = [
-          'https://github.com/primate-inc/slickr#master',
-          '@babel/core',
-          '@babel/plugin-proposal-class-properties',
-          '@babel/plugin-proposal-decorators',
-          '@babel/plugin-proposal-do-expressions',
-          '@babel/plugin-proposal-export-default-from',
-          '@babel/plugin-proposal-export-namespace-from',
-          '@babel/plugin-proposal-function-sent',
-          '@babel/plugin-proposal-json-strings',
-          '@babel/plugin-proposal-logical-assignment-operators',
-          '@babel/plugin-proposal-nullish-coalescing-operator',
-          '@babel/plugin-proposal-numeric-separator',
-          '@babel/plugin-proposal-optional-chaining',
-          '@babel/plugin-proposal-pipeline-operator',
-          '@babel/plugin-proposal-throw-expressions',
-          '@babel/plugin-syntax-dynamic-import',
-          '@babel/plugin-syntax-import-meta',
-          '@babel/preset-env',
-          '@babel/preset-react',
-          'ignore-loader',
-          'core-js@3'
-        ]
-        run "yarn add #{packages.join(' ')}"
-        # run 'npm install https://github.com/primate-inc/slickr#master --save'
+        dest_file = "package.json"
+        existing_content = File.read(dest_file)
+        new_content_1 = '"slickr_cms": "git+https://github.com/primate-inc/slickr#master"'
+        new_content_2 = '"babel-preset-stage-1": "^6.24.1"'
+        new_content_3 = '"ignore-loader": "^0.1.2"'
+
+        unless existing_content.include? new_content_1
+          gsub_file(dest_file, '"dependencies": {') do |match|
+            "#{match}\n    #{new_content_1},"
+          end
+
+          puts "Package.json extended to Slickr"
+        else
+          puts "Package.json already using Slickr"
+        end
+
+        unless existing_content.include? new_content_2
+          gsub_file(dest_file, '"devDependencies": {') do |match|
+            "#{match}\n    #{new_content_2},"
+          end
+
+          puts "Babel extended to use stage-1"
+        else
+          puts "Babel already using stage-1"
+        end
+
+        unless existing_content.include? new_content_3
+          gsub_file(dest_file, '"devDependencies": {') do |match|
+            "#{match}\n    #{new_content_3},"
+          end
+
+          puts "Package.json extended to use ignore-loader"
+        else
+          puts "Package.json already using ignore-loader"
+        end
       end
-
-      def babel_config
-        template "babel.config.js", "babel.config.js"
-
-        puts "New Babel config"
-      end
-
 
       def extend_admin_user_class
         dest_file = "app/models/admin_user.rb"
@@ -249,17 +261,17 @@ module Slickr
         puts "Slickr Page extended"
       end
 
-      # def slickr_media_image_uploader
-      #   template "media_image_uploader.rb", "app/uploaders/slickr/media_image_uploader.rb"
-      #
-      #   puts "Slickr::MediaImageUploader added"
-      # end
-      #
-      # def slickr_media_file_uploader
-      #   template "media_file_uploader.rb", "app/uploaders/slickr/media_file_uploader.rb"
-      #
-      #   puts "Slickr::MediaFileUploader added"
-      # end
+      def slickr_media_image_uploader
+        template "media_image_uploader.rb", "app/uploaders/slickr/media_image_uploader.rb"
+
+        puts "Slickr::MediaImageUploader added"
+      end
+
+      def slickr_media_file_uploader
+        template "media_file_uploader.rb", "app/uploaders/slickr/media_file_uploader.rb"
+
+        puts "Slickr::MediaFileUploader added"
+      end
 
       def extend_active_admin_initializer
         dest_file = "config/initializers/active_admin.rb"
@@ -286,9 +298,7 @@ module Slickr
         template "javascript_extensions/page_edit/components/content/editor_state_change.js", "app/javascript/slickr_extensions/page_edit/components/content/editor_state_change.js"
         template "javascript_extensions/page_edit/containers/additional_prop_types.js", "app/javascript/slickr_extensions/page_edit/containers/additional_prop_types.js"
         template "javascript_extensions/page_edit/decorators/pdf_link_component.jsx", "app/javascript/slickr_extensions/page_edit/decorators/pdf_link_component.jsx"
-        template "javascript_extensions/page_edit/decorators/cta_link_component.jsx", "app/javascript/slickr_extensions/page_edit/decorators/cta_link_component.jsx"
         template "javascript_extensions/page_edit/entity_inputs/pdf_link_input.jsx", "app/javascript/slickr_extensions/page_edit/entity_inputs/pdf_link_input.jsx"
-        template "javascript_extensions/page_edit/entity_inputs/cta_link_input.jsx", "app/javascript/slickr_extensions/page_edit/entity_inputs/cta_link_input.jsx"
         template "javascript_extensions/page_edit/plugins/plugin_list.js", "app/javascript/slickr_extensions/page_edit/plugins/plugin_list.js"
         template "javascript_extensions/page_edit/reducers/additional_reducers.js", "app/javascript/slickr_extensions/page_edit/reducers/additional_reducers.js"
         template "javascript_extensions/page_edit/reducers/loaded_pdfs.js", "app/javascript/slickr_extensions/page_edit/reducers/loaded_pdfs.js"
@@ -303,10 +313,6 @@ module Slickr
         template "slickr_page_template.html.erb", "app/views/slickr_page_templates/standard.html.erb"
 
         puts "Sample page templates added"
-      end
-
-      def install_acts_as_taggable
-        run 'rake acts_as_taggable_on_engine:install:migrations'
       end
     end
   end

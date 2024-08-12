@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import icons from "megadraft/lib/icons";
-import text_editor_store from '@primate-inc/slickr_cms/package/slickr/packs/slickr_text_area_editor.jsx';
+import text_editor_store from 'slickr_cms/package/slickr/packs/slickr_text_area_editor.jsx';
 
 export default class PdfLinkInput extends React.Component {
   constructor(props) {
@@ -69,7 +69,7 @@ export default class PdfLinkInput extends React.Component {
       (file, index) => (
         {
           value: `${this.state.pdfs.pdf_path}?id=${file.id}`,
-          label: file.file_data.metadata.filename
+          label: file.file_data.original.metadata.filename
         }
       )
     )

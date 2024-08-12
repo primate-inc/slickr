@@ -10,17 +10,20 @@ module Slickr
     MAX_SIZE      = 10 * 1024 * 1024 # 10 MB
 
     plugin :delete_raw # automatically delete processed files after uploading
+    plugin :delete_promoted
     plugin :processing
     plugin :store_dimensions
+    plugin :versions
 
     Attacher.validate do
       validate_max_size MAX_SIZE, message: 'is too large (max is 10 MB)'
       validate_mime_type_inclusion ALLOWED_TYPES
     end
 
-    Attacher.derivatives do |file|
-      file.open
-      # if file.mime_type == 'application/pdf'
+    process(:store) do |io, _context|
+      file = io.download
+
+      if io.mime_type == 'application/pdf'
         image = MiniMagick::Image.new(file.path)
         page = image.pages[0]
         display_image = Tempfile.new('version', binmode: true)
@@ -33,25 +36,35 @@ module Slickr
           convert << display_image.path
         end
         display_image.open # refresh updated file
-      # else
-      #   display_image = document_image('doc')
-      # end
+      else
+        display_image = document_image('doc')
+      end
 
       begin
-        pipeline = ImageProcessing::Vips.source(display_image)
+        if io.mime_type == 'application/pdf'
+          pipeline = ImageProcessing::Vips.source(display_image)
 
-        {
-          large:     pipeline.resize_to_fit!(762, 1080),
-          thumb: pipeline.resize_to_fit!(127, 180)
-        }
+          l_fit =     pipeline.resize_to_fit!(762, 1080)
+          thumb_fit = pipeline.resize_to_fit!(127, 180)
+        else
+          pipeline = ImageProcessing::Vips.source(display_image)
+
+          l_fit =     pipeline.resize_to_fit!(127, 180)
+          thumb_fit = pipeline.resize_to_fit!(127, 180)
+        end
+
+        { original: io, large: l_fit, thumb: thumb_fit }
       rescue Vips::Error
+        if io.mime_type == 'application/pdf'
           display_image = document_image('pdf')
           pipeline = ImageProcessing::Vips.source(display_image)
 
-          {
-            large:     pipeline.resize_to_fit!(127, 180),
-            thumb: pipeline.resize_to_fit!(127, 180)
-          }
+          l_fit =     pipeline.resize_to_fit!(127, 180)
+          thumb_fit = pipeline.resize_to_fit!(127, 180)
+          { original: io, large: l_fit, thumb: thumb_fit }
+        else
+          {}
+        end
       ensure
         file.close!
       end
@@ -78,4 +91,3 @@ module Slickr
     end
   end
 end
-

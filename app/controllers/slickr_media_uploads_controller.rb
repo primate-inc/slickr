@@ -8,7 +8,7 @@ class SlickrMediaUploadsController < ApplicationController
   end
 
   def show
-    path = @file.file_url
+    path = @file.file_url(:original)
     redirect_to path
   end
 end

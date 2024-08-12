@@ -80,17 +80,17 @@ export default class Editor extends React.Component {
     // use customOptions to pass in any extra info to plugin block
     // eg customOptions: { customAction: this.props.actions.customAction }
     var megadraftOptions = {
-      customOptions: { tags: this.props.tags },
+      customOptions: {},
       standardDisplayOptions: {
         displayOptions: [
-          {"key": "content_400", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
-          {"key": "content_600", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
-          {"key": "content_800", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
-          {"key": "content_1200", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
-          {"key": "content_1200", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
-          {"key": "content_1200", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
+          {"key": "thumb_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "THUMBNAIL"},
+          {"key": "s_limit", "icon": MegadraftIcons.MediaSmallIcon, "label": "SMALL"},
+          {"key": "m_limit", "icon": MegadraftIcons.MediaMediumIcon, "label": "MEDIUM"},
+          {"key": "l_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "LARGE"},
+          {"key": "xl_limit", "icon": MegadraftIcons.MediaBigIcon, "label": "EXTRA LARGE"},
+          {"key": "full", "icon": MegadraftIcons.MediaBigIcon, "label": "FULL"}
         ],
-        defaultDisplay: 'content_1200'
+        defaultDisplay: 'full'
       }
     }
     var plugins = [ImagePlugin(megadraftOptions), VimeoPlugin, YouTubePlugin]

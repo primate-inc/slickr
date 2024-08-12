@@ -45,7 +45,6 @@ export default class ImageArea extends React.Component {
     const actions = this.props.actions
     const textAreaName = this.props.textArea.name.slice(0, -1) +
                          '_attributes][slickr_media_upload_id]'
-
     const error = this.props.imageObject.errors[0]
 
     let hint;
@@ -74,9 +73,6 @@ export default class ImageArea extends React.Component {
           <div className="edit-wrapper">
             <label htmlFor="slickr_image_id">
               {`${this.props.imageObject.label}${hint}`}
-              { this.props.imageObject.required ?
-                    <abbr title="required">*</abbr> :
-                    null }
             </label>
             <input type="file" onClick={this.openImagePicker()} />
             {(() => {
@@ -115,7 +111,6 @@ export default class ImageArea extends React.Component {
         <ImagePickerModal
           key={`${this.props.textAreaIndex}-3`}
           modalIsOpen={this.props.modalIsOpen}
-          tags={this.props.tags}
           actions={actions}
           loadedImages={this.props.loadedImages}
           choosingActiveAdminImage={this.props.choosingActiveAdminImage}

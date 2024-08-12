@@ -10,6 +10,7 @@ export default class ImagePickerModal extends React.Component {
   }
 
   closeImagePicker = (e) => {
+    // this.props.actions.keepCurrentPage()
     this.props.actions.toggleImagePicker()
   }
 
@@ -77,7 +78,6 @@ export default class ImagePickerModal extends React.Component {
           <div id="media-gallery">
             <NewImage actions={this.props.actions}
                       allowedUploadInfo={this.props.allowedUploadInfo}
-                      tags={this.props.tags}
                       additionalInfo={this.props.additionalInfo} />
             <div id='modal_image_gallery_wrapper'>
               <Grid

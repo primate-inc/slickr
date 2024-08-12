@@ -10,7 +10,7 @@ module Slickr
     end
 
     module ClassMethods
-      def has_one_slickr_upload(method_symbol, delegate_method_symbol, required=false, options={})
+      def has_one_slickr_upload(method_symbol, delegate_method_symbol, required=false)
         has_one method_symbol,
                 -> { where(uploadable_type: method_symbol.to_s) },
                 foreign_key: 'uploadable_id',
@@ -21,10 +21,12 @@ module Slickr
                 through: method_symbol,
                 source: :slickr_media_upload,
                 class_name: 'Slickr::MediaUpload'
-        validates_with SlickrImagePresentValidator, method_symbol: method_symbol, required: required
+        validate do |object|
+          object.present_if_required(method_symbol) if required == true
+        end
       end
 
-      def has_many_slickr_uploads(method_symbol, delegate_method_symbol, required=false, options={})
+      def has_many_slickr_uploads(method_symbol, delegate_method_symbol, required=false)
         has_many method_symbol,
                  -> { where(uploadable_type: method_symbol.to_s) },
                  foreign_key: 'uploadable_id',

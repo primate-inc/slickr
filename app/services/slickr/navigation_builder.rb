@@ -22,7 +22,7 @@ module Slickr
     #     }
     # }
     def nav_helper
-      Rails.cache.fetch('slickr_nav_builder') do
+      Rails.cache.fetch('slickr_nav_builder', expires_in: 3.minutes) do
         Slickr::Schedule.now_or_past.destroy_all
         @nav_trees = Slickr::Navigation.all_nav_trees
         return if @nav_trees.nil?
@@ -85,7 +85,7 @@ module Slickr
     def build_page_pathnames(hash, pathname, array)
       if hash['child_type'] == 'Page'
         if hash['schedule_time'].nil?
-          new_pathname = pathname + hash['slug'].to_s
+          new_pathname = pathname + hash['slug']
           array.push(page_id: hash['page_id'], path: new_pathname)
           hash['children'].map do |child_hash|
             build_page_pathnames(child_hash, "#{new_pathname}/", array)
@@ -178,25 +178,21 @@ module Slickr
           text: hash['text'], page_header: hash['page_header'],
           page_subheader: hash['page_subheader'], page_intro: hash['page_intro']
         },
-        link: path_finder(pathnames, hash)[:path], 
-        link_text: hash['link_text'], alt_link_text: hash['alt_link_text'],
-        config_string: hash['config_string']
+        link: path_finder(pathnames, hash)[:path], link_text: hash['link_text']
       }
     end
 
     def build_header_nav(hash)
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
-        text: hash['text'], link: hash['link'], link_text: hash['link_text'],
-        alt_link_text: hash['alt_link_text'], config_string: hash['config_string']
+        text: hash['text'], link: hash['link'], link_text: hash['link_text']
       }
     end
 
     def build_custom_link_nav(hash)
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
-        text: hash['text'], link: hash['link'], link_text: hash['link_text'],
-        alt_link_text: hash['alt_link_text'], config_string: hash['config_string']
+        text: hash['text'], link: hash['link'], link_text: hash['link_text']
       }
     end
 
@@ -204,8 +200,7 @@ module Slickr
       {
         title: hash['title'], image: { nav_upload_id: hash['image_id'] },
         text: hash['text'], link: parent_link + hash['link'],
-        link_text: hash['link_text'], alt_link_text: hash['alt_link_text'],
-        config_string: hash['config_string']
+        link_text: hash['link_text']
       }
     end
 

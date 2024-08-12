@@ -5,31 +5,6 @@ module Slickr
   module Previewable
     extend ActiveSupport::Concern
 
-    def slickr_previewable_locals
-      self.class.slickr_previewable_opts[:locals].is_a?(Proc) ?
-        self.class.slickr_previewable_opts[:locals].call(self) :
-        self.class.slickr_previewable_opts[:locals]
-    end
-
-    def slickr_previewable_layout
-      self.class.slickr_previewable_opts[:layout].is_a?(Proc) ?
-        self.class.slickr_previewable_opts[:layout].call(self) :
-        self.class.slickr_previewable_opts[:layout]
-    end
-
-    def slickr_previewable_template
-      self.class.slickr_previewable_opts[:template].is_a?(Proc) ?
-        self.class.slickr_previewable_opts[:template].call(self) :
-        self.class.slickr_previewable_opts[:template]
-    end
-
-    def slickr_previewable_instance_variables
-      return [] if self.class.slickr_previewable_opts[:instance_variables].nil?
-      self.class.slickr_previewable_opts[:instance_variables].is_a?(Proc) ?
-        self.class.slickr_previewable_opts[:instance_variables].call(self) :
-        self.class.slickr_previewable_opts[:instance_variables]
-    end
-
     module ClassMethods
       attr_reader :slickr_previewable_opts
 

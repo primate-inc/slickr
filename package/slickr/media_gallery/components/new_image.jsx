@@ -16,14 +16,8 @@ export default class NewImage extends React.Component {
 
       if(this.props.allowedUploadInfo.file_mime_types.indexOf(file.type) > -1) {
         formData.append('slickr_media_upload[file]', file);
-        if(this.props.tags) {
-          formData.append('slickr_media_upload[media_tag_list]', this.props.tags);
-        }
       } else {
         formData.append('slickr_media_upload[image]', file);
-        if(this.props.tags) {
-          formData.append('slickr_media_upload[media_tag_list]', this.props.tags);
-        }
       }
       this.props.actions.createImage({
         formData: formData, file: file, upload: true

@@ -10,9 +10,4 @@ ActiveAdmin.register_page "Dashboard" do
   content do
     render partial: 'dashboard', locals: {greeting: time_of_day_greeting}
   end
-  controller do
-    def index
-      @activities = PublicActivity::Activity.all.includes([:owner, :trackable]).order(created_at: :desc).page(params[:page]).per(50)
-    end
-  end
 end

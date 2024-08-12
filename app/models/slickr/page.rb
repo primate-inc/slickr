@@ -7,36 +7,17 @@ module Slickr
     include Slickr::Uploadable
     include Slickr::Schedulable
     include Slickr::Metatagable
-    include Slickr::Previewable
-    include Slickr::Validable
-    include Slickr::Restorable
     include AASM
-    slickr_restorable
-    after_discard do
-      slickr_navigations.destroy_all
-    end
 
-    include PublicActivity::Model
-    tracked(
-      on: {
-        create: proc { |model, _controller| model.class.name != 'Slickr::Page::Draft' },
-        update: proc { |model, _controller| model.class.name != 'Slickr::Page::Draft' },
-        destroy: proc { |model, _controller| model.class.name != 'Slickr::Page::Draft' }
-      },
-      params: { title: :title, type: 'Page' },
-      owner: proc { |controller, _model| controller&.current_admin_user }
-    )
-
-    has_paper_trail only: %i[title aasm_state content published_content drafts]
+    has_paper_trail only: %i[title aasm_state content published_content drafts],
+                    meta: { content_changed: :content_changed? }
 
     friendly_id :title, use: %i[slugged finders]
 
     slickr_schedulable on_create: :unpublish
-    slickr_previewable(template: lambda {|p| "slickr_page_templates/#{p.layout}"}, locals: lambda {|p| { slickr_page: p, content: draftjs_to_html(p, :content) } }, layout: false)
-    slickr_metatagable
 
     belongs_to :admin_user, optional: true
-    has_one_slickr_upload(:slickr_page_header_image, :header_image, false )
+    has_one_slickr_upload(:slickr_page_header_image, :header_image)
     has_many_slickr_uploads(:slickr_page_gallery_images, :gallery_images)
     has_many :slickr_navigations,
              foreign_key: 'slickr_page_id',
@@ -118,7 +99,7 @@ module Slickr
     end
 
     def create_draft
-      drafts.create(admin_user_id: admin_user_id, layout: layout)
+      drafts.create(admin_user_id: admin_user_id)
       drafts.first.make_draft!
     end
 
@@ -165,10 +146,6 @@ module Slickr
       page_link = nav_helper[:pathnames].find{ |p| p[:page_id] == self.id }
       return 'Add this page to navigation to generate its URL' if page_link.blank?
       page_link[:path]
-    end
-
-    def to_s
-      title
     end
 
     private

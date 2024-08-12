@@ -41,12 +41,6 @@ Now in your main app type
 yarn link slickr_cms
 ```
 
-To make sure your local version is compiled, you should add its path to `config/webpacker.yml`
-
-```yml
-resolved_paths: ['../slickr']
-```
-
 The local engine now takes precedence over the version in the main app node_modules
 folder and when you run the dev server in the main app with
 
@@ -64,11 +58,3 @@ yarn unlink slickr_cms
 
 from the main app but note that you'll have to ``` yarn install ``` again as the
 slickr_cms node module will be removed.
-
-
-
-
-to bundle non-js files you have to use this line of code in the other programs Gemfile:
-```bash
-    gem "slickr_cms", :path => "/Users/<user-name>/slickr"
-```

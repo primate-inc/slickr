@@ -7,7 +7,7 @@ $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
   # s.name        = "slickr"
   s.name        = "slickr_cms"
-  s.version     = "0.23.16"
+  s.version     = "0.23.17"
   s.authors     = ["Primate"]
   s.email       = ["admin@primate.co.uk"]
   s.homepage    = "https://github.com/primate-inc/slickr"

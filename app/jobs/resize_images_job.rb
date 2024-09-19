@@ -6,40 +6,22 @@ class ResizeImagesJob < ApplicationJob
       attacher = record.image_attacher
       svg = record.image.mime_type.include?('svg')
       if svg
-        available_derivatives[size].each do |thumb_name, options|
-          attacher.add_derivative(thumb_name, record.image(:optimised).download)
-        end
+        attacher.add_derivative(thumb, record.image(:optimised).download)
       else
+        resize_methods = {
+          fill: :resize_to_fill,
+          limit: :resize_to_limit,
+          fit: :resize_to_fit,
+          pad: :resize_and_pad
+        }
+        resize_method = resize_methods[options[:type]]
+        resize_options = options[:options]
         record.image(:optimised).open do |io|
           pipeline = ImageProcessing::Vips.source(io)
-          available_derivatives[size].each do |thumb_name, options|
-            case options[:type]
-            when :fill
-              attacher.add_derivative(
-                thumb_name,
-                pipeline.resize_to_fill(*options[:options]).call,
-              )
-            when :limit
-              attacher.add_derivative(
-                thumb_name,
-                pipeline.resize_to_limit(*options[:options]).call,
-              )
-            when :fit
-              attacher.add_derivative(
-                thumb_name,
-                pipeline.resize_to_fit(*options[:options]).call,
-              )
-            when :pad
-              attacher.add_derivative(
-                thumb_name,
-                pipeline.resize_and_pad(*options[:options]).call,
-              )
-            end
-          end
+          attacher.add_derivative(thumb, pipeline.send(resize_method, *resize_options).call)
         end
+        attacher.atomic_persist
       end
-
-      record.save
     end
   end
   # rubocop:enable Metrics/MethodLength

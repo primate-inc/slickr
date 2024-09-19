@@ -9,13 +9,21 @@ class OptimiseImageJob < ApplicationJob
         jpegoptim: { allow_lossy: true, max_quality: 85 }
       )
 
-      record.image_attacher.file.open do |io|
+      tempfile = record.image_attacher.file.download
+
+      File.open(tempfile.path) do |io|
         optimized_path = image_optim.optimize_image(io)
-        optimized_path.open do |oo|
-          record.image_attacher.merge_derivatives record.image_attacher.upload_derivatives({ optimised: oo })
+
+        if optimized_path.present?
+          File.open(optimized_path.to_s) do |file|
+            record.image_attacher.add_derivative(:optimised, file)
+          end
+        else
+          record.image_attacher.add_derivative(:optimised, io)
         end
+        record.image_attacher.atomic_persist
       end
-      record.save
     end
+    record.save
   end
 end

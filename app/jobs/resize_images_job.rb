@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ResizeImagesJob < ApplicationJob
-  def perform(record, size)
+  def perform(record, thumb, options)
     if record.image_data.present?
       attacher = record.image_attacher
       svg = record.image.mime_type.include?('svg')

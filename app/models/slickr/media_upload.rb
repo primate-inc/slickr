@@ -155,6 +155,15 @@ module Slickr
 
     has_many :slickr_uploads, class_name: 'Slickr::Upload'
 
+    def self.available_derivatives
+      Slickr::MediaUpload::DEFAULT_IMAGE_DERIVATIVES.merge(
+        Slickr::MediaUpload.additional_derivatives
+      )
+    end
+    def self.additional_derivatives
+      {}
+    end
+
     scope(:pdf_files, lambda do
       where('file_data @> ?', {
         metadata: { mime_type: 'application/pdf' }
@@ -319,11 +328,11 @@ module Slickr
     end
 
     def send_for_resizing
-      ResizeImagesJob.perform_later(self, :square)
-      ResizeImagesJob.perform_later(self, :portrait)
-      ResizeImagesJob.perform_later(self, :landscape)
-      ResizeImagesJob.perform_later(self, :panoramic)
-      ResizeImagesJob.perform_later(self, :content)
+      Slickr::MediaUpload.available_derivatives.except(:thumb).each do |_size, thumbs|
+        thumbs.each do |thumb_name, options|
+          ResizeImagesJob.perform_later(self, thumb_name, options)
+        end
+      end
     end
   end
 end

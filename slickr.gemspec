@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   # Framework for admin interface
   s.add_dependency "activeadmin", ">= 1.2.1"
   # Authorization
-  s.add_dependency "cancancan", "~> 2.0.0"
+  s.add_dependency "cancancan", ">= 2.0.0", "< 4"
   # User authentication
   s.add_dependency 'devise', '~> 4.3'
   # Images
